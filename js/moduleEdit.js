@@ -46,7 +46,7 @@ window.onload = function init(){
     console.log(checkedProdsEnzsSubs);
   });
 
-  canvas1.addEventListener('click', function (event) {
+  canvas1.addEventListener("click", function (event) {
       let mousePosition = getMousePosition(canvas1, event);
       let rectNum = (Math.floor(mousePosition.x / 100) + Math.floor(mousePosition.y / 50) * 8) - 15;
       let rectClicked = document.getElementById("rectClicked");

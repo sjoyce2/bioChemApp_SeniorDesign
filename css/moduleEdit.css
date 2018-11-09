@@ -58,19 +58,19 @@ button {
 ul#substrates{
   height: 100px; /* or any value */
     overflow-y: auto;
-    width: 100px;
+    width: 150px;
     border-radius: 10px;
 }
 ul#products{
   height: 100px; /* or any value */
     overflow-y: auto;
-    width: 100px;
+    width: 150px;
     border-radius: 10px;
 }
 ul#enzymes{
   height: 100px; /* or any value */
     overflow-y: auto;
-    width: 100px;
+    width: 150px;
     border-radius: 10px;
 }
 

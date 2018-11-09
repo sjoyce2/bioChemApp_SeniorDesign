@@ -56,22 +56,51 @@ button {
 }
 
 ul#substrates{
-  height: 100px; /* or any value */
+  height: 200px; /* or any value */
     overflow-y: auto;
-    width: 150px;
+    width: 200px;
     border-radius: 10px;
+    display: block;
 }
 ul#products{
-  height: 100px; /* or any value */
+  height: 200px; /* or any value */
     overflow-y: auto;
-    width: 150px;
+    width: 200px;
     border-radius: 10px;
+    display: block;
 }
 ul#enzymes{
-  height: 100px; /* or any value */
+  height: 200px; /* or any value */
     overflow-y: auto;
-    width: 150px;
+    width: 200px;
     border-radius: 10px;
+    display: block;
+}
+
+label {
+  float: left;
+  clear: none;
+  display: block;
+  padding: 2px 1em 0 0;
+}
+
+input[type=radio],
+input.radio {
+  float: left;
+  clear: none;
+  margin: 2px 0 0 2px;
+  display: block;
+}
+
+.createReaction {
+  background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }
 
 #enzymes, #products, #substrates, #imageCanvas{

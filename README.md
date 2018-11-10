@@ -12,3 +12,7 @@ https://docs.google.com/document/d/1Dee7O1EdIwbTFityIJ7fZSn32Q8LmWTtWVGkewdyUy0/
 Link to Project Backlog:
 
 https://docs.google.com/spreadsheets/d/1ktY1G7tluKuXQLoiwlncsuEFiD-oRuO-6fFmuu4jT50/edit?usp=sharing
+
+Link to Documentation:
+
+https://docs.google.com/document/d/1DTMJKezT4y24ELtitQ7g1imXq83VmCM1UBYlmxYQ9gc/edit?usp=sharing

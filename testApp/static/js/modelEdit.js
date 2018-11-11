@@ -2,7 +2,7 @@
 function main () {
     var canvas = document.getElementById("modelEditCanvas");
     var ctx = canvas.getContext("2d");
-    for (let i = 0; i < canvas.clientWidth; i += 100) {
+    /*for (let i = 0; i < canvas.clientWidth; i += 100) {
         for (let j = 100; j < canvas.clientHeight; j += 50) {
             let grd = ctx.createRadialGradient(i+50, j+25, 20, i+50, j+25, 100);
             grd.addColorStop(0, "lightgray");
@@ -15,7 +15,7 @@ function main () {
             ctx.moveTo(i + 40, j + 25);
             ctx.lineTo(i + 60, j + 25);
         }
-    }
+    }*/
     ctx.stroke();
     function getMousePosition(canvas, event) {
         let border = canvas.getBoundingClientRect();

@@ -8,10 +8,11 @@ from django.http import HttpResponse
 from testApp.models import User
 
 def index(request):
-	user_names = User.objects.all()
+	objects = User.objects.get(username='user1')
 	
 	context = {
-		'user_name': user_names,
+		'user_name': objects.username,
+		'pass_word': objects.password,
 	}
 
-	return render(request, 'index.html', context=context)
+	return render(request, 'db_display/display.html', context=context)

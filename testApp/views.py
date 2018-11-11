@@ -11,7 +11,7 @@ def index(request):
 	user_names = User.objects.all()
 	
 	context = {
-		'user_names': user_names,
+		'user_name': user_names,
 	}
 
 	return render(request, 'index.html', context=context)

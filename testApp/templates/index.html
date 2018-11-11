@@ -31,9 +31,9 @@
 <body>
 	
 	<div class="limiter">
-		<div class="container-login100" style="background-image: url('{% static 'images/bg-01.jpg' %}');">
+		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
 			<div class="wrap-login100">
-				<img src="{% static 'images/logo.png' %}" alt="biopath_logo goes here" class="wrap-biopath-logo">
+				<img src="images/logo.png" alt="biopath_logo goes here" class="wrap-biopath-logo">
 				
 				<form class="login100-form">
 					
@@ -54,9 +54,20 @@
 						</label>
 					</div>
 
+					{% block body %}
+					<div>
+						<h2>{{ text }}</h2>
+						{% for username in user_names %}
+						<h1>
+						     {{User.username}}
+						 </h1>
+						{end for}
+				    </div>
+					{% endblock %}
+
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn">
-							Login
+							<a href="https://www.google.com">Login</a>
 						</button>
 					</div>
 
@@ -74,7 +85,7 @@
 	<div id="dropDownSelect1"></div>
 	
 <!--===============================================================================================-->
-	<script src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>
 <!--===============================================================================================-->
 	<script src="{% static 'vendor/animsition/js/animsition.min.js' %}"></script>
 <!--===============================================================================================-->

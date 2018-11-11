@@ -2,13 +2,12 @@
 
 var checkedProdsEnzsSubs = [];
 var canvas1;
-// var set1 = document.querySelectorAll(".subs");
-// var set2 = document.querySelectorAll(".prods");
-// var set3 = document.querySelectorAll(".enzs");
 var radios;
 var ctx;
 var image;
 var createBtn;
+var objectWidth = 100;
+var objectHeight = 100;
 //check which radio buttons are clicked
 function onRadioChange(){
   checkedProdsEnzsSubs = [];
@@ -31,7 +30,69 @@ function getMousePosition(canvas1, event) {
 
 function displayImage(){
   console.log("FUNCTION CALLED");
-  ctx.drawImage(image,0,0,400,145);
+  displayReaction();
+}
+
+
+function drawObject(count, type, xcoor, ycoor){
+  if(type === "substrate" || type === "product"){
+    ctx.moveTo(xcoor,ycoor);
+    ctx.lineTo(xcoor + objectWidth, ycoor);
+    ctx.lineTo(xcoor + objectWidth, ycoor + objectHeight);
+    ctx.lineTo(xcoor, ycoor + objectHeight);
+    ctx.lineTo(xcoor, ycoor);
+    ctx.stroke();
+  }else if (type === "enzyme"){
+    ycoor = ycoor + objectHeight / 2;
+    ctx.moveTo(xcoor, ycoor);
+    ctx.lineTo(xcoor + objectWidth, ycoor);
+    ctx.lineTo(xcoor + objectWidth - (objectWidth / 4), ycoor - (objectHeight / 4));
+    ctx.lineTo(xcoor + objectWidth - (objectWidth / 4), ycoor + (objectHeight / 4));
+    ctx.lineTo(xcoor + objectWidth, ycoor);
+    ctx.stroke();
+  }else{
+
+  }
+}
+
+function drawPlus(xcoor, ycoor){
+  xcoor = xcoor + objectWidth + 10;
+  ycoor = ycoor + objectHeight / 2;
+  ctx.moveTo(xcoor, ycoor);
+  ctx.lineTo(xcoor, ycoor - 10);
+  ctx.moveTo(xcoor - 5, ycoor - 5);
+  ctx.lineTo(xcoor + 5, ycoor - 5);
+}
+//width of enzyme, substrate, product is objectWidth
+//width of + is 10
+function displayReaction(){
+  ctx.clearRect(0, 0, canvas1.width, canvas1.height);
+  console.log("DISPLAY REACTION CALLED");
+  console.log(checkedProdsEnzsSubs);
+  var currentX = 10;
+  var currentY = 10;
+  for(var a = 0; a < checkedProdsEnzsSubs.length; a++){
+    var currentObject = checkedProdsEnzsSubs[a];
+    if(currentObject < 9){
+      drawObject(a, "substrate", currentX, currentY);
+      if(checkedProdsEnzsSubs[a+1] < 9){
+        drawPlus(currentX, currentY);
+      }
+      currentX = currentX + 120;
+      console.log(currentObject);
+    }else if(currentObject < 17){
+      drawObject(a, "enzyme", currentX, currentY);
+      currentX = currentX + 120;
+      console.log(currentObject);
+    }else{
+      drawObject(a, "product", currentX, currentY);
+      if(checkedProdsEnzsSubs.length - 1 > a){
+        drawPlus(currentX, currentY);
+      }
+      currentX = currentX + 120;
+      console.log(currentObject);
+    }
+  }
 }
 
 window.onload = function init(){
@@ -44,11 +105,12 @@ window.onload = function init(){
   createBtn.addEventListener("click", function(event){
     console.log("button clicked");//show reaction
     console.log(checkedProdsEnzsSubs);
+    displayImage();
   });
 
   canvas1.addEventListener("click", function (event) {
       let mousePosition = getMousePosition(canvas1, event);
-      let rectNum = (Math.floor(mousePosition.x / 100) + Math.floor(mousePosition.y / 50) * 8) - 15;
+      let rectNum = (Math.floor(mousePosition.x / 100) + Math.floor(mousePosition.y / objectWidth) * 8) - 15;
       let rectClicked = document.getElementById("rectClicked");
       console.log("CLICK");
       //TODO: link to model page and remember rectangle number

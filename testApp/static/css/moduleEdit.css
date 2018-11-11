@@ -103,7 +103,7 @@ input.radio {
     font-size: 16px;
 }
 
-#enzymes, #products, #substrates, #imageCanvas{
+#enzymes, #products, #substrates{
   float:left;
   display: inline;
 }

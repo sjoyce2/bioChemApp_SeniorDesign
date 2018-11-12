@@ -37,9 +37,9 @@ function revStep(firstText, secondText, firstRectMidX, firstRectMidY, ctx) {
 }
 
 function main () {
-    var canvas = document.getElementById("myCanvas");
+    var canvas = document.getElementById("modelEditCanvas");
     var ctx = canvas.getContext("2d");
-    var firstRectMidX = 550;
+    var firstRectMidX = (canvas.clientWidth / 2) + 50;
 	var firstRectMidY = 75;
 	var firstText = "Glucose";
 	var secondText = "G6P";

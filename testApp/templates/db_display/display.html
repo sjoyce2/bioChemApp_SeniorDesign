@@ -3,23 +3,21 @@
 {% block body %}
 
 <script type ="text/javascript">
-        var x = false
-        var username = document.getElementById('username')
-        var pass = document.getElementById('pass')
-
-var output = false
-var var1 = "{{ user_name }}";
-if(var1==username.value){
-     output = true
-}
-
-console.log(output)
-console.log(var1)
-console.log(username.value)
+        var username = document.getElementById('username');
+        var pass = document.getElementById('pass');
+        pass.addEventListener("input", function() {
+                var output = false;
+                var var1 = "{{ user_name }}";
+                var pass1 = "{{ pass_word }}";
+                if(var1==username.value && pass1 == pass.value){
+                        output = true;
+                        console.log(output);
+                        console.log("Username: ", username.value, " = ", var1);
+                        console.log("Password: ", pass.value, " = ", pass1);
+                }
+        });
+        
 </script>
-
-<h2>{{ pass_word }}</h2>
-<h2>{{ name }}</h2>
 
 
 

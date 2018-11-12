@@ -7,6 +7,10 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from testApp.models import User
 
+def modelChoice(request):
+	context = {}
+	return render(request, 'modelChoice.html', context=context)
+
 def moduleEdit(request):
 	context = {
 	}

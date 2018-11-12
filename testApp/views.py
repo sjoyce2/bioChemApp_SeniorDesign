@@ -7,6 +7,16 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from testApp.models import User
 
+def moduleEdit(request):
+	context = {
+	}
+	return render(request, 'moduleEdit.html', context=context)
+
+def modelEdit(request):
+	context = {
+	}
+	return render(request, 'modelEdit.html', context=context)
+
 def index(request):
 	objects = User.objects.get(username='user1')
 	exists = False

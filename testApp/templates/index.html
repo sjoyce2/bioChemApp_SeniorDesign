@@ -33,10 +33,10 @@
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('{% static 'images/bg-01.jpg' %}');">
 			<div class="wrap-login100">
-				<a href="{% static 'moduleEdit.html' %}">Module Edit</a>
-				<a href="{% static 'modelEdit.html' %}">Model Edit</a>
+				<a href="{% url 'moduleEdit' %}">Module Edit</a>
 				<img src="{% static 'images/logo.png' %}" alt="biopath_logo goes here" class="wrap-biopath-logo">
 				
+				<a href="{% url 'modelEdit' %}">Model Edit</a>
 				<form class="login100-form">
 					
 					<div class="wrap-input100 validate-input" data-validate = "Enter username">

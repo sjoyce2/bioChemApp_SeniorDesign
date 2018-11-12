@@ -9,26 +9,17 @@ from testApp.models import User
 
 def index(request):
 	objects = User.objects.get(username='user1')
-	
-	context = {
-		'user_name': objects.username,
-		'pass_word': objects.password,
-		
-	}
-
-	return render(request, 'db_display/display.html', context=context)
-
-def usernamePresent(request):
 	exists = False
-
+	
 	if User.objects.filter(username=username).exists():
 		exists = True
 
 	context = {
+		'user_name': objects.username,
+		'pass_word': objects.password,
 		'userExists': exists,
-		'hebejebe': 12412412123,
 	}
-	
+
 	return render(request, 'db_display/display.html', context=context)
 
 	

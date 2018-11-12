@@ -9,7 +9,7 @@ from testApp.models import User
 
 
 def index(request):
-	objects = User.objects.get(username='user1')
+	objects = User.objects.GET(username='user1')
 	exists = False
 	user = request.get['username']
 	

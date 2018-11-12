@@ -33,6 +33,8 @@
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('{% static 'images/bg-01.jpg' %}');">
 			<div class="wrap-login100">
+				<a href="{% static 'moduleEdit.html' %}">Module Edit</a>
+				<a href="{% static 'modelEdit.html' %}">Model Edit</a>
 				<img src="{% static 'images/logo.png' %}" alt="biopath_logo goes here" class="wrap-biopath-logo">
 				
 				<form class="login100-form">
@@ -53,7 +55,8 @@
 							Remember me
 						</label>
 					</div>
-
+					{% block body %}
+					{% endblock %}
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn">
 							Login

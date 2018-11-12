@@ -4,8 +4,8 @@
 
 <script type ="text/javascript">
         var x = false
-        var username = document.getElementById('username').value
-        var pass = document.getElementById('pass').value
+        var username = document.getElementsByName('username').value
+        var pass = document.getElementsByName('pass').value
 
 var output = false
 var var1 = "{{ user_name }}";
@@ -13,8 +13,8 @@ if(var1==username){
      output = true
 }
 
-console.log(output);
-
+console.log(output)
+console.log("asdgfasdgwEG")
 </script>
 
 <h2>{{ pass_word }}</h2>

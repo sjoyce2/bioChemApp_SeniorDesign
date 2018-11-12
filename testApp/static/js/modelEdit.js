@@ -16,6 +16,7 @@ function main () {
             ctx.lineTo(i + 60, j + 25);
         }
     }*/
+    ctx.rect(50, 50, 100, 50);
     ctx.stroke();
     function getMousePosition(canvas, event) {
         let border = canvas.getBoundingClientRect();

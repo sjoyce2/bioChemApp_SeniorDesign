@@ -13,12 +13,12 @@ def index(request):
 	context = {
 		'user_name': objects.username,
 		'pass_word': objects.password,
-		'hebejebe': 12412412123,
+		
 	}
 
 	return render(request, 'db_display/display.html', context=context)
 
-def usernamePresent(username):
+def usernamePresent(request):
 	exists = False
 
 	if User.objects.filter(username=username).exists():
@@ -26,9 +26,9 @@ def usernamePresent(username):
 
 	context = {
 		'userExists': exists,
-		
+		'hebejebe': 12412412123,
 	}
 	
-	return render(username, 'db_display/display.html', context=context)
+	return render(request, 'db_display/display.html', context=context)
 
 	

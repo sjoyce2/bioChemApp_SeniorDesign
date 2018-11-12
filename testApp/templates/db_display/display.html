@@ -5,6 +5,7 @@
 <script type ="text/javascript">
         var username = document.getElementById('username');
         var pass = document.getElementById('pass');
+        var loginBtn = document.getElementById('login');
         pass.addEventListener("input", function() {
                 var output = false;
                 var var1 = "{{ user_name }}";
@@ -14,6 +15,19 @@
                         console.log(output);
                         console.log("Username: ", username.value, " = ", var1);
                         console.log("Password: ", pass.value, " = ", pass1);
+                }
+        });
+        
+        loginBtn.addEventListener("click",function(){
+                var output = false;
+                var var1 = "{{ user_name }}";
+                var pass1 = "{{pass_word}}";
+                if(var1==username.value && pass1 == pass.value){
+                        output = true;
+                        console.log(output);
+                        console.log("Username: ", username.value, " = ", var1);
+                        console.log("Password: ", pass.value, " = ", pass1);
+                        console.log("Login Success");
                 }
         });
         

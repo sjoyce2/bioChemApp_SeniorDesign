@@ -2,19 +2,23 @@
 
 {% block body %}
 
-<script>
+<script type ="text/javascript">
         var x = false
         var username = document.getElementById('username').value
         var pass = document.getElementById('pass').value
 
+var output = false
+var var1 = "{{ user_name }}";
+if(var1==username){
+     output = true
+}
+
+console.log(output)
+
 </script>
 
-<h3>{{ userExists }}</h3>
-
-<h2>{{ user_name }}</h2>
 <h2>{{ pass_word }}</h2>
 <h2>{{ name }}</h2>
-
 
 
 

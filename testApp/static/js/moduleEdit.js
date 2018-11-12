@@ -44,13 +44,14 @@ function getMousePosition(canvas1, event) {
     };
 }
 
-function displayImage(){
-  console.log("FUNCTION CALLED");
-  displayReaction();
+function displayImage(xcoor, ycoor, name){
+  var img = document.getElementById(name);
+  ctx.drawImage(img, xcoor, ycoor, objectWidth, objectHeight);
 }
 
 function drawObject(count, type, xcoor, ycoor, name){
   if(type === "substrate" || type === "product"){
+    displayImage(xcoor, ycoor, name);
     ctx.moveTo(xcoor,ycoor);
     ctx.lineTo(xcoor + objectWidth, ycoor);
     ctx.lineTo(xcoor + objectWidth, ycoor + objectHeight);
@@ -143,7 +144,7 @@ window.onload = function init(){
     ctx.beginPath();
     console.log("button clicked");//show reaction
     console.log(checkedProdsEnzsSubs);
-    displayImage();
+    displayReaction();
   });
 
   canvas1.addEventListener("click", function (event) {

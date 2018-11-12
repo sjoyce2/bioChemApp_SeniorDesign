@@ -45,6 +45,7 @@ function getMousePosition(canvas1, event) {
 }
 
 function displayImage(xcoor, ycoor, name){
+  console.log(name);
   var img = document.getElementById(name);
   ctx.drawImage(img, xcoor, ycoor, objectWidth, objectHeight);
 }

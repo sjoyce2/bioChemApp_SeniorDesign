@@ -1,23 +1,39 @@
 "use strict";
 
 var checkedProdsEnzsSubs = [];
+var checkedProdsEnzsSubsNames = [];
 var canvas1;
-var radios;
+var substrates;
+var enzymes;
+var products;
 var ctx;
 var image;
 var createBtn;
-var objectWidth = 100;
-var objectHeight = 100;
+var objectWidth = 125;
+var objectHeight = 125;
+var objectBuffer = 10;
 //check which radio buttons are clicked
 function onRadioChange(){
   checkedProdsEnzsSubs = [];
-  for(var i = 0; i < radios.length; i++){
-    if(radios[i].checked){
-      checkedProdsEnzsSubs.push(radios[i].value);
+  checkedProdsEnzsSubsNames = [];
+  for(var i = 0; i < substrates.length; i++){
+    if(substrates[i].checked){
+      checkedProdsEnzsSubs.push(substrates[i].name);
+      checkedProdsEnzsSubsNames.push(substrates[i].value);
     }
   }
-  console.log(radios.length);
-  console.log(checkedProdsEnzsSubs);
+  for(var j = 0; j < enzymes.length; j++){
+    if(enzymes[j].checked){
+      checkedProdsEnzsSubs.push(enzymes[j].name);
+      checkedProdsEnzsSubsNames.push(enzymes[j].value);
+    }
+  }
+  for(var k = 0; k < products.length; k++){
+    if(products[k].checked){
+      checkedProdsEnzsSubs.push(products[k].name);
+      checkedProdsEnzsSubsNames.push(products[k].value);
+    }
+  }
 }
 
 function getMousePosition(canvas1, event) {
@@ -33,8 +49,7 @@ function displayImage(){
   displayReaction();
 }
 
-
-function drawObject(count, type, xcoor, ycoor){
+function drawObject(count, type, xcoor, ycoor, name){
   if(type === "substrate" || type === "product"){
     ctx.moveTo(xcoor,ycoor);
     ctx.lineTo(xcoor + objectWidth, ycoor);
@@ -42,54 +57,73 @@ function drawObject(count, type, xcoor, ycoor){
     ctx.lineTo(xcoor, ycoor + objectHeight);
     ctx.lineTo(xcoor, ycoor);
     ctx.stroke();
+    ctx.font = "12px Arial";
+    ctx.fillText(name, xcoor, ycoor + objectHeight + objectBuffer);
   }else if (type === "enzyme"){
-    ycoor = ycoor + objectHeight / 2;
-    ctx.moveTo(xcoor, ycoor);
-    ctx.lineTo(xcoor + objectWidth, ycoor);
-    ctx.lineTo(xcoor + objectWidth - (objectWidth / 4), ycoor - (objectHeight / 4));
-    ctx.lineTo(xcoor + objectWidth - (objectWidth / 4), ycoor + (objectHeight / 4));
-    ctx.lineTo(xcoor + objectWidth, ycoor);
-    ctx.stroke();
+    ctx.font = "12px Arial";
+    ctx.fillText(name, xcoor, ycoor + objectHeight / 2 + objectBuffer);
   }else{
-
   }
 }
 
-function drawPlus(xcoor, ycoor){
-  xcoor = xcoor + objectWidth + 10;
+function drawArrow(xcoor, ycoor){
   ycoor = ycoor + objectHeight / 2;
   ctx.moveTo(xcoor, ycoor);
-  ctx.lineTo(xcoor, ycoor - 10);
+  ctx.lineTo(xcoor + objectWidth, ycoor);
+  ctx.lineTo(xcoor + objectWidth - (objectWidth / 4), ycoor - (objectHeight / 4));
+  ctx.lineTo(xcoor + objectWidth - (objectWidth / 4), ycoor + (objectHeight / 4));
+  ctx.lineTo(xcoor + objectWidth, ycoor);
+  ctx.stroke();
+}
+
+function drawPlus(xcoor, ycoor){
+  xcoor = xcoor + objectWidth + objectBuffer;
+  ycoor = ycoor + objectHeight / 2;
+  ctx.moveTo(xcoor, ycoor);
+  ctx.lineTo(xcoor, ycoor - objectBuffer);
   ctx.moveTo(xcoor - 5, ycoor - 5);
   ctx.lineTo(xcoor + 5, ycoor - 5);
+  ctx.stroke();
 }
-//width of enzyme, substrate, product is objectWidth
-//width of + is 10
+
 function displayReaction(){
-  ctx.clearRect(0, 0, canvas1.width, canvas1.height);
+  var name;
   console.log("DISPLAY REACTION CALLED");
   console.log(checkedProdsEnzsSubs);
-  var currentX = 10;
-  var currentY = 10;
+  var currentX = objectBuffer;
+  var currentY = objectBuffer;
   for(var a = 0; a < checkedProdsEnzsSubs.length; a++){
+    name = checkedProdsEnzsSubsNames[a];
+    if(a > 0 && a % 5 === 0){
+      currentX = objectBuffer;
+      currentY = currentY + objectHeight + objectBuffer * 2;
+    }
     var currentObject = checkedProdsEnzsSubs[a];
-    if(currentObject < 9){
-      drawObject(a, "substrate", currentX, currentY);
-      if(checkedProdsEnzsSubs[a+1] < 9){
-        drawPlus(currentX, currentY);
+    if(currentObject === "Substrate"){
+      drawObject(a, "substrate", currentX, currentY, name);
+      if(checkedProdsEnzsSubs.length - 1 > a){
+        if(checkedProdsEnzsSubs[a+1] === "Enzyme"){
+          currentX = currentX + objectWidth + objectBuffer * 2;
+          drawArrow(currentX, currentY);
+        }else{
+          drawPlus(currentX, currentY);
+          currentX = currentX + objectWidth + objectBuffer * 2;
+        }
       }
-      currentX = currentX + 120;
+    }else if(currentObject === "Enzyme"){
+      drawObject(a, "enzyme", currentX, currentY, name);
       console.log(currentObject);
-    }else if(currentObject < 17){
-      drawObject(a, "enzyme", currentX, currentY);
-      currentX = currentX + 120;
-      console.log(currentObject);
+      if(checkedProdsEnzsSubs.length - 1 > a){
+        if(checkedProdsEnzsSubs[a+1] === "Product"){
+          currentX = currentX + objectWidth + objectBuffer * 2;
+        }
+      }
     }else{
-      drawObject(a, "product", currentX, currentY);
+      drawObject(a, "product", currentX, currentY, name);
       if(checkedProdsEnzsSubs.length - 1 > a){
         drawPlus(currentX, currentY);
       }
-      currentX = currentX + 120;
+      currentX = currentX + objectWidth + objectBuffer * 2;
       console.log(currentObject);
     }
   }
@@ -97,12 +131,16 @@ function displayReaction(){
 
 window.onload = function init(){
   canvas1 = document.getElementById("imageCanvas");
-  radios  = document.getElementsByTagName('input');
+  substrates  = document.getElementsByName('Substrate');
+  enzymes = document.getElementsByName('Enzyme');
+  products = document.getElementsByName('Product');
   ctx  = canvas1.getContext("2d");
   image  = document.getElementById("step1");
   createBtn = document.getElementById("createReaction");
 
   createBtn.addEventListener("click", function(event){
+    ctx.clearRect(0, 0, canvas1.width, canvas1.height);
+    ctx.beginPath();
     console.log("button clicked");//show reaction
     console.log(checkedProdsEnzsSubs);
     displayImage();
@@ -113,313 +151,8 @@ window.onload = function init(){
       let rectNum = (Math.floor(mousePosition.x / 100) + Math.floor(mousePosition.y / objectWidth) * 8) - 15;
       let rectClicked = document.getElementById("rectClicked");
       console.log("CLICK");
-      //TODO: link to model page and remember rectangle number
   });
 }
-
 function main () {
-
-  // set1.forEach(function(elem){
-  //   elem.addEventListener("change", function(){
-  //     if(this.checked) {
-  //         console.log("CHECKED");
-  //     } else {
-  //         console.log("UNCHECKED");
-  //     }
-  //   });
-  //   console.log("running");
-  // });
-  // set2.forEach(function(elem){
-  // elem.addEventListener("change", function(){
-  //   if(this.checked) {
-  //       console.log("CHECKED");
-  //       //displayImage();
-  //   } else {
-  //       console.log("UNCHECKED");
-  //   }
-  // });
-  // console.log("running");
-  // });
-  // set3.forEach(function(elem){
-  //   elem.addEventListener("change", function(){
-  //     if(this.checked) {
-  //         console.log("CHECKED");
-  //         //displayImage();
-  //     } else {
-  //         console.log("UNCHECKED");
-  //     }
-  //   });
-  //   console.log("running");
-  // });
-
-    // sub1.addEventListener("change", function(){
-    //   if(this.checked) {
-    //       // Checkbox is checked..
-    //       //displayImage();
-    //       console.log("CHECKED");
-    //       checkedProdsEnzsSubs.push()
-    //   } else {
-    //       // Checkbox is not checked..
-    //       console.log("UNCHECKED");
-    //       ctx.clearRect(0,0, canvas1.width, canvas1.height);
-    //   }
-    // });
-    //
-    // sub2.addEventListener("change", function(){
-    //   if(this.checked) {
-    //       // Checkbox is checked..
-    //       displayImage();
-    //       console.log("CHECKED");
-    //   } else {
-    //       // Checkbox is not checked..
-    //       console.log("UNCHECKED");
-    //   }
-    // });
-    //
-    // sub3.addEventListener("change", function(){
-    //   if(this.checked) {
-    //       // Checkbox is checked..
-    //       displayImage();
-    //       console.log("CHECKED");
-    //   } else {
-    //       // Checkbox is not checked..
-    //       console.log("UNCHECKED");
-    //   }
-    // });
-    // sub4.addEventListener("change", function(){
-    //   if(this.checked) {
-    //       // Checkbox is checked..
-    //       displayImage();
-    //       console.log("CHECKED");
-    //   } else {
-    //       // Checkbox is not checked..
-    //       console.log("UNCHECKED");
-    //   }
-    // });
-    // sub5.addEventListener("change", function(){
-    //   if(this.checked) {
-    //       // Checkbox is checked..
-    //       displayImage();
-    //       console.log("CHECKED");
-    //   } else {
-    //       // Checkbox is not checked..
-    //       console.log("UNCHECKED");
-    //   }
-    // });
-    // sub6.addEventListener("change", function(){
-    //   if(this.checked) {
-    //       // Checkbox is checked..
-    //       displayImage();
-    //       console.log("CHECKED");
-    //   } else {
-    //       // Checkbox is not checked..
-    //       console.log("UNCHECKED");
-    //   }
-    // });
-    // sub7.addEventListener("change", function(){
-    //   if(this.checked) {
-    //       // Checkbox is checked..
-    //       displayImage();
-    //       console.log("CHECKED");
-    //   } else {
-    //       // Checkbox is not checked..
-    //       console.log("UNCHECKED");
-    //   }
-    // });
-    // sub8.addEventListener("change", function(){
-    //   if(this.checked) {
-    //       // Checkbox is checked..
-    //       displayImage();
-    //       console.log("CHECKED");
-    //   } else {
-    //       // Checkbox is not checked..
-    //       console.log("UNCHECKED");
-    //   }
-    // });
-    // prod1.addEventListener("change", function(){
-    //   if(this.checked) {
-    //       // Checkbox is checked..
-    //       displayImage();
-    //       console.log("CHECKED");
-    //   } else {
-    //       // Checkbox is not checked..
-    //       console.log("UNCHECKED");
-    //   }
-    // });
-    // prod2.addEventListener("change", function(){
-    //   if(this.checked) {
-    //       // Checkbox is checked..
-    //       displayImage();
-    //       console.log("CHECKED");
-    //   } else {
-    //       // Checkbox is not checked..
-    //       console.log("UNCHECKED");
-    //   }
-    // });
-    // prod3.addEventListener("change", function(){
-    //   if(this.checked) {
-    //       // Checkbox is checked..
-    //       displayImage();
-    //       console.log("CHECKED");
-    //   } else {
-    //       // Checkbox is not checked..
-    //       console.log("UNCHECKED");
-    //   }
-    // });
-    // prod4.addEventListener("change", function(){
-    //   if(this.checked) {
-    //       // Checkbox is checked..
-    //       displayImage();
-    //       console.log("CHECKED");
-    //   } else {
-    //       // Checkbox is not checked..
-    //       console.log("UNCHECKED");
-    //   }
-    // });
-    // prod5.addEventListener("change", function(){
-    //   if(this.checked) {
-    //       // Checkbox is checked..
-    //       displayImage();
-    //       console.log("CHECKED");
-    //   } else {
-    //       // Checkbox is not checked..
-    //       console.log("UNCHECKED");
-    //   }
-    // });
-    // prod6.addEventListener("change", function(){
-    //   if(this.checked) {
-    //       // Checkbox is checked..
-    //       displayImage();
-    //       console.log("CHECKED");
-    //   } else {
-    //       // Checkbox is not checked..
-    //       console.log("UNCHECKED");
-    //   }
-    // });
-    // prod7.addEventListener("change", function(){
-    //   if(this.checked) {
-    //       // Checkbox is checked..
-    //       displayImage();
-    //       console.log("CHECKED");
-    //   } else {
-    //       // Checkbox is not checked..
-    //       console.log("UNCHECKED");
-    //   }
-    // });
-    // prod8.addEventListener("change", function(){
-    //   if(this.checked) {
-    //       // Checkbox is checked..
-    //       displayImage();
-    //       console.log("CHECKED");
-    //   } else {
-    //       // Checkbox is not checked..
-    //       console.log("UNCHECKED");
-    //   }
-    // });
-    // enz1.addEventListener("change", function(){
-    //   if(this.checked) {
-    //       // Checkbox is checked..
-    //       displayImage();
-    //       console.log("CHECKED");
-    //   } else {
-    //       // Checkbox is not checked..
-    //       console.log("UNCHECKED");
-    //   }
-    // });
-    // enz2.addEventListener("change", function(){
-    //   if(this.checked) {
-    //       // Checkbox is checked..
-    //       displayImage();
-    //       console.log("CHECKED");
-    //   } else {
-    //       // Checkbox is not checked..
-    //       console.log("UNCHECKED");
-    //   }
-    // });
-    // enz3.addEventListener("change", function(){
-    //   if(this.checked) {
-    //       // Checkbox is checked..
-    //       displayImage();
-    //       console.log("CHECKED");
-    //   } else {
-    //       // Checkbox is not checked..
-    //       console.log("UNCHECKED");
-    //   }
-    // });
-    // enz4.addEventListener("change", function(){
-    //   if(this.checked) {
-    //       // Checkbox is checked..
-    //       displayImage();
-    //       console.log("CHECKED");
-    //   } else {
-    //       // Checkbox is not checked..
-    //       console.log("UNCHECKED");
-    //   }
-    // });
-    // enz5.addEventListener("change", function(){
-    //   if(this.checked) {
-    //       // Checkbox is checked..
-    //       displayImage();
-    //       console.log("CHECKED");
-    //   } else {
-    //       // Checkbox is not checked..
-    //       console.log("UNCHECKED");
-    //   }
-    // });
-    // enz6.addEventListener("change", function(){
-    //   if(this.checked) {
-    //       // Checkbox is checked..
-    //       displayImage();
-    //       console.log("CHECKED");
-    //   } else {
-    //       // Checkbox is not checked..
-    //       console.log("UNCHECKED");
-    //   }
-    // });
-    // enz7.addEventListener("change", function(){
-    //   if(this.checked) {
-    //       // Checkbox is checked..
-    //       displayImage();
-    //       console.log("CHECKED");
-    //   } else {
-    //       // Checkbox is not checked..
-    //       console.log("UNCHECKED");
-    //   }
-    // });
-    // enz8.addEventListener("change", function(){
-    //   if(this.checked) {
-    //       // Checkbox is checked..
-    //       displayImage();
-    //       console.log("CHECKED");
-    //   } else {
-    //       // Checkbox is not checked..
-    //       console.log("UNCHECKED");
-    //   }
-    // });
-    // var sub1 = document.querySelector("input[name=sub1]");
-    // var sub2 = document.querySelector("input[name=sub2]");
-    // var sub3 = document.querySelector("input[name=sub3]");
-    // var sub4 = document.querySelector("input[name=sub4]");
-    // var sub5 = document.querySelector("input[name=sub5]");
-    // var sub6 = document.querySelector("input[name=sub6]");
-    // var sub7 = document.querySelector("input[name=sub7]");
-    // var sub8 = document.querySelector("input[name=sub8]");
-    // var prod1 = document.querySelector("input[name=prod1]");
-    // var prod2 = document.querySelector("input[name=prod2]");
-    // var prod3 = document.querySelector("input[name=prod3]");
-    // var prod4 = document.querySelector("input[name=prod4]");
-    // var prod5 = document.querySelector("input[name=prod5]");
-    // var prod6 = document.querySelector("input[name=prod6]");
-    // var prod7 = document.querySelector("input[name=prod7]");
-    // var prod8 = document.querySelector("input[name=prod8]");
-    // var enz1 = document.querySelector("input[name=enz1]");
-    // var enz2 = document.querySelector("input[name=enz2]");
-    // var enz3 = document.querySelector("input[name=enz3]");
-    // var enz4 = document.querySelector("input[name=enz4]");
-    // var enz5 = document.querySelector("input[name=enz5]");
-    // var enz6 = document.querySelector("input[name=enz6]");
-    // var enz7 = document.querySelector("input[name=enz7]");
-    // var enz8 = document.querySelector("input[name=enz8]");
-
 }
 main()

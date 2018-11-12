@@ -4,18 +4,18 @@
 
 <script type ="text/javascript">
         var x = false
-        var username = document.getElementsByName('username')
-        var pass = document.getElementsByName('pass')
+        var username = document.getElementById('username')
+        var pass = document.getElementById('pass')
 
 var output = false
 var var1 = "{{ user_name }}";
-if(var1==username){
+if(var1==username.value){
      output = true
 }
 
 console.log(output)
 console.log(var1)
-console.log(username)
+console.log(username.value)
 </script>
 
 <h2>{{ pass_word }}</h2>

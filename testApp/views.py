@@ -11,8 +11,8 @@ def index(request):
 	objects = User.objects.get(username='user1')
 	exists = False
 	
-	if User.objects.filter(username=user).exists():
-		exists = True
+	#if User.objects.filter(username=user1).exists():
+	#	exists = True
 
 	context = {
 		'user_name': objects.username,

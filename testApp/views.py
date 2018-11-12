@@ -16,3 +16,15 @@ def index(request):
 	}
 
 	return render(request, 'db_display/display.html', context=context)
+
+def usernamePresent(username):
+	exists = False
+
+	if User.objects.filter(username=username).exists():
+		exists = True
+
+	context = {
+		'userExists': exists,
+	}
+	
+	return render(username, 'db_display/display.html', context=context)

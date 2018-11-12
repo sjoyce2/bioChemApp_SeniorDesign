@@ -13,6 +13,7 @@ def index(request):
 	context = {
 		'user_name': objects.username,
 		'pass_word': objects.password,
+		
 	}
 
 	return render(request, 'db_display/display.html', context=context)
@@ -25,6 +26,9 @@ def usernamePresent(username):
 
 	context = {
 		'userExists': exists,
+		'hebejebe': 12412412123,
 	}
 	
 	return render(username, 'db_display/display.html', context=context)
+
+	

@@ -158,3 +158,6 @@ window.onload = function init(){
 function main () {
 }
 main()
+
+module.exports = {};
+module.exports.getMousePosition = getMousePosition;

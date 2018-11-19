@@ -9,7 +9,6 @@ from testApp.models import User
 from django.contrib.auth import authenticate
 
 
-
 def modelChoice(request):
 	context = {}
 	return render(request, 'modelChoice.html', context=context)
@@ -29,7 +28,19 @@ def register(request):
 	}
 	return render(request, 'register.html', context=context)
 
-def index(request):
+def login(request):
+	context = {
+
+	}
+	return render(request, 'accounts/login.html', context=context)
+
+def signup(request):
+	context = {
+
+	}
+	return render(request, 'accounts/signup.html', context=context)
+
+def display(request):
 	objects = User.objects.get(username='user1')
 	exists = False
 
@@ -42,6 +53,6 @@ def index(request):
 		'userExists': exists,
 	}
 
-	return render(request, 'db_display/display.html', context=context)
+	return render(request, 'accounts/display.html', context=context)
 
 	

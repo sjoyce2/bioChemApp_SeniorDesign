@@ -207,7 +207,8 @@ iframe {
 /*------------------------------------------------------------------
 [ Form ]*/
 .text-center-forgot-password{
-  margin: -50%;
+  position: relative;
+  margin: -25px;
   padding: 10px;
   text-align: center;
 }

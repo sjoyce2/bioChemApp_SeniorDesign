@@ -16,7 +16,10 @@ var submitWeightBtn; //var corresponding to button to enter weight set in text w
 var weightSlider; //var corresponding to weight slider
 var objectWidth = 125; //width of boxes for substrates and products and arrows
 var objectHeight = 125; //height of boxes for substrates and products
-var objectBuffer = 10; //buffer size between each substrate, product and enzyme in canvas
+var horizontalBuffer = 20; //buffer size between each substrate, product and enzyme in canvas
+var verticalBuffer = 10;
+var countProducts;
+var countSubstrates;
 
 //function to change the text box to the value set by slider
 function updateTextInput(val) {
@@ -31,12 +34,16 @@ function onRadioReverseChange(){
   }
   console.log(isReversible);
 }
+
 //check which radio buttons and checkboxes are clicked for products, enzymes and substrates
+//push name of product, substrate, enzyme to checkedProdsEnzsSubsNames
+//push type to checkedProdsEnzsSubs
 function onRadioChange(){
   checkedProdsEnzsSubs = [];
   checkedProdsEnzsSubsNames = [];
   for(var i = 0; i < substrates.length; i++){
     if(substrates[i].checked){
+      countSubstrates++;
       checkedProdsEnzsSubs.push(substrates[i].name);
       checkedProdsEnzsSubsNames.push(substrates[i].value);
     }
@@ -49,19 +56,20 @@ function onRadioChange(){
   }
   for(var k = 0; k < products.length; k++){
     if(products[k].checked){
+      countProducts++;
       checkedProdsEnzsSubs.push(products[k].name);
       checkedProdsEnzsSubsNames.push(products[k].value);
     }
   }
 }
 //not used as of right now
-function getMousePosition(canvas1, event) {
-    let border = canvas1.getBoundingClientRect();
-    return {
-        x: event.clientX - border.left,
-        y: event.clientY - border.top
-    };
-}
+// function getMousePosition(canvas1, event) {
+//     let border = canvas1.getBoundingClientRect();
+//     return {
+//         x: event.clientX - border.left,
+//         y: event.clientY - border.top
+//     };
+// }
 //display image corresponding to substrates and products chosen
 function displayImage(xcoor, ycoor, name){
   console.log(name);
@@ -72,22 +80,28 @@ function displayImage(xcoor, ycoor, name){
 function drawObject(count, type, xcoor, ycoor, name){
   if(type === "substrate" || type === "product"){
     displayImage(xcoor, ycoor, name);
+    //draw box around image
     ctx.moveTo(xcoor,ycoor);
     ctx.lineTo(xcoor + objectWidth, ycoor);
     ctx.lineTo(xcoor + objectWidth, ycoor + objectHeight);
     ctx.lineTo(xcoor, ycoor + objectHeight);
     ctx.lineTo(xcoor, ycoor);
     ctx.stroke();
+
     ycoor = ycoor + objectHeight / 25; //add a small buffer so that text below image does not overlap with square
     ctx.font = "12px Arial";
-    ctx.fillText(name, xcoor, ycoor + objectHeight + objectBuffer);
+    //draw text below box containing substrate or product
+    ctx.fillText(name, xcoor, ycoor + objectHeight + verticalBuffer);
+
   }else if (type === "enzyme"){
     ctx.font = "12px Arial";
     ycoor = ycoor + objectHeight / 25;
-    ctx.fillText(name, xcoor , ycoor + objectBuffer);
+    // ctx.fillText(name, xcoor , ycoor + objectBuffer); //This is for version without downwards arrow
+    ctx.fillText(name, xcoor , ycoor + (objectHeight / 2));//This is for version with downwards arrow
   }else{
   }
 }
+//draw dotted line across screen
 // function drawLine(xcoor, ycoor){
 //   ctx.moveTo(objectBuffer, ycoor + objectHeight + objectBuffer * 2);
 //   ctx.setLineDash([objectBuffer, objectBuffer/2]);
@@ -96,7 +110,32 @@ function drawObject(count, type, xcoor, ycoor, name){
 //   ctx.beginPath();
 //   ctx.setLineDash([]);
 // }
-//draw arrow for reaction, reversible or irreversible
+
+//draw downwards arrow in center of current row
+function drawDownArrow(xcoor, ycoor){
+  if(isReversible){
+    //xcoor = canvas1.width / 2;
+    ctx.moveTo(xcoor, ycoor);
+    ctx.lineTo(xcoor + (objectWidth / 4), ycoor + (objectHeight / 4));
+    ctx.lineTo(xcoor - (objectWidth / 4), ycoor + (objectHeight / 4));
+    ctx.lineTo(xcoor, ycoor);
+    ctx.lineTo(xcoor, ycoor + objectHeight);
+    ctx.lineTo(xcoor + (objectWidth / 4), ycoor + objectHeight - (objectHeight / 4));
+    ctx.lineTo(xcoor - (objectWidth / 4), ycoor + objectHeight - (objectHeight / 4));
+    ctx.lineTo(xcoor, ycoor + objectHeight);
+    ctx.stroke();
+  }else{
+    //xcoor = canvas1.width / 2;
+    ctx.moveTo(xcoor, ycoor);
+    ctx.lineTo(xcoor, ycoor + objectHeight);
+    ctx.lineTo(xcoor + (objectWidth / 4), ycoor + objectHeight - (objectHeight / 4));
+    ctx.lineTo(xcoor - (objectWidth / 4), ycoor + objectHeight - (objectHeight / 4));
+    ctx.lineTo(xcoor, ycoor + objectHeight);
+    ctx.stroke();
+  }
+}
+
+//draw regular arrow for reaction, reversible or irreversible
 function drawArrow(xcoor, ycoor){
   if(isReversible){
     ycoor = ycoor + objectHeight / 2;
@@ -121,12 +160,12 @@ function drawArrow(xcoor, ycoor){
 }
 //draw plus sign between each substrate and product
 function drawPlus(xcoor, ycoor){
-  xcoor = xcoor + objectWidth + objectBuffer;
+  xcoor = xcoor + objectWidth + horizontalBuffer;
   ycoor = ycoor + objectHeight / 2;
   ctx.moveTo(xcoor, ycoor);
-  ctx.lineTo(xcoor, ycoor - objectBuffer);
-  ctx.moveTo(xcoor - 5, ycoor - 5);
-  ctx.lineTo(xcoor + 5, ycoor - 5);
+  ctx.lineTo(xcoor, ycoor - horizontalBuffer);
+  ctx.moveTo(xcoor - horizontalBuffer / 2, ycoor - horizontalBuffer / 2);
+  ctx.lineTo(xcoor + horizontalBuffer / 2, ycoor - horizontalBuffer / 2);
   ctx.stroke();
 }
 //called when create button is clicked
@@ -135,18 +174,19 @@ function displayReaction(){
   var objectInRowCounter = 0;
   // console.log("DISPLAY REACTION CALLED");
   // console.log(checkedProdsEnzsSubs);
-  var currentX = objectBuffer;
-  var currentY = objectBuffer;
+  var currentX = horizontalBuffer;
+  var currentY = verticalBuffer;
   //iterate through checkedProdsEnzsSubs array
   for(var a = 0; a < checkedProdsEnzsSubs.length; a++){
     name = checkedProdsEnzsSubsNames[a];
-    //reset currentX and currentY if over 4 products and substrates are being displayed
+    //reset currentX and currentY if over 4 products and/or substrates are being displayed
     //so that everything is visible inside canvas border
     if(objectInRowCounter > 0 && objectInRowCounter % 5 === 0){
-      currentX = objectBuffer;
-      currentY = currentY + objectHeight + objectBuffer * 2;
-      objectInRowCounter = 0;
+      currentX = horizontalBuffer;
+      currentY = currentY + objectHeight + verticalBuffer * 2;
+      objectInRowCounter = 0;//reset counter
     }
+
     var currentObject = checkedProdsEnzsSubs[a];
     //check if currentObject is a Substrate
     if(currentObject === "Substrate"){
@@ -155,18 +195,23 @@ function displayReaction(){
         //if next object is an enzyme draw arrow
         if(checkedProdsEnzsSubs[a+1] === "Enzyme"){
           console.log(objectInRowCounter + "OBJECT IN ROW ");
-          if(objectInRowCounter > 0 && (objectInRowCounter+1) % 5 === 0){
-            currentX = objectBuffer;
-            currentY = currentY + objectHeight + objectBuffer * 2;
+          // if(objectInRowCounter > 0 && (objectInRowCounter+1) % 5 === 0){//for version without downwards arrow
+          if(objectInRowCounter > 0 && (objectInRowCounter) % 5 === 0){//for version with downwards arrow
+            currentX = horizontalBuffer;
+            currentY = currentY + objectHeight + verticalBuffer * 2;
             objectInRowCounter = 0;
           }else{
-            currentX = currentX + objectWidth + objectBuffer * 2;
+            currentX = currentX + objectWidth + horizontalBuffer * 2;
           }
-          drawArrow(currentX, currentY);
+          //drawArrow(currentX, currentY);//for version without downwards arrow
+          currentY = currentY + objectHeight + verticalBuffer * 2; //for version with downwards arrow
+          currentX = canvas1.width / 2; //for version with downwards arrow
+          drawDownArrow(currentX, currentY); //for version with downwards arrow
+          objectInRowCounter = 0;//for version with downwards arrow
         //if next object is not an enzyme draw plus
         }else{
           drawPlus(currentX, currentY);
-          currentX = currentX + objectWidth + objectBuffer * 2;
+          currentX = currentX + objectWidth + horizontalBuffer* 2;
         }
       }
     }else if(currentObject === "Enzyme"){
@@ -176,10 +221,10 @@ function displayReaction(){
         //if next object is a product set currentX
         if(checkedProdsEnzsSubs[a+1] === "Product"){
           // drawLine(currentX, currentY);
-          currentX = currentX + objectWidth + objectBuffer;
-          //currentX = objectBuffer;
-          //currentY = currentY + objectHeight + objectBuffer * 2;
-          //objectInRowCounter = 0;
+          //currentX = currentX + objectWidth + objectBuffer;
+          currentX = horizontalBuffer;//for version with downwards arrow
+          currentY = currentY + objectHeight + verticalBuffer * 2; //for version with downwards arrow
+          objectInRowCounter = 0; //for version with downwards arrow
         }
       }
     }else{
@@ -188,7 +233,7 @@ function displayReaction(){
       if(checkedProdsEnzsSubs.length - 1 > a){
         drawPlus(currentX, currentY);
       }
-      currentX = currentX + objectWidth + objectBuffer * 2;
+      currentX = currentX + objectWidth + horizontalBuffer * 2;
       console.log(currentObject);
     }
     objectInRowCounter++;
@@ -244,5 +289,5 @@ function main () {
 }
 main()
 
-module.exports = {};
-module.exports.getMousePosition = getMousePosition;
+// module.exports = {};
+// module.exports.getMousePosition = getMousePosition;

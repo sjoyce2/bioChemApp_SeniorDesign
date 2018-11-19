@@ -103,6 +103,34 @@ input.radio {
     font-size: 16px;
 }
 
+.weight {
+  background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 1% 0.5%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.weightValue {
+  border: none;
+  color: black;
+  width: 25%;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.enterWeight {
+  border: 1px solid white;
+  background-color: inherit;
+  color: white;
+  width: 15%;
+  text-decoration: none;
+  font-size: 16px;
+}
+
 #enzymes, #products, #substrates{
   float:left;
   display: inline;

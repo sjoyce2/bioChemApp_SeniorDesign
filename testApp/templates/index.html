@@ -61,9 +61,8 @@
 					{% endblock %}
 					
 					<div class="text-center-forgot-password" >
-						<a class="txt1" href="{% url 'register' %}">
-								Don't have an account? Click Here
-					</a>
+							{% block signup %}
+							{% endblock %}
 
 						<a class="txt1" href="#">
 							Forgot Password?

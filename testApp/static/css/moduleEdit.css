@@ -54,93 +54,140 @@ button {
     background: linear-gradient(top, #19384A, #347787);
     align-content:center;
 }
-
-ul#substrates{
-  height: 200px; /* or any value */
-    overflow-y: auto;
-    width: 200px;
-    border-radius: 10px;
-    display: block;
+#subsContainer, #prodsContainer, #enzsContainer{
+  width: 30%;
+  height: 15%;
+  border-radius: 5%;
+  display: inline-block;
+}
+#prodsLabel, #enzsLabel, #subsLabel{
+  display: inline-block;
+  font-size: 18px;
+  color: white;
 }
 ul#products{
-  height: 200px; /* or any value */
     overflow-y: auto;
-    width: 200px;
-    border-radius: 10px;
-    display: block;
+    color: white;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
 }
 ul#enzymes{
-  height: 200px; /* or any value */
     overflow-y: auto;
-    width: 200px;
-    border-radius: 10px;
-    display: block;
+    color: white;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
 }
 
-label {
+ul#substrates{
+    overflow-y: auto;
+    color: white;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+#substrates, #products, #enzymes{
+  float: left;
+  display: inline-block;
+}
+
+.container {
   float: left;
   clear: none;
   display: block;
-  padding: 2px 1em 0 0;
+  padding: 2% 1% 0 0;
 }
 
-input[type=radio],
-input.radio {
-  float: left;
-  clear: none;
-  margin: 2px 0 0 2px;
-  display: block;
+.reversibleChoice {
+    background-color: #4CAF50;
+    border: 1px solid white;
+    color: white;
+    width: 18%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    padding: 2% 2% 2% 2%;
+    margin-left: 2%;
+}
+
+#weightSlider {
+  color: white;
+  width: 40%;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  padding: 0 0 0 0;
 }
 
 .createReaction {
+  border: 1px solid white;
   background-color: #4CAF50; /* Green */
-    border: none;
     color: white;
-    padding: 15px 32px;
+    padding: 2% 2% 2% 2%;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    margin-right: 2%;
 }
 
+.createReaction, .weight{
+  float: left;
+  display: inline-block;
+}
+
+
 .weight {
+  border: 1px solid white;
   background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 1% 0.5%;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
+  color: white;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.weightLabel{
+  width: 20%;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  padding: 0 0 0 0;
 }
 
 .weightValue {
   border: none;
   color: black;
-  width: 25%;
+  width: 10%;
+  text-align: center;
   text-decoration: none;
   font-size: 16px;
+  padding: 0 0 0 0;
 }
 
 .enterWeight {
   border: 1px solid white;
-  background-color: inherit;
   color: white;
-  width: 15%;
+  width: 20%;
+  text-align: center;
   text-decoration: none;
   font-size: 16px;
-}
-
-#enzymes, #products, #substrates{
-  float:left;
-  display: inline;
+  padding: 0 0 0 0;
 }
 
 .editToolbar {
     display: flex;
     flex-direction: row;
     justify-content:space-between;
-    padding: 0px 10px;
+    padding: 0% 5%;
 }
 
 .innerToolbar {
@@ -152,11 +199,11 @@ input.radio {
 /*Change color of choices in tool bar*/
 .editToolbarButton {
     color: white;
-    padding: 10px;
+    padding: 5%;
 }
 
 /*Add white section above the rectangles */
 #imageCanvas {
     background-color: white;
-    border-radius: 10px;
+    border-radius: 5%;
 }

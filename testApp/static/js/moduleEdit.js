@@ -84,10 +84,18 @@ function drawObject(count, type, xcoor, ycoor, name){
   }else if (type === "enzyme"){
     ctx.font = "12px Arial";
     ycoor = ycoor + objectHeight / 25;
-    ctx.fillText(name, xcoor + (objectWidth / 4) + objectBuffer / 2, ycoor + objectHeight / 2 + objectBuffer);
+    ctx.fillText(name, xcoor , ycoor + objectBuffer);
   }else{
   }
 }
+// function drawLine(xcoor, ycoor){
+//   ctx.moveTo(objectBuffer, ycoor + objectHeight + objectBuffer * 2);
+//   ctx.setLineDash([objectBuffer, objectBuffer/2]);
+//   ctx.lineTo(canvas1.width - objectBuffer, ycoor + objectHeight + objectBuffer * 2);
+//   ctx.stroke();
+//   ctx.beginPath();
+//   ctx.setLineDash([]);
+// }
 //draw arrow for reaction, reversible or irreversible
 function drawArrow(xcoor, ycoor){
   if(isReversible){
@@ -124,6 +132,7 @@ function drawPlus(xcoor, ycoor){
 //called when create button is clicked
 function displayReaction(){
   var name;
+  var objectInRowCounter = 0;
   // console.log("DISPLAY REACTION CALLED");
   // console.log(checkedProdsEnzsSubs);
   var currentX = objectBuffer;
@@ -133,9 +142,10 @@ function displayReaction(){
     name = checkedProdsEnzsSubsNames[a];
     //reset currentX and currentY if over 4 products and substrates are being displayed
     //so that everything is visible inside canvas border
-    if(a > 0 && a % 5 === 0){
+    if(objectInRowCounter > 0 && objectInRowCounter % 5 === 0){
       currentX = objectBuffer;
       currentY = currentY + objectHeight + objectBuffer * 2;
+      objectInRowCounter = 0;
     }
     var currentObject = checkedProdsEnzsSubs[a];
     //check if currentObject is a Substrate
@@ -144,7 +154,14 @@ function displayReaction(){
       if(checkedProdsEnzsSubs.length - 1 > a){
         //if next object is an enzyme draw arrow
         if(checkedProdsEnzsSubs[a+1] === "Enzyme"){
-          currentX = currentX + objectWidth + objectBuffer * 2;
+          console.log(objectInRowCounter + "OBJECT IN ROW ");
+          if(objectInRowCounter > 0 && (objectInRowCounter+1) % 5 === 0){
+            currentX = objectBuffer;
+            currentY = currentY + objectHeight + objectBuffer * 2;
+            objectInRowCounter = 0;
+          }else{
+            currentX = currentX + objectWidth + objectBuffer * 2;
+          }
           drawArrow(currentX, currentY);
         //if next object is not an enzyme draw plus
         }else{
@@ -158,7 +175,11 @@ function displayReaction(){
       if(checkedProdsEnzsSubs.length - 1 > a){
         //if next object is a product set currentX
         if(checkedProdsEnzsSubs[a+1] === "Product"){
-          currentX = currentX + objectWidth + objectBuffer * 2;
+          // drawLine(currentX, currentY);
+          currentX = currentX + objectWidth + objectBuffer;
+          //currentX = objectBuffer;
+          //currentY = currentY + objectHeight + objectBuffer * 2;
+          //objectInRowCounter = 0;
         }
       }
     }else{
@@ -170,6 +191,7 @@ function displayReaction(){
       currentX = currentX + objectWidth + objectBuffer * 2;
       console.log(currentObject);
     }
+    objectInRowCounter++;
   }
 }
 

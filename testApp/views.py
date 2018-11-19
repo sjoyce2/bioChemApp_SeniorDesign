@@ -21,10 +21,15 @@ def modelEdit(request):
 	}
 	return render(request, 'modelEdit.html', context=context)
 
+def modelEdit(request):
+	context = {
+	}
+	return render(request, 'register.html', context=context)
+
 def index(request):
 	objects = User.objects.get(username='user1')
 	exists = False
-	
+
 	#if User.objects.filter(username=user1).exists():
 	#	exists = True
 

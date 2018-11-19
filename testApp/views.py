@@ -8,6 +8,8 @@ from django.http import HttpResponse
 from testApp.models import User
 from django.contrib.auth import authenticate
 
+
+
 def modelChoice(request):
 	context = {}
 	return render(request, 'modelChoice.html', context=context)
@@ -40,6 +42,6 @@ def index(request):
 		'userExists': exists,
 	}
 
-	return render(request, 'db_display/display.html', context=context)
+	return render(request, 'db_display/login.html', context=context)
 
 	

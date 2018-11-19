@@ -143,6 +143,7 @@ iframe {
 [ Utility ]*/
 .txt1 {
   font-family: Poppins-Regular;
+  margin: -10px;
   font-size: 13px;
   color: #e5e5e5;
   line-height: 1.5;
@@ -207,7 +208,8 @@ iframe {
 /*------------------------------------------------------------------
 [ Form ]*/
 .text-center-forgot-password{
-  text-align: start;
+  position: relative;
+  margin: -25px;
 }
 
 

@@ -6,7 +6,7 @@ from testApp import views
 from django.contrib.auth.views import LoginView
 
 urlpatterns = [
-	url(r'^display/$', LoginView, {'template_name': 'accounts/display.html'}),
+	url(r'^login/$', LoginView, {'template_name': 'accounts/display.html'}),
 	path('', views.display, name= 'display'),
 	path('moduleEdit', views.moduleEdit, name='moduleEdit'),
 	path('modelEdit', views.modelEdit, name='modelEdit'),

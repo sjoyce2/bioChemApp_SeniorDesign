@@ -21,7 +21,7 @@ def modelEdit(request):
 	}
 	return render(request, 'modelEdit.html', context=context)
 
-def modelEdit(request):
+def register(request):
 	context = {
 	}
 	return render(request, 'register.html', context=context)

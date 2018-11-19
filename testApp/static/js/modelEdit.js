@@ -1,3 +1,11 @@
+var x;
+var y;
+var firstRectMidX;
+var firstRectMidY;
+var endY;
+var direction = 1;
+var stepOrder = []; //array of steps, "n" for non-reversible, "r" for reversible
+
 function notRevStep(substrate, product, enzyme, 
     firstRectMidX, firstRectMidY, ctx) {
 	//create starting protein
@@ -46,8 +54,8 @@ function notRevStep(substrate, product, enzyme,
     ctx.font = "20px Arial";
     ctx.fillText(substrate, firstRectMidX - 90, firstRectMidY + 5);
     ctx.fillText(product, firstRectMidX - 90, firstRectMidY + 105);
-    ctx.font = "10px Arial"
-    ctx.fillText(enzyme, firstRectMidX + )
+    ctx.font = "12px Arial";
+    ctx.fillText(enzyme, firstRectMidX + 20, firstRectMidY + 54)
     ctx.fillText("ATP", firstRectMidX + 110, firstRectMidY + 5);
     ctx.fillText("ADP", firstRectMidX + 110, firstRectMidY + 105);
 }
@@ -67,52 +75,84 @@ function revStep(firstText, secondText, firstRectMidX, firstRectMidY, ctx) {
     ctx.stroke();
 }
 
-function main () {
+function getDotPos(y) {
+    var arrayPos = Math.floor((y - firstRectMidY) / 100);
+    console.log(stepOrder[arrayPos]);
+    if (stepOrder[arrayPos] === "n") {
+        var x = firstRectMidX + Math.sqrt(-1 * Math.pow((y - firstRectMidY) - 50, 2) + 2500);
+    } else {
+        x = firstRectMidX - 50;
+    }
+    return x;
+}
+
+//startX, startY, endX, endY all floats
+//stepOrder: array of strings, direction is 1 or -1
+function animate() {
+    if (y === firstRectMidY + 0.0) {
+        direction = 1;
+    } else if (y === endY && endY >= 0) {
+        direction = -1;
+    }
+    y += 0.5 * direction;
+    x = getDotPos(y - firstRectMidY);
+    console.log(x, y);
+    render();
+    window.requestAnimationFrame(animate);
+}
+
+function render() {
     var canvas = document.getElementById("modelEditCanvas");
     var ctx = canvas.getContext("2d");
-    var firstRectMidX = (canvas.clientWidth / 2) + 50;
-	var firstRectMidY = 75;
+    ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+    firstRectMidX = (canvas.clientWidth / 2) + 50;
+    firstRectMidY = 75;
 	var firstText = "Glucose";
 	var secondText = "G6P";
     var thirdText = "F6P";
     var fourthText = "F16BP";
     var fifthText = "GAP";
-    /*for (let i = 0; i < canvas.clientWidth; i += 100) {
-        for (let j = 100; j < canvas.clientHeight; j += 50) {
-            let grd = ctx.createRadialGradient(i+50, j+25, 20, i+50, j+25, 100);
-            grd.addColorStop(0, "lightgray");
-            grd.addColorStop(1, "white");
-            ctx.fillStyle = grd;
-            ctx.fillRect(i, j, 100, 50);
-            ctx.rect(i, j, 100, 50);
-            ctx.moveTo(i + 50, j + 15);
-            ctx.lineTo(i + 50, j + 35);
-            ctx.moveTo(i + 40, j + 25);
-            ctx.lineTo(i + 60, j + 25);
-        }
-    }
-    ctx.rect(50, 50, 100, 50);
-    
-    ctx.stroke();*/
-    notRevStep(firstText, secondText, firstRectMidX, firstRectMidY, ctx);
-    revStep(secondText, thirdText, firstRectMidX, firstRectMidY + 100, ctx);
-    notRevStep(thirdText, fourthText, firstRectMidX, firstRectMidY + 200, ctx);
-    revStep(fourthText, fifthText, firstRectMidX, firstRectMidY + 300, ctx);
-    function getMousePosition(canvas, event) {
+    var enzyme1 = "hexokinase";
+    var enzyme2 = "enzyme2";
+
+    notRevStep(firstText, secondText, enzyme1, 
+        firstRectMidX, firstRectMidY, ctx);
+    stepOrder.push("n");
+    revStep(secondText, thirdText, firstRectMidX, 
+        firstRectMidY + 100, ctx);
+        stepOrder.push("r");
+    notRevStep(thirdText, fourthText, enzyme2,
+        firstRectMidX, firstRectMidY + 200, ctx);
+    stepOrder.push("n");
+    revStep(fourthText, fifthText, firstRectMidX, 
+        firstRectMidY + 300, ctx);
+    stepOrder.push("r");
+    endY = firstRectMidY + 400.0;
+    ctx.moveTo(x + 5, y);
+    ctx.arc(x, y, 5, 0, 2 * Math.PI);
+    ctx.stroke();
+}
+
+function main () {
+    firstRectMidY = 75;
+    y = firstRectMidY;
+    render();
+    window.requestAnimationFrame(animate);
+
+    /* function getMousePosition(canvas, event) {
         let border = canvas.getBoundingClientRect();
         return {
             x: event.clientX - border.left,
             y: event.clientY - border.top
         };
-    }
+    } */
 
-    canvas.addEventListener('click', function (event) {
+    /* canvas.addEventListener('click', function (event) {
         let mousePosition = getMousePosition(canvas, event);
-        let rectNum = (Math.floor(mousePosition.x / 100) + Math.floor(mousePosition.y / 50) * 8) - 15;
-        let rectClicked = document.getElementById("rectClicked");
-        rectClicked.innerHTML = "Rectangle Clicked: " + rectNum;
         //TODO: link to model page and remember rectangle number
-    });
+    }); */
 }
+
+
 
 main();

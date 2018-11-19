@@ -24,8 +24,24 @@
                             <button class="editToolbarButton">Menu</button>
                         </div>
                     </div>
-                    <canvas id="modelEditCanvas" height="800" width="800"></canvas>
-                    <p id="rectClicked">Rectangle Clicked: </p>
+                    <div class="flex-horiz">
+                            <canvas id="modelEditCanvas" height="800" width="800"></canvas>
+                            <div class="flex-sliders">
+                                <h3 style="padding:10px 20px">Variables</h3>
+                                <div class="variable-holder">
+                                        <label for="hexokinase">Hexokinase</label>
+                                        <input type="range" min="0" max="10" value="5" class="variables" id="hexokinase">
+                                </div>
+                                <div class="variable-holder">
+                                        <label for="enzyme2">Enzyme2</label>
+                                        <input type="range" min="0" max="10" value="5" class="variables" id="enzyme2">
+                                </div>
+                                <div class="variable-holder">
+                                        <label for="enzyme3">Enzyme3</label>
+                                        <input type="range" min="0" max="10" value="5" class="variables" id="enzyme3">
+                                </div>
+                            </div>
+                    </div>
                     </div>
 				</form>
 			</div>

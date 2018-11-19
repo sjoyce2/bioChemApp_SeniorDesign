@@ -155,11 +155,6 @@ iframe {
 /*//////////////////////////////////////////////////////////////////
 [ login ]*/
 
-.limiter {
-    width: 100%;
-    margin: 0 auto;
-}
-
 .container-login100 {
     width: 100%;
     min-height: 100vh;
@@ -188,11 +183,11 @@ iframe {
         height: 100%;
         top: 0;
         left: 0;
-        background-color: rgba(255,255,255,0.9);
+        background-color: rgba(255,255,255,0.7);
     }
 
 .wrap-login100 {
-    width: 1000px;
+    width: 1200px;
     border-radius: 10px;
     overflow: hidden;
     padding: 100px;
@@ -202,6 +197,23 @@ iframe {
     background: -moz-linear-gradient(top, #19384A, #347787);
     background: linear-gradient(top, #19384A, #347787);
     align-content:center;
+
+}
+
+.flex-horiz {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: 1000px;
+}
+
+.flex-sliders {
+    display: flex;
+    flex-direction: column;
+}
+
+.variable-holder {
+    padding: 10px 20px;
 }
 
 
@@ -224,16 +236,10 @@ iframe {
 }
 
 
-/*------------------------------------------------------------------
-[ Responsive ]*/
 
-@media (max-width: 576px) {
-    .wrap-login100 {
-        padding: 55px 15px 37px 15px;
-    }
-}
 
 .editToolbar {
+    width: 800px;
     display: flex;
     flex-direction: row;
     justify-content:space-between;
@@ -259,10 +265,37 @@ iframe {
 #rectClicked {
     color: white;
 }
+/*------------------------------------------------------------------
+[ Responsive ]*/
 
+
+@media (max-width: 1200px) {
+    .wrap-login100 {
+        width: 95%;
+    }
+
+    .editToolbar {
+        width: 90%;
+    }
+
+    .flex-horiz {
+        min-width: 100%;
+    }
+
+    #modelEditCanvas {
+        width: 90%;
+    }
+}
 @media (max-width: 992px) {
     .alert-validate::before {
         visibility: visible;
         opacity: 1;
+    }
+}
+
+
+@media (max-width: 576px) {
+    .wrap-login100 {
+        padding: 55px 15px 37px 15px;
     }
 }

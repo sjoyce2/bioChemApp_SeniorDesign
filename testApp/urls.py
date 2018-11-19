@@ -1,6 +1,5 @@
 from django.urls import path
 from testApp import views
-from django.contrib.auth.views import login
 
 urlpatterns = [
 	path('', views.display, name= 'index'),

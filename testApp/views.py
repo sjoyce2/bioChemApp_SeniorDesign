@@ -6,6 +6,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.http import HttpResponse
 from testApp.models import User
+from django.contrib.auth import authenticate
 
 def modelChoice(request):
 	context = {}
@@ -21,10 +22,15 @@ def modelEdit(request):
 	}
 	return render(request, 'modelEdit.html', context=context)
 
+def register(request):
+	context = {
+	}
+	return render(request, 'register.html', context=context)
+
 def index(request):
 	objects = User.objects.get(username='user1')
 	exists = False
-	
+
 	#if User.objects.filter(username=user1).exists():
 	#	exists = True
 

@@ -11,6 +11,7 @@
                 user = authenticate(username='user1', password='password')
                 if(user != None){
                         console.log("Shit Worked");
+                        window.location="{% url 'modelEdit' %}"
                 }               
                 else{
                         console.log("Shit did not work")

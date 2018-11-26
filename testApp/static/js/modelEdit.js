@@ -12,8 +12,8 @@ var speed;
 var enzyme1 = "enzyme1";
 var enzyme2 = "enzyme2";
 var enzyme3 = "enzyme3";
-var en1weight = 1;
-var en2weight = 1;
+var en1weight = 2;
+var en2weight = 9;
 var en3weight = 1;
 
 
@@ -96,12 +96,13 @@ function getDotPos(newY) {
     return x;
 }
 
-function setSpeed() {
-    enzyme1Speed = parseInt(document.getElementById(enzyme1).value);
-    enzyme2Speed = parseInt(document.getElementById(enzyme2).value);
-    enzyme3Speed = parseInt(document.getElementById(enzyme3).value);
-    var totalWeight = en1weight * en2weight * en3weight;
-    speed = (enzyme1Speed / 5) * (enzyme2Speed / 5) * (enzyme3Speed / 5);
+function setSpeed(enzymeName, weight) {
+    if (enzymeName === "") {
+        speed = 1;
+    } else {
+        var enzymeSpeed = parseInt(document.getElementById(enzymeName).value);
+        speed = weight * (enzymeSpeed / 5);
+    }
 }
 
 //startX, startY, endX, endY all floats
@@ -110,7 +111,13 @@ function animate() {
     if (y < firstRectMidY + 0.0 || y >= endY) {
         y = firstRectMidY;
     }
-    setSpeed();
+    if (y >= firstRectMidY && y < firstRectMidY + 200.0) {
+        setSpeed(enzyme1, en2weight);
+    } else if (y >= firstRectMidY + 200.0 && y < firstRectMidY + 400.0) {
+        setSpeed(enzyme2, en2weight);
+    } else {
+        setSpeed("", 1);
+    }
     y += 0.5 * direction * speed;
     x = getDotPos(y);
     //x2 = getDotPos(y + 6);

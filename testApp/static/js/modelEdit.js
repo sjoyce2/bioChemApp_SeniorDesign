@@ -1,10 +1,21 @@
 var x;
 var y;
+var x2;
+var x3;
+var x4;
 var firstRectMidX;
 var firstRectMidY;
 var endY;
 var direction = 1;
 var stepOrder = []; //array of steps, "n" for non-reversible, "r" for reversible
+var speed;
+var enzyme1 = "enzyme1";
+var enzyme2 = "enzyme2";
+var enzyme3 = "enzyme3";
+var en1weight = 2;
+var en2weight = 9;
+var en3weight = 1;
+
 
 function notRevStep(substrate, product, enzyme, 
     firstRectMidX, firstRectMidY, ctx) {
@@ -75,26 +86,54 @@ function revStep(firstText, secondText, firstRectMidX, firstRectMidY, ctx) {
     ctx.stroke();
 }
 
+<<<<<<< HEAD
 function getDotPos(y) {
     var arrayPos = Math.floor((y - firstRectMidY) / 100);
     if (stepOrder[arrayPos] === "n") {
         var x = firstRectMidX + Math.sqrt(-1 * Math.pow((y - (firstRectMidY + arrayPos * 100)) - 50, 2) + 2500);
+=======
+function getDotPos(newY) {
+    var arrayPos = Math.floor((newY - firstRectMidY) / 100);
+    if (stepOrder[arrayPos] === "n") {
+        x = firstRectMidX + Math.sqrt(-1 * Math.pow((newY - firstRectMidY) - 50 - (100 * arrayPos), 2) + 2500);
+>>>>>>> 2acc965b930e7c3a364f310d1ccb451e3378f993
     } else {
         x = firstRectMidX - 50;
     }
     return x;
 }
 
+function setSpeed(enzymeName, weight) {
+    if (enzymeName === "") {
+        speed = 1;
+    } else {
+        var enzymeSpeed = parseInt(document.getElementById(enzymeName).value);
+        speed = weight * (enzymeSpeed / 5);
+    }
+}
+
 //startX, startY, endX, endY all floats
 //stepOrder: array of strings, direction is 1 or -1
 function animate() {
-    if (y === firstRectMidY + 0.0) {
-        direction = 1;
-    } else if (y === endY && endY >= 0) {
-        direction = -1;
+    if (y < firstRectMidY + 0.0 || y >= endY) {
+        y = firstRectMidY;
     }
+    if (y >= firstRectMidY && y < firstRectMidY + 200.0) {
+        setSpeed(enzyme1, en2weight);
+    } else if (y >= firstRectMidY + 200.0 && y < firstRectMidY + 400.0) {
+        setSpeed(enzyme2, en2weight);
+    } else {
+        setSpeed("", 1);
+    }
+<<<<<<< HEAD
     y += 0.5 * direction;
     x = getDotPos(y);
+=======
+    y += 0.5 * direction * speed;
+    x = getDotPos(y);
+    //x2 = getDotPos(y + 6);
+    //x3 = getDotPos(y + 12);
+>>>>>>> 2acc965b930e7c3a364f310d1ccb451e3378f993
     render();
     window.requestAnimationFrame(animate);
 }
@@ -110,8 +149,6 @@ function render() {
     var thirdText = "F6P";
     var fourthText = "F16BP";
     var fifthText = "GAP";
-    var enzyme1 = "hexokinase";
-    var enzyme2 = "enzyme2";
 
     notRevStep(firstText, secondText, enzyme1, 
         firstRectMidX, firstRectMidY, ctx);
@@ -126,14 +163,47 @@ function render() {
         firstRectMidY + 300, ctx);
     stepOrder.push("r");
     endY = firstRectMidY + 400.0;
+<<<<<<< HEAD
     ctx.beginPath();
     ctx.moveTo(x + 5, y);
     ctx.arc(x, y, 5, 0, 2 * Math.PI);
     ctx.fillStyle = "red";
     ctx.fill();
+=======
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.fillStyle = "blue";
+    ctx.moveTo(x + 5, y);
+    ctx.arc(x, y, 5, 0, 2 * Math.PI);
+    /*ctx.moveTo(x2 + 5, y + 6);
+    ctx.arc(x2, y + 6, 5, 0, 2 * Math.PI);
+    ctx.moveTo(x3 + 5, y + 12);
+    ctx.arc(x3, y + 12, 5, 0, 2 * Math.PI);*/
+    ctx.fill();
+}
+
+function reset() {
+    var en1Slider = document.getElementById(enzyme1);
+    var en2Slider = document.getElementById(enzyme2);
+    var en3Slider = document.getElementById(enzyme3);
+    en1Slider.value = "5";
+    en2Slider.value = "5";
+    en3Slider.value = "5";
+    en1Slider.oninput = function() {
+        document.getElementById("enzyme1value").innerHTML = this.value;
+    };
+    en2Slider.oninput = function() {
+        document.getElementById("enzyme2value").innerHTML = this.value;
+    };
+    en3Slider.oninput = function() {
+        document.getElementById("enzyme3value").innerHTML = this.value;
+    };
+
+>>>>>>> 2acc965b930e7c3a364f310d1ccb451e3378f993
 }
 
 function main () {
+    reset();
     firstRectMidY = 75;
     y = firstRectMidY;
     render();

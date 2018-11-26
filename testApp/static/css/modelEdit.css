@@ -40,6 +40,7 @@
 body, html {
     height: 100%;
     font-family: Poppins-Regular, sans-serif;
+    color: white;
 }
 
 /*---------------------------------------------*/
@@ -73,7 +74,6 @@ p {
     font-family: Poppins-Regular;
     font-size: 14px;
     line-height: 1.7;
-    color: #666666;
     margin: 0px;
 }
 
@@ -214,6 +214,16 @@ iframe {
 
 .variable-holder {
     padding: 10px 20px;
+    min-width: 240px;
+}
+
+.inner-flex-horiz {
+    display: flex;
+    flex-direction: row;
+}
+
+#enzyme1value, #enzyme2value, #enzyme3value {
+    padding: 0px 10px;
 }
 
 

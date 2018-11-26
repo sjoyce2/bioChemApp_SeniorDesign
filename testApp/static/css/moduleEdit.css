@@ -113,7 +113,7 @@ ul#substrates{
     margin-left: 2%;
 }
 
-#weightSlider {
+/* #weightSlider {
   color: white;
   width: 40%;
   text-align: center;
@@ -121,7 +121,7 @@ ul#substrates{
   display: inline-block;
   font-size: 16px;
   padding: 0 0 0 0;
-}
+} */
 
 .createReaction {
   border: 1px solid white;
@@ -135,15 +135,32 @@ ul#substrates{
     margin-right: 2%;
 }
 
-.createReaction, .weight{
+.saveReaction {
+  border: 1px solid white;
+  background-color: #4CAF50; /* Green */
+    color: white;
+    padding: 2% 2% 2% 2%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-right: 2%;
+}
+
+.createReaction, .saveReaction{
   float: left;
   display: inline-block;
 }
 
+/* .createReaction, .weight{
+  float: left;
+  display: inline-block;
+} */
 
-.weight {
+
+/* .weight {
   border: 1px solid white;
-  background-color: #4CAF50; /* Green */
+  background-color: #4CAF50;
   color: white;
   padding-top: 2%;
   padding-bottom: 2%;
@@ -151,9 +168,9 @@ ul#substrates{
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-}
+} */
 
-.weightLabel{
+/* .weightLabel{
   width: 20%;
   color: white;
   text-align: center;
@@ -161,9 +178,9 @@ ul#substrates{
   display: inline-block;
   font-size: 16px;
   padding: 0 0 0 0;
-}
+} */
 
-.weightValue {
+/* .weightValue {
   border: none;
   color: black;
   width: 10%;
@@ -171,9 +188,9 @@ ul#substrates{
   text-decoration: none;
   font-size: 16px;
   padding: 0 0 0 0;
-}
+} */
 
-.enterWeight {
+/* .enterWeight {
   border: 1px solid white;
   color: white;
   width: 20%;
@@ -181,7 +198,7 @@ ul#substrates{
   text-decoration: none;
   font-size: 16px;
   padding: 0 0 0 0;
-}
+} */
 
 .editToolbar {
     display: flex;
@@ -206,4 +223,42 @@ ul#substrates{
 #imageCanvas {
     background-color: white;
     border-radius: 5%;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }

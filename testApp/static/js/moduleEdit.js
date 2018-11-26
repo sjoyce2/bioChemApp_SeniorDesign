@@ -1,7 +1,8 @@
 "use strict";
 
-var checkedProdsEnzsSubs = []; //array of types (i.e. enzyme, product or substrate)
-var checkedProdsEnzsSubsNames = []; //array of names of enzymes, products, substrates in rxn
+var checkedSubsNames = []; //array of names of enzymes, products, substrates in rxn
+var checkedEnzsNames = [];
+var checkedProdsNames = [];
 var canvas1; //variable for canvas element
 var substrates; //holds array of all substrate checkboxes
 var enzymes; //holds array of all enzyme radio buttons
@@ -9,6 +10,7 @@ var products; //holds array of all product checkboxes
 var ctx; //context of the canvas element, is 2d
 var image; //image to be displayed corresponding to substrates and products chosen
 var createBtn; //button hit after module settings are set (displays rxn in canvas)
+var saveBtn; //button hit after user is finished, send user back to model edit screen
 var isReversible; //boolean that indicates if user wants rxn to be reversible or not
 var reversibleChoice; //variable to hold reversible radio buttons
 var weightSliderValue; //var corresponding to textbox for weight slider, displays weight value and allows user to set weight
@@ -20,45 +22,66 @@ var horizontalBuffer = 20; //buffer size between each substrate, product and enz
 var verticalBuffer = 10;
 var countProducts;
 var countSubstrates;
+var currentRxn = "";
+
+var step1 = "Glucose+Hexokinase+Glucose-6-Phosphate";
+var step2 = "Glucose-6-Phosphate+Phosphoglucoisomerase+Fructose-6-Phosphate";
+var step3 = "Glucose+Fructose-6-Phosphate+Phosphoglycerate kinase+Fructose-1,6-bisphosphate+Glyceraldehyde-3-Phosphate";
+var step4 = "Fructose-1,6-bisphosphate+Phosphoglycerate mutase+Dihydroxyacetone Phosphate";
+var step5 = "1,3-bisphoglycerate+Phosphoglycerate kinase+Glyceraldehyde-3-Phosphate";
+var step6 = "1,3-bisphoglycerate+G3P dehydrogenase+Glucose-6-Phosphate";
+var step7 = "1,3-bisphoglycerate+Triosephosphate isomerase+1,3-bisphoglycerate+Dihydroxyacetone Phosphate";
+var step8 = "Fructose-6-Phosphate+Fructose 1,6 bisphosphate aldolase+Dihydroxyacetone Phosphate";
+var step9 = "Fructose-6-Phosphate+Pyruvate carboxylase+2 phosphoglycerate";
+var step10 = "Fructose-1,6-bisphosphate+Phosphoenol pyruvate carboxykinase+2 phosphoglycerate";
+var step11 = "Glyceraldehyde-3-Phosphate+Fructose 1,6 bisphosphatase+3 phosphoglycerate";
+var step12 = "Glyceraldehyde-3-Phosphate+Glucose 6 phosphatase+3 phosphoglycerate";
+
+//My guess is we'll need a similar construct like this in the DB
+//there will be 3 columns Enzyme name, product/substrate name/ and boolean indicating type (prod/sub)
+//then the enzymeProds array will fetch all rows with type product and enzymeSubs will fetch the rest
+//And we'll end up with 2 arrays filled with arrays of length 2
+var enzymeProds = [['Phosphoglucoisomerase','Fructose-6-Phosphate']];
+var enzymeSubs = [['Phosphoglucoisomerase','Glucose-6-Phosphate']];
 
 //function to change the text box to the value set by slider
-function updateTextInput(val) {
-  document.getElementById('weightSliderValue').value=val;
-}
+// function updateTextInput(val) {
+//   document.getElementById('weightSliderValue').value=val;
+// }
 //function to change reversible boolean depending on which reversible radio btn is set
-function onRadioReverseChange(){
-  if(reversibleChoice[0].checked){
-    isReversible = true;
-  }else{
-    isReversible = false;
-  }
-  console.log(isReversible);
-}
+// function onRadioReverseChange(){
+//   if(reversibleChoice[0].checked){
+//     isReversible = true;
+//   }else{
+//     isReversible = false;
+//   }
+// }
 
 //check which radio buttons and checkboxes are clicked for products, enzymes and substrates
 //push name of product, substrate, enzyme to checkedProdsEnzsSubsNames
 //push type to checkedProdsEnzsSubs
 function onRadioChange(){
-  checkedProdsEnzsSubs = [];
-  checkedProdsEnzsSubsNames = [];
+  countProducts = 0;
+  countSubstrates = 0;
+  checkedSubsNames = [];
+  checkedProdsNames = [];
+  checkedEnzsNames = []
+
   for(var i = 0; i < substrates.length; i++){
     if(substrates[i].checked){
       countSubstrates++;
-      checkedProdsEnzsSubs.push(substrates[i].name);
-      checkedProdsEnzsSubsNames.push(substrates[i].value);
+      checkedSubsNames.push(substrates[i].value);
     }
   }
   for(var j = 0; j < enzymes.length; j++){
     if(enzymes[j].checked){
-      checkedProdsEnzsSubs.push(enzymes[j].name);
-      checkedProdsEnzsSubsNames.push(enzymes[j].value);
+      checkedEnzsNames.push(enzymes[j].value);
     }
   }
   for(var k = 0; k < products.length; k++){
     if(products[k].checked){
       countProducts++;
-      checkedProdsEnzsSubs.push(products[k].name);
-      checkedProdsEnzsSubsNames.push(products[k].value);
+      checkedProdsNames.push(products[k].value);
     }
   }
 }
@@ -70,49 +93,38 @@ function onRadioChange(){
 //         y: event.clientY - border.top
 //     };
 // }
+
 //display image corresponding to substrates and products chosen
 function displayImage(xcoor, ycoor, name){
-  console.log(name);
   var img = document.getElementById(name);
+  console.log("image info  " + name + xcoor + ycoor);
   ctx.drawImage(img, xcoor, ycoor, objectWidth, objectHeight);
 }
-//draw boxes for substrates and products and set text for substrates, products and enzymes
-function drawObject(count, type, xcoor, ycoor, name){
-  if(type === "substrate" || type === "product"){
-    displayImage(xcoor, ycoor, name);
-    //draw box around image
-    ctx.moveTo(xcoor,ycoor);
-    ctx.lineTo(xcoor + objectWidth, ycoor);
-    ctx.lineTo(xcoor + objectWidth, ycoor + objectHeight);
-    ctx.lineTo(xcoor, ycoor + objectHeight);
-    ctx.lineTo(xcoor, ycoor);
-    ctx.stroke();
 
-    ycoor = ycoor + objectHeight / 25; //add a small buffer so that text below image does not overlap with square
-    ctx.font = "12px Arial";
-    //draw text below box containing substrate or product
-    ctx.fillText(name, xcoor, ycoor + objectHeight + verticalBuffer);
+//draw boxes for substrates and products and set text
+function drawObject(xcoor, ycoor, name){
+  console.log(name);
+  displayImage(xcoor, ycoor, name);
+  //draw box around image
+  ctx.moveTo(xcoor,ycoor);
+  ctx.lineTo(xcoor + objectWidth, ycoor);
+  ctx.lineTo(xcoor + objectWidth, ycoor + objectHeight);
+  ctx.lineTo(xcoor, ycoor + objectHeight);
+  ctx.lineTo(xcoor, ycoor);
+  ctx.stroke();
 
-  }else if (type === "enzyme"){
-    ctx.font = "12px Arial";
-    ycoor = ycoor + objectHeight / 25;
-    // ctx.fillText(name, xcoor , ycoor + objectBuffer); //This is for version without downwards arrow
-    ctx.fillText(name, xcoor , ycoor + (objectHeight / 2));//This is for version with downwards arrow
-  }else{
-  }
+  ycoor = ycoor + objectHeight / 25; //add a small buffer so that text below image does not overlap with square
+  ctx.font = "12px Arial";
+  //draw text below box containing substrate or product
+  ctx.fillText(name, xcoor, ycoor + objectHeight + verticalBuffer);
 }
-//draw dotted line across screen
-// function drawLine(xcoor, ycoor){
-//   ctx.moveTo(objectBuffer, ycoor + objectHeight + objectBuffer * 2);
-//   ctx.setLineDash([objectBuffer, objectBuffer/2]);
-//   ctx.lineTo(canvas1.width - objectBuffer, ycoor + objectHeight + objectBuffer * 2);
-//   ctx.stroke();
-//   ctx.beginPath();
-//   ctx.setLineDash([]);
-// }
 
 //draw downwards arrow in center of current row
-function drawDownArrow(xcoor, ycoor){
+function drawDownArrow(xcoor, ycoor, name){
+  ctx.font = "12px Arial";
+  ycoor = ycoor + objectHeight / 25;
+  // ctx.fillText(name, xcoor , ycoor + objectBuffer); //This is for version without downwards arrow
+  ctx.fillText(name, xcoor , ycoor + (objectHeight / 2));//This is for version with downwards arrow
   if(isReversible){
     //xcoor = canvas1.width / 2;
     ctx.moveTo(xcoor, ycoor);
@@ -136,28 +148,28 @@ function drawDownArrow(xcoor, ycoor){
 }
 
 //draw regular arrow for reaction, reversible or irreversible
-function drawArrow(xcoor, ycoor){
-  if(isReversible){
-    ycoor = ycoor + objectHeight / 2;
-    ctx.moveTo(xcoor, ycoor);
-    ctx.lineTo(xcoor + (objectWidth / 4), ycoor - (objectHeight / 4));
-    ctx.lineTo(xcoor + (objectWidth / 4), ycoor + (objectHeight / 4));
-    ctx.lineTo(xcoor, ycoor);
-    ctx.lineTo(xcoor + objectWidth, ycoor);
-    ctx.lineTo(xcoor + objectWidth - (objectWidth / 4), ycoor - (objectHeight / 4));
-    ctx.lineTo(xcoor + objectWidth - (objectWidth / 4), ycoor + (objectHeight / 4));
-    ctx.lineTo(xcoor + objectWidth, ycoor);
-    ctx.stroke();
-  }else{
-    ycoor = ycoor + objectHeight / 2;
-    ctx.moveTo(xcoor, ycoor);
-    ctx.lineTo(xcoor + objectWidth, ycoor);
-    ctx.lineTo(xcoor + objectWidth - (objectWidth / 4), ycoor - (objectHeight / 4));
-    ctx.lineTo(xcoor + objectWidth - (objectWidth / 4), ycoor + (objectHeight / 4));
-    ctx.lineTo(xcoor + objectWidth, ycoor);
-    ctx.stroke();
-  }
-}
+// function drawArrow(xcoor, ycoor){
+//   if(isReversible){
+//     ycoor = ycoor + objectHeight / 2;
+//     ctx.moveTo(xcoor, ycoor);
+//     ctx.lineTo(xcoor + (objectWidth / 4), ycoor - (objectHeight / 4));
+//     ctx.lineTo(xcoor + (objectWidth / 4), ycoor + (objectHeight / 4));
+//     ctx.lineTo(xcoor, ycoor);
+//     ctx.lineTo(xcoor + objectWidth, ycoor);
+//     ctx.lineTo(xcoor + objectWidth - (objectWidth / 4), ycoor - (objectHeight / 4));
+//     ctx.lineTo(xcoor + objectWidth - (objectWidth / 4), ycoor + (objectHeight / 4));
+//     ctx.lineTo(xcoor + objectWidth, ycoor);
+//     ctx.stroke();
+//   }else{
+//     ycoor = ycoor + objectHeight / 2;
+//     ctx.moveTo(xcoor, ycoor);
+//     ctx.lineTo(xcoor + objectWidth, ycoor);
+//     ctx.lineTo(xcoor + objectWidth - (objectWidth / 4), ycoor - (objectHeight / 4));
+//     ctx.lineTo(xcoor + objectWidth - (objectWidth / 4), ycoor + (objectHeight / 4));
+//     ctx.lineTo(xcoor + objectWidth, ycoor);
+//     ctx.stroke();
+//   }
+// }
 //draw plus sign between each substrate and product
 function drawPlus(xcoor, ycoor){
   xcoor = xcoor + objectWidth + horizontalBuffer;
@@ -168,76 +180,148 @@ function drawPlus(xcoor, ycoor){
   ctx.lineTo(xcoor + horizontalBuffer / 2, ycoor - horizontalBuffer / 2);
   ctx.stroke();
 }
+
+function setInitialXCoor(count){
+  var xcoor;
+  console.log("SET X COOR");
+  if(count === 1){
+    console.log(count);
+    xcoor = objectWidth * 2 + horizontalBuffer * 4;
+  }else if(count === 2){
+    xcoor = (canvas1.width / 2) - (horizontalBuffer * 2) - objectWidth;
+  }else if(count === 3){
+    xcoor = objectWidth + horizontalBuffer * 2;
+  }else if(count === 4){
+    xcoor = (canvas1.width / 2) - (horizontalBuffer * 4) - objectWidth * 2;
+  }else{
+    xcoor = 0;
+  }
+  return xcoor;
+}
+
+function drawSubstrates(currentX, currentY){
+  var name;
+  var a;
+  for(a = 0; a < checkedSubsNames.length; a++){
+    name = checkedSubsNames[a];
+    drawObject(currentX, currentY, name);
+    if(checkedSubsNames.length > a + 1){
+      drawPlus(currentX, currentY);
+      currentX = currentX + objectWidth + horizontalBuffer * 2;
+    }
+  }
+}
+
+function drawProducts(currentX, currentY){
+  var name;
+  var a;
+  for(a = 0; a < checkedProdsNames.length; a++){
+    name = checkedProdsNames[a];
+    drawObject(currentX, currentY, name);
+    if(checkedProdsNames.length > a + 1){
+      drawPlus(currentX, currentY);
+      currentX = currentX + objectWidth + horizontalBuffer * 2;
+    }
+  }
+}
+
 //called when create button is clicked
 function displayReaction(){
   var name;
-  var objectInRowCounter = 0;
-  // console.log("DISPLAY REACTION CALLED");
-  // console.log(checkedProdsEnzsSubs);
   var currentX = horizontalBuffer;
   var currentY = verticalBuffer;
-  //iterate through checkedProdsEnzsSubs array
-  for(var a = 0; a < checkedProdsEnzsSubs.length; a++){
-    name = checkedProdsEnzsSubsNames[a];
-    //reset currentX and currentY if over 4 products and/or substrates are being displayed
-    //so that everything is visible inside canvas border
-    if(objectInRowCounter > 0 && objectInRowCounter % 5 === 0){
-      currentX = horizontalBuffer;
-      currentY = currentY + objectHeight + verticalBuffer * 2;
-      objectInRowCounter = 0;//reset counter
-    }
+  currentX = currentX + setInitialXCoor(countSubstrates);
+  drawSubstrates(currentX, currentY);
 
-    var currentObject = checkedProdsEnzsSubs[a];
-    //check if currentObject is a Substrate
-    if(currentObject === "Substrate"){
-      drawObject(a, "substrate", currentX, currentY, name);
-      if(checkedProdsEnzsSubs.length - 1 > a){
-        //if next object is an enzyme draw arrow
-        if(checkedProdsEnzsSubs[a+1] === "Enzyme"){
-          console.log(objectInRowCounter + "OBJECT IN ROW ");
-          // if(objectInRowCounter > 0 && (objectInRowCounter+1) % 5 === 0){//for version without downwards arrow
-          if(objectInRowCounter > 0 && (objectInRowCounter) % 5 === 0){//for version with downwards arrow
-            currentX = horizontalBuffer;
-            currentY = currentY + objectHeight + verticalBuffer * 2;
-            objectInRowCounter = 0;
-          }else{
-            currentX = currentX + objectWidth + horizontalBuffer * 2;
-          }
-          //drawArrow(currentX, currentY);//for version without downwards arrow
-          currentY = currentY + objectHeight + verticalBuffer * 2; //for version with downwards arrow
-          currentX = canvas1.width / 2; //for version with downwards arrow
-          drawDownArrow(currentX, currentY); //for version with downwards arrow
-          objectInRowCounter = 0;//for version with downwards arrow
-        //if next object is not an enzyme draw plus
-        }else{
-          drawPlus(currentX, currentY);
-          currentX = currentX + objectWidth + horizontalBuffer* 2;
-        }
+  currentY = currentY + objectHeight + verticalBuffer * 2; //for version with downwards arrow
+  currentX = canvas1.width / 2; //for version with downwards arrow
+  name = checkedEnzsNames[0];
+  drawDownArrow(currentX, currentY, name);
+
+  currentX = horizontalBuffer;
+  currentY = verticalBuffer * 5 + objectHeight * 2;
+  currentX = currentX + setInitialXCoor(countProducts);
+  drawProducts(currentX, currentY);
+}
+
+function setReaction(){
+  var enzymeName = checkedEnzsNames[0];
+  for(var i = 0; i < enzymeSubs.length; i++){
+    for(var j = 1; j < enzymeSubs[i].length; j++){
+      if(enzymeSubs[i][0] === enzymeName){
+        checkedSubsNames.push(enzymeSubs[i][j]);
+        countSubstrates++;
       }
-    }else if(currentObject === "Enzyme"){
-      drawObject(a, "enzyme", currentX, currentY, name);
-      console.log(currentObject);
-      if(checkedProdsEnzsSubs.length - 1 > a){
-        //if next object is a product set currentX
-        if(checkedProdsEnzsSubs[a+1] === "Product"){
-          // drawLine(currentX, currentY);
-          //currentX = currentX + objectWidth + objectBuffer;
-          currentX = horizontalBuffer;//for version with downwards arrow
-          currentY = currentY + objectHeight + verticalBuffer * 2; //for version with downwards arrow
-          objectInRowCounter = 0; //for version with downwards arrow
-        }
-      }
-    }else{
-      //draw all products
-      drawObject(a, "product", currentX, currentY, name);
-      if(checkedProdsEnzsSubs.length - 1 > a){
-        drawPlus(currentX, currentY);
-      }
-      currentX = currentX + objectWidth + horizontalBuffer * 2;
-      console.log(currentObject);
     }
-    objectInRowCounter++;
   }
+  for(var i = 0; i < enzymeProds.length; i++){
+    for(var j = 1; j < enzymeProds[i].length; j++){
+      if(enzymeProds[i][0] === enzymeName){
+        checkedProdsNames.push(enzymeProds[i][j]);
+        countProducts++;
+      }
+    }
+  }
+}
+
+function validateReaction(){
+  //iterate through user selections and create string representation
+  //this is done so that if it is a complete reaction (something from
+  //every categor is chosen) it can easily be compared to the known
+  //reactions
+  for(var i = 0; i < checkedSubsNames.length; i++){
+    currentRxn = currentRxn + checkedSubsNames[i] + "+";
+  }
+
+  for(var j = 0; j < checkedEnzsNames.length; j++){
+    currentRxn = currentRxn + checkedEnzsNames[j] + "+";
+  }
+
+  for(var k = 0; k < checkedProdsNames.length; k++){
+    currentRxn = currentRxn + checkedProdsNames[k];
+    if(checkedProdsNames.length > k + 1){
+      currentRxn = currentRxn + "+";
+    }
+  }
+
+  if(countProducts > 5 || countSubstrates > 5 || checkedEnzsNames.length === 0 ){
+    //settings are invalid, user is limited to 5 products and 5 substrates and an
+    //enzyme must be selected
+    console.log("INVALID");
+    ctx.fillStyle = "red";
+    ctx.fillRect(0, 0, canvas1.width, canvas1.height);
+
+    return false;
+
+  }else if(countSubstrates === 0 && countProducts === 0){
+    setReaction(); //the user has only selected the enzyme so fill in reaction
+    ctx.fillStyle = "green";//reaction will be correct so set to green
+    ctx.fillRect(0, 0, canvas1.width, canvas1.height);
+
+  }else if(countSubstrates === 0 || countProducts === 0){
+    //settings are invalid, cannot have selected some products and
+    //no substrates or some substrates and no products
+    console.log("INVALID");
+    ctx.fillStyle = "red";
+    ctx.fillRect(0, 0, canvas1.width, canvas1.height);
+
+    return false;
+
+  }else if(step1 === currentRxn || step2 === currentRxn || step3 === currentRxn || step4 === currentRxn
+        || step5 === currentRxn || step6 === currentRxn || step7 === currentRxn || step8 === currentRxn
+        || step9 === currentRxn || step10 === currentRxn || step11 === currentRxn || step12 === currentRxn){
+    //Reaction is valid
+    ctx.fillStyle = "green";
+    ctx.fillRect(0, 0, canvas1.width, canvas1.height);
+
+  }else{
+    //reaction is invalid, but still want to display reaction
+    ctx.fillStyle = "red";
+    ctx.fillRect(0, 0, canvas1.width, canvas1.height);
+  }
+  //set fillStyle back to black
+  ctx.fillStyle = "black";
+  return true;
 }
 
 window.onload = function init(){
@@ -249,41 +333,78 @@ window.onload = function init(){
   ctx  = canvas1.getContext("2d");
   image  = document.getElementById("step1");
   createBtn = document.getElementById("createReaction");
+  saveBtn = document.getElementById("saveReaction");
   weightSliderValue = document.getElementById('weightSliderValue');
   submitWeightBtn = document.getElementById('submitWeight');
   weightSlider = document.getElementById('weightSlider');
+  var modal = document.getElementById('invalidModal');
+  var span = document.getElementsByClassName("close")[0];
+  var saveBtnClicked = false;
 
   createBtn.addEventListener("click", function(event){
+    //reset global variables
+    currentRxn = "";
+
     //clear everything out of canvas on button click so we can draw new rxn
     ctx.clearRect(0, 0, canvas1.width, canvas1.height);
     //calling beginPath here preps canvas for drawing
     ctx.beginPath();
-    console.log("button clicked");//show reaction
-    console.log(checkedProdsEnzsSubs);
-    displayReaction();
+
+    //validate that settings are good, reaction created is good or bad
+    var continueDisplay = validateReaction();
+
+    //the settings are valid so display as usual
+    if(continueDisplay){
+      displayReaction();
+    }else{
+      //the settings are invalid so display modal and clear canvas
+      modal.style.display = "block";
+      ctx.clearRect(0, 0, canvas1.width, canvas1.height);
+    }
+
   });
+
+  saveBtn.addEventListener("click", function(event){
+    if(saveBtnClicked){
+      saveBtn.style.background = '#4CAF50'
+      saveBtnClicked = false;
+    }else{
+      saveBtn.style.background = '#000000';
+      saveBtnClicked = true;
+    }
+  });
+
+  //exit out of invalidModal when x is clicked
+  span.addEventListener("click", function(event) {
+    modal.style.display = "none";
+  });
+
+  //exit out of invalidModal when area outside of modal is clicked
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
 
 //not currently important
   // canvas1.addEventListener("click", function (event) {
   //     let mousePosition = getMousePosition(canvas1, event);
   //     let rectNum = (Math.floor(mousePosition.x / 100) + Math.floor(mousePosition.y / objectWidth) * 8) - 15;
   //     let rectClicked = document.getElementById("rectClicked");
-  //     console.log("CLICK");
   // });
 
 //button to submit value entered in weight value text box
 //and set slider accordingly
-  submitWeightBtn.addEventListener("click", function(event) {
-    var val = weightSliderValue.value;
-    console.log(val);
-    //verify that value entered is valid and within range
-    if(val >= -1.0 && val <= 1.0){
-      weightSlider.value=val;
-    }else{
-      weightSliderValue.value=0.0;
-      weightSlider.value = 0.0;
-    }
- });
+ //  submitWeightBtn.addEventListener("click", function(event) {
+ //    var val = weightSliderValue.value;
+ //    //verify that value entered is valid and within range
+ //    if(val >= -1.0 && val <= 1.0){
+ //      weightSlider.value=val;
+ //    }else{
+ //      weightSliderValue.value=0.0;
+ //      weightSlider.value = 0.0;
+ //    }
+ // });
 }
 function main () {
 }

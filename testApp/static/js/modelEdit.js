@@ -77,9 +77,8 @@ function revStep(firstText, secondText, firstRectMidX, firstRectMidY, ctx) {
 
 function getDotPos(y) {
     var arrayPos = Math.floor((y - firstRectMidY) / 100);
-    console.log(stepOrder[arrayPos]);
     if (stepOrder[arrayPos] === "n") {
-        var x = firstRectMidX + Math.sqrt(-1 * Math.pow((y - firstRectMidY) - 50, 2) + 2500);
+        var x = firstRectMidX + Math.sqrt(-1 * Math.pow((y - (firstRectMidY + arrayPos * 100)) - 50, 2) + 2500);
     } else {
         x = firstRectMidX - 50;
     }
@@ -95,8 +94,7 @@ function animate() {
         direction = -1;
     }
     y += 0.5 * direction;
-    x = getDotPos(y - firstRectMidY);
-    console.log(x, y);
+    x = getDotPos(y);
     render();
     window.requestAnimationFrame(animate);
 }
@@ -128,9 +126,11 @@ function render() {
         firstRectMidY + 300, ctx);
     stepOrder.push("r");
     endY = firstRectMidY + 400.0;
+    ctx.beginPath();
     ctx.moveTo(x + 5, y);
     ctx.arc(x, y, 5, 0, 2 * Math.PI);
-    ctx.stroke();
+    ctx.fillStyle = "red";
+    ctx.fill();
 }
 
 function main () {

@@ -25,24 +25,29 @@ var countSubstrates;
 var currentRxn = "";
 
 var step1 = "Glucose+Hexokinase+Glucose-6-Phosphate";
-var step2 = "Glucose-6-Phosphate+Phosphoglucoisomerase+Fructose-6-Phosphate";
-var step3 = "Glucose+Fructose-6-Phosphate+Phosphoglycerate kinase+Fructose-1,6-bisphosphate+Glyceraldehyde-3-Phosphate";
-var step4 = "Fructose-1,6-bisphosphate+Phosphoglycerate mutase+Dihydroxyacetone Phosphate";
-var step5 = "1,3-bisphoglycerate+Phosphoglycerate kinase+Glyceraldehyde-3-Phosphate";
-var step6 = "1,3-bisphoglycerate+G3P dehydrogenase+Glucose-6-Phosphate";
-var step7 = "1,3-bisphoglycerate+Triosephosphate isomerase+1,3-bisphoglycerate+Dihydroxyacetone Phosphate";
-var step8 = "Fructose-6-Phosphate+Fructose 1,6 bisphosphate aldolase+Dihydroxyacetone Phosphate";
-var step9 = "Fructose-6-Phosphate+Pyruvate carboxylase+2 phosphoglycerate";
-var step10 = "Fructose-1,6-bisphosphate+Phosphoenol pyruvate carboxykinase+2 phosphoglycerate";
-var step11 = "Glyceraldehyde-3-Phosphate+Fructose 1,6 bisphosphatase+3 phosphoglycerate";
-var step12 = "Glyceraldehyde-3-Phosphate+Glucose 6 phosphatase+3 phosphoglycerate";
+var step2 = "Glucose-6-Phosphate+Phosphoglucose isomerase+Fructose-6-Phosphate";
+var step3 = "Fructose-6-Phosphate+Phosphofructokinase+Fructose-1,6-bisphosphate";
+var step4 = "Fructose-1,6-bisphosphate+aldolase+Dihydroxyacetone Phosphate+Glyceraldehyde-3-Phosphate"
+var step5 = "Dihydroxyacetone Phosphate+Triosephosphate isomerase+Glyceraldehyde-3-Phosphate";
+var step6 = "Glyceraldehyde-3-Phosphate+Glyceraldehyde phosphate dehydrogenase+1,3-bisphoglycerate";
+var step7 = "1,3-bisphoglycerate+Phosphoglycerate kinase+3 phosphoglycerate";
+var step8 = "3 phosphoglycerate+Phosphoglycerate mutase+2 phosphoglycerate";
+var step9 = "2 phosphoglycerate+Enolase+Phosphoenolpyruvate";
+var step10 = "Phosphoenolpyruvate+Pyruvate kinase+Pyruvate";
 
 //My guess is we'll need a similar construct like this in the DB
 //there will be 3 columns Enzyme name, product/substrate name/ and boolean indicating type (prod/sub)
 //then the enzymeProds array will fetch all rows with type product and enzymeSubs will fetch the rest
 //And we'll end up with 2 arrays filled with arrays of length 2
-var enzymeProds = [['Phosphoglucoisomerase','Fructose-6-Phosphate']];
-var enzymeSubs = [['Phosphoglucoisomerase','Glucose-6-Phosphate']];
+var enzymeProds = [["Hexokinase","Glucose-6-Phosphate"],["Phosphoglucose isomerase","Fructose-6-Phosphate"],
+  ["Phosphofructokinase","Fructose-1,6-bisphosphate"],["aldolase","Dihydroxyacetone Phosphate"],["aldolase","Glyceraldehyde-3-Phosphate"],
+  ["Triosephosphate isomerase","Glyceraldehyde-3-Phosphate"],["Glyceraldehyde phosphate dehydrogenase","1,3-bisphoglycerate"],
+  ["Phosphoglycerate kinase","3 phosphoglycerate"],["Phosphoglycerate mutase","2 phosphoglycerate"],["Enolase","Phosphoenolpyruvate"],
+  ["Pyruvate kinase","Pyruvate"]];
+var enzymeSubs = [["Hexokinase","Glucose"],["Phosphoglucose isomerase","Glucose-6-Phosphate"],
+  ["Phosphofructokinase","Fructose-6-Phosphate"],["aldolase","Fructose-1,6-bisphosphate"], ["Triosephosphate isomerase","Dihydroxyacetone Phosphate"],
+  ["Glyceraldehyde phosphate dehydrogenase","Glyceraldehyde-3-Phosphate"],["Phosphoglycerate kinase","1,3-bisphoglycerate"],
+  ["Phosphoglycerate mutase","3 phosphoglycerate"],["Enolase","2 phosphoglycerate"],["Pyruvate kinase","Phosphoenolpyruvate"]];
 
 //function to change the text box to the value set by slider
 // function updateTextInput(val) {
@@ -295,6 +300,7 @@ function validateReaction(){
       currentRxn = currentRxn + "+";
     }
   }
+  console.log("***" + currentRxn);
 
   if(countProducts > 5 || countSubstrates > 5 || checkedEnzsNames.length === 0 ){
     //settings are invalid, user is limited to 5 products and 5 substrates and an
@@ -321,7 +327,7 @@ function validateReaction(){
 
   }else if(step1 === currentRxn || step2 === currentRxn || step3 === currentRxn || step4 === currentRxn
         || step5 === currentRxn || step6 === currentRxn || step7 === currentRxn || step8 === currentRxn
-        || step9 === currentRxn || step10 === currentRxn || step11 === currentRxn || step12 === currentRxn){
+        || step9 === currentRxn || step10 === currentRxn || step11 === currentRxn){
     //Reaction is valid
     ctx.fillStyle = "green";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
@@ -422,7 +428,7 @@ function main () {
 }
 main()
 
-module.exports = {};
-module.exports.testClickSaveBtn = testClickSaveBtn;
-module.exports.setReaction = setReaction;
-module.exports.setInitialXCoor = setInitialXCoor;
+// module.exports = {};
+// module.exports.testClickSaveBtn = testClickSaveBtn;
+// module.exports.setReaction = setReaction;
+// module.exports.setInitialXCoor = setInitialXCoor;

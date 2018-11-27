@@ -86,17 +86,10 @@ function revStep(firstText, secondText, firstRectMidX, firstRectMidY, ctx) {
     ctx.stroke();
 }
 
-<<<<<<< HEAD
-function getDotPos(y) {
-    var arrayPos = Math.floor((y - firstRectMidY) / 100);
-    if (stepOrder[arrayPos] === "n") {
-        var x = firstRectMidX + Math.sqrt(-1 * Math.pow((y - (firstRectMidY + arrayPos * 100)) - 50, 2) + 2500);
-=======
 function getDotPos(newY) {
     var arrayPos = Math.floor((newY - firstRectMidY) / 100);
     if (stepOrder[arrayPos] === "n") {
         x = firstRectMidX + Math.sqrt(-1 * Math.pow((newY - firstRectMidY) - 50 - (100 * arrayPos), 2) + 2500);
->>>>>>> 2acc965b930e7c3a364f310d1ccb451e3378f993
     } else {
         x = firstRectMidX - 50;
     }
@@ -125,15 +118,10 @@ function animate() {
     } else {
         setSpeed("", 1);
     }
-<<<<<<< HEAD
-    y += 0.5 * direction;
-    x = getDotPos(y);
-=======
     y += 0.5 * direction * speed;
     x = getDotPos(y);
     //x2 = getDotPos(y + 6);
     //x3 = getDotPos(y + 12);
->>>>>>> 2acc965b930e7c3a364f310d1ccb451e3378f993
     render();
     window.requestAnimationFrame(animate);
 }
@@ -163,13 +151,6 @@ function render() {
         firstRectMidY + 300, ctx);
     stepOrder.push("r");
     endY = firstRectMidY + 400.0;
-<<<<<<< HEAD
-    ctx.beginPath();
-    ctx.moveTo(x + 5, y);
-    ctx.arc(x, y, 5, 0, 2 * Math.PI);
-    ctx.fillStyle = "red";
-    ctx.fill();
-=======
     ctx.stroke();
     ctx.beginPath();
     ctx.fillStyle = "blue";
@@ -199,7 +180,6 @@ function reset() {
         document.getElementById("enzyme3value").innerHTML = this.value;
     };
 
->>>>>>> 2acc965b930e7c3a364f310d1ccb451e3378f993
 }
 
 function main () {
@@ -226,3 +206,6 @@ function main () {
 
 
 main();
+
+module.exports = {};
+module.exports.setSpeed() = setSpeed();

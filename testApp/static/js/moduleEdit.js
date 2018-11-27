@@ -117,6 +117,7 @@ function drawObject(xcoor, ycoor, name){
   ctx.font = "12px Arial";
   //draw text below box containing substrate or product
   ctx.fillText(name, xcoor, ycoor + objectHeight + verticalBuffer);
+  return [xcoor, ycoor, name];
 }
 
 //draw downwards arrow in center of current row
@@ -145,6 +146,7 @@ function drawDownArrow(xcoor, ycoor, name){
     ctx.lineTo(xcoor, ycoor + objectHeight);
     ctx.stroke();
   }
+  return [xcoor, ycoor, name];
 }
 
 //draw regular arrow for reaction, reversible or irreversible
@@ -244,7 +246,7 @@ function displayReaction(){
   drawProducts(currentX, currentY);
 }
 
-function setReaction(){
+function setReaction(enzymeSubs, enzymeProds){
   var enzymeName = checkedEnzsNames[0];
   for(var i = 0; i < enzymeSubs.length; i++){
     for(var j = 1; j < enzymeSubs[i].length; j++){
@@ -261,6 +263,16 @@ function setReaction(){
         countProducts++;
       }
     }
+  }
+}
+
+function testClickSaveBtn(click){
+  if(click === "click"){
+    //saveBtn.style.background = '#4CAF50'
+    return false;
+  }else{
+    //saveBtn.style.background = '#000000';
+    return true;
   }
 }
 
@@ -294,7 +306,7 @@ function validateReaction(){
     return false;
 
   }else if(countSubstrates === 0 && countProducts === 0){
-    setReaction(); //the user has only selected the enzyme so fill in reaction
+    setReaction(enzymeSubs, enzymeProds); //the user has only selected the enzyme so fill in reaction
     ctx.fillStyle = "green";//reaction will be correct so set to green
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
 
@@ -410,5 +422,7 @@ function main () {
 }
 main()
 
-// module.exports = {};
-// module.exports.getMousePosition = getMousePosition;
+module.exports = {};
+module.exports.testClickSaveBtn = testClickSaveBtn;
+module.exports.setReaction = setReaction;
+module.exports.setInitialXCoor = setInitialXCoor;

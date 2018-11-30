@@ -205,10 +205,14 @@ iframe {
 }
 
 label {
-  display:none;
+  color: white;
 }
 
 .login-flex {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
   display: flex;
   flex-direction: column;
   min-width: 100%;
@@ -276,7 +280,7 @@ label {
 }
 
 #id_username {
-  border: black;
+  border: 1px solid rgba(255,255,255,0.24);
   font-family: Poppins-Regular;
   font-size: 16px;
   color: #fff;
@@ -290,7 +294,7 @@ label {
 }
 
 #id_password {
-  border: black;
+  border: 1px solid rgba(255,255,255,0.24);
   font-family: Poppins-Regular;
   font-size: 16px;
   color: #fff;

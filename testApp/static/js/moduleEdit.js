@@ -25,16 +25,16 @@ var countSubstrates;
 var currentRxn = "";
 var modal;
 
-var step1 = "Glucose+ATP+Hexokinase+Glucose-6-Phosphate+ADP";
-var step2 = "Glucose-6-Phosphate+Phosphoglucose isomerase+Fructose-6-Phosphate";
-var step3 = "Fructose-6-Phosphate+ATP+Phosphofructokinase+Fructose-1,6-bisphosphate+ADP";
-var step4 = "Fructose-1,6-bisphosphate+aldolase+Dihydroxyacetone Phosphate+Glyceraldehyde-3-Phosphate"
-var step5 = "Dihydroxyacetone Phosphate+Triosephosphate isomerase+Glyceraldehyde-3-Phosphate";
-var step6 = "Glyceraldehyde-3-Phosphate+Glyceraldehyde phosphate dehydrogenase+1,3-bisphoglycerate";
-var step7 = "1,3-bisphoglycerate+Phosphoglycerate kinase+3 phosphoglycerate";
-var step8 = "3 phosphoglycerate+Phosphoglycerate mutase+2 phosphoglycerate";
-var step9 = "2 phosphoglycerate+Enolase+Phosphoenolpyruvate";
-var step10 = "Phosphoenolpyruvate+Pyruvate kinase+Pyruvate";
+var step1 = "Glucose+ATP>Hexokinase<Glucose-6-Phosphate+ADP;irreversible";
+var step2 = "Glucose-6-Phosphate>Phosphoglucose isomerase<Fructose-6-Phosphate;reversible";
+var step3 = "Fructose-6-Phosphate+ATP>Phosphofructokinase<Fructose-1,6-bisphosphate+ADP;irreversible";
+var step4 = "Fructose-1,6-bisphosphate>aldolase<Dihydroxyacetone Phosphate+Glyceraldehyde-3-Phosphate;reversible"
+var step5 = "Dihydroxyacetone Phosphate>Triosephosphate isomerase<Glyceraldehyde-3-Phosphate;reversible";
+var step6 = "Glyceraldehyde-3-Phosphate>Glyceraldehyde phosphate dehydrogenase<1,3-bisphoglycerate;reversible";
+var step7 = "1,3-bisphoglycerate>Phosphoglycerate kinase<3 phosphoglycerate;reversible";
+var step8 = "3 phosphoglycerate>Phosphoglycerate mutase<2 phosphoglycerate;reversible";
+var step9 = "2 phosphoglycerate>Enolase<Phosphoenolpyruvate;reversible";
+var step10 = "Phosphoenolpyruvate>Pyruvate kinase<Pyruvate;irreversible";
 
 //My guess is we'll need a similar construct like this in the DB
 //there will be 3 columns Enzyme name, product/substrate name/ and boolean indicating type (prod/sub)
@@ -312,7 +312,7 @@ function validateReaction(){
   }
 
   for(var j = 0; j < checkedEnzsNames.length; j++){
-    currentRxn = currentRxn + checkedEnzsNames[j] + "+";
+    currentRxn = ">" + currentRxn + checkedEnzsNames[j] + "<";
   }
 
   for(var k = 0; k < checkedProdsNames.length; k++){
@@ -321,7 +321,8 @@ function validateReaction(){
       currentRxn = currentRxn + "+";
     }
   }
-  console.log("***" + currentRxn);
+  currentRxn = currentRxn + ";" + isReversible;
+  console.log("THE CURRENT REACTION ***" + currentRxn + "*******");
 
   if(countProducts > 5 || countSubstrates > 5 || checkedEnzsNames.length === 0 ){
     //settings are invalid, user is limited to 5 products and 5 substrates and an

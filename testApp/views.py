@@ -32,7 +32,7 @@ def login(request):
 	context = {
 
 	}
-	return render(request, 'accounts/login.html', context=context)
+	return render(request, 'load.html', context=context)
 
 def signup(request):
 	context = {

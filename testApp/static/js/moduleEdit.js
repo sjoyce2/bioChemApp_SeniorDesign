@@ -312,7 +312,7 @@ function validateReaction(){
   }
 
   for(var j = 0; j < checkedEnzsNames.length; j++){
-    currentRxn = ">" + currentRxn + checkedEnzsNames[j] + "<";
+    currentRxn = currentRxn + ">" + checkedEnzsNames[j] + "<";
   }
 
   for(var k = 0; k < checkedProdsNames.length; k++){

@@ -418,9 +418,9 @@ window.onload = function init(){
     modal.style.display = "none";
   });
 
-  // document.getElementById("logout").addEventListener("click", function(event) {
-  //   document.location.href = '..';
-  // });
+  document.getElementById("logout").addEventListener("click", function(event) {
+    document.location.href = '..';
+  });
 
   //exit out of invalidModal when area outside of modal is clicked
   window.onclick = function(event) {

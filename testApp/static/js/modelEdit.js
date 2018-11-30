@@ -187,6 +187,10 @@ function reset() {
 
 }
 
+document.getElementById("logout").addEventListener("click", function(event) {
+    document.location.href = '..';
+});
+
 function main () {
     reset();
     firstRectMidY = 75;

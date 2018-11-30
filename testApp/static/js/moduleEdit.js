@@ -383,18 +383,23 @@ window.onload = function init(){
   });
 
   saveBtn.addEventListener("click", function(event){
-    if(saveBtnClicked){
-      saveBtn.style.background = '#4CAF50'
-      saveBtnClicked = false;
-    }else{
-      saveBtn.style.background = '#000000';
-      saveBtnClicked = true;
-    }
+    //if(saveBtnClicked){
+      //saveBtn.style.background = '#4CAF50'
+      //saveBtnClicked = false;
+      document.location.href = 'modelEdit';
+    //}else{
+    //  saveBtn.style.background = '#000000';
+    //  saveBtnClicked = true;
+    //}
   });
 
   //exit out of invalidModal when x is clicked
   span.addEventListener("click", function(event) {
     modal.style.display = "none";
+  });
+
+  document.getElementById("logout").addEventListener("click", function(event) {
+    document.location.href = '..';
   });
 
   //exit out of invalidModal when area outside of modal is clicked

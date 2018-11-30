@@ -152,8 +152,7 @@ iframe {
 }
 
 
-/*//////////////////////////////////////////////////////////////////
-[ login ]*/
+
 
 .container-login100 {
     width: 100%;
@@ -270,10 +269,6 @@ iframe {
 #modelEditCanvas {
     background-color: white;
     border-radius: 10px;
-}
-
-#rectClicked {
-    color: white;
 }
 /*------------------------------------------------------------------
 [ Responsive ]*/

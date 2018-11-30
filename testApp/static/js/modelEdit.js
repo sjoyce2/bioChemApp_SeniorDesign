@@ -8,10 +8,13 @@ var firstRectMidY;
 var endY;
 var direction = 1;
 var stepOrder = []; //array of steps, "n" for non-reversible, "r" for reversible
-var speed;
+var speed; //how fast the "molecule" is flowing through the pathway
 var enzyme1 = "enzyme1";
 var enzyme2 = "enzyme2";
 var enzyme3 = "enzyme3";
+var enzyme1Name = "hexokinase";
+var enzyme2Name = "phosphofructokinase";
+var enzyme3Name = "aldolase";
 var en1weight = 2;
 var en2weight = 9;
 var en3weight = 1;
@@ -48,15 +51,18 @@ function notRevStep(substrate, product, enzyme,
 	
     //create enzyme at center of reaction
     ctx.beginPath();
-    ctx.moveTo(firstRectMidX + 10, firstRectMidY + 50);
+    ctx.font = "12px Arial";
+    var fontMeasures = ctx.measureText(enzyme);
+    var xCoord = firstRectMidX + 45 - (fontMeasures.width / 2);
+    ctx.moveTo(xCoord, firstRectMidY + 50);
     ctx.bezierCurveTo(
-        firstRectMidX + 10, firstRectMidY + 30, 
-        firstRectMidX + 90, firstRectMidY + 30, 
-        firstRectMidX + 90, firstRectMidY + 50);
+        xCoord, firstRectMidY + 30, 
+        xCoord + fontMeasures.width + 10, firstRectMidY + 30, 
+        xCoord + fontMeasures.width + 10, firstRectMidY + 50);
     ctx.bezierCurveTo(
-        firstRectMidX + 90, firstRectMidY + 70, 
-        firstRectMidX + 10, firstRectMidY + 70, 
-        firstRectMidX + 10, firstRectMidY + 50);
+        xCoord + fontMeasures.width + 10, firstRectMidY + 70, 
+        xCoord, firstRectMidY + 70, 
+        xCoord, firstRectMidY + 50);
     ctx.fillStyle = "white";
 	ctx.fill();
 	
@@ -66,7 +72,8 @@ function notRevStep(substrate, product, enzyme,
     ctx.fillText(substrate, firstRectMidX - 90, firstRectMidY + 5);
     ctx.fillText(product, firstRectMidX - 90, firstRectMidY + 105);
     ctx.font = "12px Arial";
-    ctx.fillText(enzyme, firstRectMidX + 20, firstRectMidY + 54)
+    ctx.fillText(enzyme, firstRectMidX + 50 - fontMeasures.width / 2, 
+        firstRectMidY + 54);
     ctx.fillText("ATP", firstRectMidX + 110, firstRectMidY + 5);
     ctx.fillText("ADP", firstRectMidX + 110, firstRectMidY + 105);
 }
@@ -118,7 +125,7 @@ function animate() {
     } else {
         setSpeed("", 1);
     }
-    y += 0.5 * direction * speed;
+    y += 0.25 * direction * speed;
     x = getDotPos(y);
     //x2 = getDotPos(y + 6);
     //x3 = getDotPos(y + 12);
@@ -138,28 +145,26 @@ function render() {
     var fourthText = "F16BP";
     var fifthText = "GAP";
 
-    notRevStep(firstText, secondText, enzyme1, 
+    //Draw each step of the pathway, including reversible and non-reversible steps
+    notRevStep(firstText, secondText, enzyme1Name, 
         firstRectMidX, firstRectMidY, ctx);
     stepOrder.push("n");
     revStep(secondText, thirdText, firstRectMidX, 
         firstRectMidY + 100, ctx);
         stepOrder.push("r");
-    notRevStep(thirdText, fourthText, enzyme2,
+    notRevStep(thirdText, fourthText, enzyme2Name,
         firstRectMidX, firstRectMidY + 200, ctx);
     stepOrder.push("n");
     revStep(fourthText, fifthText, firstRectMidX, 
         firstRectMidY + 300, ctx);
     stepOrder.push("r");
-    endY = firstRectMidY + 400.0;
+    endY = firstRectMidY + 390.0;
     ctx.stroke();
+    ctx.closePath();
     ctx.beginPath();
     ctx.fillStyle = "blue";
     ctx.moveTo(x + 5, y);
     ctx.arc(x, y, 5, 0, 2 * Math.PI);
-    /*ctx.moveTo(x2 + 5, y + 6);
-    ctx.arc(x2, y + 6, 5, 0, 2 * Math.PI);
-    ctx.moveTo(x3 + 5, y + 12);
-    ctx.arc(x3, y + 12, 5, 0, 2 * Math.PI);*/
     ctx.fill();
 }
 
@@ -206,6 +211,3 @@ function main () {
 
 
 main();
-
-module.exports = {};
-module.exports.setSpeed() = setSpeed();

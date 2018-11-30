@@ -3,15 +3,15 @@
 <head>
 	<title>Module Edit Screen</title>
 	<meta charset="UTF-8">
-	{% load static %}
+	<!-- {% load static %}
 	<link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}"/>
-	<link rel="stylesheet" type="text/css" href="{% static 'css/moduleEdit.css' %}"/>
-	<!-- <link rel="stylesheet" type="text/css" href="css/util.css"/>
-	<link rel="stylesheet" type="text/css" href="css/moduleEdit.css"/> -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/moduleEdit.css' %}"/> -->
+	<link rel="stylesheet" type="text/css" href="css/util.css"/>
+	<link rel="stylesheet" type="text/css" href="css/moduleEdit.css"/>
 </head>
 <body>
 	<div class="limiter">
-		<div class="container-login100" style="background-image: url('{% static 'images/bg-01.jpg' %}');">
+		<!-- <div class="container-login100" style="background-image: url('{% static 'images/bg-01.jpg' %}');">
 			<img class="step1Image" id="step1" src="{% static 'images/GlycolysisStep1.jpg' %}" style="display: none;">
 			<img class="step1Image" id="Glucose" src="{% static 'images/Glucose.jpg' %}" style="display: none;">
 			<img class="step1Image" id="Glucose-6-Phosphate" src="{% static 'images/Glucose-6-Phosphate.jpg' %}" style="display: none;">
@@ -23,8 +23,8 @@
 			<img class="step1Image" id="3 phosphoglycerate" src="{% static 'images/3 phosphoglycerate.jpg' %}" style="display: none;">
 			<img class="step1Image" id="2 phosphoglycerate" src="{% static 'images/2 phosphoglycerate.jpg' %}" style="display: none;">
 			<img class="step1Image" id="Phosphoenolpyruvate" src="{% static 'images/Phosphoenolpyruvate.jpg' %}" style="display: none;">
-			<img class="step1Image" id="Pyruvate" src="{% static 'images/Pyruvate.jpg' %}" style="display: none;">
-		<!-- <div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+			<img class="step1Image" id="Pyruvate" src="{% static 'images/Pyruvate.jpg' %}" style="display: none;"> -->
+		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
 			<img class="step1Image" id="step1" src="images/GlycolysisStep1.jpg" style="display: none;">
 			<img class="step1Image" id="Glucose" src="images/Glucose.jpg" style="display: none;">
 			<img class="step1Image" id="Glucose-6-Phosphate" src="images/Glucose-6-Phosphate.jpg" style="display: none;">
@@ -36,7 +36,7 @@
 			<img class="step1Image" id="3 phosphoglycerate" src="images/3 phosphoglycerate.jpg" style="display: none;">
 			<img class="step1Image" id="2 phosphoglycerate" src="images/2 phosphoglycerate.jpg" style="display: none;">
 			<img class="step1Image" id="Phosphoenolpyruvate" src="images/Phosphoenolpyruvate.jpg" style="display: none;">
-			<img class="step1Image" id="Pyruvate" src="images/Pyruvate.jpg" style="display: none;"> -->
+			<img class="step1Image" id="Pyruvate" src="images/Pyruvate.jpg" style="display: none;">
 			<div class="wrap-login100">
 				<form class="login100-form validate-form">
                     <div class="editToolbar">
@@ -54,13 +54,9 @@
 												<canvas id="imageCanvas" height="500" width="825"></canvas>
 												<div id="subsContainer">
 													<label id="subsLabel">SUBSTRATES</label>
-											    <ul class="subs" id="substrates">
-														<label class="container">Glucose
-													  	<input value="Glucose" type="checkbox" onchange=onRadioChange() name="Substrate">
-													  	<span class="checkmark"></span>
-														</label>
-														<label class="container">Glucose-6-Phosphate
-													  	<input type="checkbox" value="Glucose-6-Phosphate" onchange="onRadioChange()" name="Substrate">
+													<ul class="subs" id="substrates">
+														<label class="container">Dihydroxyacetone Phosphate
+													  	<input type="checkbox" value="Dihydroxyacetone Phosphate" onchange="onRadioChange()" name="Substrate">
 													  	<span class="checkmark"></span>
 														</label>
 														<label class="container">Fructose-6-Phosphate
@@ -71,12 +67,20 @@
 													  	<input type="checkbox" value="Fructose-1,6-bisphosphate" onchange="onRadioChange()" name="Substrate">
 													  	<span class="checkmark"></span>
 														</label>
-														<label class="container">Dihydroxyacetone Phosphate
-													  	<input type="checkbox" value="Dihydroxyacetone Phosphate" onchange="onRadioChange()" name="Substrate">
+														<label class="container">Glucose
+													  	<input value="Glucose" type="checkbox" onchange=onRadioChange() name="Substrate">
+													  	<span class="checkmark"></span>
+														</label>
+														<label class="container">Glucose-6-Phosphate
+													  	<input type="checkbox" value="Glucose-6-Phosphate" onchange="onRadioChange()" name="Substrate">
 													  	<span class="checkmark"></span>
 														</label>
 														<label class="container">Glyceraldehyde-3-Phosphate
 													  	<input type="checkbox" value="Glyceraldehyde-3-Phosphate" onchange="onRadioChange()" name="Substrate">
+													  	<span class="checkmark"></span>
+														</label>
+														<label class="container">Phosphoenolpyruvate
+													  	<input type="checkbox" value="Phosphoenolpyruvate" onchange="onRadioChange()" name="Substrate">
 													  	<span class="checkmark"></span>
 														</label>
 														<label class="container">1,3-Bisphoglycerate
@@ -91,8 +95,8 @@
 													  	<input type="checkbox" value="2 phosphoglycerate" onchange="onRadioChange()" name="Substrate">
 													  	<span class="checkmark"></span>
 														</label>
-														<label class="container">Phosphoenolpyruvate
-													  	<input type="checkbox" value="Phosphoenolpyruvate" onchange="onRadioChange()" name="Substrate">
+														<label class="container">ATP
+													  	<input type="checkbox" value="ATP" onchange="onRadioChange()" name="Substrate">
 													  	<span class="checkmark"></span>
 														</label>
 									    		</ul>
@@ -145,8 +149,8 @@
 												<div id="prodsContainer">
 													<label id="prodsLabel">PRODUCTS</label>
 													<ul class="prods" id="products">
-														<label class="container">Glucose-6-Phosphate
-															<input type="checkbox" value="Glucose-6-Phosphate" onchange="onRadioChange()" name=Product>
+														<label class="container">Dihydroxyacetone Phosphate
+															<input type="checkbox" value="Dihydroxyacetone Phosphate" onchange="onRadioChange()" name="Product">
 															<span class="checkmark"></span>
 														</label>
 														<label class="container">Fructose-6-Phosphate
@@ -157,12 +161,20 @@
 															<input type="checkbox" value="Fructose-1,6-bisphosphate" onchange="onRadioChange()" name="Product">
 															<span class="checkmark"></span>
 														</label>
-														<label class="container">Dihydroxyacetone Phosphate
-															<input type="checkbox" value="Dihydroxyacetone Phosphate" onchange="onRadioChange()" name="Product">
+														<label class="container">Glucose-6-Phosphate
+															<input type="checkbox" value="Glucose-6-Phosphate" onchange="onRadioChange()" name=Product>
 															<span class="checkmark"></span>
 														</label>
 														<label class="container">Glyceraldehyde-3-Phosphate
 															<input type="checkbox" value="Glyceraldehyde-3-Phosphate" onchange="onRadioChange()" name="Product">
+															<span class="checkmark"></span>
+														</label>
+														<label class="container">Phosphoenolpyruvate
+															<input type="checkbox" value="Phosphoenolpyruvate" onchange="onRadioChange()" name="Product">
+															<span class="checkmark"></span>
+														</label>
+														<label class="container">Pyruvate
+															<input type="checkbox" value="Pyruvate" onchange="onRadioChange()" name="Product">
 															<span class="checkmark"></span>
 														</label>
 														<label class="container">1,3-Bisphoglycerate
@@ -177,15 +189,10 @@
 															<input type="checkbox" value="2 phosphoglycerate" onchange="onRadioChange()" name="Product">
 															<span class="checkmark"></span>
 														</label>
-														<label class="container">Pyruvate
-															<input type="checkbox" value="Pyruvate" onchange="onRadioChange()" name="Product">
+														<label class="container">ADP
+															<input type="checkbox" value="ADP" onchange="onRadioChange()" name="Product">
 															<span class="checkmark"></span>
 														</label>
-														<label class="container">Phosphoenolpyruvate
-															<input type="checkbox" value="Phosphoenolpyruvate" onchange="onRadioChange()" name="Product">
-															<span class="checkmark"></span>
-														</label>
-
 										    	</ul>
 												</div>
 
@@ -219,7 +226,7 @@
 														</datalist>
 														<input class="weightValue" type="text" id="weightSliderValue">
 														<button type="button" class="enterWeight" id="submitWeight">SUBMIT</button> -->
-												<!-- </label>
+												</label>
 												<label class="reversibleChoice">Reversible
 													<input type="radio" name="reversibleChoice" onchange="onRadioReverseChange()" value="Reversible">
 													<span class="checkmark"></span>
@@ -227,7 +234,8 @@
 												<label class="reversibleChoice">Irreversible
 													<input type="radio" name="reversibleChoice" onchange="onRadioReverseChange()" value="Irreversible" checked>
 													<span class="checkmark"></span>
-												</label> -->
+												</label>
+
 											</div>
 											<!-- The Modal -->
 											<div id="invalidModal" class="modal">
@@ -242,7 +250,7 @@
 			</div>
 		</div>
 	</div>
-	<script src="{% static 'js/moduleEdit.js' %}"></script>
-	<!-- <script src="js/moduleEdit.js"></script> -->
+	<!-- <script src="{% static 'js/moduleEdit.js' %}"></script> -->
+	<script src="js/moduleEdit.js"></script>
 </body>
 </html>

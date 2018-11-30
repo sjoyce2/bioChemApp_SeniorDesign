@@ -56,9 +56,9 @@ button {
 }
 #subsContainer, #prodsContainer, #enzsContainer{
   width: 30%;
-  height: 15%;
   border-radius: 5%;
   display: inline-block;
+  overflow: hidden;
 }
 #prodsLabel, #enzsLabel, #subsLabel{
   display: inline-block;
@@ -66,32 +66,35 @@ button {
   color: white;
 }
 ul#products{
-    overflow-y: auto;
+    overflow-y: scroll;
     color: white;
     font-size: 16px;
     display: flex;
     flex-direction: column;
+    max-height: 100px;
 }
 ul#enzymes{
-    overflow-y: auto;
+    overflow-y: scroll;
     color: white;
     font-size: 16px;
     display: flex;
     flex-direction: column;
+    max-height: 100px;
 }
 
 ul#substrates{
-    overflow-y: auto;
+    overflow-y: scroll;
     color: white;
     font-size: 16px;
     display: flex;
     flex-direction: column;
+    max-height: 100px;
 }
 
-#substrates, #products, #enzymes{
+/* #substrates, #products, #enzymes{
   float: left;
   display: inline-block;
-}
+} */
 
 .container {
   float: left;
@@ -111,6 +114,7 @@ ul#substrates{
     font-size: 16px;
     padding: 2% 2% 2% 2%;
     margin-left: 2%;
+    margin-top: 2%;
 }
 
 /* #weightSlider {
@@ -133,6 +137,7 @@ ul#substrates{
     display: inline-block;
     font-size: 16px;
     margin-right: 2%;
+    margin-top: 2%;
 }
 
 .saveReaction {
@@ -145,6 +150,7 @@ ul#substrates{
     display: inline-block;
     font-size: 16px;
     margin-right: 2%;
+    margin-top: 2%;
 }
 
 .createReaction, .saveReaction{

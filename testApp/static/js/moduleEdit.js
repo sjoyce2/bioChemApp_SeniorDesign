@@ -23,10 +23,11 @@ var verticalBuffer = 10;
 var countProducts;
 var countSubstrates;
 var currentRxn = "";
+var modal;
 
-var step1 = "Glucose+Hexokinase+Glucose-6-Phosphate";
+var step1 = "Glucose+ATP+Hexokinase+Glucose-6-Phosphate+ADP";
 var step2 = "Glucose-6-Phosphate+Phosphoglucose isomerase+Fructose-6-Phosphate";
-var step3 = "Fructose-6-Phosphate+Phosphofructokinase+Fructose-1,6-bisphosphate";
+var step3 = "Fructose-6-Phosphate+ATP+Phosphofructokinase+Fructose-1,6-bisphosphate+ADP";
 var step4 = "Fructose-1,6-bisphosphate+aldolase+Dihydroxyacetone Phosphate+Glyceraldehyde-3-Phosphate"
 var step5 = "Dihydroxyacetone Phosphate+Triosephosphate isomerase+Glyceraldehyde-3-Phosphate";
 var step6 = "Glyceraldehyde-3-Phosphate+Glyceraldehyde phosphate dehydrogenase+1,3-bisphoglycerate";
@@ -39,28 +40,29 @@ var step10 = "Phosphoenolpyruvate+Pyruvate kinase+Pyruvate";
 //there will be 3 columns Enzyme name, product/substrate name/ and boolean indicating type (prod/sub)
 //then the enzymeProds array will fetch all rows with type product and enzymeSubs will fetch the rest
 //And we'll end up with 2 arrays filled with arrays of length 2
-var enzymeProds = [["Hexokinase","Glucose-6-Phosphate"],["Phosphoglucose isomerase","Fructose-6-Phosphate"],
-  ["Phosphofructokinase","Fructose-1,6-bisphosphate"],["aldolase","Dihydroxyacetone Phosphate"],["aldolase","Glyceraldehyde-3-Phosphate"],
+var enzymeProds = [["Hexokinase","Glucose-6-Phosphate"],["Hexokinase","ADP"],["Phosphoglucose isomerase","Fructose-6-Phosphate"],
+  ["Phosphofructokinase","Fructose-1,6-bisphosphate"],["Phosphofructokinase","ADP"],["aldolase","Dihydroxyacetone Phosphate"],["aldolase","Glyceraldehyde-3-Phosphate"],
   ["Triosephosphate isomerase","Glyceraldehyde-3-Phosphate"],["Glyceraldehyde phosphate dehydrogenase","1,3-bisphoglycerate"],
-  ["Phosphoglycerate kinase","3 phosphoglycerate"],["Phosphoglycerate mutase","2 phosphoglycerate"],["Enolase","Phosphoenolpyruvate"],
-  ["Pyruvate kinase","Pyruvate"]];
-var enzymeSubs = [["Hexokinase","Glucose"],["Phosphoglucose isomerase","Glucose-6-Phosphate"],
-  ["Phosphofructokinase","Fructose-6-Phosphate"],["aldolase","Fructose-1,6-bisphosphate"], ["Triosephosphate isomerase","Dihydroxyacetone Phosphate"],
-  ["Glyceraldehyde phosphate dehydrogenase","Glyceraldehyde-3-Phosphate"],["Phosphoglycerate kinase","1,3-bisphoglycerate"],
-  ["Phosphoglycerate mutase","3 phosphoglycerate"],["Enolase","2 phosphoglycerate"],["Pyruvate kinase","Phosphoenolpyruvate"]];
+  ["Phosphoglycerate kinase","3 phosphoglycerate"],["Phosphoglycerate kinase","ADP"],["Phosphoglycerate mutase","2 phosphoglycerate"],["Enolase","Phosphoenolpyruvate"],
+  ["Pyruvate kinase","Pyruvate"],["Pyruvate kinase","ADP"]];
+var enzymeSubs = [["Hexokinase","Glucose"],["Hexokinase","ATP"],["Phosphoglucose isomerase","Glucose-6-Phosphate"],
+  ["Phosphofructokinase","Fructose-6-Phosphate"],["Phosphofructokinase","ATP"],["aldolase","Fructose-1,6-bisphosphate"], ["Triosephosphate isomerase","Dihydroxyacetone Phosphate"],
+  ["Glyceraldehyde phosphate dehydrogenase","Glyceraldehyde-3-Phosphate"],["Phosphoglycerate kinase","1,3-bisphoglycerate"],["Phosphoglycerate kinase","ATP"],
+  ["Phosphoglycerate mutase","3 phosphoglycerate"],["Enolase","2 phosphoglycerate"],["Pyruvate kinase","Phosphoenolpyruvate"],["Pyruvate kinase","ATP"]];
 
 //function to change the text box to the value set by slider
 // function updateTextInput(val) {
 //   document.getElementById('weightSliderValue').value=val;
 // }
+
 //function to change reversible boolean depending on which reversible radio btn is set
-// function onRadioReverseChange(){
-//   if(reversibleChoice[0].checked){
-//     isReversible = true;
-//   }else{
-//     isReversible = false;
-//   }
-// }
+function onRadioReverseChange(){
+  if(reversibleChoice[0].checked){
+    isReversible = true;
+  }else{
+    isReversible = false;
+  }
+}
 
 //check which radio buttons and checkboxes are clicked for products, enzymes and substrates
 //push name of product, substrate, enzyme to checkedProdsEnzsSubsNames
@@ -89,6 +91,10 @@ function onRadioChange(){
       checkedProdsNames.push(products[k].value);
     }
   }
+  if(countProducts > 5 || countSubstrates > 5){
+    modal.style.display = "block";
+    ctx.clearRect(0, 0, canvas1.width, canvas1.height);
+  }
 }
 //not used as of right now
 // function getMousePosition(canvas1, event) {
@@ -101,27 +107,40 @@ function onRadioChange(){
 
 //display image corresponding to substrates and products chosen
 function displayImage(xcoor, ycoor, name){
-  var img = document.getElementById(name);
+  if(name === "ADP" || name === "ATP"){
+    console.log("ADP OR ATP");
+  }else{
+    var img = document.getElementById(name);
+    ctx.drawImage(img, xcoor, ycoor, objectWidth, objectHeight);
+  }
   console.log("image info  " + name + xcoor + ycoor);
-  ctx.drawImage(img, xcoor, ycoor, objectWidth, objectHeight);
 }
 
 //draw boxes for substrates and products and set text
 function drawObject(xcoor, ycoor, name){
   console.log(name);
-  displayImage(xcoor, ycoor, name);
-  //draw box around image
-  ctx.moveTo(xcoor,ycoor);
-  ctx.lineTo(xcoor + objectWidth, ycoor);
-  ctx.lineTo(xcoor + objectWidth, ycoor + objectHeight);
-  ctx.lineTo(xcoor, ycoor + objectHeight);
-  ctx.lineTo(xcoor, ycoor);
-  ctx.stroke();
+  if(name === "ATP" || name === "ADP"){
+    xcoor = xcoor + (objectWidth / 2);
+    ycoor = ycoor - (objectHeight / 2);
+    ctx.font = "18px Arial";
+    ctx.fillText(name, xcoor, ycoor + objectHeight + verticalBuffer);
+    ycoor = ycoor + (objectHeight / 2);
+    xcoor = xcoor - (objectWidth / 2);
+  }else{
+    displayImage(xcoor, ycoor, name);
+    //draw box around image
+    ctx.moveTo(xcoor,ycoor);
+    ctx.lineTo(xcoor + objectWidth, ycoor);
+    ctx.lineTo(xcoor + objectWidth, ycoor + objectHeight);
+    ctx.lineTo(xcoor, ycoor + objectHeight);
+    ctx.lineTo(xcoor, ycoor);
+    ctx.stroke();
 
-  ycoor = ycoor + objectHeight / 25; //add a small buffer so that text below image does not overlap with square
-  ctx.font = "12px Arial";
-  //draw text below box containing substrate or product
-  ctx.fillText(name, xcoor, ycoor + objectHeight + verticalBuffer);
+    ycoor = ycoor + objectHeight / 25; //add a small buffer so that text below image does not overlap with square
+    ctx.font = "12px Arial";
+    //draw text below box containing substrate or product
+    ctx.fillText(name, xcoor, ycoor + objectHeight + verticalBuffer);
+  }
   return [xcoor, ycoor, name];
 }
 
@@ -135,20 +154,21 @@ function drawDownArrow(xcoor, ycoor, name){
     //xcoor = canvas1.width / 2;
     ctx.moveTo(xcoor, ycoor);
     ctx.lineTo(xcoor + (objectWidth / 4), ycoor + (objectHeight / 4));
+    ctx.lineTo(xcoor, ycoor);
     ctx.lineTo(xcoor - (objectWidth / 4), ycoor + (objectHeight / 4));
     ctx.lineTo(xcoor, ycoor);
     ctx.lineTo(xcoor, ycoor + objectHeight);
     ctx.lineTo(xcoor + (objectWidth / 4), ycoor + objectHeight - (objectHeight / 4));
-    ctx.lineTo(xcoor - (objectWidth / 4), ycoor + objectHeight - (objectHeight / 4));
     ctx.lineTo(xcoor, ycoor + objectHeight);
+    ctx.lineTo(xcoor - (objectWidth / 4), ycoor + objectHeight - (objectHeight / 4));
     ctx.stroke();
   }else{
     //xcoor = canvas1.width / 2;
     ctx.moveTo(xcoor, ycoor);
     ctx.lineTo(xcoor, ycoor + objectHeight);
     ctx.lineTo(xcoor + (objectWidth / 4), ycoor + objectHeight - (objectHeight / 4));
-    ctx.lineTo(xcoor - (objectWidth / 4), ycoor + objectHeight - (objectHeight / 4));
     ctx.lineTo(xcoor, ycoor + objectHeight);
+    ctx.lineTo(xcoor - (objectWidth / 4), ycoor + objectHeight - (objectHeight / 4));
     ctx.stroke();
   }
   return [xcoor, ycoor, name];
@@ -256,6 +276,7 @@ function setReaction(enzymeSubs, enzymeProds){
   for(var i = 0; i < enzymeSubs.length; i++){
     for(var j = 1; j < enzymeSubs[i].length; j++){
       if(enzymeSubs[i][0] === enzymeName){
+        console.log("**********"+enzymeSubs[i],[j]);
         checkedSubsNames.push(enzymeSubs[i][j]);
         countSubstrates++;
       }
@@ -355,7 +376,7 @@ window.onload = function init(){
   weightSliderValue = document.getElementById('weightSliderValue');
   submitWeightBtn = document.getElementById('submitWeight');
   weightSlider = document.getElementById('weightSlider');
-  var modal = document.getElementById('invalidModal');
+  modal = document.getElementById('invalidModal');
   var span = document.getElementsByClassName("close")[0];
   var saveBtnClicked = false;
 
@@ -375,7 +396,6 @@ window.onload = function init(){
     if(continueDisplay){
       displayReaction();
     }else{
-      //the settings are invalid so display modal and clear canvas
       modal.style.display = "block";
       ctx.clearRect(0, 0, canvas1.width, canvas1.height);
     }
@@ -398,9 +418,9 @@ window.onload = function init(){
     modal.style.display = "none";
   });
 
-  document.getElementById("logout").addEventListener("click", function(event) {
-    document.location.href = '..';
-  });
+  // document.getElementById("logout").addEventListener("click", function(event) {
+  //   document.location.href = '..';
+  // });
 
   //exit out of invalidModal when area outside of modal is clicked
   window.onclick = function(event) {

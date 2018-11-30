@@ -215,10 +215,6 @@ label {
   align-items: center;
 }
 
-.login-wrapper {
-  margin: 20px;
-  padding: 20px;
-}
 
 
 /*------------------------------------------------------------------
@@ -587,6 +583,3 @@ label {
     opacity: 1;
   }
 }
-
-
-

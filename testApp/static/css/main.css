@@ -191,13 +191,15 @@ iframe {
 }
 
 .wrap-login100 {
+  display: inline-flex;
+  flex-direction: column;
   width: 450px;
   height: 600px;
   border-radius: 10px;
   overflow: hidden;
   padding: 55px 55px 37px 55px;
 
-  background: #95f852;
+  background: white;
   background: -webkit-linear-gradient(top, #19384A, #347787);
   background: -o-linear-gradient(top, #19384A, #347787);
   background: -moz-linear-gradient(top, #19384A, #347787);
@@ -205,13 +207,17 @@ iframe {
 }
 
 label {
-  display:none;
+  color: white;
 }
 
 .login-flex {
-  margin-top: 50px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   min-width: 100%;
   align-items: center;
 }
@@ -277,7 +283,7 @@ label {
 }
 
 #id_username {
-  border: black;
+  border: 1px solid rgba(255,255,255,0.24);
   font-family: Poppins-Regular;
   font-size: 16px;
   color: #fff;
@@ -291,7 +297,7 @@ label {
 }
 
 #id_password {
-  border: black;
+  border: 1px solid rgba(255,255,255,0.24);
   font-family: Poppins-Regular;
   font-size: 16px;
   color: #fff;
@@ -302,11 +308,6 @@ label {
   height: 45px;
   background: transparent;
   padding: 0 5px 0 38px;
-}
-
-#login-loadpage-btn {
-  margin-top: 30px;
-
 }
 
 #signup-loadpage-btn {

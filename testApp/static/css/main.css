@@ -209,7 +209,7 @@ label {
 }
 
 .login-flex {
-  margin-top: 50px;
+  margin-top: 80px;
   display: flex;
   flex-direction: column;
   min-width: 100%;
@@ -472,15 +472,15 @@ label {
   justify-content: center;
   align-items: center;
   padding: 0 20px;
-  min-width: 120px;
+  min-width: 150px;
   height: 50px;
   border-radius: 25px;
 
-  background: #9152f8;
-  background: -webkit-linear-gradient(bottom, #347787 #347787);
-  background: -o-linear-gradient(bottom, #7579ff, #b224ef);
-  background: -moz-linear-gradient(bottom, #7579ff, #b224ef);
-  background: linear-gradient(bottom, #7579ff, #b224ef);
+  background: #EEEEEE;
+  background: -webkit-linear-gradient(bottom, #EEEEEE #EEEEEE);
+  background: -o-linear-gradient(bottom, #EEEEEE, #EEEEEE);
+  background: -moz-linear-gradient(bottom, #EEEEEE, #EEEEEE);
+  background: linear-gradient(bottom, #EEEEEE, #EEEEEE);
   position: relative;
   z-index: 1;
 

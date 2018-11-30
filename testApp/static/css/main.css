@@ -276,6 +276,7 @@ label {
 }
 
 #id_username {
+  border: black;
   font-family: Poppins-Regular;
   font-size: 16px;
   color: #fff;
@@ -289,6 +290,7 @@ label {
 }
 
 #id_password {
+  border: black;
   font-family: Poppins-Regular;
   font-size: 16px;
   color: #fff;
@@ -303,7 +305,7 @@ label {
 
 #login-loadpage-btn {
   margin-top: 30px;
-  
+
 }
 
 #signup-loadpage-btn {

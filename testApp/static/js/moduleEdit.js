@@ -49,7 +49,9 @@ var enzymeSubs = [["Hexokinase","Glucose"],["Hexokinase","ATP"],["Phosphoglucose
   ["Phosphofructokinase","Fructose-6-Phosphate"],["Phosphofructokinase","ATP"],["aldolase","Fructose-1,6-bisphosphate"], ["Triosephosphate isomerase","Dihydroxyacetone Phosphate"],
   ["Glyceraldehyde phosphate dehydrogenase","Glyceraldehyde-3-Phosphate"],["Phosphoglycerate kinase","1,3-bisphoglycerate"],["Phosphoglycerate kinase","ATP"],
   ["Phosphoglycerate mutase","3 phosphoglycerate"],["Enolase","2 phosphoglycerate"],["Pyruvate kinase","Phosphoenolpyruvate"],["Pyruvate kinase","ATP"]];
-
+var enzymeReverse = [["Hexokinase","irreversible"], ["Phosphoglucose isomerase","reversible"], ["Phosphofructokinase","irreversible"], ["aldolase","reversible"],
+  ["Triosephosphate isomerase","reversible"],["Glyceraldehyde phosphate dehydrogenase","reversible"],["Phosphoglycerate kinase","reversible"],
+  ["Phosphoglycerate mutase","reversible"],["Enolase","reversible"],["Pyruvate kinase","irreversible"]];
 //function to change the text box to the value set by slider
 // function updateTextInput(val) {
 //   document.getElementById('weightSliderValue').value=val;
@@ -271,7 +273,7 @@ function displayReaction(){
   drawProducts(currentX, currentY);
 }
 
-function setReaction(enzymeSubs, enzymeProds){
+function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
   var enzymeName = checkedEnzsNames[0];
   for(var i = 0; i < enzymeSubs.length; i++){
     for(var j = 1; j < enzymeSubs[i].length; j++){
@@ -287,6 +289,17 @@ function setReaction(enzymeSubs, enzymeProds){
       if(enzymeProds[i][0] === enzymeName){
         checkedProdsNames.push(enzymeProds[i][j]);
         countProducts++;
+      }
+    }
+  }
+  for(var i = 0; i < enzymeReverse.length; i++){
+    for(var j = 1; j < enzymeReverse[i].length; j++){
+      if(enzymeReverse[i][0] === enzymeName){
+        if(enzymeReverse[i][j] === "reversible"){
+          isReversible === true;
+        }else{
+          isReversible === false;
+        }
       }
     }
   }

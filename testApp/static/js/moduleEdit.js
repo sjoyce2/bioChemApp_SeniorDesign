@@ -327,7 +327,7 @@ function validateReaction(){
 
   }else if(step1 === currentRxn || step2 === currentRxn || step3 === currentRxn || step4 === currentRxn
         || step5 === currentRxn || step6 === currentRxn || step7 === currentRxn || step8 === currentRxn
-        || step9 === currentRxn || step10 === currentRxn || step11 === currentRxn){
+        || step9 === currentRxn || step10 === currentRxn){
     //Reaction is valid
     ctx.fillStyle = "green";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);

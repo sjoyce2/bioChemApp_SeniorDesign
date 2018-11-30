@@ -34,6 +34,11 @@
         return check;
     });
 
+    //Change login elements to fit our purposes
+    
+    $('#id_username')[0].placeholder = "Username";
+    $('#id_password')[0].placeholder = "Password";
+
 
     $('.validate-form .input100').each(function(){
         $(this).focus(function(){

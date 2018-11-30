@@ -204,6 +204,9 @@ iframe {
   background: linear-gradient(top, #19384A, #347787);
 }
 
+label {
+  display:none;
+}
 
 /*------------------------------------------------------------------
 [ Form ]*/

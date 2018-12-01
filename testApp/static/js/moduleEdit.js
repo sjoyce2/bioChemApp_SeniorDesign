@@ -11,7 +11,7 @@ var ctx; //context of the canvas element, is 2d
 var image; //image to be displayed corresponding to substrates and products chosen
 var createBtn; //button hit after module settings are set (displays rxn in canvas)
 var saveBtn; //button hit after user is finished, send user back to model edit screen
-var isReversible; //boolean that indicates if user wants rxn to be reversible or not
+var isReversible = false; //boolean that indicates if user wants rxn to be reversible or not
 var reversibleChoice; //variable to hold reversible radio buttons
 var weightSliderValue; //var corresponding to textbox for weight slider, displays weight value and allows user to set weight
 var submitWeightBtn; //var corresponding to button to enter weight set in text weightSliderValue textbox
@@ -25,16 +25,16 @@ var countSubstrates;
 var currentRxn = "";
 var modal;
 
-var step1 = "Glucose+ATP>Hexokinase<Glucose-6-Phosphate+ADP;irreversible";
-var step2 = "Glucose-6-Phosphate>Phosphoglucose isomerase<Fructose-6-Phosphate;reversible";
-var step3 = "Fructose-6-Phosphate+ATP>Phosphofructokinase<Fructose-1,6-bisphosphate+ADP;irreversible";
-var step4 = "Fructose-1,6-bisphosphate>aldolase<Dihydroxyacetone Phosphate+Glyceraldehyde-3-Phosphate;reversible"
-var step5 = "Dihydroxyacetone Phosphate>Triosephosphate isomerase<Glyceraldehyde-3-Phosphate;reversible";
-var step6 = "Glyceraldehyde-3-Phosphate>Glyceraldehyde phosphate dehydrogenase<1,3-bisphoglycerate;reversible";
-var step7 = "1,3-bisphoglycerate>Phosphoglycerate kinase<3 phosphoglycerate;reversible";
-var step8 = "3 phosphoglycerate>Phosphoglycerate mutase<2 phosphoglycerate;reversible";
-var step9 = "2 phosphoglycerate>Enolase<Phosphoenolpyruvate;reversible";
-var step10 = "Phosphoenolpyruvate>Pyruvate kinase<Pyruvate;irreversible";
+var step1 = "Glucose+ATP>Hexokinase<Glucose-6-Phosphate+ADP;false";
+var step2 = "Glucose-6-Phosphate>Phosphoglucose isomerase<Fructose-6-Phosphate;true";
+var step3 = "Fructose-6-Phosphate+ATP>Phosphofructokinase<Fructose-1,6-bisphosphate+ADP;false";
+var step4 = "Fructose-1,6-bisphosphate>aldolase<Dihydroxyacetone Phosphate+Glyceraldehyde-3-Phosphate;true"
+var step5 = "Dihydroxyacetone Phosphate>Triosephosphate isomerase<Glyceraldehyde-3-Phosphate;true";
+var step6 = "Glyceraldehyde-3-Phosphate>Glyceraldehyde phosphate dehydrogenase<1,3-bisphoglycerate;true";
+var step7 = "1,3-bisphoglycerate>Phosphoglycerate kinase<3 phosphoglycerate;true";
+var step8 = "3 phosphoglycerate>Phosphoglycerate mutase<2 phosphoglycerate;true";
+var step9 = "2 phosphoglycerate>Enolase<Phosphoenolpyruvate;true";
+var step10 = "Phosphoenolpyruvate>Pyruvate kinase<Pyruvate;false";
 
 //My guess is we'll need a similar construct like this in the DB
 //there will be 3 columns Enzyme name, product/substrate name/ and boolean indicating type (prod/sub)
@@ -49,6 +49,7 @@ var enzymeSubs = [["Hexokinase","Glucose"],["Hexokinase","ATP"],["Phosphoglucose
   ["Phosphofructokinase","Fructose-6-Phosphate"],["Phosphofructokinase","ATP"],["aldolase","Fructose-1,6-bisphosphate"], ["Triosephosphate isomerase","Dihydroxyacetone Phosphate"],
   ["Glyceraldehyde phosphate dehydrogenase","Glyceraldehyde-3-Phosphate"],["Phosphoglycerate kinase","1,3-bisphoglycerate"],["Phosphoglycerate kinase","ATP"],
   ["Phosphoglycerate mutase","3 phosphoglycerate"],["Enolase","2 phosphoglycerate"],["Pyruvate kinase","Phosphoenolpyruvate"],["Pyruvate kinase","ATP"]];
+
 var enzymeReverse = [["Hexokinase","irreversible"], ["Phosphoglucose isomerase","reversible"], ["Phosphofructokinase","irreversible"], ["aldolase","reversible"],
   ["Triosephosphate isomerase","reversible"],["Glyceraldehyde phosphate dehydrogenase","reversible"],["Phosphoglycerate kinase","reversible"],
   ["Phosphoglycerate mutase","reversible"],["Enolase","reversible"],["Pyruvate kinase","irreversible"]];
@@ -122,12 +123,12 @@ function displayImage(xcoor, ycoor, name){
 function drawObject(xcoor, ycoor, name){
   console.log(name);
   if(name === "ATP" || name === "ADP"){
-    xcoor = xcoor + (objectWidth / 2);
+    //xcoor = xcoor + (objectWidth / 2);
     ycoor = ycoor - (objectHeight / 2);
     ctx.font = "18px Arial";
     ctx.fillText(name, xcoor, ycoor + objectHeight + verticalBuffer);
     ycoor = ycoor + (objectHeight / 2);
-    xcoor = xcoor - (objectWidth / 2);
+    //xcoor = xcoor - (objectWidth / 2);
   }else{
     displayImage(xcoor, ycoor, name);
     //draw box around image
@@ -292,13 +293,16 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
       }
     }
   }
+  console.log(enzymeReverse);
   for(var i = 0; i < enzymeReverse.length; i++){
     for(var j = 1; j < enzymeReverse[i].length; j++){
       if(enzymeReverse[i][0] === enzymeName){
+        console.log(enzymeReverse[i][j]);
         if(enzymeReverse[i][j] === "reversible"){
-          isReversible === true;
+          console.log("HERE");
+          isReversible = true;
         }else{
-          isReversible === false;
+          isReversible = false;
         }
       }
     }
@@ -321,11 +325,15 @@ function validateReaction(){
   //every categor is chosen) it can easily be compared to the known
   //reactions
   for(var i = 0; i < checkedSubsNames.length; i++){
-    currentRxn = currentRxn + checkedSubsNames[i] + "+";
+    if(i === checkedSubsNames.length - 1){
+      currentRxn = currentRxn + checkedSubsNames[i] + ">";
+    }else {
+      currentRxn = currentRxn + checkedSubsNames[i] + "+";
+    }
   }
 
   for(var j = 0; j < checkedEnzsNames.length; j++){
-    currentRxn = currentRxn + ">" + checkedEnzsNames[j] + "<";
+    currentRxn = currentRxn + checkedEnzsNames[j] + "<";
   }
 
   for(var k = 0; k < checkedProdsNames.length; k++){
@@ -347,7 +355,7 @@ function validateReaction(){
     return false;
 
   }else if(countSubstrates === 0 && countProducts === 0){
-    setReaction(enzymeSubs, enzymeProds); //the user has only selected the enzyme so fill in reaction
+    setReaction(enzymeSubs, enzymeProds, enzymeReverse); //the user has only selected the enzyme so fill in reaction
     ctx.fillStyle = "green";//reaction will be correct so set to green
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
 
@@ -408,6 +416,7 @@ window.onload = function init(){
 
     //the settings are valid so display as usual
     if(continueDisplay){
+      console.log("IS REVERSIBLE:" + isReversible);
       displayReaction();
     }else{
       modal.style.display = "block";

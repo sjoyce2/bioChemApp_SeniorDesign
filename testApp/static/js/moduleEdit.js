@@ -11,6 +11,7 @@ var ctx; //context of the canvas element, is 2d
 var image; //image to be displayed corresponding to substrates and products chosen
 var createBtn; //button hit after module settings are set (displays rxn in canvas)
 var saveBtn; //button hit after user is finished, send user back to model edit screen
+var clearBtn;
 var isReversible = false; //boolean that indicates if user wants rxn to be reversible or not
 var reversibleChoice; //variable to hold reversible radio buttons
 var weightSliderValue; //var corresponding to textbox for weight slider, displays weight value and allows user to set weight
@@ -319,6 +320,31 @@ function testClickSaveBtn(click){
   }
 }
 
+// Clear button function to uncheck all boxes if clicked
+function clearAll(){
+    countProducts = 0;
+    countSubstrates = 0;
+    checkedSubsNames = [];
+    checkedProdsNames = [];
+    checkedEnzsNames = []
+
+    for(var i = 0; i < substrates.length; i++){
+      if(substrates[i].checked){
+        substrates[i].checked = false
+      }
+    }
+    for(var j = 0; j < enzymes.length; j++){
+      if(enzymes[j].checked){
+        enzymes[j].checked = false
+      }
+    }
+    for(var k = 0; k < products.length; k++){
+      if(products[k].checked){
+        products[k].checked = false
+      }
+    }
+}
+
 function validateReaction(){
   //iterate through user selections and create string representation
   //this is done so that if it is a complete reaction (something from
@@ -395,6 +421,7 @@ window.onload = function init(){
   image  = document.getElementById("step1");
   createBtn = document.getElementById("createReaction");
   saveBtn = document.getElementById("saveReaction");
+  clearBtn = document.getElementById("clearReaction");
   weightSliderValue = document.getElementById('weightSliderValue');
   submitWeightBtn = document.getElementById('submitWeight');
   weightSlider = document.getElementById('weightSlider');
@@ -434,6 +461,21 @@ window.onload = function init(){
     //  saveBtn.style.background = '#000000';
     //  saveBtnClicked = true;
     //}
+  });
+
+
+
+  clearBtn.addEventListener("click", function(event){
+    //reset global variables
+    currentRxn = "";
+
+    //clear everything out of canvas on button click so we can draw new rxn
+    ctx.clearRect(0, 0, canvas1.width, canvas1.height);
+
+    //calling beginPath here preps canvas for drawing
+    ctx.beginPath();
+
+    clearAll();
   });
 
   //exit out of invalidModal when x is clicked

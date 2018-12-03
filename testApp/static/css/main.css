@@ -474,6 +474,7 @@ label {
   min-width: 150px;
   height: 50px;
   border-radius: 25px;
+  margin: 10px;
 
   background: #EEEEEE;
   background: -webkit-linear-gradient(bottom, #EEEEEE #EEEEEE);
@@ -509,13 +510,16 @@ label {
 }
 
 .login100-form-btn:hover {
-  color: #fff;
+  color: black;
 }
 
 .login100-form-btn:hover:before {
   opacity: 0;
 }
 
+.title-model {
+  margin-bottom: 20px;
+}
 
 /*------------------------------------------------------------------
 [ Responsive ]*/

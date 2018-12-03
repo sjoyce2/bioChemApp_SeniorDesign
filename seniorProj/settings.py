@@ -127,4 +127,4 @@ STATICFILES_DIRS = [
 	os.path.join(BASE_DIR, "templates"),
 ]
 
-LOGIN_REDIRECT_URL = '/testApp/modelEdit'
+LOGIN_REDIRECT_URL = '/testApp/modelChoice'

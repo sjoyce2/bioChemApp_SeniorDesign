@@ -108,7 +108,7 @@ function setSpeed(enzymeName, weight) {
         speed = 1;
     } else {
         var enzymeSpeed = parseInt(document.getElementById(enzymeName).value);
-        speed = weight * (enzymeSpeed / 5);
+        speed = weight * (enzymeSpeed / 50);
     }
 }
 
@@ -119,7 +119,7 @@ function animate() {
         y = firstRectMidY;
     }
     if (y >= firstRectMidY && y < firstRectMidY + 200.0) {
-        setSpeed(enzyme1, en2weight);
+        setSpeed(enzyme1, en1weight);
     } else if (y >= firstRectMidY + 200.0 && y < firstRectMidY + 400.0) {
         setSpeed(enzyme2, en2weight);
     } else {
@@ -171,19 +171,19 @@ function render() {
 function reset() {
     var en1Slider = document.getElementById(enzyme1);
     var en2Slider = document.getElementById(enzyme2);
-    var en3Slider = document.getElementById(enzyme3);
-    en1Slider.value = "5";
-    en2Slider.value = "5";
-    en3Slider.value = "5";
+    //var en3Slider = document.getElementById(enzyme3);
+    en1Slider.value = "50";
+    en2Slider.value = "50";
+    //en3Slider.value = "5";
     en1Slider.oninput = function() {
         document.getElementById("enzyme1value").innerHTML = this.value;
     };
     en2Slider.oninput = function() {
         document.getElementById("enzyme2value").innerHTML = this.value;
     };
-    en3Slider.oninput = function() {
+    /*en3Slider.oninput = function() {
         document.getElementById("enzyme3value").innerHTML = this.value;
-    };
+    };*/
 
 }
 

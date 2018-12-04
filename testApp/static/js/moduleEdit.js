@@ -126,7 +126,7 @@ function drawObject(xcoor, ycoor, name){
   if(name === "ATP" || name === "ADP"){
     //xcoor = xcoor + (objectWidth / 2);
     ycoor = ycoor - (objectHeight / 2);
-    ctx.font = "18px Arial";
+    ctx.font = "24px Arial";
     ctx.fillText(name, xcoor, ycoor + objectHeight + verticalBuffer);
     ycoor = ycoor + (objectHeight / 2);
     //xcoor = xcoor - (objectWidth / 2);
@@ -141,7 +141,7 @@ function drawObject(xcoor, ycoor, name){
     ctx.stroke();
 
     ycoor = ycoor + objectHeight / 25; //add a small buffer so that text below image does not overlap with square
-    ctx.font = "12px Arial";
+    ctx.font = "14px Arial";
     //draw text below box containing substrate or product
     ctx.fillText(name, xcoor, ycoor + objectHeight + verticalBuffer);
   }
@@ -150,10 +150,10 @@ function drawObject(xcoor, ycoor, name){
 
 //draw downwards arrow in center of current row
 function drawDownArrow(xcoor, ycoor, name){
-  ctx.font = "12px Arial";
+  ctx.font = "14px Arial";
   ycoor = ycoor + objectHeight / 25;
   // ctx.fillText(name, xcoor , ycoor + objectBuffer); //This is for version without downwards arrow
-  ctx.fillText(name, xcoor , ycoor + (objectHeight / 2));//This is for version with downwards arrow
+  ctx.fillText(name, xcoor + 5 , ycoor + (objectHeight / 2));//This is for version with downwards arrow
   if(isReversible){
     //xcoor = canvas1.width / 2;
     ctx.moveTo(xcoor, ycoor);
@@ -302,8 +302,10 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
         if(enzymeReverse[i][j] === "reversible"){
           console.log("HERE");
           isReversible = true;
+          reversibleChoice[0].checked = true;
         }else{
           isReversible = false;
+          reversibleChoice[1].checked = true;
         }
       }
     }
@@ -375,21 +377,21 @@ function validateReaction(){
     //settings are invalid, user is limited to 5 products and 5 substrates and an
     //enzyme must be selected
     console.log("INVALID");
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "tomato";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
 
     return false;
 
   }else if(countSubstrates === 0 && countProducts === 0){
     setReaction(enzymeSubs, enzymeProds, enzymeReverse); //the user has only selected the enzyme so fill in reaction
-    ctx.fillStyle = "green";//reaction will be correct so set to green
+    ctx.fillStyle = "limegreen";//reaction will be correct so set to green
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
 
   }else if(countSubstrates === 0 || countProducts === 0){
     //settings are invalid, cannot have selected some products and
     //no substrates or some substrates and no products
     console.log("INVALID");
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "tomato";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
 
     return false;
@@ -398,12 +400,12 @@ function validateReaction(){
         || step5 === currentRxn || step6 === currentRxn || step7 === currentRxn || step8 === currentRxn
         || step9 === currentRxn || step10 === currentRxn){
     //Reaction is valid
-    ctx.fillStyle = "green";
+    ctx.fillStyle = "limegreen";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
 
   }else{
     //reaction is invalid, but still want to display reaction
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "tomato";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
   }
   //set fillStyle back to black
@@ -437,6 +439,7 @@ window.onload = function init(){
     ctx.clearRect(0, 0, canvas1.width, canvas1.height);
     //calling beginPath here preps canvas for drawing
     ctx.beginPath();
+    ctx.lineWidth = 3;
 
     //validate that settings are good, reaction created is good or bad
     var continueDisplay = validateReaction();

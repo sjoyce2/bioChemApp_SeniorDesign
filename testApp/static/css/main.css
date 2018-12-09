@@ -128,7 +128,7 @@ label {
 button {
 	outline: none !important;
 	border: none;
-	background: transparent;
+  background: transparent;
 }
 
 button:hover {
@@ -393,7 +393,7 @@ label {
 .contact100-form-checkbox {
   padding-left: 5px;
   padding-top: 5px;
-  padding-bottom: 35px;
+  padding-bottom: 10px;
 }
 
 .input-checkbox100 {

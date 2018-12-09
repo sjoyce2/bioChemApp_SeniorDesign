@@ -1,9 +1,6 @@
-const modelEdit = require('./modelEdit');
-
-test("Why wont this work", () => {
-    var firstRectMidX = 100;
-    var firstRectMidY = 0;
-    var stepOrder = ["r"];
-    var x = 0;
-    expect(modelEdit.getDotPos(50)).toBe(50);
+var test = require('tape');
+var sum = require('./modelEdit');
+ 
+test('timing test', function (t) {
+    expect(sum(1, 2)).toBe(3);
 });

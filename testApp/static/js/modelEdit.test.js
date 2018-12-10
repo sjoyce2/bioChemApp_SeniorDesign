@@ -1,6 +1,5 @@
-var test = require('tape');
-var sum = require('./modelEdit');
+var getDotPos = require('./modelEditTesting');
  
-test('timing test', function (t) {
-    expect(sum(1, 2)).toBe(3);
+test('Test getDotPos', () => {
+    expect(getDotPos(50, 0, ["r"], 100)).toBe(50);
 });

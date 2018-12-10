@@ -103,7 +103,7 @@ function revStep(firstText, secondText, firstRectMidX, firstRectMidY, ctx) {
 //Calculate the x value of the molecule in the reaction. The height
 //changes by a consistent value each time but the horizontal
 //position can change if it is following a non-reversible reaction
-function getDotPos(newY) {
+function getDotPos(newY, firstRectMidY, stepOrder, firstRectMidX) {
     var arrayPos = Math.floor((newY - firstRectMidY) / 100);
     if (stepOrder[arrayPos] === "n") {
         x = firstRectMidX + Math.sqrt(-1 * Math.pow((newY - firstRectMidY) - 50 - (100 * arrayPos), 2) + 2500);
@@ -138,7 +138,7 @@ function animate() {
         setSpeed("", 1);
     }
     y += 0.25 * direction * speed;
-    x = getDotPos(y);
+    x = getDotPos(y, firstRectMidY, stepOrder, firstRectMidX);
     //x2 = getDotPos(y + 6);
     //x3 = getDotPos(y + 12);
     render();
@@ -183,6 +183,11 @@ function render() {
 
 //resets values of sliders on page (re)load
 function reset() {
+    //adds functionality to the logout button
+    document.getElementById("logout").addEventListener("click", function(event) {
+        document.location.href = '..';
+    });
+
     var en1Slider = document.getElementById(enzyme1);
     var en2Slider = document.getElementById(enzyme2);
     //var en3Slider = document.getElementById(enzyme3);
@@ -200,11 +205,6 @@ function reset() {
     };*/
 
 }
-
-//adds functionality to the logout button
-document.getElementById("logout").addEventListener("click", function(event) {
-    document.location.href = '..';
-});
 
 function main () {
     reset();
@@ -228,4 +228,6 @@ function main () {
 }
 
 
-main();
+window.onload = main();
+
+module.exports = getDotPos;

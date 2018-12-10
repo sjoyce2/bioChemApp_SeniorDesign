@@ -19,7 +19,7 @@ var en1weight = 2;
 var en2weight = 9;
 var en3weight = 1;
 
-
+//Create a non-reversible reaction
 function notRevStep(substrate, product, enzyme, 
     firstRectMidX, firstRectMidY, ctx) {
 	//create starting protein
@@ -38,7 +38,7 @@ function notRevStep(substrate, product, enzyme,
 	//create second protein
     ctx.rect(firstRectMidX - 100, firstRectMidY + 75, 100, 50);
 	
-	//create arrow for other substrates (inputs) into the reaction
+	//create arrow for other substrates (inputs) into the reaction (such as ATP)
     ctx.moveTo(firstRectMidX + 100, firstRectMidY);
     ctx.arcTo(firstRectMidX + 50, firstRectMidY, 
         firstRectMidX + 50, firstRectMidY + 50, 50);
@@ -78,9 +78,13 @@ function notRevStep(substrate, product, enzyme,
     ctx.fillText("ADP", firstRectMidX + 110, firstRectMidY + 105);
 }
 
+//create a reversible reaction
 function revStep(firstText, secondText, firstRectMidX, firstRectMidY, ctx) {
+    //create first protein
     ctx.rect(firstRectMidX - 100, firstRectMidY - 25, 100, 50);
+    //create second protein
     ctx.rect(firstRectMidX - 100, firstRectMidY + 75, 100, 50);
+    //draw arrows between proteins
     ctx.moveTo(firstRectMidX - 65, firstRectMidY + 35);
     ctx.lineTo(firstRectMidX - 55, firstRectMidY + 25);
     ctx.lineTo(firstRectMidX - 55, firstRectMidY + 75);
@@ -88,12 +92,18 @@ function revStep(firstText, secondText, firstRectMidX, firstRectMidY, ctx) {
     ctx.lineTo(firstRectMidX - 45, firstRectMidY + 75);
     ctx.lineTo(firstRectMidX - 35, firstRectMidY + 65);
     ctx.font = "20px Arial";
+    //add label to first protein
     ctx.fillText(firstText, firstRectMidX - 90, firstRectMidY + 5);
+    //add label to second protein
     ctx.fillText(secondText, firstRectMidX - 90, firstRectMidY + 105);
+    //draw everything to the screen
     ctx.stroke();
 }
 
-function getDotPos(newY) {
+//Calculate the x value of the molecule in the reaction. The height
+//changes by a consistent value each time but the horizontal
+//position can change if it is following a non-reversible reaction
+function getDotPos(newY, firstRectMidY, stepOrder, firstRectMidX) {
     var arrayPos = Math.floor((newY - firstRectMidY) / 100);
     if (stepOrder[arrayPos] === "n") {
         x = firstRectMidX + Math.sqrt(-1 * Math.pow((newY - firstRectMidY) - 50 - (100 * arrayPos), 2) + 2500);
@@ -103,6 +113,8 @@ function getDotPos(newY) {
     return x;
 }
 
+//Sets the speed of the molecule given the weight and enzyme speed for the
+//reaction it is currently in
 function setSpeed(enzymeName, weight) {
     if (enzymeName === "") {
         speed = 1;
@@ -126,13 +138,14 @@ function animate() {
         setSpeed("", 1);
     }
     y += 0.25 * direction * speed;
-    x = getDotPos(y);
+    x = getDotPos(y, firstRectMidY, stepOrder, firstRectMidX);
     //x2 = getDotPos(y + 6);
     //x3 = getDotPos(y + 12);
     render();
     window.requestAnimationFrame(animate);
 }
 
+// specifies which steps of the pathway to draw and draws them
 function render() {
     var canvas = document.getElementById("modelEditCanvas");
     var ctx = canvas.getContext("2d");
@@ -168,7 +181,13 @@ function render() {
     ctx.fill();
 }
 
+//resets values of sliders on page (re)load
 function reset() {
+    //adds functionality to the logout button
+    document.getElementById("logout").addEventListener("click", function(event) {
+        document.location.href = '..';
+    });
+
     var en1Slider = document.getElementById(enzyme1);
     var en2Slider = document.getElementById(enzyme2);
     //var en3Slider = document.getElementById(enzyme3);
@@ -186,10 +205,6 @@ function reset() {
     };*/
 
 }
-
-document.getElementById("logout").addEventListener("click", function(event) {
-    document.location.href = '..';
-});
 
 function main () {
     reset();
@@ -213,5 +228,6 @@ function main () {
 }
 
 
+window.onload = main();
 
-main();
+module.exports = getDotPos;

@@ -1,9 +1,5 @@
-const modelEdit = require('./modelEdit');
-
-test("Why wont this work", () => {
-    var firstRectMidX = 100;
-    var firstRectMidY = 0;
-    var stepOrder = ["r"];
-    var x = 0;
-    expect(modelEdit.getDotPos(50)).toBe(50);
+var getDotPos = require('./modelEditTesting');
+ 
+test('Test getDotPos', () => {
+    expect(getDotPos(50, 0, ["r"], 100)).toBe(50);
 });

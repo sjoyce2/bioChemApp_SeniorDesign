@@ -5,7 +5,9 @@
     <form class="login100-form" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Login</button>
+        <div class="login-flex">
+            <button type="submit" class="login100-form-btn">Login</button>
+        </div>
     </form>
     <!--<a href="{% url 'modelChoice' %}">Model Choice</a>-->
     <!-- <form class="login100-form" method="post">

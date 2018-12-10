@@ -560,7 +560,7 @@ function main () {
 }
 main()
 
-// module.exports = {};
-// module.exports.testClickSaveBtn = testClickSaveBtn;
+module.exports = {};
+module.exports.testClickSaveBtn = testClickSaveBtn;
 // module.exports.setReaction = setReaction;
 // module.exports.setInitialXCoor = setInitialXCoor;

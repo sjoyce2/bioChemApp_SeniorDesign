@@ -1,0 +1,14 @@
+System test checklist:
+Test 1) User logs in
+	Directions: On the login page enter login data and attempt to login
+	Expected Results: If the user entered existing user data the entry should be validated by the database. Otherwise the user should be told their login was invalid. 
+Test 2) Create an account
+	Directions: Enter data to create new account. 
+	Expected Results: User locates register screen, enters email, username and password. If username exists the account should not be validated. If email exists the account should not be validated. If the password is not strong enough the account should not be validated.
+Test 3) Change the speed of the flow for the molecules
+	Directions: make changes to the model that cause the molecules to change speed.
+	Expected results: User locates Model screen. User locates enzyme sliders. User alters sliders and notices that blue dot changes speed. User should be able to recognize that blue dot is the molecule and sliders refer to quantity on enzymes in the system.
+Test 4) Create a new module and add it to the pathway
+	Directions: Navigate to the module edit screen create a module and save it to the model.
+	Expected Results: User finds the module screen, selects products, substrates and an enzyme and selects create. If the reaction is valid the user will select save and be displayed to model
+screen with the module added.

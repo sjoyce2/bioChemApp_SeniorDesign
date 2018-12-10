@@ -214,9 +214,7 @@ function drawPlus(xcoor, ycoor){
 
 function setInitialXCoor(count){
   var xcoor;
-  console.log("SET X COOR");
   if(count === 1){
-    console.log(count);
     xcoor = objectWidth * 2 + horizontalBuffer * 4;
   }else if(count === 2){
     xcoor = (canvas1.width / 2) - (horizontalBuffer * 2) - objectWidth;
@@ -524,4 +522,4 @@ main()
 module.exports = {};
 module.exports.testClickSaveBtn = testClickSaveBtn;
 // module.exports.setReaction = setReaction;
-// module.exports.setInitialXCoor = setInitialXCoor;
+module.exports.setInitialXCoor = setInitialXCoor;

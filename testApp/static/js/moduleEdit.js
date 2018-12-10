@@ -46,6 +46,7 @@ var enzymeProds = [["Hexokinase","Glucose-6-Phosphate"],["Hexokinase","ADP"],["P
   ["Triosephosphate isomerase","Glyceraldehyde-3-Phosphate"],["Glyceraldehyde phosphate dehydrogenase","1,3-bisphoglycerate"],
   ["Phosphoglycerate kinase","3 phosphoglycerate"],["Phosphoglycerate kinase","ADP"],["Phosphoglycerate mutase","2 phosphoglycerate"],["Enolase","Phosphoenolpyruvate"],
   ["Pyruvate kinase","Pyruvate"],["Pyruvate kinase","ADP"]];
+
 var enzymeSubs = [["Hexokinase","Glucose"],["Hexokinase","ATP"],["Phosphoglucose isomerase","Glucose-6-Phosphate"],
   ["Phosphofructokinase","Fructose-6-Phosphate"],["Phosphofructokinase","ATP"],["aldolase","Fructose-1,6-bisphosphate"], ["Triosephosphate isomerase","Dihydroxyacetone Phosphate"],
   ["Glyceraldehyde phosphate dehydrogenase","Glyceraldehyde-3-Phosphate"],["Phosphoglycerate kinase","1,3-bisphoglycerate"],["Phosphoglycerate kinase","ATP"],
@@ -99,6 +100,44 @@ function onRadioChange(){
     modal.style.display = "block";
     ctx.clearRect(0, 0, canvas1.width, canvas1.height);
   }
+}
+//unit test
+function onRadioChange(substrates, enzymes, products){
+  countProducts = 0;
+  countSubstrates = 0;
+  checkedSubsNames = [];
+  checkedProdsNames = [];
+  checkedEnzsNames = []
+  var check1 = 0;
+  var check2 = 0;
+  var check3 = 0;
+
+  for(var i = 0; i < substrates.length; i++){
+    if(substrates[i].checked){
+      countSubstrates++;
+      checkedSubsNames.push(substrates[i].value);
+      check1 = 1;
+    }
+  }
+  for(var j = 0; j < enzymes.length; j++){
+    if(enzymes[j].checked){
+      checkedEnzsNames.push(enzymes[j].value);
+      check2 = 1;
+    }
+  }
+  for(var k = 0; k < products.length; k++){
+    if(products[k].checked){
+      countProducts++;
+      checkedProdsNames.push(products[k].value);
+      check3 = 1;
+    }
+  }
+
+  if(countProducts > 5 || countSubstrates > 5){
+    // modal.style.display = "block";
+    // ctx.clearRect(0, 0, canvas1.width, canvas1.height);
+  }
+  return (check1 + check2 + check3);
 }
 //not used as of right now
 // function getMousePosition(canvas1, event) {
@@ -211,7 +250,7 @@ function drawPlus(xcoor, ycoor){
   ctx.lineTo(xcoor + horizontalBuffer / 2, ycoor - horizontalBuffer / 2);
   ctx.stroke();
 }
-
+//unit test
 function setInitialXCoor(count){
   var xcoor;
   if(count === 1){
@@ -309,7 +348,7 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
     }
   }
 }
-
+//unit test
 function testClickSaveBtn(click){
   if(click === "click"){
     //saveBtn.style.background = '#4CAF50'

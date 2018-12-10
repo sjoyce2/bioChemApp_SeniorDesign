@@ -8,4 +8,13 @@ function getDotPos(newY, firstRectMidY, stepOrder, firstRectMidX) {
     return x;
 }
 
-module.exports = getDotPos;
+function setSpeed(enzymeName, weight) {
+    if (enzymeName === "") {
+        return 0;
+    }
+    return 1;
+}
+
+module.exports = {};
+module.exports.getDotPos = getDotPos;
+module.exports.setSpeed = setSpeed;

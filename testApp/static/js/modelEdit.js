@@ -118,9 +118,11 @@ function getDotPos(newY, firstRectMidY, stepOrder, firstRectMidX) {
 function setSpeed(enzymeName, weight) {
     if (enzymeName === "") {
         speed = 1;
+        return 0;
     } else {
         var enzymeSpeed = parseInt(document.getElementById(enzymeName).value);
         speed = weight * (enzymeSpeed / 50);
+        return 1;
     }
 }
 

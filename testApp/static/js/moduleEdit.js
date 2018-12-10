@@ -102,7 +102,7 @@ function onRadioChange(){
   }
 }
 //unit test
-function onRadioChange(substrates, enzymes, products){
+function onRadioChanged(substrates, enzymes, products){
   countProducts = 0;
   countSubstrates = 0;
   checkedSubsNames = [];
@@ -560,5 +560,5 @@ main()
 
 module.exports = {};
 module.exports.testClickSaveBtn = testClickSaveBtn;
-// module.exports.setReaction = setReaction;
+module.exports.onRadioChange = onRadioChanged;
 module.exports.setInitialXCoor = setInitialXCoor;

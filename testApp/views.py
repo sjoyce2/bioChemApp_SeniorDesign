@@ -6,7 +6,9 @@ from django.shortcuts import render
 # Create your views here.
 from django.http import HttpResponse
 from testApp.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
 
 
 def modelChoice(request):

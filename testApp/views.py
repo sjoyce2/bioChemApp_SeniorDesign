@@ -6,9 +6,11 @@ from django.shortcuts import render
 # Create your views here.
 from django.http import HttpResponse
 from testApp.models import User
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
+from testApp.forms import SignUpForm
 
 
 def modelChoice(request):
@@ -26,9 +28,18 @@ def modelEdit(request):
 	return render(request, 'modelEdit.html', context=context)
 
 def register(request):
-	context = {
-	}
-	return render(request, 'registration/register.html', context=context)
+	if request.method == 'POST':
+		form = SignUpForm(request.POST)
+		if form.is_valid():
+			form.save()
+			username = form.cleaned_data.get('username')
+			raw_password = form.cleaned_data.get('password1')
+			user = authenticate(username=username, password=raw_password)
+			auth_login(request, user)
+			return redirect('modelChoice')
+	else:
+		form = SignUpForm()
+	return render(request, 'registration/signup.html', {'form': form})
 
 def login(request):
 	context = {
@@ -38,23 +49,8 @@ def login(request):
 
 def signup(request):
 	context = {
-
 	}
 	return render(request, 'accounts/signup.html', context=context)
 
-def display(request):
-	objects = User.objects.get(username='user1')
-	exists = False
-
-	#if User.objects.filter(username=user1).exists():
-	#	exists = True
-
-	context = {
-		'user_name': objects.username,
-		'pass_word': objects.password,
-		'userExists': exists,
-	}
-
-	return render(request, 'accounts/display.html', context=context)
 
 	

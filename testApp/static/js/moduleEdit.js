@@ -349,15 +349,15 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
   }
 }
 //unit test
-function testClickSaveBtn(click){
-  if(click === "click"){
-    //saveBtn.style.background = '#4CAF50'
-    return false;
-  }else{
-    //saveBtn.style.background = '#000000';
-    return true;
-  }
-}
+// function testClickSaveBtn(click){
+//   if(click === "click"){
+//     //saveBtn.style.background = '#4CAF50'
+//     return false;
+//   }else{
+//     //saveBtn.style.background = '#000000';
+//     return true;
+//   }
+// }
 
 // Clear button function to uncheck all boxes if clicked
 function clearAll(){
@@ -496,6 +496,7 @@ window.onload = function init(){
     //if(saveBtnClicked){
       //saveBtn.style.background = '#4CAF50'
       //saveBtnClicked = false;
+      localStorage.setItem("currentRxn",currentRxn);
       document.location.href = 'modelEdit';
     //}else{
     //  saveBtn.style.background = '#000000';
@@ -558,7 +559,7 @@ function main () {
 }
 main()
 
-module.exports = {};
-module.exports.testClickSaveBtn = testClickSaveBtn;
-module.exports.onRadioChange = onRadioChanged;
-module.exports.setInitialXCoor = setInitialXCoor;
+// module.exports = {};
+// module.exports.testClickSaveBtn = testClickSaveBtn;
+// module.exports.onRadioChange = onRadioChanged;
+// module.exports.setInitialXCoor = setInitialXCoor;

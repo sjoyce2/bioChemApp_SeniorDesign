@@ -210,6 +210,8 @@ function reset() {
 
 function main () {
     reset();
+    //get data from database
+    //get data from localStorage.getItem("currentRxn")
     firstRectMidY = 75;
     y = firstRectMidY;
     render();
@@ -232,4 +234,4 @@ function main () {
 
 window.onload = main();
 
-module.exports = getDotPos;
+//module.exports = getDotPos;

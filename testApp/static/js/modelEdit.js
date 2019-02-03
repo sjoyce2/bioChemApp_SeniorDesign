@@ -208,18 +208,25 @@ function reset() {
 
 }
 
+function parseThrough(stringToParse) {
+    tmpArr = stringToParse.split(">");
+    newArr = tmpArr[1].split("<");
+    fullArr = {}
+}
+
 function main () {
     reset();
     //get data from database
     //get data from localStorage.getItem("currentRxn")
     stringToParse = String(localStorage.getItem("currentRxn"));
-    console.log(stringToParse);
+    parseThrough(stringToParse);
 
     firstRectMidY = 75;
     y = firstRectMidY;
     render();
     window.requestAnimationFrame(animate);
 
+    // Will be useful later but is not important right now
     /* function getMousePosition(canvas, event) {
         let border = canvas.getBoundingClientRect();
         return {

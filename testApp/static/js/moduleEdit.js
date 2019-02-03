@@ -389,6 +389,11 @@ function validateReaction(){
   //this is done so that if it is a complete reaction (something from
   //every categor is chosen) it can easily be compared to the known
   //reactions
+  console.log("Issue check");
+  console.log(checkedSubsNames);
+  console.log(checkedEnzsNames);
+  console.log(checkedProdsNames);
+  console.log("issue check");
   for(var i = 0; i < checkedSubsNames.length; i++){
     if(i === checkedSubsNames.length - 1){
       currentRxn = currentRxn + checkedSubsNames[i] + ">";
@@ -469,6 +474,7 @@ window.onload = function init(){
   var saveBtnClicked = false;
 
   createBtn.addEventListener("click", function(event){
+    console.log(currentRxn);
     //reset global variables
     currentRxn = "";
 

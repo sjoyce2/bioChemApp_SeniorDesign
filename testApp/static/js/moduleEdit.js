@@ -347,6 +347,9 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
       }
     }
   }
+  currentRxn = "";
+  validateReaction();
+  
 }
 //unit test
 // function testClickSaveBtn(click){
@@ -365,7 +368,7 @@ function clearAll(){
     countSubstrates = 0;
     checkedSubsNames = [];
     checkedProdsNames = [];
-    checkedEnzsNames = []
+    checkedEnzsNames = [];
 
     for(var i = 0; i < substrates.length; i++){
       if(substrates[i].checked){

@@ -323,9 +323,13 @@ function displayReaction(){
 function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
   console.log("setReaction called");
   var enzymeName = checkedEnzsNames[0];
+  console.log("CURRENT ENZYME = " + enzymeName);
+  //going through enzymeSubs list to add proper subs
   for(var i = 0; i < enzymeSubs.length; i++){
+    console.log("enzymeSubs[i].length = " + enzymeSubs[i].length);
     for(var j = 1; j < enzymeSubs[i].length; j++){
       if(enzymeSubs[i][0] === enzymeName){
+        //add substrate to the list.
         // console.log("**********"+enzymeSubs[i],[j]);
         checkedSubsNames.push(enzymeSubs[i][j]);
         countSubstrates++;
@@ -487,7 +491,7 @@ window.onload = function init(){
   var saveBtnClicked = false;
 
   createBtn.addEventListener("click", function(event){
-    console.log("create button clicked, curretn reaction: " + currentRxn);
+    console.log("create button clicked, current reaction: " + currentRxn);
     //reset global variables
     currentRxn = "";
 

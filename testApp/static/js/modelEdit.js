@@ -208,18 +208,44 @@ function reset() {
 
 }
 
+function parseThrough(stringToParse) {
+    tmpArr = stringToParse.split(">");
+    newArr = tmpArr[1].split("<");
+    evenNewer = newArr[1].split(";");
+    // fullArr now contains
+    // [0]: substrates (inputs)
+    // [1]: enzyme
+    // [2]: products (outputs)
+    // [3]: reversible? (boolean)
+    fullArr = [tmpArr[0], newArr[0], evenNewer[0], evenNewer[1]];
+    subsArr = fullArr[0].split("+");
+    prodArr = fullArr[2].split("+");
+    console.log("Substrates: ");
+    console.log(subsArr);
+    console.log("Enzyme:");
+    console.log(fullArr[1]);
+    console.log("Products: ");
+    console.log(prodArr);
+    console.log("Reversible?: ");
+    console.log(fullArr[3]);
+    //TODO: convert fullArr[3] to boolean, save substrates, enzymes, and
+    // products as variables
+}
+
 function main () {
     reset();
     //get data from database
     //get data from localStorage.getItem("currentRxn")
     stringToParse = String(localStorage.getItem("currentRxn"));
     console.log(stringToParse);
+    parseThrough(stringToParse);
 
     firstRectMidY = 75;
     y = firstRectMidY;
     render();
     window.requestAnimationFrame(animate);
 
+    // Will be useful later but is not important right now
     /* function getMousePosition(canvas, event) {
         let border = canvas.getBoundingClientRect();
         return {

@@ -62,6 +62,7 @@ var enzymeReverse = [["Hexokinase","irreversible"], ["Phosphoglucose isomerase",
 
 //function to change reversible boolean depending on which reversible radio btn is set
 function onRadioReverseChange(){
+  console.log("onRadioReverseChange called");
   if(reversibleChoice[0].checked){
     isReversible = true;
   }else{
@@ -73,6 +74,7 @@ function onRadioReverseChange(){
 //push name of product, substrate, enzyme to checkedProdsEnzsSubsNames
 //push type to checkedProdsEnzsSubs
 function onRadioChange(){
+  console.log("onRadioChange called");
   countProducts = 0;
   countSubstrates = 0;
   checkedSubsNames = [];
@@ -150,6 +152,7 @@ function onRadioChanged(substrates, enzymes, products){
 
 //display image corresponding to substrates and products chosen
 function displayImage(xcoor, ycoor, name){
+  console.log("displayImage called");
   if(name === "ADP" || name === "ATP"){
     console.log("ADP OR ATP");
   }else{
@@ -161,7 +164,7 @@ function displayImage(xcoor, ycoor, name){
 
 //draw boxes for substrates and products and set text
 function drawObject(xcoor, ycoor, name){
-  console.log(name);
+  console.log("drawObject called, name = " + name);
   if(name === "ATP" || name === "ADP"){
     //xcoor = xcoor + (objectWidth / 2);
     ycoor = ycoor - (objectHeight / 2);
@@ -189,6 +192,7 @@ function drawObject(xcoor, ycoor, name){
 
 //draw downwards arrow in center of current row
 function drawDownArrow(xcoor, ycoor, name){
+  console.log("drawDownArrow called ");
   ctx.font = "14px Arial";
   ycoor = ycoor + objectHeight / 25;
   // ctx.fillText(name, xcoor , ycoor + objectBuffer); //This is for version without downwards arrow
@@ -242,6 +246,7 @@ function drawDownArrow(xcoor, ycoor, name){
 // }
 //draw plus sign between each substrate and product
 function drawPlus(xcoor, ycoor){
+  console.log("drawPlus called ");
   xcoor = xcoor + objectWidth + horizontalBuffer;
   ycoor = ycoor + objectHeight / 2;
   ctx.moveTo(xcoor, ycoor);
@@ -268,6 +273,7 @@ function setInitialXCoor(count){
 }
 
 function drawSubstrates(currentX, currentY){
+  console.log("drawSubstrates called");
   var name;
   var a;
   for(a = 0; a < checkedSubsNames.length; a++){
@@ -281,6 +287,7 @@ function drawSubstrates(currentX, currentY){
 }
 
 function drawProducts(currentX, currentY){
+  console.log("drawProducts called");
   var name;
   var a;
   for(a = 0; a < checkedProdsNames.length; a++){
@@ -295,6 +302,7 @@ function drawProducts(currentX, currentY){
 
 //called when create button is clicked
 function displayReaction(){
+  console.log("displayReaction called");
   var name;
   var currentX = horizontalBuffer;
   var currentY = verticalBuffer;
@@ -313,13 +321,19 @@ function displayReaction(){
 }
 
 function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
+  console.log("setReaction called");
   var enzymeName = checkedEnzsNames[0];
+  console.log("CURRENT ENZYME = " + enzymeName);
+  //going through enzymeSubs list to add proper subs
   for(var i = 0; i < enzymeSubs.length; i++){
+    console.log("enzymeSubs[i].length = " + enzymeSubs[i].length);
     for(var j = 1; j < enzymeSubs[i].length; j++){
       if(enzymeSubs[i][0] === enzymeName){
-        console.log("**********"+enzymeSubs[i],[j]);
+        //add substrate to the list.
+        console.log("**********"+ enzymeSubs[i][j]);
         checkedSubsNames.push(enzymeSubs[i][j]);
         countSubstrates++;
+        console.log(checkedSubsNames);
       }
     }
   }
@@ -331,13 +345,13 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
       }
     }
   }
-  console.log(enzymeReverse);
+  // console.log(enzymeReverse);
   for(var i = 0; i < enzymeReverse.length; i++){
     for(var j = 1; j < enzymeReverse[i].length; j++){
       if(enzymeReverse[i][0] === enzymeName){
-        console.log(enzymeReverse[i][j]);
+        // console.log(enzymeReverse[i][j]);
         if(enzymeReverse[i][j] === "reversible"){
-          console.log("HERE");
+          // console.log("HERE");
           isReversible = true;
           reversibleChoice[0].checked = true;
         }else{
@@ -347,6 +361,8 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
       }
     }
   }
+  currentRxn = "";
+  validateReaction();
 }
 //unit test
 // function testClickSaveBtn(click){
@@ -361,6 +377,7 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
 
 // Clear button function to uncheck all boxes if clicked
 function clearAll(){
+  console.log("clearALL called");
     countProducts = 0;
     countSubstrates = 0;
     checkedSubsNames = [];
@@ -389,11 +406,11 @@ function validateReaction(){
   //this is done so that if it is a complete reaction (something from
   //every categor is chosen) it can easily be compared to the known
   //reactions
-  console.log("Issue check");
-  console.log(checkedSubsNames);
-  console.log(checkedEnzsNames);
-  console.log(checkedProdsNames);
-  console.log("issue check");
+  console.log("validateReaction called");
+  console.log("checkedSubsNamed: " + checkedSubsNames);
+  console.log("checkedEnzsNamed: " + checkedEnzsNames);
+  console.log("checkedProdsNames: " + checkedProdsNames);
+
   for(var i = 0; i < checkedSubsNames.length; i++){
     if(i === checkedSubsNames.length - 1){
       currentRxn = currentRxn + checkedSubsNames[i] + ">";
@@ -413,12 +430,14 @@ function validateReaction(){
     }
   }
   currentRxn = currentRxn + ";" + isReversible;
-  console.log("THE CURRENT REACTION ***" + currentRxn + "*******");
+
+  console.log("THE CURRENT REACTION: " + currentRxn);
 
   if(countProducts > 5 || countSubstrates > 5 || checkedEnzsNames.length === 0 ){
     //settings are invalid, user is limited to 5 products and 5 substrates and an
     //enzyme must be selected
-    console.log("INVALID");
+    console.log("INVALID reaction has been entered ");
+    // NOTE: WHEN REACTION IS CREATED BY SELECTING JUST ENZYME THE PRODS+SUBS AREN"T SAVED
     ctx.fillStyle = "tomato";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
 
@@ -432,7 +451,7 @@ function validateReaction(){
   }else if(countSubstrates === 0 || countProducts === 0){
     //settings are invalid, cannot have selected some products and
     //no substrates or some substrates and no products
-    console.log("INVALID");
+    console.log("INVALID reaction");
     ctx.fillStyle = "tomato";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
 
@@ -456,6 +475,7 @@ function validateReaction(){
 }
 
 window.onload = function init(){
+  console.log("init function called");
   canvas1 = document.getElementById("imageCanvas");
   substrates  = document.getElementsByName('Substrate');
   enzymes = document.getElementsByName('Enzyme');
@@ -474,7 +494,7 @@ window.onload = function init(){
   var saveBtnClicked = false;
 
   createBtn.addEventListener("click", function(event){
-    console.log(currentRxn);
+    console.log("create button clicked, current reaction: " + currentRxn);
     //reset global variables
     currentRxn = "";
 
@@ -502,6 +522,7 @@ window.onload = function init(){
     //if(saveBtnClicked){
       //saveBtn.style.background = '#4CAF50'
       //saveBtnClicked = false;
+      console.log("SET ITEM IN LOCAL STORAGE ");
       localStorage.setItem("currentRxn",currentRxn);
       document.location.href = 'modelEdit';
     //}else{
@@ -513,6 +534,7 @@ window.onload = function init(){
 
 
   clearBtn.addEventListener("click", function(event){
+    console.log("clear button clicked " );
     //reset global variables
     currentRxn = "";
 

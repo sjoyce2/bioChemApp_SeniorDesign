@@ -349,7 +349,7 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
   }
   currentRxn = "";
   validateReaction();
-  
+
 }
 //unit test
 // function testClickSaveBtn(click){
@@ -480,7 +480,7 @@ window.onload = function init(){
     //calling beginPath here preps canvas for drawing
     ctx.beginPath();
     ctx.lineWidth = 3;
-    clearAll();
+    //clearAll();
     //validate that settings are good, reaction created is good or bad
     var continueDisplay = validateReaction();
 

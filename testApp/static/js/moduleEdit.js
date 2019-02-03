@@ -330,9 +330,10 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
     for(var j = 1; j < enzymeSubs[i].length; j++){
       if(enzymeSubs[i][0] === enzymeName){
         //add substrate to the list.
-        // console.log("**********"+enzymeSubs[i],[j]);
+        console.log("**********"+ enzymeSubs[i][j]);
         checkedSubsNames.push(enzymeSubs[i][j]);
         countSubstrates++;
+        console.log(checkedSubsNames);
       }
     }
   }

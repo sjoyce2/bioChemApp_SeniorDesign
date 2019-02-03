@@ -361,6 +361,8 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
       }
     }
   }
+  currentRxn = "";
+  validateReaction();
 }
 //unit test
 // function testClickSaveBtn(click){

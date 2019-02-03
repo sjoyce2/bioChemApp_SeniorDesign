@@ -402,7 +402,7 @@ function validateReaction(){
   console.log("validateReaction called");
   console.log("checkedSubsNamed: " + checkedSubsNames);
   console.log("checkedEnzsNamed: " + checkedEnzsNames);
-  console.log("checkedProdsNames: " checkedProdsNames);
+  console.log("checkedProdsNames: " + checkedProdsNames);
 
   for(var i = 0; i < checkedSubsNames.length; i++){
     if(i === checkedSubsNames.length - 1){

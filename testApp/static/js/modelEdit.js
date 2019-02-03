@@ -236,7 +236,7 @@ function main () {
     reset();
     //get data from database
     //get data from localStorage.getItem("currentRxn")
-    var stringToParse = String(localStorage.getItem("currentRxn"));
+    var stringToParse = localStorage.getItem("currentRxn");
     console.log(stringToParse);
     parseThrough(stringToParse);
 

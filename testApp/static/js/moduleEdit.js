@@ -477,7 +477,7 @@ window.onload = function init(){
     //calling beginPath here preps canvas for drawing
     ctx.beginPath();
     ctx.lineWidth = 3;
-    clearAll();
+
     //validate that settings are good, reaction created is good or bad
     var continueDisplay = validateReaction();
 
@@ -556,7 +556,6 @@ window.onload = function init(){
  // });
 }
 function main () {
-
 }
 main()
 

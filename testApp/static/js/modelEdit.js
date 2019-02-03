@@ -20,35 +20,35 @@ var en2weight = 9;
 var en3weight = 1;
 
 //Create a non-reversible reaction
-function notRevStep(substrate, product, enzyme, 
+function notRevStep(substrate, product, enzyme,
     firstRectMidX, firstRectMidY, ctx) {
 	//create starting protein
     ctx.rect(firstRectMidX - 100, firstRectMidY - 25, 100, 50);
-	
+
 	//create arrow to second protein
     ctx.moveTo(firstRectMidX, firstRectMidY);
-       ctx.arcTo(firstRectMidX + 50, firstRectMidY, 
+       ctx.arcTo(firstRectMidX + 50, firstRectMidY,
         firstRectMidX + 50, firstRectMidY + 50, 50);
-    ctx.arcTo(firstRectMidX + 50, firstRectMidY + 100, 
+    ctx.arcTo(firstRectMidX + 50, firstRectMidY + 100,
         firstRectMidX, firstRectMidY + 100, 50);
     ctx.lineTo(firstRectMidX + 10, firstRectMidY + 90);
     ctx.moveTo(firstRectMidX + 10, firstRectMidY + 110);
     ctx.lineTo(firstRectMidX, firstRectMidY + 100);
-	
+
 	//create second protein
     ctx.rect(firstRectMidX - 100, firstRectMidY + 75, 100, 50);
-	
+
 	//create arrow for other substrates (inputs) into the reaction (such as ATP)
     ctx.moveTo(firstRectMidX + 100, firstRectMidY);
-    ctx.arcTo(firstRectMidX + 50, firstRectMidY, 
+    ctx.arcTo(firstRectMidX + 50, firstRectMidY,
         firstRectMidX + 50, firstRectMidY + 50, 50);
-    ctx.arcTo(firstRectMidX + 50, firstRectMidY + 100, 
+    ctx.arcTo(firstRectMidX + 50, firstRectMidY + 100,
         firstRectMidX + 100, firstRectMidY + 100, 50);
     ctx.lineTo(firstRectMidX + 90, firstRectMidY + 90);
     ctx.moveTo(firstRectMidX + 90, firstRectMidY + 110);
     ctx.lineTo(firstRectMidX + 100, firstRectMidY + 100);
-    ctx.stroke();   
-	
+    ctx.stroke();
+
     //create enzyme at center of reaction
     ctx.beginPath();
     ctx.font = "12px Arial";
@@ -56,23 +56,23 @@ function notRevStep(substrate, product, enzyme,
     var xCoord = firstRectMidX + 45 - (fontMeasures.width / 2);
     ctx.moveTo(xCoord, firstRectMidY + 50);
     ctx.bezierCurveTo(
-        xCoord, firstRectMidY + 30, 
-        xCoord + fontMeasures.width + 10, firstRectMidY + 30, 
+        xCoord, firstRectMidY + 30,
+        xCoord + fontMeasures.width + 10, firstRectMidY + 30,
         xCoord + fontMeasures.width + 10, firstRectMidY + 50);
     ctx.bezierCurveTo(
-        xCoord + fontMeasures.width + 10, firstRectMidY + 70, 
-        xCoord, firstRectMidY + 70, 
+        xCoord + fontMeasures.width + 10, firstRectMidY + 70,
+        xCoord, firstRectMidY + 70,
         xCoord, firstRectMidY + 50);
     ctx.fillStyle = "white";
 	ctx.fill();
-	
+
     //Label the proteins(rectangles) and enzyme(oval)
     ctx.fillStyle = "black";
     ctx.font = "20px Arial";
     ctx.fillText(substrate, firstRectMidX - 90, firstRectMidY + 5);
     ctx.fillText(product, firstRectMidX - 90, firstRectMidY + 105);
     ctx.font = "12px Arial";
-    ctx.fillText(enzyme, firstRectMidX + 50 - fontMeasures.width / 2, 
+    ctx.fillText(enzyme, firstRectMidX + 50 - fontMeasures.width / 2,
         firstRectMidY + 54);
     ctx.fillText("ATP", firstRectMidX + 110, firstRectMidY + 5);
     ctx.fillText("ADP", firstRectMidX + 110, firstRectMidY + 105);
@@ -161,16 +161,16 @@ function render() {
     var fifthText = "GAP";
 
     //Draw each step of the pathway, including reversible and non-reversible steps
-    notRevStep(firstText, secondText, enzyme1Name, 
+    notRevStep(firstText, secondText, enzyme1Name,
         firstRectMidX, firstRectMidY, ctx);
     stepOrder.push("n");
-    revStep(secondText, thirdText, firstRectMidX, 
+    revStep(secondText, thirdText, firstRectMidX,
         firstRectMidY + 100, ctx);
         stepOrder.push("r");
     notRevStep(thirdText, fourthText, enzyme2Name,
         firstRectMidX, firstRectMidY + 200, ctx);
     stepOrder.push("n");
-    revStep(fourthText, fifthText, firstRectMidX, 
+    revStep(fourthText, fifthText, firstRectMidX,
         firstRectMidY + 300, ctx);
     stepOrder.push("r");
     endY = firstRectMidY + 390.0;
@@ -209,9 +209,9 @@ function reset() {
 }
 
 function parseThrough(stringToParse) {
-    tmpArr = stringToParse.split(">");
-    newArr = tmpArr[1].split("<");
-    evenNewer = newArr[1].split(";");
+    var tmpArr = stringToParse.split(">");
+    var newArr = tmpArr[1].split("<");
+    var evenNewer = newArr[1].split(";");
     // fullArr now contains
     // [0]: substrates (inputs)
     // [1]: enzyme

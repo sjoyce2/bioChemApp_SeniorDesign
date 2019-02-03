@@ -212,6 +212,9 @@ function main () {
     reset();
     //get data from database
     //get data from localStorage.getItem("currentRxn")
+    stringToParse = String(localStorage.getItem("currentRxn"));
+    console.log(stringToParse);
+
     firstRectMidY = 75;
     y = firstRectMidY;
     render();

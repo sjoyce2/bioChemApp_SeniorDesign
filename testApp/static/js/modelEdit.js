@@ -209,9 +209,9 @@ function reset() {
 }
 
 function parseThrough(stringToParse) {
-    tmpArr = stringToParse.split(">");
-    newArr = tmpArr[1].split("<");
-    evenNewer = newArr[1].split(";");
+    var tmpArr = stringToParse.split(">");
+    var newArr = tmpArr[1].split("<");
+    var evenNewer = newArr[1].split(";");
     // fullArr now contains
     // [0]: substrates (inputs)
     // [1]: enzyme
@@ -236,7 +236,8 @@ function main () {
     reset();
     //get data from database
     //get data from localStorage.getItem("currentRxn")
-    stringToParse = String(localStorage.getItem("currentRxn"));
+    console.log(localStorage.getItem('currentRxn'));
+    var stringToParse = localStorage.getItem('currentRxn');
     console.log(stringToParse);
     parseThrough(stringToParse);
 

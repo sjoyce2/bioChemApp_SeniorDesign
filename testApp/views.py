@@ -6,15 +6,15 @@ from .models import Module
 
 # Create your views here.
 from django.http import HttpResponse
-from testApp.models import User
+#from testApp.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from testApp.forms import SignUpForm
-from django.models import Module
-from django.models import Products
-from django.models import Substrates
+from testApp.models import Module
+from testApp.models import Products
+from testApp.models import Substrates
 
 def modelChoice(request):
 	context = {}
@@ -55,6 +55,6 @@ def signup(request):
 	}
 	return render(request, 'accounts/signup.html', context=context)
 
-def createModule(userId, modelId, moduleId, substrate, product, enzyme, reversible, modelName):
+#def createModule(userId, modelId, moduleId, substrate, product, enzyme, reversible, modelName):
 
-def readModule(id):	
+#def readModule(id):	

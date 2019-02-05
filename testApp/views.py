@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
+from .models import Module
 
 # Create your views here.
 from django.http import HttpResponse
@@ -52,5 +53,6 @@ def signup(request):
 	}
 	return render(request, 'accounts/signup.html', context=context)
 
+def createModule(userId, modelId, moduleId, substrate, product, enzyme, reversible, modelName):
 
-	
+def readModule(id):	

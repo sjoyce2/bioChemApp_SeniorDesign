@@ -12,7 +12,9 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from testApp.forms import SignUpForm
-
+from django.models import Module
+from django.models import Products
+from django.models import Substrates
 
 def modelChoice(request):
 	context = {}

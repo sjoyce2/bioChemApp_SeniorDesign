@@ -399,9 +399,9 @@ function setArraysRepresentingReaction(){
     // [1]: enzyme
     // [2]: products (outputs)
     // [3]: reversible? (boolean)
-    fullArr = [tmpArr[0], newArr[0], evenNewer[0], evenNewer[1]];
-    subsArr = fullArr[0].split("+");
-    prodArr = fullArr[2].split("+");
+    var fullArr = [tmpArr[0], newArr[0], evenNewer[0], evenNewer[1]];
+    var subsArr = fullArr[0].split("+");
+    var prodArr = fullArr[2].split("+");
     console.log("Substrates: ");
     console.log(subsArr);
     console.log("Enzyme:");
@@ -498,13 +498,13 @@ window.onload = function init(){
   modal = document.getElementById('invalidModal');
   var span = document.getElementsByClassName("close")[0];
   var saveBtnClicked = false;
+  //SET CURRENT REACTION TO STRING FROM MODEL EDIT SCREEN HERE
+  currentRxn = step1;
+  setArraysRepresentingReaction();
 
   createBtn.addEventListener("click", function(event){
     //reset global variables
     currentRxn = "";
-    //SET CURRENT REACTION TO STRING FROM MODEL EDIT SCREEN HERE
-    currentRxn = step1;
-    setArraysRepresentingReaction();
     //clear everything out of canvas on button click so we can draw new rxn
     ctx.clearRect(0, 0, canvas1.width, canvas1.height);
     //calling beginPath here preps canvas for drawing

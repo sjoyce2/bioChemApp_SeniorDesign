@@ -417,6 +417,7 @@ function checkSubsEnzProds(){
     console.log("CHECKING TRUE");
     reversibleChoice[0].checked = true;
   }else{
+    console.log("CHECKING FALSE");
     reversibleChoice[1].checked = true;
   }
 }

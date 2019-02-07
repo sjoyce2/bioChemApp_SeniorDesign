@@ -388,12 +388,21 @@ function clearAll(){
       }
     }
 }
+
+function checkSubsEnzProds(){
+  console.log("BEGIN");
+  console.log(substrates);
+  console.log(products);
+  console.log(enzymes);
+  console.log("END");
+}
 function setArraysRepresentingReaction(){
   countProducts = 0;
   countSubstrates = 0;
   checkedSubsNames = [];
   checkedProdsNames = [];
   checkedEnzsNames = []
+
   if(currentRxn === ""){
     console.log("CURRENT RXN + " + currentRxn);
     return false;
@@ -430,6 +439,7 @@ function setArraysRepresentingReaction(){
     isReversible = fullArr[3];
     //Reset currentRxn string, since everything is pushed to the global variables
     currentRxn = "";
+    checkSubsEnzProds();
     var continueDisplay = validateReaction();
 
     if(continueDisplay){

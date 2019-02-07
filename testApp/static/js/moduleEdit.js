@@ -392,6 +392,7 @@ function clearAll(){
 }
 
 function checkSubsEnzProds(){
+  console.log("IS REVERISBLE IES HEKRJ"+isReversible);
   for(var i = 0; i < substrates.length; i++){
     for(var j = 0; j < checkedSubsNames.length; j++){
       if(substrates[i].value === checkedSubsNames[j]){

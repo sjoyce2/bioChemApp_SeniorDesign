@@ -418,6 +418,9 @@ function setArraysRepresentingReaction(){
       checkedProdsNames.push(subsArr[i]);
     }
     checkedEnzsNames.push(fullArr[1]);
+    isReversible = fullArr[3];
+    //Reset currentRxn string, since everything is pushed to the global variables
+    currentRxn = "";
     validateReaction();
     //TODO: convert fullArr[3] to boolean, save substrates, enzymes, and
     // products as variables

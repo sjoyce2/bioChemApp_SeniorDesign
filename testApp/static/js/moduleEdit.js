@@ -412,7 +412,7 @@ function checkSubsEnzProds(){
       enzymes[i].checked = true;
     }
   }
-  if(isReversible){
+  if(isReversible === "true"){
     reversibleChoice[0].checked = true;
   }else{
     reversibleChoice[1].checked = true;

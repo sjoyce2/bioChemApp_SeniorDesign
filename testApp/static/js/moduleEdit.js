@@ -421,9 +421,15 @@ function setArraysRepresentingReaction(){
     isReversible = fullArr[3];
     //Reset currentRxn string, since everything is pushed to the global variables
     currentRxn = "";
-    validateReaction();
-    //TODO: convert fullArr[3] to boolean, save substrates, enzymes, and
-    // products as variables
+    var continueDisplay = validateReaction();
+    
+    if(continueDisplay){
+      console.log("IS REVERSIBLE:" + isReversible);
+      displayReaction();
+    }else{
+      modal.style.display = "block";
+      ctx.clearRect(0, 0, canvas1.width, canvas1.height);
+    }
   }
 }
 

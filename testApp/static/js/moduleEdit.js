@@ -194,8 +194,10 @@ function drawDownArrow(xcoor, ycoor, name){
   ycoor = ycoor + objectHeight / 25;
   // ctx.fillText(name, xcoor , ycoor + objectBuffer); //This is for version without downwards arrow
   ctx.fillText(name, xcoor + 5 , ycoor + (objectHeight / 2));//This is for version with downwards arrow
+    console.log("isREVERISBLE = " + isReversible);
   if(isReversible){
     console.log("MISTAKE");
+    console.log("isREVERISBLE = " + isReversible);
     //xcoor = canvas1.width / 2;
     ctx.moveTo(xcoor, ycoor);
     ctx.lineTo(xcoor + (objectWidth / 4), ycoor + (objectHeight / 4));

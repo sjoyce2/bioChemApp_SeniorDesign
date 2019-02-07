@@ -410,6 +410,15 @@ function setArraysRepresentingReaction(){
     console.log(prodArr);
     console.log("Reversible?: ");
     console.log(fullArr[3]);
+
+    for(var i = 0; i < subsArr.length; i++){
+      checkedSubsNames.push(subsArr[i]);
+    }
+    for(var i = 0; i < prodArr.length; i++){
+      checkedProdsNames.push(subsArr[i]);
+    }
+    checkedEnzsNames.push(fullArr[1]);
+    validateReaction();
     //TODO: convert fullArr[3] to boolean, save substrates, enzymes, and
     // products as variables
   }

@@ -194,6 +194,7 @@ function drawDownArrow(xcoor, ycoor, name){
   // ctx.fillText(name, xcoor , ycoor + objectBuffer); //This is for version without downwards arrow
   ctx.fillText(name, xcoor + 5 , ycoor + (objectHeight / 2));//This is for version with downwards arrow
   if(isReversible){
+    console.log("MISTAKE");
     //xcoor = canvas1.width / 2;
     ctx.moveTo(xcoor, ycoor);
     ctx.lineTo(xcoor + (objectWidth / 4), ycoor + (objectHeight / 4));
@@ -456,6 +457,7 @@ function setArraysRepresentingReaction(){
     }
     checkedEnzsNames.push(fullArr[1]);
     isReversible = fullArr[3];
+    console.log("IS REVERSIBLE IS SET TO " + isReversible);
     //Reset currentRxn string, since everything is pushed to the global variables
     currentRxn = "";
     var continueDisplay = validateReaction();

@@ -62,6 +62,7 @@ var enzymeReverse = [["Hexokinase","irreversible"], ["Phosphoglucose isomerase",
 
 //function to change reversible boolean depending on which reversible radio btn is set
 function onRadioReverseChange(){
+  console.log("THIS IS TRIGGERED");
   if(reversibleChoice[0].checked){
     isReversible = true;
   }else{

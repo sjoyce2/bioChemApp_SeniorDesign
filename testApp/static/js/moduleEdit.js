@@ -390,11 +390,25 @@ function clearAll(){
 }
 
 function checkSubsEnzProds(){
-  console.log("BEGIN");
-  console.log(substrates);
-  console.log(products);
-  console.log(enzymes);
-  console.log("END");
+  for(var i = 0; i < substrates.length; i++){
+    for(var j = 0; j < checkedSubsNames.length; j++){
+      if(substrates[i].value === checkedSubsNames[j]){
+        substrates[i].checked = true;
+      }
+    }
+  }
+  for(var i = 0; i < products.length; i++){
+    for(var j = 0; j < checkedProdsNames.length; j++){
+      if(products[i].value === checkedProdsNames[j]){
+        products[i].checked = true;
+      }
+    }
+  }
+  for(var i = 0; i < enzymes.length; i++){
+    if(enzymes[i].value === checkedEnzsNames[0]){
+      enzymes[i].checked = true;
+    }
+  }
 }
 function setArraysRepresentingReaction(){
   countProducts = 0;
@@ -439,10 +453,10 @@ function setArraysRepresentingReaction(){
     isReversible = fullArr[3];
     //Reset currentRxn string, since everything is pushed to the global variables
     currentRxn = "";
-    checkSubsEnzProds();
     var continueDisplay = validateReaction();
 
     if(continueDisplay){
+      checkSubsEnzProds();
       console.log("IS REVERSIBLE:" + isReversible);
       displayReaction();
     }else{

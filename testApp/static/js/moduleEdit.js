@@ -386,6 +386,33 @@ function clearAll(){
       }
     }
 }
+function setArraysRepresentingReaction(){
+  if(currentRxn === ""){
+    return false;
+  }else{
+    var tmpArr = currentRxn.split(">");
+    var newArr = tmpArr[1].split("<");
+    var evenNewer = newArr[1].split(";");
+    // fullArr now contains
+    // [0]: substrates (inputs)
+    // [1]: enzyme
+    // [2]: products (outputs)
+    // [3]: reversible? (boolean)
+    fullArr = [tmpArr[0], newArr[0], evenNewer[0], evenNewer[1]];
+    subsArr = fullArr[0].split("+");
+    prodArr = fullArr[2].split("+");
+    console.log("Substrates: ");
+    console.log(subsArr);
+    console.log("Enzyme:");
+    console.log(fullArr[1]);
+    console.log("Products: ");
+    console.log(prodArr);
+    console.log("Reversible?: ");
+    console.log(fullArr[3]);
+    //TODO: convert fullArr[3] to boolean, save substrates, enzymes, and
+    // products as variables
+  }
+}
 
 function validateReaction(){
   //iterate through user selections and create string representation
@@ -474,7 +501,9 @@ window.onload = function init(){
   createBtn.addEventListener("click", function(event){
     //reset global variables
     currentRxn = "";
-
+    //SET CURRENT REACTION TO STRING FROM MODEL EDIT SCREEN HERE
+    currentRxn = step1;
+    setArraysRepresentingReaction();
     //clear everything out of canvas on button click so we can draw new rxn
     ctx.clearRect(0, 0, canvas1.width, canvas1.height);
     //calling beginPath here preps canvas for drawing

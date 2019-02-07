@@ -413,16 +413,18 @@ function setArraysRepresentingReaction(){
 
     for(var i = 0; i < subsArr.length; i++){
       checkedSubsNames.push(subsArr[i]);
+      countSubstrates++;
     }
     for(var i = 0; i < prodArr.length; i++){
       checkedProdsNames.push(prodArr[i]);
+      countProducts++;
     }
     checkedEnzsNames.push(fullArr[1]);
     isReversible = fullArr[3];
     //Reset currentRxn string, since everything is pushed to the global variables
     currentRxn = "";
     var continueDisplay = validateReaction();
-    
+
     if(continueDisplay){
       console.log("IS REVERSIBLE:" + isReversible);
       displayReaction();
@@ -517,8 +519,9 @@ window.onload = function init(){
   var span = document.getElementsByClassName("close")[0];
   var saveBtnClicked = false;
   //SET CURRENT REACTION TO STRING FROM MODEL EDIT SCREEN HERE
-  currentRxn = step1;
-  setArraysRepresentingReaction();
+  currentRxn = step1;//set currentRxn to dummy value
+  setArraysRepresentingReaction();//function to set the arrays to currentRxn and call values to display/validate
+
 
   createBtn.addEventListener("click", function(event){
     //reset global variables
@@ -554,8 +557,6 @@ window.onload = function init(){
     //  saveBtnClicked = true;
     //}
   });
-
-
 
   clearBtn.addEventListener("click", function(event){
     //reset global variables

@@ -389,6 +389,11 @@ function clearAll(){
     }
 }
 function setArraysRepresentingReaction(){
+  countProducts = 0;
+  countSubstrates = 0;
+  checkedSubsNames = [];
+  checkedProdsNames = [];
+  checkedEnzsNames = []
   if(currentRxn === ""){
     console.log("CURRENT RXN + " + currentRxn);
     return false;

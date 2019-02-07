@@ -154,6 +154,7 @@ function render() {
     ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
     firstRectMidX = (canvas.clientWidth / 2) + 50;
     firstRectMidY = 75;
+    //Need to define these differently
 	var firstText = "Glucose";
 	var secondText = "G6P";
     var thirdText = "F6P";
@@ -208,6 +209,8 @@ function reset() {
 
 }
 
+// Assumes that there are at least one substrate, at least one product,
+// exactly one enzyme, and exactly one boolean for reversible/irreversible
 function parseThrough(stringToParse) {
     var tmpArr = stringToParse.split(">");
     var newArr = tmpArr[1].split("<");
@@ -220,6 +223,8 @@ function parseThrough(stringToParse) {
     fullArr = [tmpArr[0], newArr[0], evenNewer[0], evenNewer[1]];
     subsArr = fullArr[0].split("+");
     prodArr = fullArr[2].split("+");
+    enzyme1Name = fullArr[1];
+
     console.log("Substrates: ");
     console.log(subsArr);
     console.log("Enzyme:");
@@ -243,6 +248,7 @@ function main () {
 
     firstRectMidY = 75;
     y = firstRectMidY;
+    // TODO: render() should be able to access the 
     render();
     window.requestAnimationFrame(animate);
 

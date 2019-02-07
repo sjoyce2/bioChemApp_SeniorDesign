@@ -409,6 +409,11 @@ function checkSubsEnzProds(){
       enzymes[i].checked = true;
     }
   }
+  if(isReversible){
+    reversibleChoice[0].checked = true;
+  }else{
+    reversibleChoice[1].checked = true;
+  }
 }
 function setArraysRepresentingReaction(){
   countProducts = 0;

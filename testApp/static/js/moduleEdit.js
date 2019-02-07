@@ -388,6 +388,7 @@ function clearAll(){
 }
 function setArraysRepresentingReaction(){
   if(currentRxn === ""){
+    console.log("CURRENT RXN + " + currentRxn);
     return false;
   }else{
     var tmpArr = currentRxn.split(">");

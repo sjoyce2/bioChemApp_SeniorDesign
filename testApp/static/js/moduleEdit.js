@@ -415,7 +415,7 @@ function setArraysRepresentingReaction(){
       checkedSubsNames.push(subsArr[i]);
     }
     for(var i = 0; i < prodArr.length; i++){
-      checkedProdsNames.push(subsArr[i]);
+      checkedProdsNames.push(prodArr[i]);
     }
     checkedEnzsNames.push(fullArr[1]);
     isReversible = fullArr[3];

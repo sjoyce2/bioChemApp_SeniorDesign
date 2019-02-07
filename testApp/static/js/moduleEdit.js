@@ -299,6 +299,7 @@ function displayReaction(){
   var currentX = horizontalBuffer;
   var currentY = verticalBuffer;
   currentX = currentX + setInitialXCoor(countSubstrates);
+  console.log("COUNT SUBSTRATES = " + countSubstrates);
   drawSubstrates(currentX, currentY);
 
   currentY = currentY + objectHeight + verticalBuffer * 2; //for version with downwards arrow
@@ -309,6 +310,7 @@ function displayReaction(){
   currentX = horizontalBuffer;
   currentY = verticalBuffer * 5 + objectHeight * 2;
   currentX = currentX + setInitialXCoor(countProducts);
+  console.log("COUNT SUBSTRATES = " + countProducts);
   drawProducts(currentX, currentY);
 }
 

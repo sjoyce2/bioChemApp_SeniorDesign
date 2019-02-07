@@ -463,7 +463,13 @@ function setArraysRepresentingReaction(){
       countProducts++;
     }
     checkedEnzsNames.push(fullArr[1]);
-    isReversible = fullArr[3];
+    if(fullArr[3] === 'true'){
+      console.log("SET IS REVERSIBLE TO TRUE");
+      isReversible = true;
+    }else if(fullArr[3] === 'false'){
+      console.log("SET IS REVERSIBLE TO FALSE");
+      isReversible = false;
+    }
     console.log("IS REVERSIBLE IS SET TO " + isReversible);
     //Reset currentRxn string, since everything is pushed to the global variables
     currentRxn = "";

@@ -55,6 +55,22 @@ def signup(request):
 	}
 	return render(request, 'accounts/signup.html', context=context)
 
-#def createModule(userId, modelId, moduleId, substrate, product, enzyme, reversible, modelName):
+''' def createModule(new_userId, new_modelId, new_moduleId, substrate_list, \
+	product_list, new_enzyme, new_reversible, new_modelName):
+	new_module = Module(userID = new_userId, modelID = new_modelId, \
+		moduleID = new_moduleId, enzyme = new_enzyme, reversible = \
+		new_reversible, modelName = new_modelName)
+	new_module.save()
+	for i in range(len(substrate_list)):
+		new_substrate = Substrates(module = new_moduleId, substrate = \
+			substrate_list[i])
+		new_substrate.save()
+	for i in range(len(product_list)):
+		new_product = Products(module = new_moduleId, product = \
+			product_list[i])
+		new_product.save() '''
+
+
+
 
 #def readModule(id):	

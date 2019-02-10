@@ -178,8 +178,8 @@
 										    	</ul>
 												</div>
 												<button type="button" class="createReaction" id="createReaction">CREATE</button>
-												<form method="POST" class="saveModuleForm">{% csrf_token %}
-													{{ form.as_p }}
+												<form method="POST" class="saveModuleForm">
+													{% csrf_token %}
 													<button type="button" class="saveReaction" id="saveReaction">SAVE</button>
 												</form>
 												<button type="button" class="clearReaction" id="clearReaction">CLEAR</button>

@@ -22,7 +22,7 @@ def modelChoice(request):
 	return render(request, 'modelChoice.html', context=context)
 
 def moduleEdit(request):
-	context = {}
+	context = {'form': SaveModuleForm}
 	return render(request, 'moduleEdit.html', context=context)
 
 def modelEdit(request):

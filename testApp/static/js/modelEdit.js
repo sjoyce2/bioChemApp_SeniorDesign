@@ -215,6 +215,8 @@ function reset() {
 // Assumes that there are at least one substrate, at least one product,
 // exactly one enzyme, and exactly one boolean for reversible/irreversible
 function parseThrough(stringToParse) {
+    //Need to do a try catch if there is no info in stringToParse
+    //Also, on chrome the wrong information is being stored as an enzyme
     var tmpArr = stringToParse.split(">");
     var newArr = tmpArr[1].split("<");
     var evenNewer = newArr[1].split(";");

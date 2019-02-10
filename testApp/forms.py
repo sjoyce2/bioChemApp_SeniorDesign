@@ -12,7 +12,7 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', )
 
-class SaveModule(forms.Form):
+class SaveModuleForm(forms.Form):
     modelId = forms.IntegerField()
     moduleId = forms.IntegerField()
     enzyme = forms.CharField(max_length=200)

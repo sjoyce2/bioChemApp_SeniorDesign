@@ -14,7 +14,9 @@ class Module(models.Model):
 	modelName = models.CharField(max_length = 200 )
 
 	def __str__(self):
-		return self.userID
+		return_val = str(self.userID) + str(self.modelID) + str(self.moduleID) \
+			+ str(self.enzyme) + str(self.reversible) + str(self.modelName)
+		return return_val
 
 class Products(models.Model):
 	module = models.ForeignKey(Module, on_delete=models.CASCADE)

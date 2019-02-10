@@ -11,3 +11,11 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', )
+
+class SaveModule(forms.Form):
+    modelId = forms.IntegerField()
+    moduleId = forms.IntegerField()
+    enzyme = forms.CharField(max_length=200)
+    reversible = forms.CharField(max_length=200)
+    modelName = forms.CharField(max_length=200)
+    # products and substrates are preferably in lists

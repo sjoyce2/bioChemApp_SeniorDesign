@@ -9,6 +9,9 @@ var endY;
 var direction = 1;
 var stepOrder = []; //array of steps, "n" for non-reversible, "r" for reversible
 var speed; //how fast the "molecule" is flowing through the pathway
+
+// Instead of these, we need a list of enzymes and a corresponding 2d list
+// for products and another for substrates
 var enzyme1 = "enzyme1";
 var enzyme2 = "enzyme2";
 var enzyme3 = "enzyme3";

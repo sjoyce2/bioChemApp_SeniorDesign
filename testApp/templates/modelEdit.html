@@ -23,6 +23,9 @@
                             <button class="editToolbarButton" id="logout" type="button">Logout</button>
                         </div>
                     </div>
+                    {% for mod in modules %}
+                        {{ mod }}
+                    {% endfor %}
                     <div class="flex-horiz">
                         <a href="{% url 'moduleEdit' %}" id="link-to-module">
                             <canvas id="modelEditCanvas" height="800" width="800"></canvas>

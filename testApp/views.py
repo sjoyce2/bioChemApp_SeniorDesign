@@ -21,13 +21,12 @@ def modelChoice(request):
 	return render(request, 'modelChoice.html', context=context)
 
 def moduleEdit(request):
-	context = {
-	}
+	context = {}
 	return render(request, 'moduleEdit.html', context=context)
 
 def modelEdit(request):
-	context = {
-	}
+	mod = Module.objects.all()
+	context = { "modules": mod }
 	return render(request, 'modelEdit.html', context=context)
 
 def register(request):
@@ -55,7 +54,7 @@ def signup(request):
 	}
 	return render(request, 'accounts/signup.html', context=context)
 
-''' def createModule(new_userId, new_modelId, new_moduleId, substrate_list, \
+'''def createModule(new_userId, new_modelId, new_moduleId, substrate_list, \
 	product_list, new_enzyme, new_reversible, new_modelName):
 	new_module = Module(userID = new_userId, modelID = new_modelId, \
 		moduleID = new_moduleId, enzyme = new_enzyme, reversible = \
@@ -69,8 +68,6 @@ def signup(request):
 		new_product = Products(module = new_moduleId, product = \
 			product_list[i])
 		new_product.save() '''
-
-
 
 
 #def readModule(id):	

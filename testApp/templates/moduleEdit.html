@@ -36,6 +36,7 @@
 										</div>
 										<div class="viewAndCreateReaction">
 												<canvas id="imageCanvas" height="500" width="825"></canvas>
+										<form method="POST" class="saveModuleForm" action="/saveModule">{% csrf_token %}
 												<div id="subsContainer">
 													<label id="subsLabel">SUBSTRATES</label>
 											    <ul class="subs" id="substrates">
@@ -177,14 +178,7 @@
 														</label>
 										    	</ul>
 												</div>
-												<button type="button" class="createReaction" id="createReaction">CREATE</button>
-												<form method="POST" class="saveModuleForm">
-													{% csrf_token %}
-													{{form}}
-													<button type="button" class="saveReaction" id="saveReaction">SAVE</button>
-												</form>
-												<button type="button" class="clearReaction" id="clearReaction">CLEAR</button>
-
+												<button type="button" class="saveReaction" id="saveReaction">SAVE</button>
 												</label>
 												<label class="reversibleChoice">Reversible
 													<input type="radio" name="reversibleChoice" onchange="onRadioReverseChange()" value="Reversible">
@@ -194,6 +188,9 @@
 													<input type="radio" name="reversibleChoice" onchange="onRadioReverseChange()" value="Irreversible" checked>
 													<span class="checkmark"></span>
 												</label>
+											</form>
+												<button type="button" class="createReaction" id="createReaction">CREATE</button>
+												<button type="button" class="clearReaction" id="clearReaction">CLEAR</button>
 
 											</div>
 											<!-- The Modal -->

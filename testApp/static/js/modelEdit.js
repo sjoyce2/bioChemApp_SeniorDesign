@@ -12,6 +12,9 @@ var speed; //how fast the "molecule" is flowing through the pathway
 
 // Instead of these, we need a list of enzymes and a corresponding 2d list
 // for products and another for substrates
+var enzymeList = [];
+var substrateList = [];
+var productList = [];
 var enzyme1 = "enzyme1";
 var enzyme2 = "enzyme2";
 var enzyme3 = "enzyme3";
@@ -84,9 +87,11 @@ function notRevStep(substrate, product, enzyme,
 //create a reversible reaction
 function revStep(firstText, secondText, firstRectMidX, firstRectMidY, ctx) {
     //create first protein
-    ctx.rect(firstRectMidX - 100, firstRectMidY - 25, 100, 50);
+    firstWidth = ctx.measureText(firstText).width;
+    ctx.rect(firstRectMidX - 100, firstRectMidY - 25, firstWidth, 50);
     //create second protein
-    ctx.rect(firstRectMidX - 100, firstRectMidY + 75, 100, 50);
+    secondWidth = ctx.measureText(secondText).width
+    ctx.rect(firstRectMidX - 100, firstRectMidY + 75, secondWidth, 50);
     //draw arrows between proteins
     ctx.moveTo(firstRectMidX - 65, firstRectMidY + 35);
     ctx.lineTo(firstRectMidX - 55, firstRectMidY + 25);
@@ -217,7 +222,11 @@ function reset() {
 function parseThrough(stringToParse) {
     //Need to do a try catch if there is no info in stringToParse
     //Also, on chrome the wrong information is being stored as an enzyme
-    var tmpArr = stringToParse.split(">");
+    try {
+        var tmpArr = stringToParse.split(">");
+    } catch (e) {
+        return null
+    }
     var newArr = tmpArr[1].split("<");
     var evenNewer = newArr[1].split(";");
     // fullArr now contains
@@ -228,7 +237,8 @@ function parseThrough(stringToParse) {
     fullArr = [tmpArr[0], newArr[0], evenNewer[0], evenNewer[1]];
     subsArr = fullArr[0].split("+");
     prodArr = fullArr[2].split("+");
-    enzyme1Name = fullArr[1];
+    enzymeList[0] = fullArr[1];
+    
 
     console.log("Substrates: ");
     console.log(subsArr);
@@ -240,16 +250,16 @@ function parseThrough(stringToParse) {
     console.log(fullArr[3]);
     //TODO: convert fullArr[3] to boolean, save substrates, enzymes, and
     // products as variables
+    return [subsArr, fullArr[1], prodArr, fullArr[3]]
 }
 
 function main () {
     reset();
     //get data from database
     //get data from localStorage.getItem("currentRxn")
-    console.log(localStorage.getItem('currentRxn'));
+    localStorage.setItem("reactionClicked", "-1")
     var stringToParse = localStorage.getItem('currentRxn');
-    console.log(stringToParse);
-    parseThrough(stringToParse);
+    var reaction = parseThrough(stringToParse);
 
     firstRectMidY = 75;
     y = firstRectMidY;

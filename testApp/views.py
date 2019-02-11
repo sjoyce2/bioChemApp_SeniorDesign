@@ -25,9 +25,13 @@ def moduleEdit(request):
 	context = {'form': SaveModuleForm}
 	return render(request, 'moduleEdit.html', context=context)
 
+def saveModule(request):
+	context = {}
+	return render(request, 'moduleEdit.html', context=context)
+
 def modelEdit(request):
 	mod = Module.objects.all()
-	context = { "modules": mod }
+	context = { 'modules': mod }
 	return render(request, 'modelEdit.html', context=context)
 
 def register(request):

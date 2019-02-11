@@ -16,3 +16,7 @@ https://docs.google.com/spreadsheets/d/1ktY1G7tluKuXQLoiwlncsuEFiD-oRuO-6fFmuu4j
 Link to Documentation:
 
 https://docs.google.com/document/d/1DTMJKezT4y24ELtitQ7g1imXq83VmCM1UBYlmxYQ9gc/edit?usp=sharing
+
+Link to Enzyme Definitions: 
+
+https://docs.google.com/document/d/1ORGct6DgaUYzYgF9CZ3No40mG_3aKlU7Mb1Pw8-3pmA/edit

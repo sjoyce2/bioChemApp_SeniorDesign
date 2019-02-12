@@ -87,10 +87,11 @@ function notRevStep(substrate, product, enzyme,
 //create a reversible reaction
 function revStep(firstText, secondText, firstRectMidX, firstRectMidY, ctx) {
     //create first protein
-    firstWidth = ctx.measureText(firstText).width;
+    ctx.font = "20px Arial";
+    firstWidth = ctx.measureText(firstText).width + 20;
     ctx.rect(firstRectMidX - 100, firstRectMidY - 25, firstWidth, 50);
     //create second protein
-    secondWidth = ctx.measureText(secondText).width
+    secondWidth = ctx.measureText(secondText).width + 20;
     ctx.rect(firstRectMidX - 100, firstRectMidY + 75, secondWidth, 50);
     //draw arrows between proteins
     ctx.moveTo(firstRectMidX - 65, firstRectMidY + 35);

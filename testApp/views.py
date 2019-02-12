@@ -28,13 +28,13 @@ def moduleEdit(request):
 
 def saveModule(request):
 	print(request.POST)
-	substrate = request.POST.get("Substrate")
-	product = request.POST.get("Product")
-	enzyme = request.POST.get("Enzyme")
-	reversible = request.POST.get("reversibleChoice")
-	saveModule = saveModule(substrate=substrate, product=product, enzyme=enzyme, reversible=reversible)
+	new_substrate = request.POST.get("Substrate")
+	new_product = request.POST.get("Product")
+	new_enzyme = request.POST.get("Enzyme")
+	new_reversible = request.POST.get("reversibleChoice")
+	saveModule = Module(substrate=new_substrate, product=new_product, enzyme=new_enzyme, \
+		reversible=new_reversible)
 	saveModule.save()
-	context = {}
 	return HttpResponseRedirect("/moduleEdit")
 
 def modelEdit(request):

@@ -6,6 +6,7 @@ from .models import Module
 
 # Create your views here.
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 #from testApp.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login

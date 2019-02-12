@@ -31,8 +31,10 @@ def saveModule(request):
 	product = request.POST.get("Product")
 	enzyme = request.POST.get("Enzyme")
 	reversible = request.POST.get("reversibleChoice")
+	saveModule = saveModule(substrate=substrate, product=product, enzyme=enzyme, reversible=reversible)
+	saveModule.save()
 	context = {}
-	return render(request, 'moduleEdit.html', context=context)
+	return HttpResponseRedirect("/moduleEdit")
 
 def modelEdit(request):
 	mod = Module.objects.all()

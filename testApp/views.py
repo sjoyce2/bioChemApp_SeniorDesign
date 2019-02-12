@@ -26,16 +26,17 @@ def moduleEdit(request):
 	context = {'form': SaveModuleForm}
 	return render(request, 'moduleEdit.html', context=context)
 
-def saveModule(request):
-	print(request.POST)
-	new_substrate = request.POST.get("Substrate")
-	new_product = request.POST.get("Product")
-	new_enzyme = request.POST.get("Enzyme")
-	new_reversible = request.POST.get("reversibleChoice")
-	saveModule = Module(substrate=new_substrate, product=new_product, enzyme=new_enzyme, \
-		reversible=new_reversible)
-	saveModule.save()
-	return HttpResponseRedirect("/moduleEdit")
+class saveModule(View):
+	def post(self, request):
+		print(request.POST)
+		new_substrate = request.POST.get("Substrate")
+		new_product = request.POST.get("Product")
+		new_enzyme = request.POST.get("Enzyme")
+		new_reversible = request.POST.get("reversibleChoice")
+		post = Module(substrate=new_substrate, product=new_product, enzyme=new_enzyme, \
+			reversible=new_reversible)
+		post.save()
+		return HttpResponseRedirect("/moduleEdit")
 
 def modelEdit(request):
 	mod = Module.objects.all()

@@ -13,5 +13,4 @@ urlpatterns = [
 	path('modelEdit', views.modelEdit, name='modelEdit'),
 	path('modelChoice', views.modelChoice, name='modelChoice'),
 	path('register', views.register, name='register'),
-	path('moduleEdit/saveModule', views.saveModule, name='saveModule'),
 ]

@@ -26,6 +26,11 @@ def moduleEdit(request):
 	return render(request, 'moduleEdit.html', context=context)
 
 def saveModule(request):
+	print(request.POST)
+	substrate = request.POST.get("Substrate")
+	product = request.POST.get("Product")
+	enzyme = request.POST.get("Enzyme")
+	reversible = request.POST.get("reversibleChoice")
 	context = {}
 	return render(request, 'moduleEdit.html', context=context)
 
@@ -75,4 +80,4 @@ def signup(request):
 		new_product.save() '''
 
 
-#def readModule(id):	
+#def readModule(id):

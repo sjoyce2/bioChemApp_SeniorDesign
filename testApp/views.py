@@ -23,8 +23,19 @@ def modelChoice(request):
 	return render(request, 'modelChoice.html', context=context)
 
 def moduleEdit(request):
-	context = {'form': SaveModuleForm}
-	return render(request, 'moduleEdit.html', context=context)
+	if request.method == 'POST':
+		print(request.POST)
+		new_substrate = request.POST.get("Substrate")
+		new_product = request.POST.get("Product")
+		new_enzyme = request.POST.get("Enzyme")
+		new_reversible = request.POST.get("reversibleChoice")
+		post = Module(substrate=new_substrate, product=new_product, enzyme=new_enzyme, \
+			reversible=new_reversible)
+		post.save()
+		return HttpResponseRedirect("/moduleEdit")
+	else:
+		context = {'form': SaveModuleForm}
+		return render(request, 'moduleEdit.html', context=context)
 
 class saveModule(View):
 	def post(self, request):

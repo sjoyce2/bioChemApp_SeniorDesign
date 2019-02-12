@@ -23,185 +23,183 @@
 			<img class="step1Image" id="Phosphoenolpyruvate" src="{% static 'images/Phosphoenolpyruvate.jpg' %}" style="display: none;">
 			<img class="step1Image" id="Pyruvate" src="{% static 'images/Pyruvate.jpg' %}" style="display: none;">
 			<div class="wrap-login100">
-				<form class="login100-form validate-form">
-                    <div class="editToolbar">
-                        <div class="innerToolbar">
-                            <button class="editToolbarButton" type="button">Home</button>
-                            <button class="editToolbarButton" type="button">Settings</button>
-                        </div>
-                        <div class="innerToolbar">
-                            <button class="editToolbarButton" type="button">Help</button>
-                            <button class="editToolbarButton" id="logout" type="button">Logout</button>
-                        </div>
+                  <div class="editToolbar">
+                      <div class="innerToolbar">
+                          <button class="editToolbarButton" type="button">Home</button>
+                          <button class="editToolbarButton" type="button">Settings</button>
+                      </div>
+                      <div class="innerToolbar">
+                          <button class="editToolbarButton" type="button">Help</button>
+                          <button class="editToolbarButton" id="logout" type="button">Logout</button>
+                      </div>
+									</div>
+									<div class="viewAndCreateReaction">
+											<canvas id="imageCanvas" height="500" width="825"></canvas>
+									<form method="post" class="saveModuleForm" action="#">{% csrf_token %}
+											<div id="subsContainer">
+												<label id="subsLabel">SUBSTRATES</label>
+										    <ul class="subs" id="substrates">
+
+													<label class="container">Dihydroxyacetone Phosphate
+												  	<input type="checkbox" value="Dihydroxyacetone Phosphate" onchange="onRadioChange()" name="Substrate">
+												  	<span class="checkmark"></span>
+													</label>
+													<label class="container">Fructose-6-Phosphate
+												  	<input type="checkbox" value="Fructose-6-Phosphate" onchange="onRadioChange()" name="Substrate">
+												  	<span class="checkmark"></span>
+													</label>
+													<label class="container">Fructose-1,6-Bisphosphate
+												  	<input type="checkbox" value="Fructose-1,6-bisphosphate" onchange="onRadioChange()" name="Substrate">
+												  	<span class="checkmark"></span>
+													</label>
+													<label class="container">Glucose
+												  	<input value="Glucose" type="checkbox" onchange=onRadioChange() name="Substrate">
+												  	<span class="checkmark"></span>
+													</label>
+													<label class="container">Glucose-6-Phosphate
+												  	<input type="checkbox" value="Glucose-6-Phosphate" onchange="onRadioChange()" name="Substrate">
+												  	<span class="checkmark"></span>
+													</label>
+													<label class="container">Glyceraldehyde-3-Phosphate
+												  	<input type="checkbox" value="Glyceraldehyde-3-Phosphate" onchange="onRadioChange()" name="Substrate">
+												  	<span class="checkmark"></span>
+													</label>
+													<label class="container">Phosphoenolpyruvate
+												  	<input type="checkbox" value="Phosphoenolpyruvate" onchange="onRadioChange()" name="Substrate">
+												  	<span class="checkmark"></span>
+													</label>
+													<label class="container">1,3-Bisphoglycerate
+												  	<input type="checkbox" value="1,3-bisphoglycerate" onchange="onRadioChange()" name="Substrate">
+												  	<span class="checkmark"></span>
+													</label>
+													<label class="container">3 Phosphoglycerate
+												  	<input type="checkbox" value="3 phosphoglycerate" onchange="onRadioChange()" name="Substrate">
+												  	<span class="checkmark"></span>
+													</label>
+													<label class="container">2 Phosphoglycerate
+												  	<input type="checkbox" value="2 phosphoglycerate" onchange="onRadioChange()" name="Substrate">
+												  	<span class="checkmark"></span>
+													</label>
+													<label class="container">ATP
+												  	<input type="checkbox" value="ATP" onchange="onRadioChange()" name="Substrate">
+												  	<span class="checkmark"></span>
+													</label>
+								    		</ul>
+											</div>
+											<div id="enzsContainer">
+												<label id="enzsLabel">ENZYMES</label>
+												<ul class="enzs" id="enzymes">
+													<label class="container">Aldolase
+														<input type="radio" name="Enzyme" onchange="onRadioChange()" value="aldolase">
+														<span class="checkmark"></span>
+													</label>
+													<label class="container">Glyceraldehyde Phosphate Dehydrogenase
+														<input type="radio" name="Enzyme" onchange="onRadioChange()" value="Glyceraldehyde phosphate dehydrogenase">
+														<span class="checkmark"></span>
+													</label>
+													<label class="container">Enolase
+														<input type="radio" name="Enzyme" onchange="onRadioChange()" value="Enolase">
+														<span class="checkmark"></span>
+													</label>
+													<label class="container">Hexokinase
+														<input type="radio" name="Enzyme" onchange="onRadioChange()" value="Hexokinase">
+														<span class="checkmark"></span>
+													</label>
+													<label class="container">Phosphoglucose Isomerase
+														<input type="radio" name="Enzyme" onchange="onRadioChange()" value="Phosphoglucose isomerase">
+														<span class="checkmark"></span>
+													</label>
+													<label class="container">Phosphofructokinase
+														<input type="radio" name="Enzyme" onchange="onRadioChange()" value="Phosphofructokinase">
+														<span class="checkmark"></span>
+													</label>
+													<label class="container">Phosphoglycerate Kinase
+														<input type="radio" name="Enzyme" onchange="onRadioChange()" value="Phosphoglycerate kinase">
+														<span class="checkmark"></span>
+													</label>
+													<label class="container">Phosphoglycerate Mutase
+														<input type="radio" name="Enzyme" onchange="onRadioChange()" value="Phosphoglycerate mutase">
+														<span class="checkmark"></span>
+													</label>
+													<label class="container">Triosephosphate Isomerase
+														<input type="radio" name="Enzyme" onchange="onRadioChange()" value="Triosephosphate isomerase">
+														<span class="checkmark"></span>
+													</label>
+												</ul>
+											</div>
+											<div id="prodsContainer">
+												<label id="prodsLabel">PRODUCTS</label>
+												<ul class="prods" id="products">
+
+													<label class="container">Dihydroxyacetone Phosphate
+														<input type="checkbox" value="Dihydroxyacetone Phosphate" onchange="onRadioChange()" name="Product">
+														<span class="checkmark"></span>
+													</label>
+													<label class="container">Fructose-6-Phosphate
+														<input type="checkbox" value="Fructose-6-Phosphate" onchange="onRadioChange()" name="Product">
+														<span class="checkmark"></span>
+													</label>
+													<label class="container">Fructose-1,6-Bisphosphate
+														<input type="checkbox" value="Fructose-1,6-bisphosphate" onchange="onRadioChange()" name="Product">
+														<span class="checkmark"></span>
+													</label>
+													<label class="container">Glucose-6-Phosphate
+														<input type="checkbox" value="Glucose-6-Phosphate" onchange="onRadioChange()" name=Product>
+														<span class="checkmark"></span>
+													</label>
+													<label class="container">Glyceraldehyde-3-Phosphate
+														<input type="checkbox" value="Glyceraldehyde-3-Phosphate" onchange="onRadioChange()" name="Product">
+														<span class="checkmark"></span>
+													</label>
+													<label class="container">Phosphoenolpyruvate
+														<input type="checkbox" value="Phosphoenolpyruvate" onchange="onRadioChange()" name="Product">
+														<span class="checkmark"></span>
+													</label>
+													<label class="container">Pyruvate
+														<input type="checkbox" value="Pyruvate" onchange="onRadioChange()" name="Product">
+														<span class="checkmark"></span>
+													</label>
+													<label class="container">1,3-Bisphoglycerate
+														<input type="checkbox" value="1,3-bisphoglycerate" onchange="onRadioChange()" name="Product">
+														<span class="checkmark"></span>
+													</label>
+													<label class="container">3 Phosphoglycerate
+														<input type="checkbox" value="3 phosphoglycerate" onchange="onRadioChange()" name="Product">
+														<span class="checkmark"></span>
+													</label>
+													<label class="container">2 Phosphoglycerate
+														<input type="checkbox" value="2 phosphoglycerate" onchange="onRadioChange()" name="Product">
+														<span class="checkmark"></span>
+													</label>
+													<label class="container">ADP
+														<input type="checkbox" value="ADP" onchange="onRadioChange()" name="Product">
+														<span class="checkmark"></span>
+													</label>
+									    	</ul>
+											</div>
+											<label class="reversibleChoice">Reversible
+												<input type="radio" name="reversibleChoice" onchange="onRadioReverseChange()" value="Reversible">
+												<span class="checkmark"></span>
+											</label>
+											<label class="reversibleChoice">Irreversible
+												<input type="radio" name="reversibleChoice" onchange="onRadioReverseChange()" value="Irreversible" checked>
+												<span class="checkmark"></span>
+											</label>
+											<button type="submit" class="saveReaction" id="saveReaction">SAVE</button>
+										</form>
+											<button type="button" class="createReaction" id="createReaction">CREATE</button>
+											<button type="button" class="clearReaction" id="clearReaction">CLEAR</button>
+
 										</div>
-										<div class="viewAndCreateReaction">
-												<canvas id="imageCanvas" height="500" width="825"></canvas>
-										<form method="post" class="saveModuleForm" action="#">{% csrf_token %}
-												<div id="subsContainer">
-													<label id="subsLabel">SUBSTRATES</label>
-											    <ul class="subs" id="substrates">
+										<!-- The Modal -->
+										<div id="invalidModal" class="modal">
 
-														<label class="container">Dihydroxyacetone Phosphate
-													  	<input type="checkbox" value="Dihydroxyacetone Phosphate" onchange="onRadioChange()" name="Substrate">
-													  	<span class="checkmark"></span>
-														</label>
-														<label class="container">Fructose-6-Phosphate
-													  	<input type="checkbox" value="Fructose-6-Phosphate" onchange="onRadioChange()" name="Substrate">
-													  	<span class="checkmark"></span>
-														</label>
-														<label class="container">Fructose-1,6-Bisphosphate
-													  	<input type="checkbox" value="Fructose-1,6-bisphosphate" onchange="onRadioChange()" name="Substrate">
-													  	<span class="checkmark"></span>
-														</label>
-														<label class="container">Glucose
-													  	<input value="Glucose" type="checkbox" onchange=onRadioChange() name="Substrate">
-													  	<span class="checkmark"></span>
-														</label>
-														<label class="container">Glucose-6-Phosphate
-													  	<input type="checkbox" value="Glucose-6-Phosphate" onchange="onRadioChange()" name="Substrate">
-													  	<span class="checkmark"></span>
-														</label>
-														<label class="container">Glyceraldehyde-3-Phosphate
-													  	<input type="checkbox" value="Glyceraldehyde-3-Phosphate" onchange="onRadioChange()" name="Substrate">
-													  	<span class="checkmark"></span>
-														</label>
-														<label class="container">Phosphoenolpyruvate
-													  	<input type="checkbox" value="Phosphoenolpyruvate" onchange="onRadioChange()" name="Substrate">
-													  	<span class="checkmark"></span>
-														</label>
-														<label class="container">1,3-Bisphoglycerate
-													  	<input type="checkbox" value="1,3-bisphoglycerate" onchange="onRadioChange()" name="Substrate">
-													  	<span class="checkmark"></span>
-														</label>
-														<label class="container">3 Phosphoglycerate
-													  	<input type="checkbox" value="3 phosphoglycerate" onchange="onRadioChange()" name="Substrate">
-													  	<span class="checkmark"></span>
-														</label>
-														<label class="container">2 Phosphoglycerate
-													  	<input type="checkbox" value="2 phosphoglycerate" onchange="onRadioChange()" name="Substrate">
-													  	<span class="checkmark"></span>
-														</label>
-														<label class="container">ATP
-													  	<input type="checkbox" value="ATP" onchange="onRadioChange()" name="Substrate">
-													  	<span class="checkmark"></span>
-														</label>
-									    		</ul>
-												</div>
-												<div id="enzsContainer">
-													<label id="enzsLabel">ENZYMES</label>
-													<ul class="enzs" id="enzymes">
-														<label class="container">Aldolase
-															<input type="radio" name="Enzyme" onchange="onRadioChange()" value="aldolase">
-															<span class="checkmark"></span>
-														</label>
-														<label class="container">Glyceraldehyde Phosphate Dehydrogenase
-															<input type="radio" name="Enzyme" onchange="onRadioChange()" value="Glyceraldehyde phosphate dehydrogenase">
-															<span class="checkmark"></span>
-														</label>
-														<label class="container">Enolase
-															<input type="radio" name="Enzyme" onchange="onRadioChange()" value="Enolase">
-															<span class="checkmark"></span>
-														</label>
-														<label class="container">Hexokinase
-															<input type="radio" name="Enzyme" onchange="onRadioChange()" value="Hexokinase">
-															<span class="checkmark"></span>
-														</label>
-														<label class="container">Phosphoglucose Isomerase
-															<input type="radio" name="Enzyme" onchange="onRadioChange()" value="Phosphoglucose isomerase">
-															<span class="checkmark"></span>
-														</label>
-														<label class="container">Phosphofructokinase
-															<input type="radio" name="Enzyme" onchange="onRadioChange()" value="Phosphofructokinase">
-															<span class="checkmark"></span>
-														</label>
-														<label class="container">Phosphoglycerate Kinase
-															<input type="radio" name="Enzyme" onchange="onRadioChange()" value="Phosphoglycerate kinase">
-															<span class="checkmark"></span>
-														</label>
-														<label class="container">Phosphoglycerate Mutase
-															<input type="radio" name="Enzyme" onchange="onRadioChange()" value="Phosphoglycerate mutase">
-															<span class="checkmark"></span>
-														</label>
-														<label class="container">Triosephosphate Isomerase
-															<input type="radio" name="Enzyme" onchange="onRadioChange()" value="Triosephosphate isomerase">
-															<span class="checkmark"></span>
-														</label>
-													</ul>
-												</div>
-												<div id="prodsContainer">
-													<label id="prodsLabel">PRODUCTS</label>
-													<ul class="prods" id="products">
-
-														<label class="container">Dihydroxyacetone Phosphate
-															<input type="checkbox" value="Dihydroxyacetone Phosphate" onchange="onRadioChange()" name="Product">
-															<span class="checkmark"></span>
-														</label>
-														<label class="container">Fructose-6-Phosphate
-															<input type="checkbox" value="Fructose-6-Phosphate" onchange="onRadioChange()" name="Product">
-															<span class="checkmark"></span>
-														</label>
-														<label class="container">Fructose-1,6-Bisphosphate
-															<input type="checkbox" value="Fructose-1,6-bisphosphate" onchange="onRadioChange()" name="Product">
-															<span class="checkmark"></span>
-														</label>
-														<label class="container">Glucose-6-Phosphate
-															<input type="checkbox" value="Glucose-6-Phosphate" onchange="onRadioChange()" name=Product>
-															<span class="checkmark"></span>
-														</label>
-														<label class="container">Glyceraldehyde-3-Phosphate
-															<input type="checkbox" value="Glyceraldehyde-3-Phosphate" onchange="onRadioChange()" name="Product">
-															<span class="checkmark"></span>
-														</label>
-														<label class="container">Phosphoenolpyruvate
-															<input type="checkbox" value="Phosphoenolpyruvate" onchange="onRadioChange()" name="Product">
-															<span class="checkmark"></span>
-														</label>
-														<label class="container">Pyruvate
-															<input type="checkbox" value="Pyruvate" onchange="onRadioChange()" name="Product">
-															<span class="checkmark"></span>
-														</label>
-														<label class="container">1,3-Bisphoglycerate
-															<input type="checkbox" value="1,3-bisphoglycerate" onchange="onRadioChange()" name="Product">
-															<span class="checkmark"></span>
-														</label>
-														<label class="container">3 Phosphoglycerate
-															<input type="checkbox" value="3 phosphoglycerate" onchange="onRadioChange()" name="Product">
-															<span class="checkmark"></span>
-														</label>
-														<label class="container">2 Phosphoglycerate
-															<input type="checkbox" value="2 phosphoglycerate" onchange="onRadioChange()" name="Product">
-															<span class="checkmark"></span>
-														</label>
-														<label class="container">ADP
-															<input type="checkbox" value="ADP" onchange="onRadioChange()" name="Product">
-															<span class="checkmark"></span>
-														</label>
-										    	</ul>
-												</div>
-												<label class="reversibleChoice">Reversible
-													<input type="radio" name="reversibleChoice" onchange="onRadioReverseChange()" value="Reversible">
-													<span class="checkmark"></span>
-												</label>
-												<label class="reversibleChoice">Irreversible
-													<input type="radio" name="reversibleChoice" onchange="onRadioReverseChange()" value="Irreversible" checked>
-													<span class="checkmark"></span>
-												</label>
-												<button type="submit" class="saveReaction" id="saveReaction">SAVE</button>
-											</form>
-												<button type="button" class="createReaction" id="createReaction">CREATE</button>
-												<button type="button" class="clearReaction" id="clearReaction">CLEAR</button>
-
-											</div>
-											<!-- The Modal -->
-											<div id="invalidModal" class="modal">
-
-											  <!-- Modal content -->
-											  <div class="modal-content">
-											    <span class="close">&times;</span>
-											    <p>You must select at least one substrate, enzyme and product, as well as no more than five products or substrates.</p>
-											  </div>
-											</div>
-				</form>
+										  <!-- Modal content -->
+										  <div class="modal-content">
+										    <span class="close">&times;</span>
+										    <p>You must select at least one substrate, enzyme and product, as well as no more than five products or substrates.</p>
+										  </div>
+										</div>
 			</div>
 		</div>
 	</div>

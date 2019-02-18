@@ -1,35 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<title>BioPath</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	{% load static %}
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->
-	<link rel="icon" type="image/png" href="{% static 'images/icons/favicon.ico' %}"/>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'fonts/iconic/css/material-design-iconic-font.min.css' %}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css' %}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'vendor/animsition/css/animsition.min.css' %}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'vendor/select2/select2.min.css' %}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'vendor/daterangepicker/daterangepicker.css' %}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
-<!--===============================================================================================-->
-</head>
-<body>
+{% extends 'index.html' %}
 
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('{% static 'images/bg-01.jpg' %}');">
@@ -42,7 +11,7 @@
 									Glycolysis
 								</button>
 							</a>
-					
+
 							<button class="login100-form-btn" type="button">
 								Gluconeogenesis
 							</button>
@@ -50,28 +19,87 @@
 							<button class="login100-form-btn">
 								+
 							</button>
-						</div>
+						</a>
+
 					</div>
 			</div>
 		</div>
 	</div>
 
-<!--===============================================================================================-->
-	<script src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>
-<!--===============================================================================================-->
-	<script src="{% static 'vendor/animsition/js/animsition.min.js' %}"></script>
-<!--===============================================================================================-->
-	<script src="{% static 'vendor/bootstrap/js/popper.js' %}"></script>
-	<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
-<!--===============================================================================================-->
-	<script src="{% static 'vendor/select2/select2.min.js' %}"></script>
-<!--===============================================================================================-->
-	<script src="{% static 'vendor/daterangepicker/moment.min.js' %}"></script>
-	<script src="{% static 'vendor/daterangepicker/daterangepicker.js' %}"></script>
-<!--===============================================================================================-->
-	<script src="{% static 'vendor/countdowntime/countdowntime.js' %}"></script>
-<!--===============================================================================================-->
-	<script src="{% static 'js/main.js' %}"></script>
+	<div class="wrap-modelChoice100">
+		<div class="container-modelChoice">
+			<div class="modelChoice-flex">
+				<h2 class="title-model">Your Models</h2>
+					<div class="modelChoice-scroll-elements">
+						<a href="">
+							<button class="login100-form-btn">
+								Citric acid cycle
+							</button>
+						</a>
+						<a href="">
+							<button class="login100-form-btn" type="button">
+								Fatty acid β-oxidation
+							</button>
+						</a>
 
-</body>
-</html>
+						<a href="">
+							<button class="login100-form-btn" type="button">
+								Caffeine Metabolism
+							</button>
+						</a>
+
+						<a href="">
+							<button class="login100-form-btn" type="button">
+								Nicotine metabolism
+							</button>
+						</a>
+
+						<a href="">
+							<button class="login100-form-btn" type="button">
+								Dopamine degradation
+							</button>
+						</a>
+
+						<a href="">
+							<button class="login100-form-btn" type="button">
+								Serotonin metabolism
+							</button>
+						</a>
+
+						<a href="">
+							<button class="login100-form-btn" type="button">
+								Collagen biosynthesis
+							</button>
+						</a>
+
+						<a href="">
+							<button class="login100-form-btn" type="button">
+								Steroid hormone biosynthesis
+							</button>
+						</a>
+					</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="wrap-modelChoice100">
+		<div class="container-modelChoice">
+			<div class="modelChoice-flex">
+				<h2 class="title-model">Our Models</h2>
+					<div class="modelChoice-scroll-elements">
+						<a href="">
+							<button class="login100-form-btn" type="button">
+								Glycolysis
+							</button>
+						</a>
+						<a href="">
+							<button class="login100-form-btn" type="button">
+								Gluconeogenesis
+							</button>
+						</a>
+					</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

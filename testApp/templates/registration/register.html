@@ -32,43 +32,17 @@
 <body>
 
 	<div class="limiter">
+			<div class="topnav">
+				<a class="active" href="#home">Home</a>
+				<a href="#news">News</a>
+				<a href="#contact">Contact</a>
+				<a href="#about">About</a>
+				<img src="{% static 'images/logo.png' %}" alt="biopath_logo goes here" class="wrap-biopath-logo-top-bar">
+				<p class="web-title">BioPath</p>
+			</div>
 		<div class="container-login100" style="background-image: url('{% static 'images/bg-01.jpg' %}');">
-			<div class="wrap-login100">
-				<img src="{% static 'images/logo.png' %}" alt="biopath_logo goes here" class="wrap-biopath-logo">
-
-				{% block content %}
-				{% endblock %}
-				<form class="login100-form">
-
-					<div class="wrap-input100 validate-input" data-validate = "Enter email">
-						<input class="input100" type="email" name="email" placeholder="email">
-						<span class="focus-input100" data-placeholder="&#xf207;"></span>
-					</div>
-
-					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input class="input100" type="password" name="pass" placeholder="Password">
-						<span class="focus-input100" data-placeholder="&#xf191;"></span>
-					</div>
-					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input class="input100" type="password" name="pass" placeholder="Confirm Password">
-						<span class="focus-input100" data-placeholder="&#xf191;"></span>
-					</div>
-
-					<div class="contact100-form-checkbox">
-						<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
-						<label class="label-checkbox100" for="ckb1">
-							By clicking this box you agree to our Privacy Policy and Terms of Service
-						</label>
-					</div>
-
-					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
-							Create Account
-						</button>
-					</div>
-
-					</div>
-				</form>
+			<div class="wrap-signup100">
+				
 			</div>
 		</div>
 	</div>

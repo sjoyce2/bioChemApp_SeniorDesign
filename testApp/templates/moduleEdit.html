@@ -34,8 +34,9 @@
                       </div>
 									</div>
 									<div class="viewAndCreateReaction">
-											<canvas id="imageCanvas" height="500" width="825"></canvas>
-									<form method="post" class="saveModuleForm" action="#">{% csrf_token %}
+										<canvas id="imageCanvas" height="500" width="825"></canvas>
+										<form method="post" class="saveModuleForm" action="#">
+											{% csrf_token %}
 											<div id="subsContainer">
 												<label id="subsLabel">SUBSTRATES</label>
 										    <ul class="subs" id="substrates">

@@ -33,12 +33,17 @@ def moduleEdit(request):
 		print(request.POST)
 		new_enzyme = request.POST.get("Enzyme")
 		new_reversible = request.POST.get("reversibleChoice")
-		new_product = request.POST.get("Product")
-		new_substrate = request.POST.get("Substrate")
 		post = Module(modelID_id=1, enzyme=new_enzyme, reversible=new_reversible)
 		post.save()
-		post = Substrates(module_id=5, substrate=new_substrate)
-		post.save();
+		for key, values in request.POST.lists():
+			if (key == "Product"):
+				for i in range(len(values)):
+					prods = Products(module_id=5, product=values[i])
+					prods.save()
+			if (key == "Substrate"):
+				for i in range(len(values)):
+					subs = Substrates(module_id=5, substrate=values[i])
+					subs.save()
 
 		return HttpResponseRedirect("modelEdit")
 	else:

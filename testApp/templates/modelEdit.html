@@ -24,7 +24,12 @@
                         </div>
                     </div>
                     {% for mod in modules %}
-                        {{ mod }}
+                        {{ mod.userID }}
+                        {{ mod.modelID }}
+                        {{ mod.moduleID }}
+                        {{ mod.enzyme }}
+                        {{ mod.reversible }}
+                        {{ mod.modelName }}
                     {% endfor %}
                     <div class="flex-horiz">
                         <a href="{% url 'moduleEdit' %}" id="link-to-module">

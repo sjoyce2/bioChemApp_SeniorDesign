@@ -27,7 +27,7 @@ def moduleEdit(request):
 		print(request.POST)
 		new_enzyme = request.POST.get("Enzyme")
 		new_reversible = request.POST.get("reversibleChoice")
-		post = Module(userID=1, modelID=1, moduleID=1, enzyme=new_enzyme, \
+		post = Module(userID=2, modelID=1, moduleID=1, enzyme=new_enzyme, \
 			reversible=new_reversible, modelName="New_model")
 		post.save()
 		return HttpResponseRedirect("modelEdit")

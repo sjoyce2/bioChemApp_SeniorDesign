@@ -37,7 +37,7 @@ def moduleEdit(request):
 		new_substrate = request.POST.get("Substrate")
 		post = Module(modelID_id=1, enzyme=new_enzyme, reversible=new_reversible)
 		post.save()
-		post = Substrates(module_id=1, substrate=new_substrate)
+		post = Substrates(module_id=5, substrate=new_substrate)
 		post.save();
 
 		return HttpResponseRedirect("modelEdit")

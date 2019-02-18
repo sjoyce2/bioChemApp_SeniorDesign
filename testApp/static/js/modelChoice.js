@@ -13,10 +13,10 @@
             else {
                 $(this).removeClass('has-val');
             }
-        })    
+        })
     })
-  
-  
+
+
     /*==================================================================
     [ Validate ]*/
     var input = $('.validate-input .input100');
@@ -66,7 +66,16 @@
 
         $(thisAlert).removeClass('alert-validate');
     }
-    
+
+    function createButton(buttonName){
+      var link = document.createElement("A");
+      var btn = document.createElement("BUTTON");
+      btn.innerHTML = buttonName;
+      link.href = "modelEdit";
+      link.appendChild(btn);
+      document.getElementById("main").appendChild(link);
+    }
+
     /*==================================================================
     [ Show pass ]*/
     var showPass = 0;
@@ -81,7 +90,7 @@
             $(this).removeClass('active');
             showPass = 0;
         }
-        
+
     });
 
 

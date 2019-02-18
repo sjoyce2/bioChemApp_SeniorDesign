@@ -5,13 +5,15 @@ from django.contrib.auth import views as auth_views
 from django.views.generic.base import TemplateView
 from testApp import views
 from django.contrib.auth.views import LoginView
+from testApp.views import createModule
 
 urlpatterns = [
-	#url(r'^login/$', LoginView, {'template_name': 'accounts/display.html'}),
-	path('', views.login, name= 'login'),
+	path('', views.load , name='load'),
+	path('login', views.login, name= 'login'),
 	path('accounts/', include('django.contrib.auth.urls')),
 	path('moduleEdit', views.moduleEdit, name='moduleEdit'),
 	path('modelEdit', views.modelEdit, name='modelEdit'),
 	path('modelChoice', views.modelChoice, name='modelChoice'),
-	path('register', views.register, name='register'),
+	path('register', views.signup, name='register'),
+	path('createModule', views.createModule, name='createModule')
 ]

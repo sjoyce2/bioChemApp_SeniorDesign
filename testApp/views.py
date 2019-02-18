@@ -44,11 +44,11 @@ def moduleEdit(request):
 		for key, values in request.POST.lists():
 			if (key == "Product"):
 				for i in range(len(values)):
-					prods = Products(module_id=5, product=values[i])
+					prods = Products(moduleID_id=5, product=values[i])
 					prods.save()
 			if (key == "Substrate"):
 				for i in range(len(values)):
-					subs = Substrates(module_id=5, substrate=values[i])
+					subs = Substrates(moduleID_id=5, substrate=values[i])
 					subs.save()
 
 		return HttpResponseRedirect("modelEdit")

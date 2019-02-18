@@ -261,7 +261,6 @@ function main () {
     localStorage.setItem("reactionClicked", "-1")
     var stringToParse = localStorage.getItem('currentRxn');
     var reaction = parseThrough(stringToParse);
-    console.log(modules)
 
     firstRectMidY = 75;
     y = firstRectMidY;

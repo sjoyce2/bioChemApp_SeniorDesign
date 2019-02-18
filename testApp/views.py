@@ -20,7 +20,12 @@ from testApp.models import Products
 from testApp.models import Substrates
 
 def modelChoice(request):
-	context = {}
+	# need to add a pop-up/redirect to allow the user to create a new model
+	# using a form so that we can add a new row to the model table
+	user = request.user
+	context = {
+		'userID': user.id
+	}
 	return render(request, 'modelChoice.html', context=context)
 
 def moduleEdit(request):
@@ -28,8 +33,7 @@ def moduleEdit(request):
 		print(request.POST)
 		new_enzyme = request.POST.get("Enzyme")
 		new_reversible = request.POST.get("reversibleChoice")
-		post = Module(userID_id=1, modelID=1, moduleID=1, enzyme=new_enzyme, \
-			reversible=new_reversible, modelName="New_model")
+		post = Module(modelID_id=1, enzyme=new_enzyme, reversible=new_reversible)
 		post.save()
 		return HttpResponseRedirect("modelEdit")
 	else:

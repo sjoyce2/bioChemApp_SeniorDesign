@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 from .models import Module
+from django.contrib.auth.models import User
 
 # Create your views here.
 from django.http import HttpResponse
@@ -27,7 +28,7 @@ def moduleEdit(request):
 		print(request.POST)
 		new_enzyme = request.POST.get("Enzyme")
 		new_reversible = request.POST.get("reversibleChoice")
-		post = Module(userID=2, modelID=1, moduleID=1, enzyme=new_enzyme, \
+		post = Module(userID_id=1, modelID=1, moduleID=1, enzyme=new_enzyme, \
 			reversible=new_reversible, modelName="New_model")
 		post.save()
 		return HttpResponseRedirect("modelEdit")

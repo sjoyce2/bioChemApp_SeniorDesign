@@ -103,7 +103,3 @@ def signup(request):
 
 
 #def readModule(id):
-
-
-
-	

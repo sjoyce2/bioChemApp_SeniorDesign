@@ -1,13 +1,21 @@
 {% extends 'index.html' %}
 
-{% block modelChoice %}
-<div class=".modelChoice-spacing">
-	<div class="wrap-modelChoice100">
-		<div class="container-modelChoice">
-			<div class="modelChoice-flex">
-				<h2 class="title-model">Create or Continue</h2>
-					<div class="modelChoice-scroll-elements">
-						<a href="modelEdit">
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('{% static 'images/bg-01.jpg' %}');">
+			<div class="wrap-login100">
+					<div class="container-login100-form-btn">
+						<div class="login-flex" id="main">
+							<h2 class="title-model">Choose a Model</h2>
+							<a href="modelEdit">
+								<button class="login100-form-btn" type="button">
+									Glycolysis
+								</button>
+							</a>
+
+							<button class="login100-form-btn" type="button">
+								Gluconeogenesis
+							</button>
+
 							<button class="login100-form-btn">
 								+
 							</button>

@@ -16,6 +16,7 @@ from django.shortcuts import render, redirect
 from testApp.forms import SignUpForm
 from testApp.forms import SaveModuleForm
 from testApp.models import Module
+from testApp.models import Model
 from testApp.models import Products
 from testApp.models import Substrates
 
@@ -23,6 +24,11 @@ def modelChoice(request):
 	# need to add a pop-up/redirect to allow the user to create a new model
 	# using a form so that we can add a new row to the model table
 	user = request.user
+	models = Model.objects.all()
+	# for element in models:
+		# if element.userID_id == user.id
+			# createButton(element.modelName) (where createButton is a predefined 
+			# function in modelChoice.js that creates a button )
 	context = {
 		'userID': user.id
 	}

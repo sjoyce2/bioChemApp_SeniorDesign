@@ -570,6 +570,8 @@ window.onload = function init(){
   var span = document.getElementsByClassName("close")[0];
   var saveBtnClicked = false;
   //SET CURRENT REACTION TO STRING FROM MODEL EDIT SCREEN HERE
+  var fromModel = localStorage.getItem("reactionClicked");
+  console.log(fromModel);
   currentRxn = step3;//set currentRxn to dummy value
   setArraysRepresentingReaction();//function to set the arrays to currentRxn and call values to display/validate
 

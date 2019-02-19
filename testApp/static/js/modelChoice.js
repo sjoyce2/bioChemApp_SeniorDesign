@@ -73,7 +73,7 @@
       btn.innerHTML = buttonName;
       link.href = "modelEdit";
       link.appendChild(btn);
-      document.getElementById("main").appendChild(link);
+      document.getElementById("custom-models").appendChild(link);
     }
 
     /*==================================================================

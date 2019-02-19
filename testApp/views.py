@@ -19,7 +19,6 @@ from testApp.models import Module
 from testApp.models import Model
 from testApp.models import Products
 from testApp.models import Substrates
-from testApp.static.modelChoice import createButton as cb
 
 def modelChoice(request):
 	# need to add a pop-up/redirect to allow the user to create a new model

@@ -72,7 +72,16 @@
 						<!-- TODO: Add in script to create buttons -->
 						<script>
 							var models = {{ models }};
-							
+							for (var i = 0; i < models.length; i++) {
+								if (models[i].userID_id == userID) {
+									var link = document.createElement("A");
+      								var btn = document.createElement("BUTTON");
+     								btn.innerHTML = buttonName;
+      								link.href = "modelEdit";
+      								link.appendChild(btn);
+      								document.getElementById("custom-models").appendChild(link);
+								}
+							}
 						</script>
 					</div>
 			</div>

@@ -19,18 +19,16 @@ from testApp.models import Module
 from testApp.models import Model
 from testApp.models import Products
 from testApp.models import Substrates
+from testApp.static.modelChoice import createButton as cb
 
 def modelChoice(request):
 	# need to add a pop-up/redirect to allow the user to create a new model
 	# using a form so that we can add a new row to the model table
 	user = request.user
 	models = Model.objects.all()
-	# for element in models:
-		# if element.userID_id == user.id
-			# createButton(element.modelName) (where createButton is a predefined
-			# function in modelChoice.js that creates a button )
 	context = {
-		'userID': user.id
+		'userID': user.id,
+		'models': models
 	}
 	return render(request, 'modelChoice.html', context=context)
 
@@ -39,7 +37,7 @@ def moduleEdit(request):
 		print(request.POST)
 		new_enzyme = request.POST.get("Enzyme")
 		new_reversible = request.POST.get("reversibleChoice")
-		post = Module(modelID_id=1, enzyme=new_enzyme, reversible=new_reversible)
+		post = Module(modelID_id=2, enzyme=new_enzyme, reversible=new_reversible)
 		post.save()
 		for key, values in request.POST.lists():
 			if (key == "Product"):

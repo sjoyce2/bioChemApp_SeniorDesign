@@ -265,6 +265,11 @@ function main () {
     firstRectMidY = 75;
     y = firstRectMidY;
     // TODO: render() should be able to access the 
+    canvas.addEventListener('click', function (event) {
+        let mousePosition = getMousePosition(canvas, event);
+        //TODO: link to model page and remember rectangle number
+        if (mousePosition <= )
+    });
     render();
     window.requestAnimationFrame(animate);
 
@@ -276,11 +281,6 @@ function main () {
             y: event.clientY - border.top
         };
     } */
-
-    /* canvas.addEventListener('click', function (event) {
-        let mousePosition = getMousePosition(canvas, event);
-        //TODO: link to model page and remember rectangle number
-    }); */
 }
 
 

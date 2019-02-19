@@ -9,6 +9,18 @@
 </head>
 <body>
 	<div class="limiter">
+		{% for mod in modules %}
+				{{ mod.id }}
+				{{ mod.modelID_id }}
+				{{ mod.enzyme }}
+				{{ mod.reversible }}
+		{% endfor %}
+		{% for subs in substrates %}
+				{{ mod.id }}
+				{{ mod.modelID_id }}
+				{{ mod.enzyme }}
+				{{ mod.reversible }}
+		{% endfor %}
 		<div class="container-login100" style="background-image: url('{% static 'images/bg-01.jpg' %}');">
 			<img class="step1Image" id="step1" src="{% static 'images/GlycolysisStep1.jpg' %}" style="display: none;">
 			<img class="step1Image" id="Glucose" src="{% static 'images/Glucose.jpg' %}" style="display: none;">

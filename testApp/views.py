@@ -32,6 +32,9 @@ def modelChoice(request):
 	return render(request, 'modelChoice.html', context=context)
 
 def moduleEdit(request):
+	mod = Module.objects.all()
+	subs = Substrates.objects.all()
+	prods = Products.objects.all()
 	if request.method == 'POST':
 		print(request.POST)
 		new_enzyme = request.POST.get("Enzyme")
@@ -50,7 +53,11 @@ def moduleEdit(request):
 
 		return HttpResponseRedirect("modelEdit")
 	else:
-		context = {'form': SaveModuleForm}
+		context = {'form': SaveModuleForm,
+				   'modules' : mod,
+				   'substrates' : subs,
+				   'products' : prods
+				  }
 		return render(request, 'moduleEdit.html', context=context)
 
 def modelEdit(request):

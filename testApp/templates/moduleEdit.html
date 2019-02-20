@@ -8,6 +8,16 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/moduleEdit.css' %}"/>
 </head>
 <body>
+	<script>
+		var myEnzymes = [];
+		{% for mod in modules %}
+				myEnzymes.push({{ mod.enzyme }}.toString());
+		{% endfor %}
+		var mySubstrates = [];
+		{% for subs in substrates %}
+				mySubstrates.push({{subs.substrate}});
+		{% endfor %}
+	</script>
 	<div class="limiter">
 		{% for mod in modules %}
 				{{ mod.id }}

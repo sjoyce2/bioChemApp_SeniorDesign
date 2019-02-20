@@ -21,7 +21,7 @@
 
 		var myProducts = [];
 		{% for prods in products %}
-				myProducts.push(['{{prods.substrate}}', '{{prods.id}}', '{{prods.moduleID_id}}']);
+				myProducts.push(['{{prods.product}}', '{{prods.id}}', '{{prods.moduleID_id}}']);
 		{% endfor %}
 	</script>
 	<div class="limiter">

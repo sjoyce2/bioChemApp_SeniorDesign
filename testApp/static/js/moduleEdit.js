@@ -28,6 +28,8 @@ var modal;
 var mySubstrates;
 var myEnzymes;
 var myProducts;
+var enzymeProds;
+var enzymeSubs;
 
 var step1 = "Glucose+ATP>Hexokinase<Glucose-6-Phosphate+ADP;false";
 var step2 = "Glucose-6-Phosphate>Phosphoglucose isomerase<Fructose-6-Phosphate;true";
@@ -555,10 +557,25 @@ function validateReaction(){
   return true;
 }
 
+function createErrorCheckArrays() {
+  for(var i = 0; i < mySubstrates.length; i++){
+    enzymeSubs.push([myEnzymes[mySubstrates[i][2]][0], mySubstrates[i][0]]);
+  }
+  for(var j = 0; j < myProducts.length; j++){
+    enzymeProds.push([myEnzymes[myProducts[j][2]][0], myProducts[j][0]]);
+  }
+  console.log("WISH ME LUCK");
+  console.log(enzymeSubs);
+  console.log(enzymeProds);
+}
+
 window.onload = function init(){
   console.log(myEnzymes);
   console.log(mySubstrates);
   console.log(myProducts);
+
+  createErrorCheckArrays();
+
   canvas1 = document.getElementById("imageCanvas");
   substrates  = document.getElementsByName('Substrate');
   enzymes = document.getElementsByName('Enzyme');

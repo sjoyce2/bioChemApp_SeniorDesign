@@ -69,7 +69,7 @@ var step10 = "Phosphoenolpyruvate>Pyruvate kinase<Pyruvate;false";
 
 //function to change reversible boolean depending on which reversible radio btn is set
 function onRadioReverseChange(){
-  console.log("THIS IS TRIGGERED");
+  //console.log("THIS IS TRIGGERED");
   if(reversibleChoice[0].checked){
     isReversible = true;
   }else{
@@ -159,17 +159,17 @@ function onRadioChanged(substrates, enzymes, products){
 //display image corresponding to substrates and products chosen
 function displayImage(xcoor, ycoor, name){
   if(name === "ADP" || name === "ATP"){
-    console.log("ADP OR ATP");
+    //console.log("ADP OR ATP");
   }else{
     var img = document.getElementById(name);
     ctx.drawImage(img, xcoor, ycoor, objectWidth, objectHeight);
   }
-  console.log("image info  " + name + xcoor + ycoor);
+  //console.log("image info  " + name + xcoor + ycoor);
 }
 
 //draw boxes for substrates and products and set text
 function drawObject(xcoor, ycoor, name){
-  console.log(name);
+  //console.log(name);
   if(name === "ATP" || name === "ADP"){
     //xcoor = xcoor + (objectWidth / 2);
     ycoor = ycoor - (objectHeight / 2);
@@ -201,10 +201,10 @@ function drawDownArrow(xcoor, ycoor, name){
   ycoor = ycoor + objectHeight / 25;
   // ctx.fillText(name, xcoor , ycoor + objectBuffer); //This is for version without downwards arrow
   ctx.fillText(name, xcoor + 5 , ycoor + (objectHeight / 2));//This is for version with downwards arrow
-    console.log("isREVERISBLE = " + isReversible);
+    //console.log("isREVERISBLE = " + isReversible);
   if(isReversible){
-    console.log("MISTAKE");
-    console.log("isREVERISBLE = " + isReversible);
+    //console.log("MISTAKE");
+    //console.log("isREVERISBLE = " + isReversible);
     //xcoor = canvas1.width / 2;
     ctx.moveTo(xcoor, ycoor);
     ctx.lineTo(xcoor + (objectWidth / 4), ycoor + (objectHeight / 4));
@@ -310,7 +310,7 @@ function displayReaction(){
   var currentX = horizontalBuffer;
   var currentY = verticalBuffer;
   currentX = currentX + setInitialXCoor(countSubstrates);
-  console.log("COUNT SUBSTRATES = " + countSubstrates);
+  //console.log("COUNT SUBSTRATES = " + countSubstrates);
   drawSubstrates(currentX, currentY);
 
   currentY = currentY + objectHeight + verticalBuffer * 2; //for version with downwards arrow
@@ -321,17 +321,19 @@ function displayReaction(){
   currentX = horizontalBuffer;
   currentY = verticalBuffer * 5 + objectHeight * 2;
   currentX = currentX + setInitialXCoor(countProducts);
-  console.log("COUNT SUBSTRATES = " + countProducts);
+  //console.log("COUNT SUBSTRATES = " + countProducts);
   drawProducts(currentX, currentY);
 }
 
 function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
   var canBeChecked = false;
   var enzymeName = checkedEnzsNames[0];
+  console.log(enzymeName);
+  console.log(enzymeSubs);
   for(var i = 0; i < enzymeSubs.length; i++){
     for(var j = 1; j < enzymeSubs[i].length; j++){
       if(enzymeSubs[i][0] === enzymeName){
-        console.log("**********"+enzymeSubs[i],[j]);
+        //console.log("**********"+enzymeSubs[i],[j]);
         checkedSubsNames.push(enzymeSubs[i][j]);
         countSubstrates++;
         canBeChecked = true;
@@ -346,13 +348,13 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
       }
     }
   }
-  console.log(enzymeReverse);
+  //console.log(enzymeReverse);
   for(var i = 0; i < enzymeReverse.length; i++){
     for(var j = 1; j < enzymeReverse[i].length; j++){
       if(enzymeReverse[i][0] === enzymeName){
-        console.log(enzymeReverse[i][j]);
+        //console.log(enzymeReverse[i][j]);
         if(enzymeReverse[i][j] === "reversible"){
-          console.log("HERE");
+          //console.log("HERE");
           isReversible = true;
           reversibleChoice[0].checked = true;
         }else{
@@ -408,7 +410,7 @@ function clearAll(){
 }
 
 function checkSubsEnzProds(){
-  console.log("IS REVERISBLE IES HEKRJ"+isReversible);
+  // console.log("IS REVERISBLE IES HEKRJ"+isReversible);
   for(var i = 0; i < substrates.length; i++){
     for(var j = 0; j < checkedSubsNames.length; j++){
       if(substrates[i].value === checkedSubsNames[j]){
@@ -428,12 +430,12 @@ function checkSubsEnzProds(){
       enzymes[i].checked = true;
     }
   }
-  console.log("IS REVERSIBLE = " + isReversible)
+  //console.log("IS REVERSIBLE = " + isReversible)
   if(isReversible === "true"){
-    console.log("CHECKING TRUE");
+    //console.log("CHECKING TRUE");
     reversibleChoice[0].checked = true;
   }else{
-    console.log("CHECKING FALSE");
+    //console.log("CHECKING FALSE");
     reversibleChoice[1].checked = true;
   }
 }
@@ -445,7 +447,7 @@ function setArraysRepresentingReaction(){
   checkedEnzsNames = []
 
   if(currentRxn === ""){
-    console.log("CURRENT RXN + " + currentRxn);
+    //console.log("CURRENT RXN + " + currentRxn);
     return false;
   }else{
     var tmpArr = currentRxn.split(">");
@@ -459,14 +461,14 @@ function setArraysRepresentingReaction(){
     var fullArr = [tmpArr[0], newArr[0], evenNewer[0], evenNewer[1]];
     var subsArr = fullArr[0].split("+");
     var prodArr = fullArr[2].split("+");
-    console.log("Substrates: ");
-    console.log(subsArr);
-    console.log("Enzyme:");
-    console.log(fullArr[1]);
-    console.log("Products: ");
-    console.log(prodArr);
-    console.log("Reversible?: ");
-    console.log(fullArr[3]);
+    // console.log("Substrates: ");
+    // console.log(subsArr);
+    // console.log("Enzyme:");
+    // console.log(fullArr[1]);
+    // console.log("Products: ");
+    // console.log(prodArr);
+    // console.log("Reversible?: ");
+    // console.log(fullArr[3]);
 
     for(var i = 0; i < subsArr.length; i++){
       checkedSubsNames.push(subsArr[i]);
@@ -478,20 +480,20 @@ function setArraysRepresentingReaction(){
     }
     checkedEnzsNames.push(fullArr[1]);
     if(fullArr[3] === 'true'){
-      console.log("SET IS REVERSIBLE TO TRUE");
+      //console.log("SET IS REVERSIBLE TO TRUE");
       isReversible = true;
     }else if(fullArr[3] === 'false'){
-      console.log("SET IS REVERSIBLE TO FALSE");
+      //console.log("SET IS REVERSIBLE TO FALSE");
       isReversible = false;
     }
-    console.log("IS REVERSIBLE IS SET TO " + isReversible);
+    //console.log("IS REVERSIBLE IS SET TO " + isReversible);
     //Reset currentRxn string, since everything is pushed to the global variables
     currentRxn = "";
     var continueDisplay = validateReaction();
 
     if(continueDisplay){
       checkSubsEnzProds();
-      console.log("IS REVERSIBLE:" + isReversible);
+      //console.log("IS REVERSIBLE:" + isReversible);
       displayReaction();
     }else{
       modal.style.display = "block";
@@ -524,12 +526,12 @@ function validateReaction(){
     }
   }
   currentRxn = currentRxn + ";" + isReversible;
-  console.log("THE CURRENT REACTION ***" + currentRxn + "*******");
+  //console.log("THE CURRENT REACTION ***" + currentRxn + "*******");
 
   if(countProducts > 5 || countSubstrates > 5 || checkedEnzsNames.length === 0 ){
     //settings are invalid, user is limited to 5 products and 5 substrates and an
     //enzyme must be selected
-    console.log("INVALID");
+    //console.log("INVALID");
     ctx.fillStyle = "tomato";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
 
@@ -543,7 +545,7 @@ function validateReaction(){
   }else if(countSubstrates === 0 || countProducts === 0){
     //settings are invalid, cannot have selected some products and
     //no substrates or some substrates and no products
-    console.log("INVALID");
+    //console.log("INVALID");
     ctx.fillStyle = "tomato";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
 
@@ -580,16 +582,16 @@ function createErrorCheckArrays() {
     }
     enzymeReverse.push([myEnzymes[k][0], isReversible]);
   }
-  console.log("WISH ME LUCK");
-  console.log(enzymeSubs);
-  console.log(enzymeProds);
-  console.log(enzymeReverse);
+  // console.log("WISH ME LUCK");
+  // console.log(enzymeSubs);
+  // console.log(enzymeProds);
+  // console.log(enzymeReverse);
 }
 
 window.onload = function init(){
-  console.log(myEnzymes);
-  console.log(mySubstrates);
-  console.log(myProducts);
+  // console.log(myEnzymes);
+  // console.log(mySubstrates);
+  // console.log(myProducts);
 
   createErrorCheckArrays();
 
@@ -612,8 +614,8 @@ window.onload = function init(){
   var saveBtnClicked = false;
   //SET CURRENT REACTION TO STRING FROM MODEL EDIT SCREEN HERE
   var fromModel = localStorage.getItem("reactionClicked");
-  console.log("LOCAL STORAGE FROM MODEL EDIT ");
-  console.log(fromModel);
+  //console.log("LOCAL STORAGE FROM MODEL EDIT ");
+  //console.log(fromModel);
   currentRxn = step3;//set currentRxn to dummy value
   setArraysRepresentingReaction();//function to set the arrays to currentRxn and call values to display/validate
 
@@ -632,7 +634,7 @@ window.onload = function init(){
 
     //the settings are valid so display as usual
     if(continueDisplay){
-      console.log("IS REVERSIBLE:" + isReversible);
+      //console.log("IS REVERSIBLE:" + isReversible);
       displayReaction();
     }else{
       modal.style.display = "block";

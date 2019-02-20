@@ -36,9 +36,8 @@
 			<a href="#news">News</a>
 			<a href="#contact">Contact</a>
 			<a href="#about">About</a>
-			<img src="{% static 'images/logo.png' %}" alt="biopath_logo goes here" class="wrap-biopath-logo-top-bar">
+			<img src="{% static 'images/logo.png' %}" class="wrap-biopath-logo-top-bar">
 			<p class="web-title">BioPath</p>
-
 			<a href="/testApp/accounts/login/" id="topnav-buttons" class="login100-form-btn" ><button type="button">
 				Log In
 			</button></a>
@@ -49,6 +48,9 @@
 		<div class="container-login100" style="background-image: url('{% static 'images/bg-01.jpg' %}');">
 			
 			{% block modelChoice %}
+			{% endblock %}
+
+			{% block home %}
 			{% endblock %}
 
 			{% block login %}

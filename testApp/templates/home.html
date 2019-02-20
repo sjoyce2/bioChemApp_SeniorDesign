@@ -1,5 +1,14 @@
 {% extends 'index.html' %}
+{% load staticfiles%}
 
-{% block login %}
-  <a href="{% url 'login' %}">Login</a>
+{% block home %}
+  <div class="landing-page">
+    
+    <img src="{% static 'images/logo.png' %}" class="landing-page-logo">
+
+
+    <h1 class="landing-page-text"> Web application for biochemical pathway creation and visualization</h1>
+  
+
+  </div>  
 {% endblock %}

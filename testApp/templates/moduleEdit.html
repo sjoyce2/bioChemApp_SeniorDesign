@@ -13,13 +13,15 @@
 		{% for mod in modules %}
 				myEnzymes.push(['{{ mod.enzyme }}', '{{mod.reversible}}', '{{mod.id}}', '{{mod.modelID_id}}']);
 		{% endfor %}
+
 		var mySubstrates = [];
 		{% for subs in substrates %}
 				mySubstrates.push(['{{subs.substrate}}', '{{subs.id}}', '{{subs.moduleID_id}}']);
 		{% endfor %}
+
 		var myProducts = [];
 		{% for prods in products %}
-				mySubstrates.push(['{{prods.substrate}}', '{{prods.id}}', '{{prods.moduleID_id}}']);
+				myProducts.push(['{{prods.substrate}}', '{{prods.id}}', '{{prods.moduleID_id}}']);
 		{% endfor %}
 	</script>
 	<div class="limiter">

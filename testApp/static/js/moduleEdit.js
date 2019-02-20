@@ -332,7 +332,7 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
   console.log(enzymeSubs);
   for(var i = 0; i < enzymeSubs.length; i++){
     for(var j = 1; j < enzymeSubs[i].length; j++){
-      if(enzymeSubs[i][0] === enzymeName){
+      if(enzymeSubs[i][0].toUpperCase() === enzymeName.toUpperCase()){
         //console.log("**********"+enzymeSubs[i],[j]);
         checkedSubsNames.push(enzymeSubs[i][j]);
         countSubstrates++;
@@ -342,7 +342,7 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
   }
   for(var i = 0; i < enzymeProds.length; i++){
     for(var j = 1; j < enzymeProds[i].length; j++){
-      if(enzymeProds[i][0] === enzymeName){
+      if(enzymeProds[i][0].toUpperCase() === enzymeName.toUpperCase()){
         checkedProdsNames.push(enzymeProds[i][j]);
         countProducts++;
       }
@@ -351,7 +351,7 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
   //console.log(enzymeReverse);
   for(var i = 0; i < enzymeReverse.length; i++){
     for(var j = 1; j < enzymeReverse[i].length; j++){
-      if(enzymeReverse[i][0] === enzymeName){
+      if(enzymeReverse[i][0].toUpperCase() === enzymeName.toUpperCase()){
         //console.log(enzymeReverse[i][j]);
         if(enzymeReverse[i][j] === "reversible"){
           //console.log("HERE");

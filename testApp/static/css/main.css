@@ -22,9 +22,42 @@
 
 @font-face {
   font-family: Poppins-SemiBold;
-  src: url('../fonts/poppins/Poppins-SemiBold.ttf'); 
+  src: url('../fonts/poppins/Poppins-SemiBold.ttf');
 }
 
+/*//////////////////////////////////////////////////////////////////
+Landing Page CSS
+*/
+.landing-page {
+  display: inline-block;
+  text-align: center;
+  width: 100%;  
+  min-height: 90vh;
+  background: rgb(51, 51, 60); /* Fallback for older browsers without RGBA-support */
+  background: rgba(51, 51, 60, 0.4);
+  border-radius: 20px;
+}
+
+.inner-landing-page {
+  opacity: 1.6;
+  display: inline-block;
+  
+
+}
+
+.landing-page-logo {
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+  margin-top: 100px;
+  border-radius: 5px;
+  
+}
+
+.landing-page-text {
+  margin-top: 35px;
+
+}
 
 
 
@@ -143,6 +176,7 @@ iframe {
 .topnav {
   background-color: #315565;
   overflow: hidden;
+  text-align: center;
 }
 
 #topnav-buttons {
@@ -282,7 +316,7 @@ iframe {
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: scroll;
+  overflow-y: scroll;
   width: 100%;
   
   
@@ -376,7 +410,8 @@ label {
 .web-title{
   color: #EEEEEE;
   font-size: 33px;
-  float: left;
+  display: inline-block;
+  text-align: center;
   font-family: 'Courier', Courier, monospace;
   font-weight: 500;
   margin-left: 1%;
@@ -388,15 +423,12 @@ label {
   display: -webkit-flex;
   display: -moz-box;
   display: -ms-flexbox;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  float: left;
+  display: inline-block;
+  text-align: center;
   width: 50px;
   height: 50px;
+  margin-top: -13px;
   border-radius: 3px;
-  margin-left: 18%;
-  margin-top: 3px;
 }
 
 

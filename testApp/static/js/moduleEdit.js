@@ -28,8 +28,8 @@ var modal;
 var mySubstrates;
 var myEnzymes;
 var myProducts;
-var enzymeProds;
-var enzymeSubs;
+var enzymeProds = [];
+var enzymeSubs = [];
 
 var step1 = "Glucose+ATP>Hexokinase<Glucose-6-Phosphate+ADP;false";
 var step2 = "Glucose-6-Phosphate>Phosphoglucose isomerase<Fructose-6-Phosphate;true";

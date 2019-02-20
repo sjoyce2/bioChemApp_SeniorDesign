@@ -30,6 +30,7 @@ var myEnzymes;
 var myProducts;
 var enzymeProds = [];
 var enzymeSubs = [];
+var enzymeReverse = [];
 
 var step1 = "Glucose+ATP>Hexokinase<Glucose-6-Phosphate+ADP;false";
 var step2 = "Glucose-6-Phosphate>Phosphoglucose isomerase<Fructose-6-Phosphate;true";
@@ -564,9 +565,17 @@ function createErrorCheckArrays() {
   for(var j = 0; j < myProducts.length; j++){
     enzymeProds.push([myEnzymes[(myProducts[j][2]) - 1][0], myProducts[j][0]]);
   }
+  for(var k = 0; k < myEnzymes.length; k++){
+    var isReversible = false;
+    if(myEnzymes[k][1] == "reversible"){
+      isReversible = true;
+    }
+    enzymeReverse.push([myEnzymes[k][0], isReversible]);
+  }
   console.log("WISH ME LUCK");
   console.log(enzymeSubs);
   console.log(enzymeProds);
+  console.log(enzymeReverse);
 }
 
 window.onload = function init(){

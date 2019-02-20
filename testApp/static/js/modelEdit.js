@@ -265,19 +265,11 @@ function main () {
     firstRectMidY = 75;
     y = firstRectMidY;
     // TODO: render() should be able to access the 
-<<<<<<< HEAD
     /* canvas.addEventListener('click', function (event) {
         let mousePosition = getMousePosition(canvas, event);
         //TODO: link to model page and remember rectangle number
         if (mousePosition <= )
     }); */
-=======
-    /*canvas.addEventListener('click', function (event) {
-        let mousePosition = getMousePosition(canvas, event);
-        //TODO: link to model page and remember rectangle number
-        if (mousePosition <= )
-    });*/
->>>>>>> d8e6a8c74e5f65c52049418887aebf63907afb37
     render();
     window.requestAnimationFrame(animate);
 

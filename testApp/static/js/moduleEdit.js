@@ -559,10 +559,10 @@ function validateReaction(){
 
 function createErrorCheckArrays() {
   for(var i = 0; i < mySubstrates.length; i++){
-    enzymeSubs.push([myEnzymes[mySubstrates[i][2]][0], mySubstrates[i][0]]);
+    enzymeSubs.push([myEnzymes[(mySubstrates[i][2]) - 1][0], mySubstrates[i][0]]);
   }
   for(var j = 0; j < myProducts.length; j++){
-    enzymeProds.push([myEnzymes[myProducts[j][2]][0], myProducts[j][0]]);
+    enzymeProds.push([myEnzymes[(myProducts[j][2]) - 1][0], myProducts[j][0]]);
   }
   console.log("WISH ME LUCK");
   console.log(enzymeSubs);

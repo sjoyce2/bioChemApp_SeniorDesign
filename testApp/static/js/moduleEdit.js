@@ -366,7 +366,8 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
   if(canBeChecked){
     validateReaction();
   }else{
-
+    modal2.style.display = "block";
+    ctx.clearRect(0, 0, canvas1.width, canvas1.height);
   }
 
 }

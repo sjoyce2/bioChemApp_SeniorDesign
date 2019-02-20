@@ -25,6 +25,8 @@ var countProducts;
 var countSubstrates;
 var currentRxn = "";
 var modal;
+var mySubstrates;
+var myEnzymes;
 
 var step1 = "Glucose+ATP>Hexokinase<Glucose-6-Phosphate+ADP;false";
 var step2 = "Glucose-6-Phosphate>Phosphoglucose isomerase<Fructose-6-Phosphate;true";
@@ -553,6 +555,8 @@ function validateReaction(){
 }
 
 window.onload = function init(){
+  console.log(myEnzymes);
+  console.log(mySubstrates);
   canvas1 = document.getElementById("imageCanvas");
   substrates  = document.getElementsByName('Substrate');
   enzymes = document.getElementsByName('Enzyme');

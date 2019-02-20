@@ -25,6 +25,7 @@ var countProducts;
 var countSubstrates;
 var currentRxn = "";
 var modal;
+var modal2;
 var mySubstrates;
 var myEnzymes;
 var myProducts;
@@ -325,6 +326,7 @@ function displayReaction(){
 }
 
 function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
+  var canBeChecked = false;
   var enzymeName = checkedEnzsNames[0];
   for(var i = 0; i < enzymeSubs.length; i++){
     for(var j = 1; j < enzymeSubs[i].length; j++){
@@ -332,6 +334,7 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
         console.log("**********"+enzymeSubs[i],[j]);
         checkedSubsNames.push(enzymeSubs[i][j]);
         countSubstrates++;
+        canBeChecked = true;
       }
     }
   }
@@ -360,7 +363,11 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
     }
   }
   currentRxn = "";
-  validateReaction();
+  if(canBeChecked){
+    validateReaction();
+  }else{
+
+  }
 
 }
 //unit test
@@ -495,7 +502,7 @@ function setArraysRepresentingReaction(){
 function validateReaction(){
   //iterate through user selections and create string representation
   //this is done so that if it is a complete reaction (something from
-  //every categor is chosen) it can easily be compared to the known
+  //every category is chosen) it can easily be compared to the known
   //reactions
   for(var i = 0; i < checkedSubsNames.length; i++){
     if(i === checkedSubsNames.length - 1){
@@ -599,6 +606,7 @@ window.onload = function init(){
   submitWeightBtn = document.getElementById('submitWeight');
   weightSlider = document.getElementById('weightSlider');
   modal = document.getElementById('invalidModal');
+  modal2 = document.getElementById('invalidCheckModal');
   var span = document.getElementsByClassName("close")[0];
   var saveBtnClicked = false;
   //SET CURRENT REACTION TO STRING FROM MODEL EDIT SCREEN HERE
@@ -670,6 +678,8 @@ window.onload = function init(){
   window.onclick = function(event) {
     if (event.target == modal) {
       modal.style.display = "none";
+    }else if (event.target == modal2){
+      modal2.style.display = "none"
     }
   }
 

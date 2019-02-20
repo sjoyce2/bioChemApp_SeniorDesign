@@ -69,6 +69,12 @@ def modelEdit(request):
 	context = { 'modules': mod }
 	return render(request, 'modelEdit.html', context=context)
 
+def home(request):
+	context = {
+
+	}
+	return render(request, 'home.html', context=context)
+
 def register(request):
 	if request.method == 'POST':
 		form = SignUpForm(request.POST)

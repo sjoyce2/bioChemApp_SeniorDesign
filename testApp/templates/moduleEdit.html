@@ -11,7 +11,7 @@
 	<script>
 		var myEnzymes = [];
 		{% for mod in modules %}
-				myEnzymes.push(['{{ mod.enzyme }}', '{{mod.reversible}}' '{{mod.id}}', '{{mod.modelID_id}}']);
+				myEnzymes.push(['{{ mod.enzyme }}', '{{mod.reversible}}', '{{mod.id}}', '{{mod.modelID_id}}']);
 		{% endfor %}
 		var mySubstrates = [];
 		{% for subs in substrates %}

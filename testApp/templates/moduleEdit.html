@@ -11,15 +11,21 @@
 	<script>
 		var myEnzymes = [];
 		{% for mod in modules %}
-				myEnzymes.push({{ mod.enzyme }}.toString());
+				myEnzymes.push(['{{ mod.enzyme }}', '{{mod.reversible}}', '{{mod.id}}', '{{mod.modelID_id}}']);
 		{% endfor %}
+
 		var mySubstrates = [];
 		{% for subs in substrates %}
-				mySubstrates.push({{subs.substrate}});
+				mySubstrates.push(['{{subs.substrate}}', '{{subs.id}}', '{{subs.moduleID_id}}']);
+		{% endfor %}
+
+		var myProducts = [];
+		{% for prods in products %}
+				myProducts.push(['{{prods.product}}', '{{prods.id}}', '{{prods.moduleID_id}}']);
 		{% endfor %}
 	</script>
 	<div class="limiter">
-		{% for mod in modules %}
+		<!-- {% for mod in modules %}
 				{{ mod.id }}
 				{{ mod.modelID_id }}
 				{{ mod.enzyme }}
@@ -30,7 +36,7 @@
 				{{ mod.modelID_id }}
 				{{ mod.enzyme }}
 				{{ mod.reversible }}
-		{% endfor %}
+		{% endfor %} -->
 		<div class="container-login100" style="background-image: url('{% static 'images/bg-01.jpg' %}');">
 			<img class="step1Image" id="step1" src="{% static 'images/GlycolysisStep1.jpg' %}" style="display: none;">
 			<img class="step1Image" id="Glucose" src="{% static 'images/Glucose.jpg' %}" style="display: none;">
@@ -221,6 +227,14 @@
 										  <div class="modal-content">
 										    <span class="close">&times;</span>
 										    <p>You must select at least one substrate, enzyme and product, as well as no more than five products or substrates.</p>
+										  </div>
+										</div>
+										<div id="invalidCheckModal" class="modal">
+
+										  <!-- Modal content -->
+										  <div class="modal-content">
+										    <span class="close">&times;</span>
+										    <p>Sorry! We cannot fill in the reaction for your chosen enzyme at the moment.</p>
 										  </div>
 										</div>
 			</div>

@@ -19,10 +19,10 @@ from testApp.models import Module
 from testApp.models import Model
 from testApp.models import Products
 from testApp.models import Substrates
-<<<<<<< HEAD
-=======
+# <<<<<<< HEAD
+# =======
 # from testApp.static.modelChoice import createButton as cb
->>>>>>> d8e6a8c74e5f65c52049418887aebf63907afb37
+# >>>>>>> d8e6a8c74e5f65c52049418887aebf63907afb37
 
 def modelChoice(request):
 	# need to add a pop-up/redirect to allow the user to create a new model
@@ -48,11 +48,11 @@ def moduleEdit(request):
 		for key, values in request.POST.lists():
 			if (key == "Product"):
 				for i in range(len(values)):
-					prods = Products(moduleID_id=20, product=values[i])
+					prods = Products(moduleID_id=2, product=values[i])
 					prods.save()
 			if (key == "Substrate"):
 				for i in range(len(values)):
-					subs = Substrates(moduleID_id=20, substrate=values[i])
+					subs = Substrates(moduleID_id=2, substrate=values[i])
 					subs.save()
 
 		return HttpResponseRedirect("modelEdit")
@@ -68,6 +68,12 @@ def modelEdit(request):
 	mod = Module.objects.all()
 	context = { 'modules': mod }
 	return render(request, 'modelEdit.html', context=context)
+
+def home(request):
+	context = {
+
+	}
+	return render(request, 'home.html', context=context)
 
 def register(request):
 	if request.method == 'POST':

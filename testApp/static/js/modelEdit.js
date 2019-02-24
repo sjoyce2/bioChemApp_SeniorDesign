@@ -15,6 +15,9 @@ var speed; //how fast the "molecule" is flowing through the pathway
 var enzymeList = [];
 var substrateList = [];
 var productList = [];
+var revList = [];
+var xCoords = [];
+var yCoords = [];
 var enzyme1 = "enzyme1";
 var enzyme2 = "enzyme2";
 var enzyme3 = "enzyme3";
@@ -53,6 +56,7 @@ function notRevStep(substrate, product, enzyme,
     ctx.lineTo(firstRectMidX + 90, firstRectMidY + 90);
     ctx.moveTo(firstRectMidX + 90, firstRectMidY + 110);
     ctx.lineTo(firstRectMidX + 100, firstRectMidY + 100);
+    ctx.fillStyle = "black";
     ctx.stroke();
 
     //create enzyme at center of reaction
@@ -82,17 +86,16 @@ function notRevStep(substrate, product, enzyme,
         firstRectMidY + 54);
     ctx.fillText("ATP", firstRectMidX + 110, firstRectMidY + 5);
     ctx.fillText("ADP", firstRectMidX + 110, firstRectMidY + 105);
+    ctx.stroke();
 }
 
 //create a reversible reaction
-function revStep(firstText, secondText, firstRectMidX, firstRectMidY, ctx) {
+function revStep(firstText, secondText, enzyme, firstRectMidX, firstRectMidY, ctx) {
     //create first protein
     ctx.font = "20px Arial";
-    firstWidth = ctx.measureText(firstText).width + 20;
-    ctx.rect(firstRectMidX - 100, firstRectMidY - 25, firstWidth, 50);
+    ctx.rect(firstRectMidX - 100, firstRectMidY - 25, 100, 50);
     //create second protein
-    secondWidth = ctx.measureText(secondText).width + 20;
-    ctx.rect(firstRectMidX - 100, firstRectMidY + 75, secondWidth, 50);
+    ctx.rect(firstRectMidX - 100, firstRectMidY + 75, 100, 50);
     //draw arrows between proteins
     ctx.moveTo(firstRectMidX - 65, firstRectMidY + 35);
     ctx.lineTo(firstRectMidX - 55, firstRectMidY + 25);
@@ -100,11 +103,34 @@ function revStep(firstText, secondText, firstRectMidX, firstRectMidY, ctx) {
     ctx.moveTo(firstRectMidX - 45, firstRectMidY + 25);
     ctx.lineTo(firstRectMidX - 45, firstRectMidY + 75);
     ctx.lineTo(firstRectMidX - 35, firstRectMidY + 65);
+    ctx.fillStyle = "black";
+    ctx.stroke();
+    //Enzyme
+    ctx.beginPath();
+    ctx.font = "12px Arial";
+    var fontMeasures = ctx.measureText(enzyme);
+    var xCoord = firstRectMidX - 55 - (fontMeasures.width / 2);
+    ctx.moveTo(xCoord, firstRectMidY + 50);
+    ctx.bezierCurveTo(
+        xCoord, firstRectMidY + 30,
+        xCoord + fontMeasures.width + 10, firstRectMidY + 30,
+        xCoord + fontMeasures.width + 10, firstRectMidY + 50);
+    ctx.bezierCurveTo(
+        xCoord + fontMeasures.width + 10, firstRectMidY + 70,
+        xCoord, firstRectMidY + 70,
+        xCoord, firstRectMidY + 50);
+    ctx.fillStyle = "white";
+    ctx.fill();
+
+    ctx.fillStyle = "black";
     ctx.font = "20px Arial";
     //add label to first protein
     ctx.fillText(firstText, firstRectMidX - 90, firstRectMidY + 5);
     //add label to second protein
     ctx.fillText(secondText, firstRectMidX - 90, firstRectMidY + 105);
+    ctx.font = "12px Arial";
+    ctx.fillText(enzyme, firstRectMidX - 50 - fontMeasures.width / 2,
+        firstRectMidY + 54);
     //draw everything to the screen
     ctx.stroke();
 }
@@ -112,9 +138,10 @@ function revStep(firstText, secondText, firstRectMidX, firstRectMidY, ctx) {
 //Calculate the x value of the molecule in the reaction. The height
 //changes by a consistent value each time but the horizontal
 //position can change if it is following a non-reversible reaction
-function getDotPos(newY, firstRectMidY, stepOrder, firstRectMidX) {
+//TODO: Fix this equation
+function getDotPos(newY, firstRectMidY, firstRectMidX) {
     var arrayPos = Math.floor((newY - firstRectMidY) / 100);
-    if (stepOrder[arrayPos] === "n") {
+    if (!revList[arrayPos]) {
         x = firstRectMidX + Math.sqrt(-1 * Math.pow((newY - firstRectMidY) - 50 - (100 * arrayPos), 2) + 2500);
     } else {
         x = firstRectMidX - 50;
@@ -150,8 +177,6 @@ function animate() {
     }
     y += 0.25 * direction * speed;
     x = getDotPos(y, firstRectMidY, stepOrder, firstRectMidX);
-    //x2 = getDotPos(y + 6);
-    //x3 = getDotPos(y + 12);
     render();
     window.requestAnimationFrame(animate);
 }
@@ -171,7 +196,14 @@ function render() {
     var fifthText = "GAP";
 
     //Draw each step of the pathway, including reversible and non-reversible steps
-    notRevStep(firstText, secondText, enzyme1Name,
+    for (var i = 0; i < enzymeList.length; i++) {
+        if (revList[i]) {
+            revStep(substrateList[i][0], productList[i][0], enzymeList[i], xCoords[i], yCoords[i], ctx);
+        } else {
+            notRevStep(substrateList[i][0], productList[i][0], enzymeList[i], xCoords[i], yCoords[i], ctx);
+        }
+    }
+    /* notRevStep(firstText, secondText, enzyme1Name,
         firstRectMidX, firstRectMidY, ctx);
     stepOrder.push("n");
     revStep(secondText, thirdText, firstRectMidX,
@@ -182,14 +214,14 @@ function render() {
     stepOrder.push("n");
     revStep(fourthText, fifthText, firstRectMidX,
         firstRectMidY + 300, ctx);
-    stepOrder.push("r");
+    stepOrder.push("r"); */
     endY = firstRectMidY + 390.0;
     ctx.stroke();
     ctx.closePath();
     ctx.beginPath();
     ctx.fillStyle = "blue";
-    ctx.moveTo(x + 5, y);
-    ctx.arc(x, y, 5, 0, 2 * Math.PI);
+    //ctx.moveTo(x + 5, y);
+    //ctx.arc(x, y, 5, 0, 2 * Math.PI);
     ctx.fill();
 }
 
@@ -202,10 +234,8 @@ function reset() {
 
     var en1Slider = document.getElementById(enzyme1);
     var en2Slider = document.getElementById(enzyme2);
-    //var en3Slider = document.getElementById(enzyme3);
     en1Slider.value = "50";
     en2Slider.value = "50";
-    //en3Slider.value = "5";
     en1Slider.oninput = function() {
         document.getElementById("enzyme1value").innerHTML = this.value;
     };
@@ -221,8 +251,7 @@ function reset() {
 // Assumes that there are at least one substrate, at least one product,
 // exactly one enzyme, and exactly one boolean for reversible/irreversible
 function parseThrough(stringToParse) {
-    //Need to do a try catch if there is no info in stringToParse
-    //Also, on chrome the wrong information is being stored as an enzyme
+    //on chrome the wrong information is being stored as an enzyme
     try {
         var tmpArr = stringToParse.split(">");
     } catch (e) {
@@ -238,7 +267,6 @@ function parseThrough(stringToParse) {
     fullArr = [tmpArr[0], newArr[0], evenNewer[0], evenNewer[1]];
     subsArr = fullArr[0].split("+");
     prodArr = fullArr[2].split("+");
-    enzymeList[0] = fullArr[1];
     
 
     console.log("Substrates: ");
@@ -264,7 +292,16 @@ function main () {
 
     firstRectMidY = 75;
     y = firstRectMidY;
-    // TODO: render() should be able to access the 
+
+
+
+    // Test values
+    enzymeList.push("HEXO")
+    substrateList.push(["G", "ATP"])
+    productList.push(["G6P", "ADP"])
+    revList.push(false)
+    xCoords.push(450)
+    yCoords.push(100)
     /* canvas.addEventListener('click', function (event) {
         let mousePosition = getMousePosition(canvas, event);
         //TODO: link to model page and remember rectangle number

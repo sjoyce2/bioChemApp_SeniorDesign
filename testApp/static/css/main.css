@@ -175,6 +175,7 @@ iframe {
 /* Add a black background color to the top navigation */
 .topnav {
   background-color: #315565;
+  height: 56px;
   overflow: hidden;
   text-align: center;
 }
@@ -205,7 +206,6 @@ iframe {
   background-color: #21394A;
   color: white;
 }
-
 
 /*//////////////////////////////////////////////////////////////////
 [ Utility ]*/
@@ -316,7 +316,7 @@ iframe {
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-y: scroll;
+  overflow-y: scroll; 
   width: 100%;
   
   
@@ -414,10 +414,17 @@ label {
   text-align: center;
   font-family: 'Courier', Courier, monospace;
   font-weight: 500;
-  margin-left: 1%;
-  
+  margin-left: -25px;
   
 }
+
+.landing-page-sub-width {
+  width: 80%;
+  display: inline-block;
+  text-align: center;
+
+}
+
 .wrap-biopath-logo-top-bar {
   display: -webkit-box;
   display: -webkit-flex;
@@ -425,10 +432,24 @@ label {
   display: -ms-flexbox;
   display: inline-block;
   text-align: center;
-  width: 50px;
+  width: 90px;
   height: 50px;
-  margin-top: -13px;
+  margin-left: 82px;
+  margin-top: -9px;
   border-radius: 3px;
+}
+
+.wrap-home-top-bar {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  padding: 5px 5px 5px 5px;
+
+
 }
 
 

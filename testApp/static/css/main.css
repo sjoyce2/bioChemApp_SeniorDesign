@@ -219,18 +219,11 @@ iframe {
 /*//////////////////////////////////////////////////////////////////
 [ Sign up Button ]*/
 
-.sign-up-button {
-  margin-left: 85px;
-  margin-top: 25px;
-  background-color: whitesmoke; 
-  border: none;
-  color: black;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
+#sign-up-button {
   display: inline-block;
-  font-size: 16px;
-
+  text-align: center;
+  margin-left: 70px;
+  margin-top: 25px;
 }
 /*---------------------------------------------*/ 
 /*sign-up*/ 
@@ -280,7 +273,7 @@ iframe {
 }
 
 .wrap-login100 {
-  display: inline-flex;
+  display: inline-block;
   flex-direction: column;
   width: 400px;
   height: 500px;
@@ -480,13 +473,11 @@ label {
   border: 1px solid rgba(255,255,255,0.24);
   font-family: Poppins-Regular;
   font-size: 16px;
-  color: #fff;
+  color: black;
   line-height: 1.2;
-
   display: block;
   width: 100%;
   height: 45px;
-  background: transparent;
   padding: 0 5px 0 38px;
 }
 
@@ -494,13 +485,12 @@ label {
   border: 1px solid rgba(255,255,255,0.24);
   font-family: Poppins-Regular;
   font-size: 16px;
-  color: #fff;
+  color: black;
   line-height: 1.2;
 
   display: block;
   width: 100%;
   height: 45px;
-  background: transparent;
   padding: 0 5px 0 38px;
 }
 

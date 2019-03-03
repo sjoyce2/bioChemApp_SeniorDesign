@@ -569,6 +569,7 @@ function validateReaction(){
 }
 
 function createErrorCheckArrays() {
+  console.log(myEnzymes);
   for(var i = 0; i < mySubstrates.length; i++){
     enzymeSubs.push([myEnzymes[(mySubstrates[i][2]) - 1][0], mySubstrates[i][0]]);
   }

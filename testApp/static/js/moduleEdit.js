@@ -591,9 +591,9 @@ function createErrorCheckArrays() {
 }
 
 window.onload = function init(){
-  // console.log(myEnzymes);
-  // console.log(mySubstrates);
-  // console.log(myProducts);
+  console.log(myEnzymes);
+  console.log(mySubstrates);
+  console.log(myProducts);
 
   createErrorCheckArrays();
 

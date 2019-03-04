@@ -66,7 +66,7 @@ def moduleEdit(request):
 		return render(request, 'moduleEdit.html', context=context)
 
 def moduleEditCase1(request, module):
-	print "Hello"
+	print ("Hello")
 	# mod = Module.objects.all().filter(modelID_id = model)
 	currentMod = Substartes.objects.values('modelID_id').filter(id = module)
 	mod = Module.objects.all().filter(modelID_id__exact = currentMod)

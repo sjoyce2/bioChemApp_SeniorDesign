@@ -37,7 +37,7 @@ def modelChoice(request):
 
 def moduleEdit(request):
 	mod = Module.objects.all()
-	mod = Module.objects.all().filter(modelID_id = )
+	# mod = Module.objects.all().filter(modelID_id = )
 	subs = Substrates.objects.all()
 	prods = Products.objects.all()
 	if request.method == 'POST':

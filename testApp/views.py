@@ -35,12 +35,16 @@ def modelChoice(request):
 	}
 	return render(request, 'modelChoice.html', context=context)
 
-def moduleEdit(request):
+def moduleEdit(request, module):
 	print ("HI");
-	mod = Module.objects.all()
+	currentMod = Substartes.objects.values('modelID_id').filter(id = module)
+	mod = Module.objects.all().filter(modelID_id__exact = currentMod)
+	subs = Substrates.objects.all().filter(moduleID_id__exact = module)
+	prods = Products.objects.all().filter(moduleID_id__exact = module)
+	# mod = Module.objects.all()
 	# mod = Module.objects.all().filter(modelID_id = )
-	subs = Substrates.objects.all()
-	prods = Products.objects.all()
+	# subs = Substrates.objects.all()
+	# prods = Products.objects.all()
 	if request.method == 'POST':
 		print(request.POST)
 		new_enzyme = request.POST.get("Enzyme")

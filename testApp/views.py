@@ -36,12 +36,10 @@ def modelChoice(request):
 	return render(request, 'modelChoice.html', context=context)
 
 def moduleEdit(request, module):
-	print ("HI");
 	currentMod = Module.objects.filter(pk = module).values('modelID_id')
-	print (currentMod)
 	for value in currentMod:
 		result = value
-	print (result)
+	#have to loop through queryset so we can have standard dictionary 
 	mod = Module.objects.all().filter(modelID_id = result.get('modelID_id'))
 	subs = Substrates.objects.all().filter(moduleID_id__exact = module)
 	prods = Products.objects.all().filter(moduleID_id__exact = module)

@@ -42,7 +42,10 @@ def moduleEdit(request, module):
 	model = Model.objects.filter(pk = result.get('modelID_id')).values('public')
 	for value in model:
 		result = value
-	print (result)
+	print (result.get('public'))
+
+	if(result.get('public')):
+		print ("public")
 	# mod = Module.objects.all()
 	# mod = Module.objects.all().filter(modelID_id = )
 	# subs = Substrates.objects.all()

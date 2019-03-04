@@ -9,9 +9,6 @@
 <!--===============================================================================================-->
 </head>
 <body>
-    <script>
-        var modList = "{{ Module }}";
-    </script>
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('{% static 'images/bg-01.jpg' %}');">
 			<div class="wrap-login100">
@@ -26,12 +23,9 @@
                             <button class="editToolbarButton" id="logout" type="button">Logout</button>
                         </div>
                     </div>
-                    {% for mod in modules %}
-                        {{ mod.id }}
-                        {{ mod.modelID_id }}
-                        {{ mod.enzyme }}
-                        {{ mod.reversible }}
-                    {% endfor %}
+                    {{ modules|json_script:"db-modules" }}
+                    {{ substrates|json_script:"db-substrates" }}
+                    {{ products|json_script:"db-products" }}
                     <div class="flex-horiz">
                         <a href="{% url 'moduleEdit' module=1 %}" id="link-to-module">
                             <canvas id="modelEditCanvas" height="800" width="800"></canvas>

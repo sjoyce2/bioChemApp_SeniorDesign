@@ -19,10 +19,6 @@ from testApp.models import Module
 from testApp.models import Model
 from testApp.models import Products
 from testApp.models import Substrates
-# <<<<<<< HEAD
-# =======
-# from testApp.static.modelChoice import createButton as cb
-# >>>>>>> d8e6a8c74e5f65c52049418887aebf63907afb37
 
 def modelChoice(request):
 	# need to add a pop-up/redirect to allow the user to create a new model
@@ -36,6 +32,10 @@ def modelChoice(request):
 	return render(request, 'modelChoice.html', context=context)
 
 def moduleEdit(request, module):
+<<<<<<< HEAD
+=======
+	print ("HI")
+>>>>>>> 9a89b0352717962169180f225d33e0ff3cde90a2
 	currentMod = Module.objects.filter(pk = module).values('modelID_id')
 	for value in currentMod:
 		result = value
@@ -75,7 +75,7 @@ def moduleEdit(request, module):
 def moduleEditCase1(request, module):
 	print ("Hello")
 	# mod = Module.objects.all().filter(modelID_id = model)
-	currentMod = Substartes.objects.values('modelID_id').filter(id = module)
+	currentMod = Substrates.objects.values('modelID_id').filter(id = module)
 	mod = Module.objects.all().filter(modelID_id__exact = currentMod)
 	subs = Substrates.objects.all().filter(moduleID_id__exact = module)
 	prods = Products.objects.all().filter(moduleID_id__exact = module)
@@ -106,12 +106,30 @@ def moduleEditCase1(request, module):
 
 def modelEdit(request):
 	mod = Module.objects.all()
-	context = { 'modules': mod }
+	list_of_mods = []
+	for obj in mod:
+		mod_dict = {"id": obj.id, "modelID_id": obj.modelID_id, "enzyme": obj.enzyme, \
+			"reversible": obj.reversible, "enzymeAbbr": obj.enzymeAbbr, "xCoor": obj.xCoor, \
+			"yCoor": obj.yCoor, "enzWeight": obj.enzWeight}
+		list_of_mods.append(mod_dict)
+	subs = Substrates.objects.all()
+	list_of_subs = []
+	for obj in subs:
+		sub_dict = {"id": obj.id, "substrate": obj.substrate, "moduleID_id": obj.moduleID_id, \
+			"abbr": obj.abbr}
+		list_of_subs.append(sub_dict)
+	prods = Products.objects.all()
+	list_of_prods = []
+	for obj in prods:
+		prod_dict = {"id": obj.id, "product": obj.product, "moduleID_id": obj.moduleID_id, \
+			"abbr": obj.abbr}
+		list_of_prods.append(prod_dict)
+	context = { 'modules': list_of_mods, 'substrates': list_of_subs, 'products': list_of_prods}
 	return render(request, 'modelEdit.html', context=context)
 
 def modelEditCase1(request, model):
 	mod = Module.objects.all()
-	context = { 'modules': mod }
+	context = { 'modules':mod }
 	return render(request, 'modelEdit.html', context=context)
 
 def home(request):

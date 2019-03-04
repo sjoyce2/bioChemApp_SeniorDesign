@@ -1,13 +1,9 @@
 var x;
 var y;
-var x2;
-var x3;
-var x4;
 var firstRectMidX;
 var firstRectMidY;
-var endY;
-var direction = 1;
-var stepOrder = []; //array of steps, "n" for non-reversible, "r" for reversible
+var endY;  //depricated
+var direction = 1; //depricated
 var speed; //how fast the "molecule" is flowing through the pathway
 
 // Instead of these, we need a list of enzymes and a corresponding 2d list
@@ -27,6 +23,9 @@ var enzyme3Name = "aldolase";
 var en1weight = 2;
 var en2weight = 9;
 var en3weight = 1;
+var db_modules = JSON.parse(document.getElementById('db-modules').textContent);
+var db_substrates = JSON.parse(document.getElementById('db-substrates').textContent);
+var db_products = JSON.parse(document.getElementById('db-products').textContent);
 
 //Create a non-reversible reaction
 function notRevStep(substrate, product, enzyme,
@@ -151,6 +150,8 @@ function getDotPos(newY, firstRectMidY, firstRectMidX) {
 
 //Sets the speed of the molecule given the weight and enzyme speed for the
 //reaction it is currently in
+
+//TODO: Fix this
 function setSpeed(enzymeName, weight) {
     if (enzymeName === "") {
         speed = 1;
@@ -164,6 +165,8 @@ function setSpeed(enzymeName, weight) {
 
 //startX, startY, endX, endY all floats
 //stepOrder: array of strings, direction is 1 or -1
+
+//TODO: Fix this
 function animate() {
     if (y < firstRectMidY + 0.0 || y >= endY) {
         y = firstRectMidY;
@@ -176,7 +179,7 @@ function animate() {
         setSpeed("", 1);
     }
     y += 0.25 * direction * speed;
-    x = getDotPos(y, firstRectMidY, stepOrder, firstRectMidX);
+    x = getDotPos(y, firstRectMidY, firstRectMidX);
     render();
     window.requestAnimationFrame(animate);
 }
@@ -186,42 +189,29 @@ function render() {
     var canvas = document.getElementById("modelEditCanvas");
     var ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
-    firstRectMidX = (canvas.clientWidth / 2) + 50;
-    firstRectMidY = 75;
     //Need to define these differently
-	var firstText = "Glucose";
-	var secondText = "G6P";
-    var thirdText = "F6P";
-    var fourthText = "F16BP";
-    var fifthText = "GAP";
 
     //Draw each step of the pathway, including reversible and non-reversible steps
     for (var i = 0; i < enzymeList.length; i++) {
-        if (revList[i]) {
-            revStep(substrateList[i][0], productList[i][0], enzymeList[i], xCoords[i], yCoords[i], ctx);
+        if (i == 0) {
+            firstRectMidX = xCoords[i] * 50 + (canvas.clientWidth / 2 + 50)
+            firstRectMidY = yCoords[i] * 100
+        }
+        if (revList[i] == "reversible") {
+            revStep(substrateList[i][0], productList[i][0], enzymeList[i], 
+                xCoords[i] * 50 + (canvas.clientWidth / 2 + 50), yCoords[i] * 100, ctx);
         } else {
-            notRevStep(substrateList[i][0], productList[i][0], enzymeList[i], xCoords[i], yCoords[i], ctx);
+            notRevStep(substrateList[i][0], productList[i][0], enzymeList[i], 
+                xCoords[i] * 50 + (canvas.clientWidth / 2 + 50), yCoords[i] * 100, ctx);
         }
     }
-    /* notRevStep(firstText, secondText, enzyme1Name,
-        firstRectMidX, firstRectMidY, ctx);
-    stepOrder.push("n");
-    revStep(secondText, thirdText, firstRectMidX,
-        firstRectMidY + 100, ctx);
-        stepOrder.push("r");
-    notRevStep(thirdText, fourthText, enzyme2Name,
-        firstRectMidX, firstRectMidY + 200, ctx);
-    stepOrder.push("n");
-    revStep(fourthText, fifthText, firstRectMidX,
-        firstRectMidY + 300, ctx);
-    stepOrder.push("r"); */
     endY = firstRectMidY + 390.0;
     ctx.stroke();
     ctx.closePath();
     ctx.beginPath();
     ctx.fillStyle = "blue";
-    //ctx.moveTo(x + 5, y);
-    //ctx.arc(x, y, 5, 0, 2 * Math.PI);
+    ctx.moveTo(x + 5, y);
+    ctx.arc(x, y, 5, 0, 2 * Math.PI);
     ctx.fill();
 }
 
@@ -282,6 +272,32 @@ function parseThrough(stringToParse) {
     return [subsArr, fullArr[1], prodArr, fullArr[3]]
 }
 
+function addValues() {
+    for (i=0; i<db_modules.length; i++) {
+        if (db_modules[i].modelID_id == 1) {
+            var moduleNum = db_modules[i].id
+            enzymeList.push(db_modules[i].enzymeAbbr)
+            revList.push(db_modules[i].reversible)
+            xCoords.push(db_modules[i].xCoor)
+            yCoords.push(db_modules[i].yCoor)
+            var subList = []
+            for (j=0; j<db_substrates.length; j++) {
+                if (db_substrates[j].moduleID_id == moduleNum) {
+                    subList.push(db_substrates[j].abbr)
+                }
+            }
+            substrateList.push(subList)
+            var prodList = []
+            for (j=0; j<db_products.length; j++) {
+                if (db_products[j].moduleID_id == moduleNum) {
+                    prodList.push(db_products[j].abbr)
+                }
+            }
+            productList.push(prodList)
+        }
+    }
+}
+
 function main () {
     reset();
     //get data from database
@@ -289,24 +305,14 @@ function main () {
     localStorage.setItem("reactionClicked", "-1")
     var stringToParse = localStorage.getItem('currentRxn');
     var reaction = parseThrough(stringToParse);
-
-    firstRectMidY = 75;
-    y = firstRectMidY;
-
-
-
-    // Test values
-    enzymeList.push("HEXO")
-    substrateList.push(["G", "ATP"])
-    productList.push(["G6P", "ADP"])
-    revList.push(false)
-    xCoords.push(450)
-    yCoords.push(100)
+    addValues();
     /* canvas.addEventListener('click', function (event) {
         let mousePosition = getMousePosition(canvas, event);
         //TODO: link to model page and remember rectangle number
         if (mousePosition <= )
     }); */
+    x = 0;
+    y = 0;
     render();
     window.requestAnimationFrame(animate);
 

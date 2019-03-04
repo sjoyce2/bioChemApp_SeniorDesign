@@ -40,7 +40,9 @@ def moduleEdit(request, module):
 	subs = Substrates.objects.all().filter(moduleID_id__exact = module)
 	prods = Products.objects.all().filter(moduleID_id__exact = module)
 	model = Model.objects.filter(pk = result.get('modelID_id')).values('public')
-	print(model)
+	for value in model:
+		result = value
+	print result
 	# mod = Module.objects.all()
 	# mod = Module.objects.all().filter(modelID_id = )
 	# subs = Substrates.objects.all()

@@ -42,7 +42,7 @@ def moduleEdit(request, module):
 	for value in currentMod:
 		result = value
 	print (result)
-	mod = Module.objects.all().filter(modelID_id = currentMod)
+	mod = Module.objects.all().filter(modelID_id = result.get('modelID_id'))
 	subs = Substrates.objects.all().filter(moduleID_id__exact = module)
 	prods = Products.objects.all().filter(moduleID_id__exact = module)
 	# mod = Module.objects.all()
@@ -68,7 +68,7 @@ def moduleEdit(request, module):
 		return HttpResponseRedirect("/testApp/modelEdit")
 	else:
 		context = {'form': SaveModuleForm,
-				   'modules' : currentMod,
+				   'modules' : mod,
 				   'substrates' : subs,
 				   'products' : prods
 				  }

@@ -572,17 +572,29 @@ function createErrorCheckArrays() {
   console.log("createErrorCheckArrays");
   console.log(myEnzymes);
   for(var i = 0; i < mySubstrates.length; i++){
-    enzymeSubs.push([myEnzymes[(mySubstrates[i][2]) - 1][0], mySubstrates[i][0]]);
+    var str1 = myEnzymes[(mySubstrates[i][2]) - 1][0];
+    var str2 = mySubstrates[i][0];
+
+    var newStr1 = str1.replace(/_/g, ' ');
+    var newStr2 = str2.replace(/_/g, ' ');
+    enzymeSubs.push([newStr1, newStr2);
   }
   for(var j = 0; j < myProducts.length; j++){
-    enzymeProds.push([myEnzymes[(myProducts[j][2]) - 1][0], myProducts[j][0]]);
+    var str1 = myEnzymes[(myProducts[i][2]) - 1][0];
+    var str2 = myProducts[i][0];
+
+    var newStr1 = str1.replace(/_/g, ' ');
+    var newStr2 = str2.replace(/_/g, ' ');
+    enzymeProds.push([newStr1, newStr2]);
   }
   for(var k = 0; k < myEnzymes.length; k++){
     var isReversible = false;
     if(myEnzymes[k][1] == "reversible"){
       isReversible = true;
     }
-    enzymeReverse.push([myEnzymes[k][0], isReversible]);
+    var str = myEnzymes[k][0];
+    var newStr = str.replace(/_/,' ');
+    enzymeReverse.push([newStr, isReversible]);
   }
   // console.log("WISH ME LUCK");
   // console.log(enzymeSubs);

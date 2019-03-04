@@ -32,17 +32,15 @@ def modelChoice(request):
 	return render(request, 'modelChoice.html', context=context)
 
 def moduleEdit(request, module):
-<<<<<<< HEAD
-=======
-	print ("HI")
->>>>>>> 9a89b0352717962169180f225d33e0ff3cde90a2
 	currentMod = Module.objects.filter(pk = module).values('modelID_id')
 	for value in currentMod:
 		result = value
-	#have to loop through queryset so we can have standard dictionary 
+	#have to loop through queryset so we can have standard dictionary
 	mod = Module.objects.all().filter(modelID_id = result.get('modelID_id'))
 	subs = Substrates.objects.all().filter(moduleID_id__exact = module)
 	prods = Products.objects.all().filter(moduleID_id__exact = module)
+	model = Model.objects.filter(pk = result.get('modelID_id')).values('public')
+	print(model)
 	# mod = Module.objects.all()
 	# mod = Module.objects.all().filter(modelID_id = )
 	# subs = Substrates.objects.all()

@@ -39,7 +39,7 @@ def moduleEdit(request, module):
 	print ("HI");
 	currentMod = Module.objects.filter(pk = module).values('modelID_id')
 	print (currentMod)
-	mod = Module.objects.all().filter()
+	mod = Module.objects.all().filter(modelID_id = currentMod.modelID_id)
 	subs = Substrates.objects.all().filter(moduleID_id__exact = module)
 	prods = Products.objects.all().filter(moduleID_id__exact = module)
 	# mod = Module.objects.all()

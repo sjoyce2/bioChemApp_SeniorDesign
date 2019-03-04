@@ -66,10 +66,11 @@ def moduleEdit(request):
 		return render(request, 'moduleEdit.html', context=context)
 
 def moduleEditCase1(request, module):
-	mod = Module.objects.all()
 	# mod = Module.objects.all().filter(modelID_id = model)
-	subs = Substrates.objects.all(moduleID_id = module)
-	prods = Products.objects.all(moduleID_id = module)
+	currentMod = Substartes.objects.values('modelID_id').filter(id = module)
+	mod = Module.objects.all().filter(modelID_id = currentMod)
+	subs = Substrates.objects.all().filter(moduleID_id = module)
+	prods = Products.objects.all().filter(moduleID_id = module)
 	if request.method == 'POST':
 		print(request.POST)
 		new_enzyme = request.POST.get("Enzyme")

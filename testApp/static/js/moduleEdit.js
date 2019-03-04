@@ -577,7 +577,7 @@ function createErrorCheckArrays() {
 
     var newStr1 = str1.replace(/_/g, ' ');
     var newStr2 = str2.replace(/_/g, ' ');
-    enzymeSubs.push([newStr1, newStr2);
+    enzymeSubs.push([newStr1, newStr2]);
   }
   for(var j = 0; j < myProducts.length; j++){
     var str1 = myEnzymes[(myProducts[i][2]) - 1][0];

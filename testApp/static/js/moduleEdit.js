@@ -596,10 +596,11 @@ function createErrorCheckArrays() {
     var newStr = str.replace(/_/,' ');
     enzymeReverse.push([newStr, isReversible]);
   }
-  // console.log("WISH ME LUCK");
-  // console.log(enzymeSubs);
-  // console.log(enzymeProds);
-  // console.log(enzymeReverse);
+  console.log("WISH ME LUCK");
+  console.log(enzymeSubs);
+  console.log(enzymeProds);
+  console.log(enzymeReverse);
+
 }
 
 window.onload = function init(){

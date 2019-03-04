@@ -36,6 +36,7 @@ def modelChoice(request):
 	return render(request, 'modelChoice.html', context=context)
 
 def moduleEdit(request):
+	print ("HI");
 	mod = Module.objects.all()
 	# mod = Module.objects.all().filter(modelID_id = )
 	subs = Substrates.objects.all()

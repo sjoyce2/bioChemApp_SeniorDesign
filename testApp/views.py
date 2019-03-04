@@ -44,7 +44,7 @@ def moduleEdit(request, module):
 	for value in model:
 		result = value
 
-	if(result.get('public')):
+	# if(result.get('public')):
 
 	# mod = Module.objects.all()
 	# mod = Module.objects.all().filter(modelID_id = )

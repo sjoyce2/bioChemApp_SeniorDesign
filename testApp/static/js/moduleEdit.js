@@ -580,12 +580,13 @@ function createErrorCheckArrays() {
     enzymeSubs.push([newStr1, newStr2]);
   }
   for(var j = 0; j < myProducts.length; j++){
-    str1 = myEnzymes[(myProducts[i][2]) - 1][0];
-    str2 = myProducts[i][0];
 
-    newStr1 = str1.replace(/_/g, ' ');
-    newStr2 = str2.replace(/_/g, ' ');
-    enzymeProds.push([newStr1, newStr2]);
+    prod1 = myEnzymes[(myProducts[i][2]) - 1][0];
+    prod2 = myProducts[i][0];
+
+    newProd1 = prod1.replace(/_/g, ' ');
+    newProd2 = prod2.replace(/_/g, ' ');
+    enzymeProds.push([newProd1, newProd2]);
   }
   for(var k = 0; k < myEnzymes.length; k++){
     var isReversible = false;

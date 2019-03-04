@@ -61,7 +61,7 @@ def moduleEdit(request, module):
 					subs = Substrates(moduleID_id=2, substrate=values[i])
 					subs.save()
 
-		return HttpResponseRedirect("modelEdit")
+		return HttpResponseRedirect("/modelEdit")
 	else:
 		context = {'form': SaveModuleForm,
 				   'modules' : mod,

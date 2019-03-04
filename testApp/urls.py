@@ -10,7 +10,6 @@ urlpatterns = [
 	path('', views.login, name= 'login'),
 	path('accounts/', include('django.contrib.auth.urls')),
 	path('moduleEdit/(?P<module>[0-9]{5})', views.moduleEdit, name='moduleEdit'),
-	path('moduleEdit/<int:module>/', views.moduleEditCase1, name='moduleEditCase1'),
 	path('modelEdit', views.modelEdit, name='modelEdit'),
 	path('modelEdit/<int:model>/', views.modelEditCase1, name='modelEditCase1'),
 	path('modelChoice', views.modelChoice, name='modelChoice'),

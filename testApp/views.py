@@ -64,7 +64,7 @@ def moduleEdit(request, module):
 		return HttpResponseRedirect("/testApp/modelEdit")
 	else:
 		context = {'form': SaveModuleForm,
-				   'modules' : mod,
+				   'modules' : currentMod,
 				   'substrates' : subs,
 				   'products' : prods
 				  }

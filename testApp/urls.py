@@ -11,7 +11,6 @@ urlpatterns = [
 	path('accounts/', include('django.contrib.auth.urls')),
 	path('moduleEdit/(?P<module>[0-9]{5})', views.moduleEdit, name='moduleEdit'),
 	path('modelEdit', views.modelEdit, name='modelEdit'),
-	path('modelEdit/<int:model>/', views.modelEditCase1, name='modelEditCase1'),
 	path('modelChoice', views.modelChoice, name='modelChoice'),
 	path('register', views.register, name='register'),
 	path('home', views.home, name='home'),

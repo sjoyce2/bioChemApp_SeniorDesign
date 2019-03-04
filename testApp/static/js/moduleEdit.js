@@ -162,6 +162,8 @@ function displayImage(xcoor, ycoor, name){
     //console.log("ADP OR ATP");
   }else{
     var img = document.getElementById(name);
+    console.log(img);
+    console.log(name);
     ctx.drawImage(img, xcoor, ycoor, objectWidth, objectHeight);
   }
   //console.log("image info  " + name + xcoor + ycoor);

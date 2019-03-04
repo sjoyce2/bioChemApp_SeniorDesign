@@ -39,38 +39,40 @@ def moduleEdit(request, module):
 	print ("HI");
 	currentMod = Module.objects.filter(pk = module).values('modelID_id')
 	print (currentMod)
-	print(currentMod.get('modelID_id'))
-	# mod = Module.objects.all().filter(modelID_id = currentMod.get('modelID_id'))
-	# subs = Substrates.objects.all().filter(moduleID_id__exact = module)
-	# prods = Products.objects.all().filter(moduleID_id__exact = module)
-	# # mod = Module.objects.all()
-	# # mod = Module.objects.all().filter(modelID_id = )
-	# # subs = Substrates.objects.all()
-	# # prods = Products.objects.all()
-	# if request.method == 'POST':
-	# 	print(request.POST)
-	# 	new_enzyme = request.POST.get("Enzyme")
-	# 	new_reversible = request.POST.get("reversibleChoice")
-	# 	post = Module(modelID_id=2, enzyme=new_enzyme, reversible=new_reversible)
-	# 	post.save()
-	# 	for key, values in request.POST.lists():
-	# 		if (key == "Product"):
-	# 			for i in range(len(values)):
-	# 				prods = Products(moduleID_id=2, product=values[i])
-	# 				prods.save()
-	# 		if (key == "Substrate"):
-	# 			for i in range(len(values)):
-	# 				subs = Substrates(moduleID_id=2, substrate=values[i])
-	# 				subs.save()
-	#
-	# 	return HttpResponseRedirect("/testApp/modelEdit")
-	# else:
-	# 	context = {'form': SaveModuleForm,
-	# 			   'modules' : currentMod,
-	# 			   'substrates' : subs,
-	# 			   'products' : prods
-	# 			  }
-	# 	return render(request, 'moduleEdit.html', context=context)
+	for value in currentMod:
+		result = value
+	print (result)
+	mod = Module.objects.all().filter(modelID_id = currentMod)
+	subs = Substrates.objects.all().filter(moduleID_id__exact = module)
+	prods = Products.objects.all().filter(moduleID_id__exact = module)
+	# mod = Module.objects.all()
+	# mod = Module.objects.all().filter(modelID_id = )
+	# subs = Substrates.objects.all()
+	# prods = Products.objects.all()
+	if request.method == 'POST':
+		print(request.POST)
+		new_enzyme = request.POST.get("Enzyme")
+		new_reversible = request.POST.get("reversibleChoice")
+		post = Module(modelID_id=2, enzyme=new_enzyme, reversible=new_reversible)
+		post.save()
+		for key, values in request.POST.lists():
+			if (key == "Product"):
+				for i in range(len(values)):
+					prods = Products(moduleID_id=2, product=values[i])
+					prods.save()
+			if (key == "Substrate"):
+				for i in range(len(values)):
+					subs = Substrates(moduleID_id=2, substrate=values[i])
+					subs.save()
+
+		return HttpResponseRedirect("/testApp/modelEdit")
+	else:
+		context = {'form': SaveModuleForm,
+				   'modules' : currentMod,
+				   'substrates' : subs,
+				   'products' : prods
+				  }
+		return render(request, 'moduleEdit.html', context=context)
 
 def moduleEditCase1(request, module):
 	print ("Hello")

@@ -37,7 +37,7 @@ def modelChoice(request):
 
 def moduleEdit(request, module):
 	print ("HI");
-	currentMod = Substartes.objects.values('modelID_id').filter(id = module)
+	currentMod = Substrates.objects.values('modelID_id').filter(id = module)
 	mod = Module.objects.all().filter(modelID_id__exact = currentMod)
 	subs = Substrates.objects.all().filter(moduleID_id__exact = module)
 	prods = Products.objects.all().filter(moduleID_id__exact = module)

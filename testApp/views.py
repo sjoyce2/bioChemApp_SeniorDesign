@@ -75,7 +75,7 @@ def moduleEdit(request, model, module):
 		context = {'form': SaveModuleForm,
 				   'modules' : myMod,
 				   'substrates' : mySubs,
-				   'products' : myPr
+				   'products' : myProds
 				  }
 		return render(request, 'moduleEdit.html', context=context)
 

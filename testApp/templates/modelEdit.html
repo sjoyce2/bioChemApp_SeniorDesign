@@ -27,9 +27,16 @@
                     {{ substrates|json_script:"db-substrates" }}
                     {{ products|json_script:"db-products" }}
                     <div class="flex-horiz">
-                        <a href="{% url 'moduleEdit' model=1 module=2 %}" id="link-to-module">
-                            <canvas id="modelEditCanvas" height="800" width="800"></canvas>
-                        </a>
+                        <div>
+                            <a href="{% url 'moduleEdit' model=1 module=2 %}" id="link-to-module">
+                                <canvas id="modelEditCanvas" height="800" width="800"></canvas>
+                            </a>
+                            <a href="{% url 'moduleEdit' model=1 module=2 %}">
+                                <button>
+                                    Create New Reaction
+                                </button>
+                            </a>
+                        </div>
                         <div class="flex-sliders" id="slider-holder">
                             <h3 style="padding:10px 20px">Variables</h3>
                             <div class="variable-holder">
@@ -57,11 +64,6 @@
                     </div>
                     </div>
                 </form>
-                <a href="{% url 'moduleEdit' model=1 module=2 %}">
-                    <button>
-                        Create New Reaction
-                    </button>
-                </a>
 			</div>
 		</div>
 	</div>

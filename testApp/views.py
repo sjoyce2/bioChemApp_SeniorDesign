@@ -32,8 +32,8 @@ def modelChoice(request):
 	return render(request, 'modelChoice.html', context=context)
 
 def moduleEdit(request, model, module):
-	print(model)
-	print (module)
+	print(model + "model")
+	print (module + "module")
 	currentMod = Module.objects.filter(pk = module).values('modelID_id')
 	for value in currentMod:
 		result = value

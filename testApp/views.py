@@ -45,7 +45,7 @@ def moduleEdit(request, model, module):
 	mySubs = Substrates.objects.all().filter(moduleID_id__exact = module)
 	myProds = Products.objects.all().filter(moduleID_id__exact = module)
 	myModel = Model.objects.filter(pk = model).values('public')
-	for value in model:
+	for value in myModel:
 		result = value
 
 	# if(result.get('public')):

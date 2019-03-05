@@ -298,6 +298,45 @@ function addValues() {
     }
 }
 
+function createSliders() {
+    /*
+    <div class="variable-holder">
+        <label for="hexokinase">Hexokinase</label>
+        <div class="inner-flex-horiz">
+            <input type="range" min="0" max="100" value="50" step="10" class="variables" id="enzyme1">
+            <h4 id="enzyme1value">50</h4>
+        </div>
+    </div>*/
+    for (i=0; i<db_modules.length; i++) {
+        if (db_modules[i].modelID_id == 1) { //TODO: Set this to the current model id
+            sliderHolder = document.getElementById("slider-holder");
+            varHolder = document.createElement('div');
+            varHolder.class = "variable-holder";
+            enzLabel = document.createElement('label');
+            enzLabel.setAttribute("for", db_modules[i].enzyme);
+            enzLabel.innerHTML = db_modules[i].enzyme;
+            varHolder.appendChild(enzLabel);
+            inner = document.createElement('div');
+            inner.class = "inner-flex-horiz";
+            //Set slider attributes
+            inputItem = document.createElement('input');
+            inputItem.setAttribute("type", "range");
+            inputItem.setAttribute("min", "0");
+            inputItem.setAttribute("max", "100");
+            inputItem.setAttribute("value", "50");
+            inputItem.setAttribute("step", "10");
+            inputItem.setAttribute("class", "variables");
+            inputItem.setAttribute("id", db_modules[i].enzyme);
+            inner.appendChild(inputItem);
+            header = document.createElement('h4');
+            header.id = db_modules[i].enzyme + "Value";
+            inner.appendChild(header);
+            varHolder.appendChild(inner);
+            sliderHolder.append(varHolder);
+        } 
+    }
+}
+
 function main () {
     reset();
     //get data from database
@@ -313,6 +352,7 @@ function main () {
     }); */
     x = 0;
     y = 0;
+    createSliders();
     render();
     window.requestAnimationFrame(animate);
 

@@ -41,19 +41,19 @@ def moduleEdit(request, model, module):
 	# 	result = value
 	#have to loop through queryset so we can have standard dictionary
 	#mod = Module.objects.all().filter(modelID_id = result.get('modelID_id'))
-	mod = Module.objects.all().filter(pk = module)
-	subs = Substrates.objects.all().filter(moduleID_id__exact = module)
-	prods = Products.objects.all().filter(moduleID_id__exact = module)
-	model = Model.objects.filter(pk = model).values('public')
+	myMod = Module.objects.all().filter(pk = module)
+	mySubs = Substrates.objects.all().filter(moduleID_id__exact = module)
+	myProds = Products.objects.all().filter(moduleID_id__exact = module)
+	myModel = Model.objects.filter(pk = model).values('public')
 	for value in model:
 		result = value
 
 	# if(result.get('public')):
-
-	# mod = Module.objects.all()
-	# mod = Module.objects.all().filter(modelID_id = )
-	# subs = Substrates.objects.all()
-	# prods = Products.objects.all()
+	# 	mod = Module.objects.all().filter(modelID_id__exact = model)
+	# 	for value in mod
+	# 		result = value
+	# 		subs = Substrates.objects.all().filter(moduleID_id = result.get('pk'))
+	# 		prods = Products.objects.all().filter(moduleID_id = result.get('pk'))
 	if request.method == 'POST':
 		print(request.POST)
 		new_enzyme = request.POST.get("Enzyme")
@@ -73,9 +73,9 @@ def moduleEdit(request, model, module):
 		return HttpResponseRedirect("/testApp/modelEdit")
 	else:
 		context = {'form': SaveModuleForm,
-				   'modules' : mod,
-				   'substrates' : subs,
-				   'products' : prods
+				   'modules' : myMod,
+				   'substrates' : mySubs,
+				   'products' : myPr
 				  }
 		return render(request, 'moduleEdit.html', context=context)
 

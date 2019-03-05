@@ -27,7 +27,7 @@
                     {{ substrates|json_script:"db-substrates" }}
                     {{ products|json_script:"db-products" }}
                     <div class="flex-horiz">
-                        <a href="{% url 'moduleEdit' module=-1 %}" id="link-to-module">
+                        <a href="{% url 'moduleEdit' module=0 %}" id="link-to-module">
                             <canvas id="modelEditCanvas" height="800" width="800"></canvas>
                         </a>
                         <div class="flex-sliders" id="slider-holder">

@@ -36,15 +36,15 @@ def moduleEdit(request, model, module):
 	print(model)
 	print("module")
 	print (module)
-	currentMod = Module.objects.filter(pk = module).values('modelID_id')
-	for value in currentMod:
-		result = value
+	# currentMod = Module.objects.filter(pk = module).values('modelID_id')
+	# for value in currentMod:
+	# 	result = value
 	#have to loop through queryset so we can have standard dictionary
 	#mod = Module.objects.all().filter(modelID_id = result.get('modelID_id'))
 	mod = Module.objects.all().filter(pk = module)
 	subs = Substrates.objects.all().filter(moduleID_id__exact = module)
 	prods = Products.objects.all().filter(moduleID_id__exact = module)
-	model = Model.objects.filter(pk = result.get('modelID_id')).values('public')
+	model = Model.objects.filter(pk = model).values('public')
 	for value in model:
 		result = value
 

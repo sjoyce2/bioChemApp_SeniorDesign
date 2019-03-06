@@ -20,3 +20,8 @@ https://docs.google.com/document/d/1DTMJKezT4y24ELtitQ7g1imXq83VmCM1UBYlmxYQ9gc/
 Link to Enzyme Definitions: 
 
 https://docs.google.com/document/d/1ORGct6DgaUYzYgF9CZ3No40mG_3aKlU7Mb1Pw8-3pmA/edit
+
+Link to latest PowerPoint 
+
+https://docs.google.com/presentation/d/1J01QVqnocP9uX6Ll24yIE6PfKwb8tuaYlFI_fuL2h9I/edit?usp=sharing
+

@@ -14,12 +14,6 @@ var productList = [];
 var revList = [];
 var xCoords = [];
 var yCoords = [];
-var enzyme1 = "enzyme1";
-var enzyme2 = "enzyme2";
-var enzyme3 = "enzyme3";
-var enzyme1Name = "hexokinase";
-var enzyme2Name = "phosphofructokinase";
-var enzyme3Name = "aldolase";
 var en1weight = 2;
 var en2weight = 9;
 var en3weight = 1;
@@ -189,7 +183,6 @@ function render() {
     var canvas = document.getElementById("modelEditCanvas");
     var ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
-    //Need to define these differently
 
     //Draw each step of the pathway, including reversible and non-reversible steps
     for (var i = 0; i < enzymeList.length; i++) {
@@ -215,27 +208,35 @@ function render() {
     ctx.fill();
 }
 
+function convertIdToText(id) {
+    stringArr = id.split("_");
+    textStr = stringArr.join(" ");
+    return textStr;
+}
+
+function convertTextToId(text) {
+    txtArr = text.split(" ");
+    idStr = txtArr.join("_");
+    return idStr;
+}
+
 //resets values of sliders on page (re)load
 function reset() {
     //adds functionality to the logout button
     document.getElementById("logout").addEventListener("click", function(event) {
         document.location.href = '..';
     });
-
-    var en1Slider = document.getElementById(enzyme1);
-    var en2Slider = document.getElementById(enzyme2);
-    en1Slider.value = "50";
-    en2Slider.value = "50";
-    en1Slider.oninput = function() {
-        document.getElementById("enzyme1value").innerHTML = this.value;
-    };
-    en2Slider.oninput = function() {
-        document.getElementById("enzyme2value").innerHTML = this.value;
-    };
-    /*en3Slider.oninput = function() {
-        document.getElementById("enzyme3value").innerHTML = this.value;
-    };*/
-
+    for (i=0; i<db_modules.length; i++) {
+        if (db_modules[i].modelID_id == 1) {
+            var enSlider = document.getElementById(db_modules[i].enzyme);
+            enSlider.value = "50";
+            numId = db_modules[i].enzyme + "Value";
+            enSlider.oninput = function() {
+                sliderId = convertTextToId(this.id) + "Value";
+                document.getElementById(sliderId).innerHTML = this.value;
+            }
+        }
+    }
 }
 
 // Assumes that there are at least one substrate, at least one product,
@@ -257,18 +258,6 @@ function parseThrough(stringToParse) {
     fullArr = [tmpArr[0], newArr[0], evenNewer[0], evenNewer[1]];
     subsArr = fullArr[0].split("+");
     prodArr = fullArr[2].split("+");
-    
-
-    console.log("Substrates: ");
-    console.log(subsArr);
-    console.log("Enzyme:");
-    console.log(fullArr[1]);
-    console.log("Products: ");
-    console.log(prodArr);
-    console.log("Reversible?: ");
-    console.log(fullArr[3]);
-    //TODO: convert fullArr[3] to boolean, save substrates, enzymes, and
-    // products as variables
     return [subsArr, fullArr[1], prodArr, fullArr[3]]
 }
 
@@ -299,25 +288,17 @@ function addValues() {
 }
 
 function createSliders() {
-    /*
-    <div class="variable-holder">
-        <label for="hexokinase">Hexokinase</label>
-        <div class="inner-flex-horiz">
-            <input type="range" min="0" max="100" value="50" step="10" class="variables" id="enzyme1">
-            <h4 id="enzyme1value">50</h4>
-        </div>
-    </div>*/
     for (i=0; i<db_modules.length; i++) {
         if (db_modules[i].modelID_id == 1) { //TODO: Set this to the current model id
             sliderHolder = document.getElementById("slider-holder");
             varHolder = document.createElement('div');
-            varHolder.class = "variable-holder";
+            varHolder.setAttribute("class", "variable-holder");
             enzLabel = document.createElement('label');
             enzLabel.setAttribute("for", db_modules[i].enzyme);
-            enzLabel.innerHTML = db_modules[i].enzyme;
+            enzLabel.innerHTML = convertIdToText(db_modules[i].enzyme);
             varHolder.appendChild(enzLabel);
             inner = document.createElement('div');
-            inner.class = "inner-flex-horiz";
+            inner.setAttribute("class", "inner-flex-horiz");
             //Set slider attributes
             inputItem = document.createElement('input');
             inputItem.setAttribute("type", "range");
@@ -329,7 +310,7 @@ function createSliders() {
             inputItem.setAttribute("id", db_modules[i].enzyme);
             inner.appendChild(inputItem);
             header = document.createElement('h4');
-            header.id = db_modules[i].enzyme + "Value";
+            header.setAttribute("id", db_modules[i].enzyme + "Value");
             header.innerHTML = "50";
             inner.appendChild(header);
             varHolder.appendChild(inner);
@@ -339,6 +320,7 @@ function createSliders() {
 }
 
 function main () {
+    createSliders();
     reset();
     //get data from database
     //get data from localStorage.getItem("currentRxn")
@@ -353,9 +335,8 @@ function main () {
     }); */
     x = 0;
     y = 0;
-    createSliders();
     render();
-    window.requestAnimationFrame(animate);
+    //window.requestAnimationFrame(animate); //TODO: Fix animate() so we can use this
 
     // Will be useful later but is not important right now
     /* function getMousePosition(canvas, event) {

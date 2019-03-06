@@ -330,6 +330,7 @@ function createSliders() {
             inner.appendChild(inputItem);
             header = document.createElement('h4');
             header.id = db_modules[i].enzyme + "Value";
+            header.innerHTML = "50";
             inner.appendChild(header);
             varHolder.appendChild(inner);
             sliderHolder.append(varHolder);

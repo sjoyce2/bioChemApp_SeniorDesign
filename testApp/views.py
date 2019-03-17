@@ -60,11 +60,7 @@ def moduleEdit(request, model, module):
 	print(model)
 	print("module")
 	print (module)
-	# currentMod = Module.objects.filter(pk = module).values('modelID_id')
-	# for value in currentMod:
-	# 	result = value
-	#have to loop through queryset so we can have standard dictionary
-	#mod = Module.objects.all().filter(modelID_id = result.get('modelID_id'))
+
 	myMod = Module.objects.all().filter(pk = module)
 	mySubs = Substrates.objects.all().filter(moduleID_id__exact = module)
 	myProds = Products.objects.all().filter(moduleID_id__exact = module)
@@ -80,11 +76,9 @@ def moduleEdit(request, model, module):
 		allsubs = Substrates.objects.select_related('moduleID').all()
 		allprods = Products.objects.select_related('moduleID').all()
 
-		# for value1 in allmodules:
-		# 	print("mod")
 		listOfSubs = []
 		listOfProds = []
-		# 	print(value1)
+
 		for value in allsubs:
 			currentSubDict = {"substrate": value.substrate, "enzyme": value.moduleID.enzyme, "abbr": value.abbr}
 			listOfSubs.append(currentSubDict)
@@ -93,19 +87,6 @@ def moduleEdit(request, model, module):
 			currentProdDict = {"product": value.product, "enzyme": value.moduleID.enzyme, "abbr": value.abbr}
 			listOfProds.append(currentProdDict)
 
-		# print(listOfSubs)
-		# for value3 in allprods:
-		# 	print("prod")
-		# 	print(value3)
-		# print(value1)
-		# print(value2)
-		# print(value3)
-	# if(result.get('public')):
-	# 	mod = Module.objects.all().filter(modelID_id__exact = model)
-	# 	for value in mod
-	# 		result = value
-	# 		subs = Substrates.objects.all().filter(moduleID_id = result.get('pk'))
-	# 		prods = Products.objects.all().filter(moduleID_id = result.get('pk'))
 	if request.method == 'POST':
 		print(request.POST)
 		new_enzyme = request.POST.get("Enzyme")
@@ -134,38 +115,6 @@ def moduleEdit(request, model, module):
 				  }
 		return render(request, 'moduleEdit.html', context=context)
 
-# def moduleEditCase1(request, module):
-# 	print ("Hello")
-# 	# mod = Module.objects.all().filter(modelID_id = model)
-# 	currentMod = Substrates.objects.values('modelID_id').filter(id = module)
-# 	mod = Module.objects.all().filter(modelID_id__exact = currentMod)
-# 	subs = Substrates.objects.all().filter(moduleID_id__exact = module)
-# 	prods = Products.objects.all().filter(moduleID_id__exact = module)
-# 	if request.method == 'POST':
-# 		print(request.POST)
-# 		new_enzyme = request.POST.get("Enzyme")
-# 		new_reversible = request.POST.get("reversibleChoice")
-# 		post = Module(modelID_id=2, enzyme=new_enzyme, reversible=new_reversible)
-# 		post.save()
-# 		for key, values in request.POST.lists():
-# 			if (key == "Product"):
-# 				for i in range(len(values)):
-# 					prods = Products(moduleID_id=2, product=values[i])
-# 					prods.save()
-# 			if (key == "Substrate"):
-# 				for i in range(len(values)):
-# 					subs = Substrates(moduleID_id=2, substrate=values[i])
-# 					subs.save()
-#
-# 		return HttpResponseRedirect("modelEdit")
-# 	else:
-# 		context = {'form': SaveModuleForm,
-# 				   'modules' : mod,
-# 				   'substrates' : subs,
-# 				   'products' : prods
-# 				  }
-# 		return render(request, 'moduleEdit.html', context=context)
-
 def modelEdit(request, model):
 	mod = Module.objects.all()
 	list_of_mods = []
@@ -189,15 +138,8 @@ def modelEdit(request, model):
 	context = { 'modules': list_of_mods, 'substrates': list_of_subs, 'products': list_of_prods}
 	return render(request, 'modelEdit.html', context=context)
 
-def modelEditCase1(request, model):
-	mod = Module.objects.all()
-	context = { 'modules':mod }
-	return render(request, 'modelEdit.html', context=context)
-
 def home(request):
-	context = {
-
-	}
+	context = {}
 	return render(request, 'home.html', context=context)
 
 def register(request):
@@ -215,30 +157,11 @@ def register(request):
 	return render(request, 'registration/signup.html', {'form': form})
 
 def login(request):
-	context = {
+	context = {}
 
-	}
 	return render(request, 'load.html', context=context)
 
 def signup(request):
-	context = {
-	}
+	context = {}
+
 	return render(request, 'accounts/signup.html', context=context)
-
-'''def createModule(new_userId, new_modelId, new_moduleId, substrate_list, \
-	product_list, new_enzyme, new_reversible, new_modelName):
-	new_module = Module(userID = new_userId, modelID = new_modelId, \
-		moduleID = new_moduleId, enzyme = new_enzyme, reversible = \
-		new_reversible, modelName = new_modelName)
-	new_module.save()
-	for i in range(len(substrate_list)):
-		new_substrate = Substrates(module = new_moduleId, substrate = \
-			substrate_list[i])
-		new_substrate.save()
-	for i in range(len(product_list)):
-		new_product = Products(module = new_moduleId, product = \
-			product_list[i])
-		new_product.save() '''
-
-
-#def readModule(id):

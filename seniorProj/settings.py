@@ -83,7 +83,8 @@ DATABASES = {
         'NAME': 'biochemDB',
 	'USER': 'cssd07',
 	'PASSWORD': 'B10Te@m!',
-	'HOST': 'cps-database'
+	'HOST': 'cps-database',
+	'PORT': ''
     }
 }
 

@@ -48,6 +48,34 @@ def moduleEdit(request, model, module):
 	for value in myModel:
 		result = value
 
+	print(result)
+	print(result.get("public"))
+
+	if(result.get("public")):
+		allmodules = Module.objects.all().filter(modelID_id__exact = model).values('enzyme', 'enzymeAbbr', 'reversible', 'id')
+		allsubs = Substrates.objects.select_related('moduleID').all()
+		allprods = Products.objects.select_related('moduleID').all()
+
+		# for value1 in allmodules:
+		# 	print("mod")
+		listOfSubs = []
+		listOfProds = []
+		# 	print(value1)
+		for value in allsubs:
+			currentSubDict = {"substrate": value.substrate, "enzyme": value.moduleID.enzyme, "abbr": value.abbr}
+			listOfSubs.append(currentSubDict)
+
+		for value in allprods:
+			currentProdDict = {"product": value.product, "enzyme": value.moduleID.enzyme, "abbr": value.abbr}
+			listOfProds.append(currentProdDict)
+
+		# print(listOfSubs)
+		# for value3 in allprods:
+		# 	print("prod")
+		# 	print(value3)
+		# print(value1)
+		# print(value2)
+		# print(value3)
 	# if(result.get('public')):
 	# 	mod = Module.objects.all().filter(modelID_id__exact = model)
 	# 	for value in mod
@@ -75,7 +103,10 @@ def moduleEdit(request, model, module):
 		context = {'form': SaveModuleForm,
 				   'modules' : myMod,
 				   'substrates' : mySubs,
-				   'products' : myProds
+				   'products' : myProds,
+				   'allmodules' : allmodules,
+				   'allprods' : listOfProds,
+				   'allsubs' : listOfSubs
 				  }
 		return render(request, 'moduleEdit.html', context=context)
 

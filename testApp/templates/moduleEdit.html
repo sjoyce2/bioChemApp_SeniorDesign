@@ -24,6 +24,23 @@
 				myProducts.push(['{{prods.product}}', '{{prods.id}}', '{{prods.moduleID_id}}']);
 		{% endfor %}
 
+		var allProds = []
+		{% for prods in allprods %}
+				allProds.push(['{{prods.product}}', '{{prods.enzyme}}', '{{prods.abbr}}']);
+		{% endfor %}
+		var allSubs = []
+		{% for subs in allsubs %}
+				allSubs.push(['{{subs.substrate}}', '{{subs.enzyme}}', '{{subs.abbr}}']);
+		{% endfor %}
+		
+		var allModules = []
+		{% for mod in allmodules %}
+				allModules.push(['{{ mod.enzyme }}', '{{mod.reversible}}', '{{mod.enzymeAbbr}}', '{{mod.id}}']);
+		{% endfor %}
+
+		console.log(allProds);
+		console.log(allSubs);
+		console.log(allModules);
 		// var allEnzymes = []
 		// var allProducts = []
 		// var allSubstrates = []

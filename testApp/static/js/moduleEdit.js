@@ -26,9 +26,14 @@ var countSubstrates;
 var currentRxn = "";
 var modal;
 var modal2;
+//from database
 var mySubstrates;
 var myEnzymes;
 var myProducts;
+var allProds;
+var allSubs;
+var allModules;
+//above from database
 var enzymeProds = [];
 var enzymeSubs = [];
 var enzymeReverse = [];
@@ -571,35 +576,18 @@ function validateReaction(){
 }
 
 function createErrorCheckArrays() {
-  console.log("createErrorCheckArrays");
-  console.log(myEnzymes);
-  for(var i = 0; i < mySubstrates.length; i++){
-    var str1 = myEnzymes[(mySubstrates[i][2]) - 1][0];
-    var str2 = mySubstrates[i][0];
-
-    var newStr1 = str1.replace(/_/g, ' ');
-    var newStr2 = str2.replace(/_/g, ' ');
-    enzymeSubs.push([newStr1, newStr2]);
-  }
-  for(var j = 0; j < myProducts.length; j++){
-
-    var str1 = myEnzymes[(myProducts[j][2]) - 1][0];
-    var str2 = myProducts[j][0];
-
-    var newStr1 = str1.replace(/_/g, ' ');
-    var newStr2 = str2.replace(/_/g, ' ');
-    enzymeProds.push([newStr1, newStr2]);
-  }
-  for(var k = 0; k < myEnzymes.length; k++){
+  enzymeSubs = allSubs;
+  enzymeProds = allProds;
+  console.log(allModules);
+  for(var k = 0; k < allModules.length; k++){
     var isReversible = false;
-    if(myEnzymes[k][1] == "reversible"){
+    if(allModules[k][1] == "reversible"){
       isReversible = true;
     }
-    var str = myEnzymes[k][0];
+    var str = allModules[k][0];
     var newStr = str.replace(/_/,' ');
-    enzymeReverse.push([newStr, isReversible]);
+    enzymeReverse.push([newStr, isReversible, allModules[k][2], allModules[k][3]]);
   }
-  console.log("WISH ME LUCK");
   console.log(enzymeSubs);
   console.log(enzymeProds);
   console.log(enzymeReverse);
@@ -607,11 +595,12 @@ function createErrorCheckArrays() {
 }
 
 window.onload = function init(){
-  console.log(myEnzymes);
-  console.log(mySubstrates);
-  console.log(myProducts);
 
-  createErrorCheckArrays();
+  if(allModules.length != 0){
+    createErrorCheckArrays();
+  }else{
+    //error checking is disabled
+  }
 
   canvas1 = document.getElementById("imageCanvas");
   substrates  = document.getElementsByName('Substrate');

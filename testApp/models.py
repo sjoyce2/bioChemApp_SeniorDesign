@@ -22,21 +22,23 @@ class Module(models.Model):
 	enzWeight = models.IntegerField(default=1)
 
 	def __str__(self):
-		return_val = str(id) + str(self.modelID) + str(self.enzyme) + str(self.reversible)
+		return_val = str(id) + str(self.modelID) + str(self.enzyme) + str(self.enzymeAbbr) + str(self.reversible) + str(self.xCoor) + str(self.yCoor) + str(self.enzWeight)
 		return return_val
 
 class Products(models.Model):
 	moduleID = models.ForeignKey(Module, on_delete=models.CASCADE)
 	product = models.CharField(max_length = 200)
 	abbr = models.CharField(max_length = 8, default="PROD")
+	modelID = models.IntegerField(default=1)
 
 	def __str__(self):
-		return str(id) + str(self.moduleID) + str(self.product)
+		return str(id) + str(self.moduleID) + str(self.product) + str(self.abbr)
 
 class Substrates(models.Model):
 	moduleID = models.ForeignKey(Module, on_delete=models.CASCADE)
 	substrate = models.CharField(max_length = 200)
 	abbr = models.CharField(max_length = 8, default="SUB")
+	modelID = models.IntegerField(default=1)
 
 	def __str__(self):
-		return str(id) + str(self.moduleID) + str(self.substrate)
+		return str(id) + str(self.moduleID) + str(self.substrate) + str(self.abbr)

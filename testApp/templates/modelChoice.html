@@ -23,53 +23,7 @@
 			<div class="modelChoice-flex">
 				<h2 class="title-model">Your Models</h2>
 					<div class="modelChoice-scroll-elements" id="custom-models">
-						<!-- <a href="">
-							<button class="login100-form-btn">
-								Citric acid cycle
-							</button>
-						</a>
-						<a href="">
-							<button class="login100-form-btn" type="button">
-								Fatty acid β-oxidation
-							</button>
-						</a>
-
-						<a href="">
-							<button class="login100-form-btn" type="button">
-								Caffeine Metabolism
-							</button>
-						</a>
-
-						<a href="">
-							<button class="login100-form-btn" type="button">
-								Nicotine metabolism
-							</button>
-						</a>
-
-						<a href="">
-							<button class="login100-form-btn" type="button">
-								Dopamine degradation
-							</button>
-						</a>
-
-						<a href="">
-							<button class="login100-form-btn" type="button">
-								Serotonin metabolism
-							</button>
-						</a>
-
-						<a href="">
-							<button class="login100-form-btn" type="button">
-								Collagen biosynthesis
-							</button>
-						</a>
-
-						<a href="">
-							<button class="login100-form-btn" type="button">
-								Steroid hormone biosynthesis
-							</button>
-						</a> -->
-						<!-- TODO: Add in script to create buttons -->
+						<!-- Create buttons dynamically for private models section -->
 						<script>
 							var myModels = [];
 							{% for model in models %}
@@ -80,8 +34,10 @@
 							for(var i = 0; i < myModels.length; i++){
 								var link = document.createElement("A");
 								var btn = document.createElement("BUTTON");
+								//grab model name and set it as the inner html
 								btn.innerHTML = myModels[i][0];
 								btn.className = "login100-form-btn";
+								//grab the model id to complete the link to model edit screen 
 								link.href = "modelEdit/" + myModels[i][1];
 								link.appendChild(btn);
 								document.getElementById("custom-models").appendChild(link);
@@ -97,16 +53,7 @@
 			<div class="modelChoice-flex">
 				<h2 class="title-model">Our Models</h2>
 					<div class="modelChoice-scroll-elements" id="public-models">
-						<!-- <a href="">
-							<button class="login100-form-btn" type="button">
-								Glycolysis
-							</button>
-						</a>
-						<a href="">
-							<button class="login100-form-btn" type="button">
-								Gluconeogenesis
-							</button>
-						</a> -->
+						<!-- Create buttons dynamically for public models section -->
 						<script>
 							var myPublicModels = [];
 							{% for model in publicModels %}
@@ -117,8 +64,10 @@
 							for(var i = 0; i < myPublicModels.length; i++){
 								var link = document.createElement("A");
 								var btn = document.createElement("BUTTON");
+								// Grab the model name and set it as the inner html
 								btn.innerHTML = myPublicModels[i][0];
 								btn.className = "login100-form-btn";
+								//grab the model ID to create link to model Edit screen
 								link.href = "modelEdit/" + myPublicModels[i][1];
 								link.appendChild(btn);
 								document.getElementById("public-models").appendChild(link);

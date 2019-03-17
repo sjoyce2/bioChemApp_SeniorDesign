@@ -24,10 +24,23 @@ def modelChoice(request):
 	# need to add a pop-up/redirect to allow the user to create a new model
 	# using a form so that we can add a new row to the model table
 	user = request.user
-	models = Model.objects.all()
+	print(user)
+	print(user.id)
+	# user.id holds user id, use this to query for all models of user
+
+	modelsList = []
+
+	models = Model.objects.all().filter(userID_id__exact = user.id)
+	for model in models:
+		print(model.modelName)
+		print(model.id)
+		modelDict = {"modelName":model.modelName, "id": model.id}
+		modelsList.append(modelDict)
+	print(modelsList)
+
 	context = {
 		'userID': user.id,
-		'models': models
+		'models': modelsList
 	}
 	return render(request, 'modelChoice.html', context=context)
 

@@ -23,7 +23,7 @@
 			<div class="modelChoice-flex">
 				<h2 class="title-model">Your Models</h2>
 					<div class="modelChoice-scroll-elements" id="custom-models">
-						<a href="">
+						<!-- <a href="">
 							<button class="login100-form-btn">
 								Citric acid cycle
 							</button>
@@ -68,19 +68,23 @@
 							<button class="login100-form-btn" type="button">
 								Steroid hormone biosynthesis
 							</button>
-						</a>
+						</a> -->
 						<!-- TODO: Add in script to create buttons -->
 						<script>
-							var models = {{ models }};
-							for (var i = 0; i < models.length; i++) {
-								if (models[i].userID_id == userID) {
-									var link = document.createElement("A");
-      								var btn = document.createElement("BUTTON");
-     								btn.innerHTML = buttonName;
-      								link.href = "modelEdit";
-      								link.appendChild(btn);
-      								document.getElementById("custom-models").appendChild(link);
-								}
+							var myModels = [];
+							{% for model in models %}
+									myModels.push(['{{ model.modelName }}', '{{model.id}}']);
+							{% endfor %}
+							console.log(myModels);
+
+							for(var i = 0; i < myModels.length; i++){
+								var link = document.createElement("A");
+								var btn = document.createElement("BUTTON");
+								btn.innerHTML = myModels[i][0];
+								btn.className = "login100-form-btn";
+								link.href = "modelEdit/" + myModels[i][1];
+								link.appendChild(btn);
+								document.getElementById("custom-models").appendChild(link);
 							}
 						</script>
 					</div>
@@ -93,7 +97,7 @@
 			<div class="modelChoice-flex">
 				<h2 class="title-model">Our Models</h2>
 					<div class="modelChoice-scroll-elements">
-						<a href="">
+						<!-- <a href="">
 							<button class="login100-form-btn" type="button">
 								Glycolysis
 							</button>
@@ -102,7 +106,7 @@
 							<button class="login100-form-btn" type="button">
 								Gluconeogenesis
 							</button>
-						</a>
+						</a> -->
 					</div>
 			</div>
 		</div>

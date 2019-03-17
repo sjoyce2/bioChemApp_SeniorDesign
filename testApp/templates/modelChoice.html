@@ -96,7 +96,7 @@
 		<div class="container-modelChoice">
 			<div class="modelChoice-flex">
 				<h2 class="title-model">Our Models</h2>
-					<div class="modelChoice-scroll-elements">
+					<div class="modelChoice-scroll-elements" id="public-models">
 						<!-- <a href="">
 							<button class="login100-form-btn" type="button">
 								Glycolysis
@@ -107,6 +107,23 @@
 								Gluconeogenesis
 							</button>
 						</a> -->
+						<script>
+							var myPublicModels = [];
+							{% for model in publicModels %}
+									myPublicModels.push(['{{ model.modelName }}', '{{model.id}}']);
+							{% endfor %}
+							console.log(myPublicModels);
+
+							for(var i = 0; i < myPublicModels.length; i++){
+								var link = document.createElement("A");
+								var btn = document.createElement("BUTTON");
+								btn.innerHTML = myPublicModels[i][0];
+								btn.className = "login100-form-btn";
+								link.href = "modelEdit/" + myPublicModels[i][1];
+								link.appendChild(btn);
+								document.getElementById("public-models").appendChild(link);
+							}
+						</script>
 					</div>
 			</div>
 		</div>

@@ -28,19 +28,30 @@ def modelChoice(request):
 	print(user.id)
 	# user.id holds user id, use this to query for all models of user
 
-	modelsList = []
+	privateModelsList = []
+	publicModelsList = []
 
-	models = Model.objects.all().filter(userID_id__exact = user.id)
-	for model in models:
+	privateModels = Model.objects.all().filter(userID_id__exact = user.id)
+	publicModels = Model.objects.all().filter(public__exact = True)
+
+	for model in privateModels:
 		print(model.modelName)
 		print(model.id)
 		modelDict = {"modelName":model.modelName, "id": model.id}
-		modelsList.append(modelDict)
-	print(modelsList)
+		privateModelsList.append(modelDict)
+	print(privateModelsList)
+
+	for model in publicModels:
+		print(model.modelName)
+		print(model.id)
+		pubModelDict = {"modelName":model.modelName, "id": model.id}
+		publicModelsList.append(pubModelDict)
+	print(publicModelsList)
 
 	context = {
 		'userID': user.id,
-		'models': modelsList
+		'models': privateModelsList,
+		'publicModels' : publicModelsList
 	}
 	return render(request, 'modelChoice.html', context=context)
 

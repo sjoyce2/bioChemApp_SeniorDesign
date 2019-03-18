@@ -83,21 +83,45 @@ function notRevStep(substrate, product, enzyme,
 }
 
 //create a reversible reaction
-function revStep(firstText, secondText, enzyme, firstRectMidX, firstRectMidY, ctx) {
+function revStep(firstText, secondText, enzyme, firstRectMidX, firstRectMidY, 
+        nextX, nextY, ctx) {
     //create first protein
     ctx.font = "20px Arial";
     ctx.rect(firstRectMidX - 100, firstRectMidY - 25, 100, 50);
-    //create second protein
-    ctx.rect(firstRectMidX - 100, firstRectMidY + 75, 100, 50);
     //draw arrows between proteins
-    ctx.moveTo(firstRectMidX - 65, firstRectMidY + 35);
-    ctx.lineTo(firstRectMidX - 55, firstRectMidY + 25);
-    ctx.lineTo(firstRectMidX - 55, firstRectMidY + 75);
-    ctx.moveTo(firstRectMidX - 45, firstRectMidY + 25);
-    ctx.lineTo(firstRectMidX - 45, firstRectMidY + 75);
-    ctx.lineTo(firstRectMidX - 35, firstRectMidY + 65);
-    ctx.fillStyle = "black";
-    ctx.stroke();
+    if (nextX) {
+        if (nextX == firstRectMidX) { //reactions are formatted normally
+            ctx.moveTo(firstRectMidX - 65, firstRectMidY + 35);
+            ctx.lineTo(firstRectMidX - 55, firstRectMidY + 25);
+            ctx.lineTo(firstRectMidX - 55, firstRectMidY + 75);
+            ctx.moveTo(firstRectMidX - 45, firstRectMidY + 25);
+            ctx.lineTo(firstRectMidX - 45, firstRectMidY + 75);
+            ctx.lineTo(firstRectMidX - 35, firstRectMidY + 65);
+            ctx.fillStyle = "black";
+            //create second protein
+            ctx.rect(firstRectMidX - 100, firstRectMidY + 75, 100, 50);
+            ctx.stroke();
+        } else {
+            if (nextY == firstRectMidY) { //reactions horizontally connected
+                //TODO
+            } else { //reactions diagonally connected
+                ctx.moveTo(firstRectMidX - 55, firstRectMidY + 25);
+                ctx.lineTo(firstRectMidX - 55, firstRectMidY + 50);
+                ctx.lineTo(firstRectMidX - 130, firstRectMidY + 75);
+                ctx.moveTo(firstRectMidX - 55, firstRectMidY + 50);
+                ctx.lineTo(firstRectMidX + 20, firstRectMidY + 75);
+                ctx.moveTo(firstRectMidX - 45, firstRectMidY + 25);
+                ctx.lineTo(firstRectMidX - 45, firstRectMidY + 50);
+                ctx.lineTo(firstRectMidX - 120, firstRectMidY + 75);
+                ctx.moveTo(firstRectMidX - 45, firstRectMidY + 50);
+                ctx.lineTo(firstRectMidX + 30, firstRectMidY + 75);
+                ctx.stroke();
+                ctx.rect(firstRectMidX - 175, firstRectMidY + 75, 100, 50);
+                ctx.rect(firstRectMidX - 25, firstRectMidY + 75, 100, 50);
+                ctx.stroke();
+            }
+        }
+    }
     //Enzyme
     ctx.beginPath();
     ctx.font = "12px Arial";
@@ -119,8 +143,10 @@ function revStep(firstText, secondText, enzyme, firstRectMidX, firstRectMidY, ct
     ctx.font = "20px Arial";
     //add label to first protein
     ctx.fillText(firstText, firstRectMidX - 90, firstRectMidY + 5);
-    //add label to second protein
-    ctx.fillText(secondText, firstRectMidX - 90, firstRectMidY + 105);
+    if (!nextY) {
+        //add label to second protein
+        ctx.fillText(secondText, firstRectMidX - 90, firstRectMidY + 105);
+    }
     ctx.font = "12px Arial";
     ctx.fillText(enzyme, firstRectMidX - 50 - fontMeasures.width / 2,
         firstRectMidY + 54);
@@ -187,15 +213,26 @@ function render() {
     //Draw each step of the pathway, including reversible and non-reversible steps
     for (var i = 0; i < enzymeList.length; i++) {
         if (i == 0) {
-            firstRectMidX = xCoords[i] * 50 + (canvas.clientWidth / 2 + 50)
-            firstRectMidY = yCoords[i] * 100
+            firstRectMidX = xCoords[i] * 75 + (canvas.clientWidth / 2 + 50)
+            firstRectMidY = yCoords[i] * 75
         }
         if (revList[i] == "reversible") {
+            var nextX;
+            var nextY;
+            if (i != enzymeList.length) {
+                nextX = xCoords[i+1] * 75 + (canvas.clientWidth / 2 + 50);
+                nextY = yCoords[i+1] * 75;
+            } else {
+                nextX = null
+                nextY = null
+            }
             revStep(substrateList[i][0], productList[i][0], enzymeList[i], 
-                xCoords[i] * 50 + (canvas.clientWidth / 2 + 50), yCoords[i] * 100, ctx);
+                xCoords[i] * 75 + (canvas.clientWidth / 2 + 50), yCoords[i] * 100, 
+                nextX, nextY, ctx);
         } else {
             notRevStep(substrateList[i][0], productList[i][0], enzymeList[i], 
-                xCoords[i] * 50 + (canvas.clientWidth / 2 + 50), yCoords[i] * 100, ctx);
+                xCoords[i] * 75 + (canvas.clientWidth / 2 + 50), yCoords[i] * 100, 
+                ctx);
         }
     }
     endY = firstRectMidY + 390.0;

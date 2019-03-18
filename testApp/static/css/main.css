@@ -288,6 +288,16 @@ iframe {
   background: linear-gradient(top, #19384A, #347787);
 }
 
+.username {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#username {
+  float: right;
+}
+
 .wrap-modelChoice100 {
   display: inline-flex;
   flex-direction: column;
@@ -312,8 +322,6 @@ iframe {
   overflow-y: scroll; 
   width: 100%;
   
-  
-
 }
 
 .modelChoice-spacing {

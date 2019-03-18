@@ -19,6 +19,7 @@ from testApp.models import Module
 from testApp.models import Model
 from testApp.models import Products
 from testApp.models import Substrates
+from django.contrib.auth import logout
 
 def modelChoice(request):
 	# need to add a pop-up/redirect to allow the user to create a new model
@@ -171,3 +172,7 @@ def indexLogged(request):
 
 	return render(request, 'indexLogged.html', context=context)
 
+def logout_view(request):
+	context = {}
+	logout(request)
+	return render(request, 'home.html', context=context)

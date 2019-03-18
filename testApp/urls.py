@@ -6,6 +6,7 @@ from django.views.generic.base import TemplateView
 from testApp import views
 from django.contrib.auth.views import LoginView
 
+
 urlpatterns = [
 	path('', views.login, name= 'login'),
 	path('accounts/', include('django.contrib.auth.urls')),
@@ -14,5 +15,6 @@ urlpatterns = [
 	path('modelChoice', views.modelChoice, name='modelChoice'),
 	path('register', views.register, name='register'),
 	path('home', views.home, name='home'),
-	path('indexLogged', views.indexLogged, name='indexLogged')
+	path('indexLogged', views.indexLogged, name='indexLogged'),
+	path('logout_view', views.logout_view, name='logout_view'),
 ]

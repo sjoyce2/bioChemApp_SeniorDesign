@@ -6,6 +6,12 @@ var endY;  //depricated
 var direction = 1; //depricated
 var speed; //how fast the "molecule" is flowing through the pathway
 
+var canv = document.getElementById("modelEditCanvas");
+var context = canv.getContext('2d');
+var dragging = false;
+var lastX;
+var marginLeft = 0;
+
 // Instead of these, we need a list of enzymes and a corresponding 2d list
 // for products and another for substrates
 var enzymeList = [];
@@ -20,6 +26,14 @@ var en3weight = 1;
 var db_modules = JSON.parse(document.getElementById('db-modules').textContent);
 var db_substrates = JSON.parse(document.getElementById('db-substrates').textContent);
 var db_products = JSON.parse(document.getElementById('db-products').textContent);
+
+//TODO
+/* canv.addEventListener('mousedown', function(e) {
+    var evt = e || event;
+    dragging = true;
+    lastX = evt.clientX;
+    e.preventDefault();
+}, false); */
 
 //Create a non-reversible reaction
 function notRevStep(substrate, product, enzyme,
@@ -103,7 +117,14 @@ function revStep(firstText, secondText, enzyme, firstRectMidX, firstRectMidY,
             ctx.stroke();
         } else {
             if (nextY == firstRectMidY) { //reactions horizontally connected
-                //TODO
+                ctx.moveTo(firstRectMidX + 10, firstRectMidY - 15);
+                ctx.lineTo(firstRectMidX, firstRectMidY - 5);
+                ctx.lineTo(firstRectMidX + 50, firstRectMidY - 5);
+                ctx.moveTo(firstRectMidX, firstRectMidY + 5);
+                ctx.lineTo(firstRectMidX + 50, firstRectMidY + 5);
+                ctx.lineTo(firstRectMidX + 40, firstRectMidY + 15);
+                ctx.rect(firstRectMidX + 50, firstRectMidY - 25, 100, 50);
+                ctx.stroke();
             } else { //reactions diagonally connected
                 ctx.moveTo(firstRectMidX - 55, firstRectMidY + 25);
                 ctx.lineTo(firstRectMidX - 55, firstRectMidY + 50);
@@ -126,16 +147,25 @@ function revStep(firstText, secondText, enzyme, firstRectMidX, firstRectMidY,
     ctx.beginPath();
     ctx.font = "12px Arial";
     var fontMeasures = ctx.measureText(enzyme);
-    var xCoord = firstRectMidX - 55 - (fontMeasures.width / 2);
-    ctx.moveTo(xCoord, firstRectMidY + 50);
+
+    var xCoord;
+    var yCoord;
+    if (nextX && (nextY == firstRectMidY)) {
+        xCoord = firstRectMidX + 20 - (fontMeasures.width / 2);
+        yCoord = firstRectMidY;
+    } else {
+        xCoord = firstRectMidX - 55 - (fontMeasures.width / 2);
+        yCoord = firstRectMidY + 50;
+    }
+    ctx.moveTo(xCoord, yCoord);
     ctx.bezierCurveTo(
-        xCoord, firstRectMidY + 30,
-        xCoord + fontMeasures.width + 10, firstRectMidY + 30,
-        xCoord + fontMeasures.width + 10, firstRectMidY + 50);
+        xCoord, yCoord - 20,
+        xCoord + fontMeasures.width + 10, yCoord - 20,
+        xCoord + fontMeasures.width + 10, yCoord);
     ctx.bezierCurveTo(
-        xCoord + fontMeasures.width + 10, firstRectMidY + 70,
-        xCoord, firstRectMidY + 70,
-        xCoord, firstRectMidY + 50);
+        xCoord + fontMeasures.width + 10, yCoord + 20,
+        xCoord, yCoord + 20,
+        xCoord, yCoord);
     ctx.fillStyle = "white";
     ctx.fill();
 
@@ -148,8 +178,7 @@ function revStep(firstText, secondText, enzyme, firstRectMidX, firstRectMidY,
         ctx.fillText(secondText, firstRectMidX - 90, firstRectMidY + 105);
     }
     ctx.font = "12px Arial";
-    ctx.fillText(enzyme, firstRectMidX - 50 - fontMeasures.width / 2,
-        firstRectMidY + 54);
+    ctx.fillText(enzyme, xCoord + 5, yCoord + 4);
     //draw everything to the screen
     ctx.stroke();
 }
@@ -214,14 +243,14 @@ function render() {
     for (var i = 0; i < enzymeList.length; i++) {
         if (i == 0) {
             firstRectMidX = xCoords[i] * 75 + (canvas.clientWidth / 2 + 50)
-            firstRectMidY = yCoords[i] * 75
+            firstRectMidY = yCoords[i] * 100;
         }
         if (revList[i] == "reversible") {
             var nextX;
             var nextY;
             if (i != enzymeList.length) {
                 nextX = xCoords[i+1] * 75 + (canvas.clientWidth / 2 + 50);
-                nextY = yCoords[i+1] * 75;
+                nextY = yCoords[i+1] * 100;
             } else {
                 nextX = null
                 nextY = null
@@ -275,6 +304,8 @@ function reset() {
         }
     }
 }
+
+
 
 // Assumes that there are at least one substrate, at least one product,
 // exactly one enzyme, and exactly one boolean for reversible/irreversible

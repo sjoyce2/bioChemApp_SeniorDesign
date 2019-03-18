@@ -288,10 +288,6 @@ function convertTextToId(text) {
 
 //resets values of sliders on page (re)load
 function reset() {
-    //adds functionality to the logout button
-    document.getElementById("logout").addEventListener("click", function(event) {
-        document.location.href = '..';
-    });
     for (i=0; i<db_modules.length; i++) {
         if (db_modules[i].modelID_id == 1) {
             var enSlider = document.getElementById(db_modules[i].enzyme);
@@ -357,7 +353,8 @@ function addValues() {
 
 function createSliders() {
     for (i=0; i<db_modules.length; i++) {
-        if (db_modules[i].modelID_id == 1) { //TODO: Set this to the current model id
+        currentModel = 1;
+        if (db_modules[i].modelID_id == currentModel) { //TODO: Set this to the current model id
             sliderHolder = document.getElementById("slider-holder");
             varHolder = document.createElement('div');
             varHolder.setAttribute("class", "variable-holder");
@@ -381,6 +378,10 @@ function createSliders() {
             header.setAttribute("id", db_modules[i].enzyme + "Value");
             header.innerHTML = "50";
             inner.appendChild(header);
+            editButton = document.createElement('a');
+            editButton.setAttribute("href", "{% url 'moduleEdit' model=" +
+                currentModel + "module=" + i + "%}");
+            inner.appendChild(editButton);
             varHolder.appendChild(inner);
             sliderHolder.append(varHolder);
         } 

@@ -13,16 +13,6 @@
 		<div class="container-login100" style="background-image: url('{% static 'images/bg-01.jpg' %}');">
 			<div class="wrap-login100">
 				<form class="login100-form validate-form">
-                    <div class="editToolbar">
-                        <div class="innerToolbar">
-                            <button class="editToolbarButton" type="button">Home</button>
-                            <button class="editToolbarButton" type="button">Settings</button>
-                        </div>
-                        <div class="innerToolbar">
-                            <button class="editToolbarButton" type="button">Help</button>
-                            <button class="editToolbarButton" id="logout" type="button">Logout</button>
-                        </div>
-                    </div>
                     {{ modules|json_script:"db-modules" }}
                     {{ substrates|json_script:"db-substrates" }}
                     {{ products|json_script:"db-products" }}
@@ -31,7 +21,7 @@
                             <a href="{% url 'moduleEdit' model=1 module=2 %}" id="link-to-module">
                                 <canvas id="modelEditCanvas" height="800" width="800"></canvas>
                             </a>
-                            <a href="{% url 'moduleEdit' model=1 module=2 %}">
+                            <a href="{% url 'moduleEdit' model=1 module=2 %}" id="new-reaction">
                                 <button>
                                     Create New Reaction
                                 </button>

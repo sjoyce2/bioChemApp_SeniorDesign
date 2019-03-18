@@ -14,4 +14,5 @@ urlpatterns = [
 	path('modelChoice', views.modelChoice, name='modelChoice'),
 	path('register', views.register, name='register'),
 	path('home', views.home, name='home'),
+	path('indexLogged', views.indexLogged, name='indexLogged')
 ]

@@ -165,3 +165,9 @@ def signup(request):
 	context = {}
 
 	return render(request, 'accounts/signup.html', context=context)
+
+def indexLogged(request):
+	context = {}
+
+	return render(request, 'indexLogged.html', context=context)
+

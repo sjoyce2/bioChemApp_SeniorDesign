@@ -26,6 +26,8 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/moduleEdit.css' %}"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/modelEdit.css' %}">
 <!--===============================================================================================-->
 </head>
 <body>
@@ -40,19 +42,29 @@
 			<img src="{% static 'images/BioPath3.png' %}" class="wrap-biopath-logo-top-bar">
 			<p class="web-title">BioPath</p>
 			
-			<a href="" id="topnav-buttons" >User: ------</a>
-			<a href="" id="topnav-buttons" class="login100-form-btn"><button type="button">
+			<a class="username" id="username">User: {{ user.get_username }}</a>
+			
+			<a href="{% url 'logout_view' %}" id="topnav-buttons" class="login100-form-btn"><button type="button">
 				Log Out
 			</button></a>
 
-		</div>
-		<div class="container-login100" style="background-image: url('{% static 'images/bg-01.jpg' %}');">
 			
-			{% block modelChoice %}
-			{% endblock %}
-
+		
 		</div>
+	<div class="container-login100" style="background-image: url('{% static 'images/bg-01.jpg' %}');">
+		{% block modelChoice %}
+	    {% endblock %}
+			
+		{% block moduleEdit %}
+		{% endblock %}
+
+		{% block modelEdit %}
+		{% endblock %}
 	</div>
+		
+	</div>
+	
+	
 	
 <!--===============================================================================================-->
 	<script src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>

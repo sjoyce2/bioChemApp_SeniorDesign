@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<title>Module Edit Screen</title>
-	<meta charset="UTF-8">
-	{% load static %}
-	<link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}"/>
-	<link rel="stylesheet" type="text/css" href="{% static 'css/moduleEdit.css' %}"/>
-</head>
+{% extends 'indexLogged.html' %}
+
+{% block moduleEdit %}
+{% load static %}
 <body>
 	<script>
 		var myEnzymes = [];
@@ -45,7 +40,6 @@
 		// var allProducts = []
 		// var allSubstrates = []
 	</script>
-	<div class="limiter">
 		<!-- {% for mod in modules %}
 				{{ mod.id }}
 				{{ mod.modelID_id }}
@@ -58,7 +52,6 @@
 				{{ mod.enzyme }}
 				{{ mod.reversible }}
 		{% endfor %} -->
-		<div class="container-login100" style="background-image: url('{% static 'images/bg-01.jpg' %}');">
 			<img class="step1Image" id="step1" src="{% static 'images/GlycolysisStep1.jpg' %}" style="display: none;">
 			<img class="step1Image" id="Glucose" src="{% static 'images/Glucose.jpg' %}" style="display: none;">
 			<img class="step1Image" id="Glucose-6-Phosphate" src="{% static 'images/Glucose-6-Phosphate.jpg' %}" style="display: none;">
@@ -71,17 +64,6 @@
 			<img class="step1Image" id="2 phosphoglycerate" src="{% static 'images/2 phosphoglycerate.jpg' %}" style="display: none;">
 			<img class="step1Image" id="Phosphoenolpyruvate" src="{% static 'images/Phosphoenolpyruvate.jpg' %}" style="display: none;">
 			<img class="step1Image" id="Pyruvate" src="{% static 'images/Pyruvate.jpg' %}" style="display: none;">
-			<div class="wrap-login100">
-                  <div class="editToolbar">
-                      <div class="innerToolbar">
-                          <button class="editToolbarButton" type="button">Home</button>
-                          <button class="editToolbarButton" type="button">Settings</button>
-                      </div>
-                      <div class="innerToolbar">
-                          <button class="editToolbarButton" type="button">Help</button>
-                          <button class="editToolbarButton" id="logout" type="button">Logout</button>
-                      </div>
-									</div>
 									<div class="viewAndCreateReaction">
 										<canvas id="imageCanvas" height="500" width="825"></canvas>
 										<form method="post" class="saveModuleForm" action="#">
@@ -258,9 +240,8 @@
 										    <p>Sorry! We cannot fill in the reaction for your chosen enzyme at the moment.</p>
 										  </div>
 										</div>
-			</div>
-		</div>
-	</div>
+			
 	<script src="{% static 'js/moduleEdit.js' %}"></script>
 </body>
 </html>
+{% endblock %}

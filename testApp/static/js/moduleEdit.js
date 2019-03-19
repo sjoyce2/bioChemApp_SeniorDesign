@@ -92,6 +92,8 @@ function onRadioChange(){
   checkedProdsNames = [];
   checkedEnzsNames = []
 
+  console.log("substrates in onRadioChange");
+  console.log(substrates);
   for(var i = 0; i < substrates.length; i++){
     if(substrates[i].checked){
       countSubstrates++;
@@ -100,6 +102,8 @@ function onRadioChange(){
   }
   for(var j = 0; j < enzymes.length; j++){
     if(enzymes[j].checked){
+      console.log("ENZYMES[j]");
+      console.log(enzymes[j].value);
       checkedEnzsNames.push(enzymes[j].value);
     }
   }
@@ -286,10 +290,14 @@ function setInitialXCoor(count){
 }
 
 function drawSubstrates(currentX, currentY){
+  console.log("drawSubstrates");
   var name;
   var a;
+  console.log(checkedSubsNames);
   for(a = 0; a < checkedSubsNames.length; a++){
     name = checkedSubsNames[a];
+    console.log("drawSubstrates")
+    console.log(name);
     drawObject(currentX, currentY, name);
     if(checkedSubsNames.length > a + 1){
       drawPlus(currentX, currentY);
@@ -299,6 +307,7 @@ function drawSubstrates(currentX, currentY){
 }
 
 function drawProducts(currentX, currentY){
+  console.log("drawProducts");
   var name;
   var a;
   for(a = 0; a < checkedProdsNames.length; a++){
@@ -333,35 +342,45 @@ function displayReaction(){
 }
 
 function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
+  //SOMETHING IS WRONG HERE
+  console.log("setReaction is called");
   var canBeChecked = false;
   var enzymeName = checkedEnzsNames[0];
   console.log(enzymeName);
+  console.log("*****");
   console.log(enzymeSubs);
+  console.log("*****");
   for(var i = 0; i < enzymeSubs.length; i++){
-    for(var j = 1; j < enzymeSubs[i].length; j++){
-      if(enzymeSubs[i][0].toUpperCase() === enzymeName.toUpperCase()){
+    //for(var j = 1; j < enzymeSubs[i].length; j++){
+      console.log(enzymeSubs[i][1]);
+      console.log(enzymeName);
+      if(enzymeSubs[i][1].toUpperCase() === enzymeName.toUpperCase()){
+        //console.log(enzymeSubs[i][j]);
+        console.log("SET checkedSubsNames");
         //console.log("**********"+enzymeSubs[i],[j]);
-        checkedSubsNames.push(enzymeSubs[i][j]);
+        checkedSubsNames.push(enzymeSubs[i][0]);
         countSubstrates++;
         canBeChecked = true;
-      }
+      //}
     }
   }
   for(var i = 0; i < enzymeProds.length; i++){
-    for(var j = 1; j < enzymeProds[i].length; j++){
-      if(enzymeProds[i][0].toUpperCase() === enzymeName.toUpperCase()){
-        checkedProdsNames.push(enzymeProds[i][j]);
+    //for(var j = 1; j < enzymeProds[i].length; j++){
+      if(enzymeProds[i][1].toUpperCase() === enzymeName.toUpperCase()){
+        checkedProdsNames.push(enzymeProds[i][0]);
         countProducts++;
       }
-    }
+    //}
   }
-  //console.log(enzymeReverse);
+  console.log(enzymeReverse);
+  console.log("&&&&&&&&&&&&&&&");
   for(var i = 0; i < enzymeReverse.length; i++){
-    for(var j = 1; j < enzymeReverse[i].length; j++){
+    console.log(enzymeReverse[i]);
+    //for(var j = 1; j < enzymeReverse[i].length; j++){
       if(enzymeReverse[i][0].toUpperCase() === enzymeName.toUpperCase()){
-        //console.log(enzymeReverse[i][j]);
-        if(enzymeReverse[i][j] === "reversible"){
-          //console.log("HERE");
+        console.log(enzymeReverse[i][1]);
+        if(enzymeReverse[i][1]){
+          console.log("HERE");
           isReversible = true;
           reversibleChoice[0].checked = true;
         }else{
@@ -369,7 +388,7 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
           reversibleChoice[1].checked = true;
         }
       }
-    }
+    //}
   }
   currentRxn = "";
   if(canBeChecked){
@@ -510,10 +529,15 @@ function setArraysRepresentingReaction(){
 }
 
 function validateReaction(){
+  console.log("validateReaction is called");
   //iterate through user selections and create string representation
   //this is done so that if it is a complete reaction (something from
   //every category is chosen) it can easily be compared to the known
   //reactions
+  console.log(checkedSubsNames);
+  console.log(checkedEnzsNames);
+  console.log(checkedProdsNames);
+  console.log("ABOVE validate RXN");
   for(var i = 0; i < checkedSubsNames.length; i++){
     if(i === checkedSubsNames.length - 1){
       currentRxn = currentRxn + checkedSubsNames[i] + ">";
@@ -576,6 +600,9 @@ function validateReaction(){
 }
 
 function createErrorCheckArrays() {
+  console.log("createErrorCheckArrays");
+  console.log(allSubs);
+  console.log(allProds);
   enzymeSubs = allSubs;
   enzymeProds = allProds;
   console.log(allModules);
@@ -590,7 +617,9 @@ function createErrorCheckArrays() {
   }
   console.log(enzymeSubs);
   console.log(enzymeProds);
+  console.log("@@@@@@@");
   console.log(enzymeReverse);
+  console.log("@@@@@@@");
 
 }
 
@@ -628,6 +657,7 @@ window.onload = function init(){
 
 
   createBtn.addEventListener("click", function(event){
+    console.log("create button is clicked");
     //reset global variables
     currentRxn = "";
     //clear everything out of canvas on button click so we can draw new rxn

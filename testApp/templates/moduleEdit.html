@@ -27,7 +27,7 @@
 		{% for subs in allsubs %}
 				allSubs.push(['{{subs.substrate}}', '{{subs.enzyme}}', '{{subs.abbr}}']);
 		{% endfor %}
-		
+
 		var allModules = []
 		{% for mod in allmodules %}
 				allModules.push(['{{ mod.enzyme }}', '{{mod.reversible}}', '{{mod.enzymeAbbr}}', '{{mod.id}}']);
@@ -36,22 +36,7 @@
 		console.log(allProds);
 		console.log(allSubs);
 		console.log(allModules);
-		// var allEnzymes = []
-		// var allProducts = []
-		// var allSubstrates = []
 	</script>
-		<!-- {% for mod in modules %}
-				{{ mod.id }}
-				{{ mod.modelID_id }}
-				{{ mod.enzyme }}
-				{{ mod.reversible }}
-		{% endfor %}
-		{% for subs in substrates %}
-				{{ mod.id }}
-				{{ mod.modelID_id }}
-				{{ mod.enzyme }}
-				{{ mod.reversible }}
-		{% endfor %} -->
 			<img class="step1Image" id="step1" src="{% static 'images/GlycolysisStep1.jpg' %}" style="display: none;">
 			<img class="step1Image" id="Glucose" src="{% static 'images/Glucose.jpg' %}" style="display: none;">
 			<img class="step1Image" id="Glucose-6-Phosphate" src="{% static 'images/Glucose-6-Phosphate.jpg' %}" style="display: none;">
@@ -71,142 +56,116 @@
 											<div id="subsContainer">
 												<label id="subsLabel">SUBSTRATES</label>
 										    <ul class="subs" id="substrates">
-
-													<label class="container">Dihydroxyacetone Phosphate
-												  	<input type="checkbox" value="Dihydroxyacetone Phosphate" onchange="onRadioChange()" name="Substrate">
-												  	<span class="checkmark"></span>
-													</label>
-													<label class="container">Fructose-6-Phosphate
-												  	<input type="checkbox" value="Fructose-6-Phosphate" onchange="onRadioChange()" name="Substrate">
-												  	<span class="checkmark"></span>
-													</label>
-													<label class="container">Fructose-1,6-Bisphosphate
-												  	<input type="checkbox" value="Fructose-1,6-bisphosphate" onchange="onRadioChange()" name="Substrate">
-												  	<span class="checkmark"></span>
-													</label>
-													<label class="container">Glucose
-												  	<input value="Glucose" type="checkbox" onchange=onRadioChange() name="Substrate">
-												  	<span class="checkmark"></span>
-													</label>
-													<label class="container">Glucose-6-Phosphate
-												  	<input type="checkbox" value="Glucose-6-Phosphate" onchange="onRadioChange()" name="Substrate">
-												  	<span class="checkmark"></span>
-													</label>
-													<label class="container">Glyceraldehyde-3-Phosphate
-												  	<input type="checkbox" value="Glyceraldehyde-3-Phosphate" onchange="onRadioChange()" name="Substrate">
-												  	<span class="checkmark"></span>
-													</label>
-													<label class="container">Phosphoenolpyruvate
-												  	<input type="checkbox" value="Phosphoenolpyruvate" onchange="onRadioChange()" name="Substrate">
-												  	<span class="checkmark"></span>
-													</label>
-													<label class="container">1,3-Bisphoglycerate
-												  	<input type="checkbox" value="1,3-bisphoglycerate" onchange="onRadioChange()" name="Substrate">
-												  	<span class="checkmark"></span>
-													</label>
-													<label class="container">3 Phosphoglycerate
-												  	<input type="checkbox" value="3 phosphoglycerate" onchange="onRadioChange()" name="Substrate">
-												  	<span class="checkmark"></span>
-													</label>
-													<label class="container">2 Phosphoglycerate
-												  	<input type="checkbox" value="2 phosphoglycerate" onchange="onRadioChange()" name="Substrate">
-												  	<span class="checkmark"></span>
-													</label>
-													<label class="container">ATP
-												  	<input type="checkbox" value="ATP" onchange="onRadioChange()" name="Substrate">
-												  	<span class="checkmark"></span>
-													</label>
+													<!-- dynamically create substrates checkboxes and labels -->
+													<script type="text/javascript">
+													//look for element by id, don't add if not null.
+														for(var i = 0; i < allSubs.length; i++){
+															console.log("BELOW");
+															console.log(document.getElementById(allSubs[i][0]+"SubId"));
+															if(document.getElementById(allSubs[i][0]+"SubId") === null){
+																console.log("Does not exist");
+																console.log(allSubs[i][0]);
+																String.prototype.replaceAll = function(search, replacement) {
+																	var target = this;
+    															return target.split(search).join(replacement);
+																};
+																var str = allSubs[i][0];
+														    var newStr = str.replaceAll(/_/,' ');
+																var enzymeStr = allSubs[i][1];
+																var newEnz = enzymeStr.replaceAll(/_/,' ');
+																allSubs[i][1] = newEnz;
+																allSubs[i][0] = newStr;
+																var newlabel = document.createElement("Label");
+																newlabel.innerHTML = newStr;
+																newlabel.className = "container";
+																newlabel.setAttribute("id",allSubs[i][0]+"SubId");
+																var newcheckbox = document.createElement("input");
+																newcheckbox.setAttribute("type", "checkbox");
+																newcheckbox.setAttribute("value", newStr);
+																newcheckbox.setAttribute("onchange", "onRadioChange()");
+																newcheckbox.setAttribute("name", "Substrate");
+																newlabel.appendChild(newcheckbox);
+																document.getElementById("substrates").appendChild(newlabel);
+															}
+														}
+													</script>
 								    		</ul>
 											</div>
 											<div id="enzsContainer">
 												<label id="enzsLabel">ENZYMES</label>
 												<ul class="enzs" id="enzymes">
-													<label class="container">Aldolase
-														<input type="radio" name="Enzyme" onchange="onRadioChange()" value="aldolase">
-														<span class="checkmark"></span>
-													</label>
-													<label class="container">Glyceraldehyde Phosphate Dehydrogenase
-														<input type="radio" name="Enzyme" onchange="onRadioChange()" value="Glyceraldehyde phosphate dehydrogenase">
-														<span class="checkmark"></span>
-													</label>
-													<label class="container">Enolase
-														<input type="radio" name="Enzyme" onchange="onRadioChange()" value="Enolase">
-														<span class="checkmark"></span>
-													</label>
-													<label class="container">Hexokinase
-														<input type="radio" name="Enzyme" onchange="onRadioChange()" value="Hexokinase">
-														<span class="checkmark"></span>
-													</label>
-													<label class="container">Phosphoglucose Isomerase
-														<input type="radio" name="Enzyme" onchange="onRadioChange()" value="Phosphoglucose isomerase">
-														<span class="checkmark"></span>
-													</label>
-													<label class="container">Phosphofructokinase
-														<input type="radio" name="Enzyme" onchange="onRadioChange()" value="Phosphofructokinase">
-														<span class="checkmark"></span>
-													</label>
-													<label class="container">Phosphoglycerate Kinase
-														<input type="radio" name="Enzyme" onchange="onRadioChange()" value="Phosphoglycerate kinase">
-														<span class="checkmark"></span>
-													</label>
-													<label class="container">Phosphoglycerate Mutase
-														<input type="radio" name="Enzyme" onchange="onRadioChange()" value="Phosphoglycerate mutase">
-														<span class="checkmark"></span>
-													</label>
-													<label class="container">Triosephosphate Isomerase
-														<input type="radio" name="Enzyme" onchange="onRadioChange()" value="Triosephosphate isomerase">
-														<span class="checkmark"></span>
-													</label>
+
+													<script type="text/javascript">
+													//look for element by id, don't add if not null.
+														for(var i = 0; i < allModules.length; i++){
+															console.log("BELOW");
+															console.log(document.getElementById(allModules[i][0]+"EnzId"));
+															if(document.getElementById(allModules[i][0]+"EnzId") === null){
+																console.log("Does not exist");
+																console.log(allModules[i][0]);
+																//function to replace all underscores in the string
+																String.prototype.replaceAll = function(search, replacement) {
+																	var target = this;
+    															return target.split(search).join(replacement);
+																};
+																var str = allModules[i][0];
+														    var newStr = str.replaceAll(/_/,' ');
+																allModules[i][0] = newStr;
+																console.log(newStr);
+																var newlabel = document.createElement("Label");
+																newlabel.innerHTML = newStr;
+																newlabel.className = "container";
+																newlabel.setAttribute("id",allModules[i][0]+"EnzId");
+																var newcheckbox = document.createElement("input");
+																newcheckbox.setAttribute("type", "radio");
+																newcheckbox.setAttribute("value", newStr);
+																newcheckbox.setAttribute("onchange", "onRadioChange()");
+																newcheckbox.setAttribute("name", "Enzyme");
+																newlabel.appendChild(newcheckbox);
+																document.getElementById("enzymes").appendChild(newlabel);
+															}
+														}
+													</script>
 												</ul>
 											</div>
 											<div id="prodsContainer">
 												<label id="prodsLabel">PRODUCTS</label>
 												<ul class="prods" id="products">
 
-													<label class="container">Dihydroxyacetone Phosphate
-														<input type="checkbox" value="Dihydroxyacetone Phosphate" onchange="onRadioChange()" name="Product">
-														<span class="checkmark"></span>
-													</label>
-													<label class="container">Fructose-6-Phosphate
-														<input type="checkbox" value="Fructose-6-Phosphate" onchange="onRadioChange()" name="Product">
-														<span class="checkmark"></span>
-													</label>
-													<label class="container">Fructose-1,6-Bisphosphate
-														<input type="checkbox" value="Fructose-1,6-bisphosphate" onchange="onRadioChange()" name="Product">
-														<span class="checkmark"></span>
-													</label>
-													<label class="container">Glucose-6-Phosphate
-														<input type="checkbox" value="Glucose-6-Phosphate" onchange="onRadioChange()" name=Product>
-														<span class="checkmark"></span>
-													</label>
-													<label class="container">Glyceraldehyde-3-Phosphate
-														<input type="checkbox" value="Glyceraldehyde-3-Phosphate" onchange="onRadioChange()" name="Product">
-														<span class="checkmark"></span>
-													</label>
-													<label class="container">Phosphoenolpyruvate
-														<input type="checkbox" value="Phosphoenolpyruvate" onchange="onRadioChange()" name="Product">
-														<span class="checkmark"></span>
-													</label>
-													<label class="container">Pyruvate
-														<input type="checkbox" value="Pyruvate" onchange="onRadioChange()" name="Product">
-														<span class="checkmark"></span>
-													</label>
-													<label class="container">1,3-Bisphoglycerate
-														<input type="checkbox" value="1,3-bisphoglycerate" onchange="onRadioChange()" name="Product">
-														<span class="checkmark"></span>
-													</label>
-													<label class="container">3 Phosphoglycerate
-														<input type="checkbox" value="3 phosphoglycerate" onchange="onRadioChange()" name="Product">
-														<span class="checkmark"></span>
-													</label>
-													<label class="container">2 Phosphoglycerate
-														<input type="checkbox" value="2 phosphoglycerate" onchange="onRadioChange()" name="Product">
-														<span class="checkmark"></span>
-													</label>
-													<label class="container">ADP
-														<input type="checkbox" value="ADP" onchange="onRadioChange()" name="Product">
-														<span class="checkmark"></span>
-													</label>
+													<script type="text/javascript">
+													//look for element by id, don't add if not null.
+														for(var i = 0; i < allProds.length; i++){
+															console.log("BELOW");
+															console.log(document.getElementById(allProds[i][0]+"ProdId"));
+															if(document.getElementById(allProds[i][0]+"ProdId") === null){
+																console.log("Does not exist");
+																console.log(allProds[i][0]);
+																String.prototype.replaceAll = function(search, replacement) {
+																	var target = this;
+    															return target.split(search).join(replacement);
+																};
+																var str = allProds[i][0];
+														    var newStr = str.replaceAll(/_/,' ');
+																allProds[i][0] = newStr;
+																var enzymeStr = allProds[i][1];
+																var newEnz = enzymeStr.replaceAll(/_/,' ');
+																allProds[i][1] = newEnz;
+																console.log("REPLACE");
+																console.log(newStr);
+																var newlabel = document.createElement("Label");
+																newlabel.innerHTML = newStr;
+																newlabel.className = "container";
+																newlabel.setAttribute("id",allProds[i][0]+"ProdId");
+																var newcheckbox = document.createElement("input");
+																newcheckbox.setAttribute("type", "checkbox");
+																newcheckbox.setAttribute("value", newStr);
+																newcheckbox.setAttribute("onchange", "onRadioChange()");
+																newcheckbox.setAttribute("name", "Product");
+																newlabel.appendChild(newcheckbox);
+																document.getElementById("products").appendChild(newlabel);
+															}
+														}
+													</script>
 									    	</ul>
 											</div>
 											<label class="reversibleChoice">Reversible
@@ -240,7 +199,7 @@
 										    <p>Sorry! We cannot fill in the reaction for your chosen enzyme at the moment.</p>
 										  </div>
 										</div>
-			
+
 	<script src="{% static 'js/moduleEdit.js' %}"></script>
 </body>
 </html>

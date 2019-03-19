@@ -1,15 +1,22 @@
-﻿{% extends 'indexLogged.html' %}
-
-{% block modelEdit %}
-{% load static %}
-
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Model Edit Screen</title>
+    <meta charset="UTF-8">
+    {% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/modelEdit.css' %}">
+<!--===============================================================================================-->
 </head>
 <body>
-	
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('{% static 'images/bg-01.jpg' %}');">
+			<div class="wrap-login100">
 				<form class="login100-form validate-form">
                     {{ modules|json_script:"db-modules" }}
                     {{ substrates|json_script:"db-substrates" }}
                     {{ products|json_script:"db-products" }}
+                    {{ model_num|json_script:"modelNum"}}
                     <div class="flex-horiz">
                         <div>
                             <a href="{% url 'moduleEdit' model=1 module=2 %}" id="link-to-module">
@@ -27,9 +34,13 @@
                     </div>
                     </div>
                 </form>
+			</div>
+		</div>
+	</div>
+
+
 	<div id="dropDownSelect1"></div>
 	<script src="{% static 'js/modelEdit.js' %}"></script>
 
 </body>
 </html>
-{% endblock %}

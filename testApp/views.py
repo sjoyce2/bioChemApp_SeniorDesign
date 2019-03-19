@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from .models import Module
 from django.contrib.auth.models import User
+from django.contrib.auth import logout
 
 # Create your views here.
 from django.http import HttpResponse
@@ -19,7 +20,6 @@ from testApp.models import Module
 from testApp.models import Model
 from testApp.models import Products
 from testApp.models import Substrates
-from django.contrib.auth import logout
 
 def modelChoice(request):
 	# need to add a pop-up/redirect to allow the user to create a new model
@@ -136,7 +136,8 @@ def modelEdit(request, model):
 		prod_dict = {"id": obj.id, "product": obj.product, "moduleID_id": obj.moduleID_id, \
 			"abbr": obj.abbr}
 		list_of_prods.append(prod_dict)
-	context = { 'modules': list_of_mods, 'substrates': list_of_subs, 'products': list_of_prods}
+	context = { 'modules': list_of_mods, 'substrates': list_of_subs, 'products': list_of_prods, 
+		'model_num':model }
 	return render(request, 'modelEdit.html', context=context)
 
 def home(request):
@@ -176,3 +177,4 @@ def logout_view(request):
 	context = {}
 	logout(request)
 	return render(request, 'home.html', context=context)
+

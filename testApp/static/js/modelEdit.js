@@ -26,6 +26,7 @@ var en3weight = 1;
 var db_modules = JSON.parse(document.getElementById('db-modules').textContent);
 var db_substrates = JSON.parse(document.getElementById('db-substrates').textContent);
 var db_products = JSON.parse(document.getElementById('db-products').textContent);
+//var modelNum = document.getElementById('modelNum').textContent;
 
 //TODO
 /* canv.addEventListener('mousedown', function(e) {
@@ -379,8 +380,9 @@ function createSliders() {
             header.innerHTML = "50";
             inner.appendChild(header);
             editButton = document.createElement('a');
-            editButton.setAttribute("href", "{% url 'moduleEdit' model=" +
-                currentModel + "module=" + i + "%}");
+            editButton.innerHTML = "Edit";
+            var url = "/testApp/moduleEdit/" + currentModel + "/" + i;
+            editButton.setAttribute("href", url);
             inner.appendChild(editButton);
             varHolder.appendChild(inner);
             sliderHolder.append(varHolder);

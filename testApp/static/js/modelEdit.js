@@ -7,11 +7,14 @@ var direction = 1; //depricated
 var speed; //how fast the "molecule" is flowing through the pathway
 
 var canv = document.getElementById("modelEditCanvas");
+var modelDiv = document.getElementById("modelEditDiv");
+var divWidth = window.getComputedStyle(modelDiv, null).width
 var context = canv.getContext('2d');
 var dragging = false;
 var lastX;
 var lastY;
-var marginLeft = 0;
+var marginLeft = -(divWidth/2 - canv.width/2);
+console.log(divWidth, canv.width, marginLeft)
 var marginTop = 0;
 
 // Instead of these, we need a list of enzymes and a corresponding 2d list
@@ -48,6 +51,8 @@ window.addEventListener('mousemove', function(e) {
         lastY = evt.clientY;
         marginLeft += delta;
         marginTop += deltaY;
+        marginLeft = marginLeft;
+        marginTop = Math.min(marginTop, 0);
         canv.style.marginLeft = marginLeft + "px";
         canv.style.marginTop = marginTop + "px";
     }

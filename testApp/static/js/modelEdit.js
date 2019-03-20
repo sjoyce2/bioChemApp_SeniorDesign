@@ -26,15 +26,30 @@ var en3weight = 1;
 var db_modules = JSON.parse(document.getElementById('db-modules').textContent);
 var db_substrates = JSON.parse(document.getElementById('db-substrates').textContent);
 var db_products = JSON.parse(document.getElementById('db-products').textContent);
-//var modelNum = document.getElementById('modelNum').textContent;
+var modelNum = parseInt(document.getElementById('modelNum').textContent);
 
-//TODO
-/* canv.addEventListener('mousedown', function(e) {
+//TODO: Add scrolling
+canv.addEventListener('mousedown', function(e) {
     var evt = e || event;
     dragging = true;
     lastX = evt.clientX;
     e.preventDefault();
-}, false); */
+}, false);
+
+window.addEventListener('mousemove', function(e) {
+    var evt = e || event;
+    if (dragging) {
+        var delta = evt.clientX - lastX;
+        lastX = evt.clientX;
+        marginLeft += delta;
+        canvas.style.marginLeft = marginLeft + "px";
+    }
+    e.preventDefault();
+}, false);
+
+window.addEventListener('mouseup', function() {
+    dragging = false;
+}, false);
 
 //Create a non-reversible reaction
 function notRevStep(substrate, product, enzyme,
@@ -242,6 +257,7 @@ function render() {
 
     //Draw each step of the pathway, including reversible and non-reversible steps
     for (var i = 0; i < enzymeList.length; i++) {
+        //set speed
         if (i == 0) {
             firstRectMidX = xCoords[i] * 75 + (canvas.clientWidth / 2 + 50)
             firstRectMidY = yCoords[i] * 100;
@@ -354,8 +370,7 @@ function addValues() {
 
 function createSliders() {
     for (i=0; i<db_modules.length; i++) {
-        currentModel = 1;
-        if (db_modules[i].modelID_id == currentModel) { //TODO: Set this to the current model id
+        if (db_modules[i].modelID_id == modelNum) {
             sliderHolder = document.getElementById("slider-holder");
             varHolder = document.createElement('div');
             varHolder.setAttribute("class", "variable-holder");
@@ -381,7 +396,7 @@ function createSliders() {
             inner.appendChild(header);
             editButton = document.createElement('a');
             editButton.innerHTML = "Edit";
-            var url = "/testApp/moduleEdit/" + currentModel + "/" + i;
+            var url = "/testApp/moduleEdit/" + modelNum + "/" + i;
             editButton.setAttribute("href", url);
             inner.appendChild(editButton);
             varHolder.appendChild(inner);
@@ -399,24 +414,10 @@ function main () {
     var stringToParse = localStorage.getItem('currentRxn');
     var reaction = parseThrough(stringToParse);
     addValues();
-    /* canvas.addEventListener('click', function (event) {
-        let mousePosition = getMousePosition(canvas, event);
-        //TODO: link to model page and remember rectangle number
-        if (mousePosition <= )
-    }); */
     x = 0;
     y = 0;
     render();
     //window.requestAnimationFrame(animate); //TODO: Fix animate() so we can use this
-
-    // Will be useful later but is not important right now
-    /* function getMousePosition(canvas, event) {
-        let border = canvas.getBoundingClientRect();
-        return {
-            x: event.clientX - border.left,
-            y: event.clientY - border.top
-        };
-    } */
 }
 
 

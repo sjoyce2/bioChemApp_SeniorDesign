@@ -42,7 +42,7 @@ window.addEventListener('mousemove', function(e) {
         var delta = evt.clientX - lastX;
         lastX = evt.clientX;
         marginLeft += delta;
-        canvas.style.marginLeft = marginLeft + "px";
+        canv.style.marginLeft = marginLeft + "px";
     }
     e.preventDefault();
 }, false);

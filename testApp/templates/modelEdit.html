@@ -5,16 +5,14 @@
 
 </head>
 <body>
-	
 	<form class="login100-form validate-form">
         {{ modules|json_script:"db-modules" }}
         {{ substrates|json_script:"db-substrates" }}
         {{ products|json_script:"db-products" }}
+        {{ model_num|json_script:"modelNum"}}
         <div class="flex-horiz">
             <div>
-                <a href="{% url 'moduleEdit' model=1 module=2 %}" id="link-to-module">
-                    <canvas id="modelEditCanvas" height="800" width="800"></canvas>
-                </a>
+                <canvas id="modelEditCanvas" height="800" width="800"></canvas>
                 <a href="{% url 'moduleEdit' model=1 module=2 %}" id="new-reaction">
                     <button>
                         Create New Reaction
@@ -29,7 +27,6 @@
     </form>
 	<div id="dropDownSelect1"></div>
 	<script src="{% static 'js/modelEdit.js' %}"></script>
-
 </body>
 </html>
 {% endblock %}

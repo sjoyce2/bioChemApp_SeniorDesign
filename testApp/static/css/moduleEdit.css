@@ -11,6 +11,23 @@ button {
     background: transparent;
 }
 
+#irreversibleID {
+    
+}
+
+.viewAndCreateReaction {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    padding: 2%;
+    
+
+}
+
+.formdiv {
+    
+}
+
 .container-login100 {
     width: 100%;
     min-height: 100vh;
@@ -20,8 +37,8 @@ button {
     display: -ms-flexbox;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+    justify-content: left;
+    align-items: left;
     padding: 15px;
     background-repeat: no-repeat;
     background-position: center;
@@ -55,14 +72,14 @@ button {
     align-content:center;
 }
 #subsContainer, #prodsContainer, #enzsContainer{
-  width: 30%;
+  width: 80%; /* makes them stack */
   border-radius: 5%;
   display: inline-block;
   overflow: hidden;
 }
 #prodsLabel, #enzsLabel, #subsLabel{
   display: inline-block;
-  font-size: 18px;
+  font-size: 25px;
   color: white;
 }
 ul#products{
@@ -107,7 +124,7 @@ ul#substrates{
     background-color: #4CAF50;
     border: 1px solid white;
     color: white;
-    width: 18%;
+    width: 38%;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -117,27 +134,26 @@ ul#substrates{
     margin-top: 2%;
 }
 
-/* #weightSlider {
-  color: white;
-  width: 40%;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  padding: 0 0 0 0;
-} */
-
 .createReaction {
-  border: 1px solid white;
-  background-color: #4CAF50; /* Green */
+    border: 1px solid white;
+    background-color: #4CAF50; /* Green */
     color: white;
     padding: 2% 2% 2% 2%;
     text-align: center;
     text-decoration: none;
     display: inline-block;
+    margin-left: 1%;
     font-size: 16px;
     margin-right: 2%;
-    margin-top: 2%;
+    
+    
+}
+.saveModuleForm {
+    float: left;
+    padding-left: 15px;
+    height: 550px;
+    width: 34%;
+    
 }
 
 .saveReaction {
@@ -154,70 +170,22 @@ ul#substrates{
 }
 
 .clearReaction {
-  border: 1px solid white;
-  background-color: #4CAF50; /* Green */
+    border: 1px solid white;
+    background-color: #4CAF50; /* Green */
     color: white;
     padding: 2% 2% 2% 2%;
+
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin-right: 2%;
-    margin-top: 2%;
+    
 }
 
 .createReaction, .saveReaction, .clearReaction{
   float: left;
   display: inline-block;
 }
-
-/* .createReaction, .weight{
-  float: left;
-  display: inline-block;
-} */
-
-
-/* .weight {
-  border: 1px solid white;
-  background-color: #4CAF50;
-  color: white;
-  padding-top: 2%;
-  padding-bottom: 2%;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-} */
-
-/* .weightLabel{
-  width: 20%;
-  color: white;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  padding: 0 0 0 0;
-} */
-
-/* .weightValue {
-  border: none;
-  color: black;
-  width: 10%;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-  padding: 0 0 0 0;
-} */
-
-/* .enterWeight {
-  border: 1px solid white;
-  color: white;
-  width: 20%;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-  padding: 0 0 0 0;
-} */
 
 .editToolbar {
     display: flex;
@@ -242,6 +210,8 @@ ul#substrates{
 #imageCanvas {
     background-color: white;
     border-radius: 5%;
+    float: left;
+    
 }
 
 /* The Modal (background) */

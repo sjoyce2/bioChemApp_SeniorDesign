@@ -11,8 +11,8 @@
         {{ products|json_script:"db-products" }}
         {{ model_num|json_script:"modelNum"}}
         <div class="flex-horiz">
-            <div>
-                <canvas id="modelEditCanvas" height="800" width="800"></canvas>
+            <div style="width: 800px; height: 800px; overflow: hidden">
+                <canvas id="modelEditCanvas" height="10000" width="800" ></canvas>
                 <a href="{% url 'moduleEdit' model=1 module=2 %}" id="new-reaction">
                     <button>
                         Create New Reaction

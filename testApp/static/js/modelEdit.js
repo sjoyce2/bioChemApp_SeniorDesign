@@ -10,7 +10,9 @@ var canv = document.getElementById("modelEditCanvas");
 var context = canv.getContext('2d');
 var dragging = false;
 var lastX;
+var lastY;
 var marginLeft = 0;
+var marginTop = 0;
 
 // Instead of these, we need a list of enzymes and a corresponding 2d list
 // for products and another for substrates
@@ -33,6 +35,7 @@ canv.addEventListener('mousedown', function(e) {
     var evt = e || event;
     dragging = true;
     lastX = evt.clientX;
+    lastY = evt.clientY;
     e.preventDefault();
 }, false);
 
@@ -40,9 +43,13 @@ window.addEventListener('mousemove', function(e) {
     var evt = e || event;
     if (dragging) {
         var delta = evt.clientX - lastX;
+        var deltaY = evt.clientY - lastY;
         lastX = evt.clientX;
+        lastY = evt.clientY;
         marginLeft += delta;
+        marginTop += deltaY;
         canv.style.marginLeft = marginLeft + "px";
+        canv.style.marginTop = marginTop + "px";
     }
     e.preventDefault();
 }, false);

@@ -403,7 +403,7 @@ function createSliders() {
             inner.appendChild(header);
             editButton = document.createElement('a');
             editButton.innerHTML = "Edit";
-            var url = "/testApp/moduleEdit/" + modelNum + "/" + i;
+            var url = "/testApp/moduleEdit/" + modelNum + "/" + (i + 1);
             editButton.setAttribute("href", url);
             inner.appendChild(editButton);
             varHolder.appendChild(inner);

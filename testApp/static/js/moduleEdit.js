@@ -681,11 +681,11 @@ window.onload = function init(){
   });
 
   saveBtn.addEventListener("click", function(event){
+    console.log(myEnzymes);
     //if(saveBtnClicked){
       //saveBtn.style.background = '#4CAF50'
       //saveBtnClicked = false;
       localStorage.setItem("currentRxn",currentRxn);
-      document.location.href = 'modelEdit';
     //}else{
     //  saveBtn.style.background = '#000000';
     //  saveBtnClicked = true;

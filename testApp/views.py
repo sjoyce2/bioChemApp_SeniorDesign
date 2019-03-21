@@ -25,8 +25,6 @@ def modelChoice(request):
 	# need to add a pop-up/redirect to allow the user to create a new model
 	# using a form so that we can add a new row to the model table
 	user = request.user
-	print(user)
-	print(user.id)
 	# user.id holds user id, use this to query for all models of user
 
 	privateModelsList = []
@@ -36,18 +34,12 @@ def modelChoice(request):
 	publicModels = Model.objects.all().filter(public__exact = True)
 
 	for model in privateModels:
-		print(model.modelName)
-		print(model.id)
 		modelDict = {"modelName":model.modelName, "id": model.id}
 		privateModelsList.append(modelDict)
-	print(privateModelsList)
 
 	for model in publicModels:
-		print(model.modelName)
-		print(model.id)
 		pubModelDict = {"modelName":model.modelName, "id": model.id}
 		publicModelsList.append(pubModelDict)
-	print(publicModelsList)
 
 	context = {
 		'userID': user.id,
@@ -57,10 +49,6 @@ def modelChoice(request):
 	return render(request, 'modelChoice.html', context=context)
 
 def moduleEdit(request, model, module):
-	print("model")
-	print(model)
-	print("module")
-	print (module)
 
 	myMod = Module.objects.all().filter(pk = module)
 	mySubs = Substrates.objects.all().filter(moduleID_id__exact = module)
@@ -68,9 +56,6 @@ def moduleEdit(request, model, module):
 	myModel = Model.objects.filter(pk = model).values('public')
 	for value in myModel:
 		result = value
-
-	print(result)
-	print(result.get("public"))
 
 	if(result.get("public")):
 		allmodules = Module.objects.all().filter(modelID_id__exact = model).values('enzyme', 'enzymeAbbr', 'reversible', 'id')
@@ -89,7 +74,6 @@ def moduleEdit(request, model, module):
 			listOfProds.append(currentProdDict)
 
 	if request.method == 'POST':
-		print(request.POST)
 		new_enzyme = request.POST.get("Enzyme")
 		new_reversible = request.POST.get("reversibleChoice")
 		post = Module(modelID_id=2, enzyme=new_enzyme, reversible=new_reversible)
@@ -136,7 +120,7 @@ def modelEdit(request, model):
 		prod_dict = {"id": obj.id, "product": obj.product, "moduleID_id": obj.moduleID_id, \
 			"abbr": obj.abbr}
 		list_of_prods.append(prod_dict)
-	context = { 'modules': list_of_mods, 'substrates': list_of_subs, 'products': list_of_prods, 
+	context = { 'modules': list_of_mods, 'substrates': list_of_subs, 'products': list_of_prods,
 		'model_num':model }
 	return render(request, 'modelEdit.html', context=context)
 
@@ -145,14 +129,22 @@ def home(request):
 	return render(request, 'home.html', context=context)
 
 def register(request):
+
 	if request.method == 'POST':
 		form = SignUpForm(request.POST)
 		if form.is_valid():
+			# create new rows in model table for each public model
 			form.save()
 			username = form.cleaned_data.get('username')
 			raw_password = form.cleaned_data.get('password1')
 			user = authenticate(username=username, password=raw_password)
 			auth_login(request, user)
+
+			publicModels = Model.objects.filter(public__exact = True).values()
+			for model in publicModels:
+				modelName = model.get("modelName")
+				post = Model(modelName=modelName, userID_id=user.id, public=False)
+				post.save()
 			return redirect('modelChoice')
 	else:
 		form = SignUpForm()
@@ -177,4 +169,3 @@ def logout_view(request):
 	context = {}
 	logout(request)
 	return render(request, 'home.html', context=context)
-

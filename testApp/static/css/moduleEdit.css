@@ -11,10 +11,6 @@ button {
     background: transparent;
 }
 
-#irreversibleID {
-
-}
-
 .viewAndCreateReaction {
     position: absolute;
     height: 100%;
@@ -136,14 +132,13 @@ ul#substrates{
     background-color: #4CAF50;
     border: 1px solid white;
     color: white;
-    width: 39.4%;
-
+    width: 41.2%;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
     padding: 2% 2% 2% 2%;
-    margin-left: 2%;
+    margin-right: 2.2%;
     margin-top: 2%;
 }
 
@@ -153,15 +148,15 @@ ul#substrates{
     height: 57.8px;
     margin-top: 3%;
     color: white;
-    width: 16.15%;
-    padding: 2% 2% 2% 2%;
+    width: 14%;
+    padding: 1.2% 1.2% 1.2% 1.2%;
     text-align: center;
     line-height: 50%;
     text-decoration: none;
     display: inline-block;
     margin-left: 1%;
-    font-size: 16px;
-    margin-right: 1.5%;
+    font-size: 14px;
+    margin-right: 1%;
     
     
 }
@@ -177,12 +172,13 @@ ul#substrates{
     border: 1px solid white;
     background-color: #4CAF50; /* Green */
     color: white;
+    width: 15%;
     padding: 2% 2% 2% 2%;
     text-align: center;
     text-decoration: none;
     display: inline-block;
+    float: right;
     font-size: 16px;
-    margin-right: .5%;
     margin-top: 2%;
 }
 
@@ -190,35 +186,23 @@ ul#substrates{
     border: 1px solid white;
     background-color: #4CAF50; /* Green */
     color: white;
-    padding: 2% 2% 2% 2%;
-    width: 16.15%;
+    padding: 1.2% 1.2% 1.2% 1.2%;
+    width: 13%;
     height: 57.8px;
     margin-top: 3%;
     text-align: center;
     line-height: 50%;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 14px;
     
 }
 
-.clearReaction {
-    border: 1px solid white;
-    background-color: #4CAF50; /* Green */
-    color: white;
-    padding: 2% 2% 2% 2%;
-
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-
-}
-
-.createReaction, .saveReaction, .clearReaction{
+.createReaction, .clearReaction{
   float: left;
   display: inline-block;
 }
+
 
 .editToolbar {
     display: flex;
@@ -282,4 +266,23 @@ ul#substrates{
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+.backBtn{
+    border: 1px solid white;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    width: 70px;
+    padding: 1% 1% 1% 1%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    height: 57.8px;
+    margin-top: 3%;
+    margin-left: .8%;
+}
+
+#irreversibleID{
+    width: 38.5%;
 }

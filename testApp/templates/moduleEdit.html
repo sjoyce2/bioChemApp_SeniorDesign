@@ -50,7 +50,8 @@
 			<img class="step1Image" id="Phosphoenolpyruvate" src="{% static 'images/Phosphoenolpyruvate.jpg' %}" style="display: none;">
 			<img class="step1Image" id="Pyruvate" src="{% static 'images/Pyruvate.jpg' %}" style="display: none;">
 									<div class="viewAndCreateReaction">
-										<canvas id="imageCanvas" height="500" width="825"></canvas>
+										<canvas id="imageCanvas" height="655" width="900"></canvas>
+										<div class="formdiv">
 										<form method="post" class="saveModuleForm" action="#">
 											{% csrf_token %}
 											<div id="subsContainer">
@@ -172,14 +173,15 @@
 												<input type="radio" name="reversibleChoice" onchange="onRadioReverseChange()" value="Reversible">
 												<span class="checkmark"></span>
 											</label>
-											<label class="reversibleChoice">Irreversible
+											<label id='irreversibleID' class="reversibleChoice">Irreversible
 												<input type="radio" name="reversibleChoice" onchange="onRadioReverseChange()" value="Irreversible" checked>
 												<span class="checkmark"></span>
 											</label>
-											<button type="submit" class="saveReaction" id="saveReaction">SAVE</button>
+											<button type="submit" class="saveReaction" id="saveReaction">CHECK</button>
 										</form>
-											<button type="button" class="createReaction" id="createReaction">CREATE</button>
-											<button type="button" class="clearReaction" id="clearReaction">CLEAR</button>
+										</div>
+											<button type="button" class="createReaction" id="createReaction">CREATE REACTION</button>
+											<button type="button" class="clearReaction" id="clearReaction">CLEAR REACTION</button>
 
 										</div>
 										<!-- The Modal -->

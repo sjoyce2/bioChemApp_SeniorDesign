@@ -138,7 +138,7 @@ function displayImage(xcoor, ycoor, name){
 }
 
 //draw boxes for substrates and products and set text
-function drawObject(xcoor, ycoor, name){
+function drawObject(xcoor, ycoor, name, displayName){
   if(name === "ATP" || name === "ADP"){
     //xcoor = xcoor + (objectWidth / 2);
     ycoor = ycoor - (objectHeight / 2);
@@ -156,22 +156,20 @@ function drawObject(xcoor, ycoor, name){
     ctx.lineTo(xcoor, ycoor);
     ctx.stroke();
 
-    ycoor = ycoor + objectHeight / 25; //add a small buffer so that text below image does not overlap with square
-    ctx.font = "14px Arial";
+    ycoor = ycoor + objectHeight / 15; //add a small buffer so that text below image does not overlap with square
+    ctx.font = "20px Arial";
     //draw text below box containing substrate or product
-    ctx.fillText(name, xcoor, ycoor + objectHeight + verticalBuffer);
+    ctx.fillText(displayName, xcoor, ycoor + objectHeight + verticalBuffer);
   }
   return [xcoor, ycoor, name];
 }
 
 //draw downwards arrow in center of current row
 function drawDownArrow(xcoor, ycoor, name){
-  ctx.font = "14px Arial";
+  ctx.font = "20px Arial";
   ycoor = ycoor + objectHeight / 25;
-  // ctx.fillText(name, xcoor , ycoor + objectBuffer); //This is for version without downwards arrow
-  ctx.fillText(name, xcoor + 5 , ycoor + (objectHeight / 2));//This is for version with downwards arrow
+  ctx.fillText(name, xcoor + 5 , ycoor + (objectHeight / 2));
   if(isReversible){
-    //xcoor = canvas1.width / 2;
     ctx.moveTo(xcoor, ycoor);
     ctx.lineTo(xcoor + (objectWidth / 4), ycoor + (objectHeight / 4));
     ctx.lineTo(xcoor, ycoor);
@@ -183,7 +181,6 @@ function drawDownArrow(xcoor, ycoor, name){
     ctx.lineTo(xcoor - (objectWidth / 4), ycoor + objectHeight - (objectHeight / 4));
     ctx.stroke();
   }else{
-    //xcoor = canvas1.width / 2;
     ctx.moveTo(xcoor, ycoor);
     ctx.lineTo(xcoor, ycoor + objectHeight);
     ctx.lineTo(xcoor + (objectWidth / 4), ycoor + objectHeight - (objectHeight / 4));
@@ -245,11 +242,15 @@ function setInitialXCoor(count){
 }
 
 function drawSubstrates(currentX, currentY){
+  console.log(checkedSubsNames);
+  console.log("*888888888*");
   var name;
   var a;
   for(a = 0; a < checkedSubsNames.length; a++){
     name = checkedSubsNames[a];
-    drawObject(currentX, currentY, name);
+    var displayName = mySubstrates[a][3];
+    console.log(displayName);
+    drawObject(currentX, currentY, name, displayName);
     if(checkedSubsNames.length > a + 1){
       drawPlus(currentX, currentY);
       currentX = currentX + objectWidth + horizontalBuffer * 2;
@@ -262,7 +263,8 @@ function drawProducts(currentX, currentY){
   var a;
   for(a = 0; a < checkedProdsNames.length; a++){
     name = checkedProdsNames[a];
-    drawObject(currentX, currentY, name);
+    var displayName = myProducts[a][3];
+    drawObject(currentX, currentY, name, displayName);
     if(checkedProdsNames.length > a + 1){
       drawPlus(currentX, currentY);
       currentX = currentX + objectWidth + horizontalBuffer * 2;
@@ -420,6 +422,10 @@ function setArraysRepresentingReaction(){
       isReversible = true;
     }
 
+    console.log(checkedProdsNames);
+    console.log(checkedSubsNames);
+    console.log(checkedEnzsNames);
+
     var continueDisplay = validateReaction();
 
     if(continueDisplay){
@@ -462,6 +468,11 @@ function validateReaction(){
       }
     }
   }
+  console.log(validProdCount);
+  console.log(validSubCount);
+  console.log(validEnzCount);
+  console.log(countProducts);
+  console.log(countSubstrates);
 
   if(countProducts > 5 || countSubstrates > 5 || checkedEnzsNames.length === 0 ){
     //settings are invalid, user is limited to 5 products and 5 substrates and an
@@ -523,7 +534,7 @@ function enableAndDisableBtns() {
 }
 
 //any substrate, product, or enzyme with a space in it's name, has to be saved
-//with an underscore instead of a space, so we need to change the underscores to spaces 
+//with an underscore instead of a space, so we need to change the underscores to spaces
 function replaceUnderscores(){
   for(var i = 0; i < myEnzymes.length; i++){
     myEnzymes[i][0] = myEnzymes[i][0].replaceAll(/_/,' ');
@@ -566,7 +577,7 @@ window.onload = function init(){
   //SET CURRENT REACTION TO STRING FROM MODEL EDIT SCREEN HERE
   var fromModel = localStorage.getItem("reactionClicked");
 
-  enableAndDisableBtns();
+  enableAndDisableBtns();//if user is viewing public model, disable save button
   setArraysRepresentingReaction();//function to set the arrays to current reaction and call values to display/validate
 
 

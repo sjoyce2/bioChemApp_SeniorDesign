@@ -4,20 +4,27 @@
 {% load static %}
 <body>
 	<script>
+		//need to add in abbreviations
 		var myEnzymes = [];
 		{% for mod in modules %}
-				myEnzymes.push(['{{ mod.enzyme }}', '{{mod.reversible}}', '{{mod.id}}', '{{mod.modelID_id}}']);
+				myEnzymes.push(['{{ mod.enzyme }}', '{{mod.reversible}}', '{{mod.id}}', '{{mod.modelID_id}}', '{{mod.enzymeAbbr}}']);
 		{% endfor %}
+
+		console.log(myEnzymes);
 
 		var mySubstrates = [];
 		{% for subs in substrates %}
-				mySubstrates.push(['{{subs.substrate}}', '{{subs.id}}', '{{subs.moduleID_id}}']);
+				mySubstrates.push(['{{subs.substrate}}', '{{subs.id}}', '{{subs.moduleID_id}}', '{{subs.abbr}}']);
 		{% endfor %}
+
+	  console.log(mySubstrates);
 
 		var myProducts = [];
 		{% for prods in products %}
-				myProducts.push(['{{prods.product}}', '{{prods.id}}', '{{prods.moduleID_id}}']);
+				myProducts.push(['{{prods.product}}', '{{prods.id}}', '{{prods.moduleID_id}}', '{{prods.abbr}}']);
 		{% endfor %}
+
+		console.log(myProducts);
 
 		var allProds = []
 		{% for prods in allprods %}
@@ -65,8 +72,6 @@
 													<script type="text/javascript">
 													//look for element by id, don't add if not null.
 														for(var i = 0; i < allSubs.length; i++){
-															console.log("BELOW");
-															console.log(document.getElementById(allSubs[i][0]+"SubId"));
 															String.prototype.replaceAll = function(search, replacement) {
 																var target = this;
 																return target.split(search).join(replacement);
@@ -77,12 +82,7 @@
 															var newEnz = enzymeStr.replaceAll(/_/,' ');
 															allSubs[i][1] = newEnz;
 															allSubs[i][0] = newStr;
-															console.log("****************");
-															console.log(newStr);
-															console.log(newEnz);
 															if(document.getElementById(allSubs[i][0]+"SubId") === null){
-																console.log("Does not exist");
-																console.log(allSubs[i][0]);
 																var newlabel = document.createElement("Label");
 																newlabel.innerHTML = newStr;
 																newlabel.className = "container";
@@ -94,8 +94,6 @@
 																newcheckbox.setAttribute("name", "Substrate");
 																newlabel.appendChild(newcheckbox);
 																document.getElementById("substrates").appendChild(newlabel);
-																console.log("SUBS");
-																console.log(allSubs);
 															}
 														}
 													</script>
@@ -108,8 +106,6 @@
 													<script type="text/javascript">
 													//look for element by id, don't add if not null.
 														for(var i = 0; i < allModules.length; i++){
-															console.log("BELOW");
-															console.log(document.getElementById(allModules[i][0]+"EnzId"));
 															String.prototype.replaceAll = function(search, replacement) {
 																var target = this;
 																return target.split(search).join(replacement);
@@ -117,11 +113,7 @@
 															var str = allModules[i][0];
 															var newStr = str.replaceAll(/_/,' ');
 															allModules[i][0] = newStr;
-															console.log("****************");
-															console.log(newStr);
 															if(document.getElementById(allModules[i][0]+"EnzId") === null){
-																console.log("Does not exist");
-																console.log(allModules[i][0]);
 																var newlabel = document.createElement("Label");
 																newlabel.innerHTML = newStr;
 																newlabel.className = "container";
@@ -133,8 +125,6 @@
 																newcheckbox.setAttribute("name", "Enzyme");
 																newlabel.appendChild(newcheckbox);
 																document.getElementById("enzymes").appendChild(newlabel);
-																console.log("MODULES");
-																console.log(allModules);
 															}
 														}
 													</script>
@@ -147,8 +137,6 @@
 													<script type="text/javascript">
 													//look for element by id, don't add if not null.
 														for(var i = 0; i < allProds.length; i++){
-															console.log("BELOW");
-															console.log(document.getElementById(allProds[i][0]+"ProdId"));
 															String.prototype.replaceAll = function(search, replacement) {
 																var target = this;
 																return target.split(search).join(replacement);
@@ -159,12 +147,7 @@
 															var enzymeStr = allProds[i][1];
 															var newEnz = enzymeStr.replaceAll(/_/,' ');
 															allProds[i][1] = newEnz;
-															console.log("****************");
-															console.log(newStr);
-															console.log(newEnz);
 															if(document.getElementById(allProds[i][0]+"ProdId") === null){
-																console.log("Does not exist");
-																console.log(allProds[i][0]);
 																var newlabel = document.createElement("Label");
 																newlabel.innerHTML = newStr;
 																newlabel.className = "container";
@@ -176,8 +159,6 @@
 																newcheckbox.setAttribute("name", "Product");
 																newlabel.appendChild(newcheckbox);
 																document.getElementById("products").appendChild(newlabel);
-																console.log("PRODS");
-																console.log(allProds);
 															}
 														}
 													</script>

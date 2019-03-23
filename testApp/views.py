@@ -51,17 +51,15 @@ def modelChoice(request):
 def moduleEdit(request, model, module):
 
 	myMod = Module.objects.all().filter(pk = module)
+
 	mySubs = Substrates.objects.all().filter(moduleID_id__exact = module)
 	myProds = Products.objects.all().filter(moduleID_id__exact = module)
 	myModel = Model.objects.filter(pk = model)
-	print("HERKJEKFJKDF")
+
 	for value in myModel:
-		print(value)
 		currentModelName = value.modelName
 		result = value.public
 
-	print(result)
-	print(currentModelName)
 
 	isPublic = result;
 
@@ -81,23 +79,14 @@ def moduleEdit(request, model, module):
 			currentProdDict = {"product": value.product, "enzyme": value.moduleID.enzyme, "abbr": value.abbr}
 			listOfProds.append(currentProdDict)
 	else:
-		print("KDJFKDFKDJFKDJF")
 		publicModel = Model.objects.all().filter(modelName = currentModelName, public = True)
 		for mod in publicModel:
 			publicMod = mod
-		print(publicMod)
-		print(publicMod.id)
-		print("$$$$$$$$$$")
+
 		allmodules = Module.objects.all().filter(modelID_id__exact = publicMod.id).values('enzyme', 'enzymeAbbr', 'reversible', 'id')
 		allsubs = Substrates.objects.select_related('moduleID').filter(modelID = publicMod.id)
 		allprods = Products.objects.select_related('moduleID').filter(modelID = publicMod.id)
 
-		print(allsubs)
-		print("******************")
-		print(allprods)
-		print("******************")
-		print(allmodules)
-		print("******************")
 		listOfSubs = []
 		listOfProds = []
 
@@ -108,9 +97,6 @@ def moduleEdit(request, model, module):
 		for value in allprods:
 			currentProdDict = {"product": value.product, "enzyme": value.moduleID.enzyme, "abbr": value.abbr}
 			listOfProds.append(currentProdDict)
-
-		print(listOfSubs)
-		print(listOfProds)
 
 	if request.method == 'POST':
 		new_enzyme = request.POST.get("Enzyme")

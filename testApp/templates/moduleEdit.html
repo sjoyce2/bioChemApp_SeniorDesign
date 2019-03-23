@@ -91,7 +91,9 @@
 																newcheckbox.setAttribute("type", "checkbox");
 																newcheckbox.setAttribute("value", newStr);
 																newcheckbox.setAttribute("onchange", "onRadioChange()");
-																newcheckbox.setAttribute("name", "Substrate");
+																newcheckbox.setAttribute("name", allSubs[i][2]);
+																console.log(allSubs[i][2]);
+																newcheckbox.className = "Substrate";
 																newlabel.appendChild(newcheckbox);
 																document.getElementById("substrates").appendChild(newlabel);
 															}
@@ -123,6 +125,7 @@
 																newcheckbox.setAttribute("value", newStr);
 																newcheckbox.setAttribute("onchange", "onRadioChange()");
 																newcheckbox.setAttribute("name", "Enzyme");
+																newcheckbox.className = "Enzyme";
 																newlabel.appendChild(newcheckbox);
 																document.getElementById("enzymes").appendChild(newlabel);
 															}
@@ -156,7 +159,9 @@
 																newcheckbox.setAttribute("type", "checkbox");
 																newcheckbox.setAttribute("value", newStr);
 																newcheckbox.setAttribute("onchange", "onRadioChange()");
-																newcheckbox.setAttribute("name", "Product");
+																newcheckbox.setAttribute("name", allProds[i][2]);
+																console.log(allProds[i][2]);
+																newcheckbox.className = "Product";
 																newlabel.appendChild(newcheckbox);
 																document.getElementById("products").appendChild(newlabel);
 															}

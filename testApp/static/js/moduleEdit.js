@@ -3,6 +3,8 @@
 var checkedSubsNames = []; //array of names of enzymes, products, substrates in rxn
 var checkedEnzsNames = [];
 var checkedProdsNames = [];
+var checkedSubsAbbr = [];//hold abbreviations to display on canvas
+var checkedProdsAbbr = [];
 var canvas1; //variable for canvas element
 var substrates; //holds array of all substrate checkboxes
 var enzymes; //holds array of all enzyme radio buttons
@@ -56,12 +58,16 @@ function onRadioChange(){
   countSubstrates = 0;
   checkedSubsNames = [];
   checkedProdsNames = [];
-  checkedEnzsNames = []
+  checkedEnzsNames = [];
+  checkedSubsAbbr = [];
+  checkedProdsAbbr = [];
 
   for(var i = 0; i < substrates.length; i++){
     if(substrates[i].checked){
       countSubstrates++;
       checkedSubsNames.push(substrates[i].value);
+      checkedSubsAbbr.push(substrates[i].name);
+      console.log(substrates[i].name);
     }
   }
   for(var j = 0; j < enzymes.length; j++){
@@ -73,6 +79,8 @@ function onRadioChange(){
     if(products[k].checked){
       countProducts++;
       checkedProdsNames.push(products[k].value);
+      checkedProdsAbbr.push(products[k].name);
+      console.log(products[k].name);
     }
   }
   if(countProducts > 5 || countSubstrates > 5){
@@ -81,50 +89,42 @@ function onRadioChange(){
   }
 }
 //unit test
-function onRadioChanged(substrates, enzymes, products){
-  countProducts = 0;
-  countSubstrates = 0;
-  checkedSubsNames = [];
-  checkedProdsNames = [];
-  checkedEnzsNames = []
-  var check1 = 0;
-  var check2 = 0;
-  var check3 = 0;
-
-  for(var i = 0; i < substrates.length; i++){
-    if(substrates[i].checked){
-      countSubstrates++;
-      checkedSubsNames.push(substrates[i].value);
-      check1 = 1;
-    }
-  }
-  for(var j = 0; j < enzymes.length; j++){
-    if(enzymes[j].checked){
-      checkedEnzsNames.push(enzymes[j].value);
-      check2 = 1;
-    }
-  }
-  for(var k = 0; k < products.length; k++){
-    if(products[k].checked){
-      countProducts++;
-      checkedProdsNames.push(products[k].value);
-      check3 = 1;
-    }
-  }
-
-  if(countProducts > 5 || countSubstrates > 5){
-    // modal.style.display = "block";
-    // ctx.clearRect(0, 0, canvas1.width, canvas1.height);
-  }
-  return (check1 + check2 + check3);
-}
-//not used as of right now
-// function getMousePosition(canvas1, event) {
-//     let border = canvas1.getBoundingClientRect();
-//     return {
-//         x: event.clientX - border.left,
-//         y: event.clientY - border.top
-//     };
+// function onRadioChanged(substrates, enzymes, products){
+//   countProducts = 0;
+//   countSubstrates = 0;
+//   checkedSubsNames = [];
+//   checkedProdsNames = [];
+//   checkedEnzsNames = []
+//   var check1 = 0;
+//   var check2 = 0;
+//   var check3 = 0;
+//
+//   for(var i = 0; i < substrates.length; i++){
+//     if(substrates[i].checked){
+//       countSubstrates++;
+//       checkedSubsNames.push(substrates[i].value);
+//       check1 = 1;
+//     }
+//   }
+//   for(var j = 0; j < enzymes.length; j++){
+//     if(enzymes[j].checked){
+//       checkedEnzsNames.push(enzymes[j].value);
+//       check2 = 1;
+//     }
+//   }
+//   for(var k = 0; k < products.length; k++){
+//     if(products[k].checked){
+//       countProducts++;
+//       checkedProdsNames.push(products[k].value);
+//       check3 = 1;
+//     }
+//   }
+//
+//   if(countProducts > 5 || countSubstrates > 5){
+//     // modal.style.display = "block";
+//     // ctx.clearRect(0, 0, canvas1.width, canvas1.height);
+//   }
+//   return (check1 + check2 + check3);
 // }
 
 //display image corresponding to substrates and products chosen
@@ -242,13 +242,12 @@ function setInitialXCoor(count){
 }
 
 function drawSubstrates(currentX, currentY){
-  console.log(checkedSubsNames);
-  console.log("*888888888*");
+  console.log(checkedSubsAbbr);
   var name;
   var a;
   for(a = 0; a < checkedSubsNames.length; a++){
     name = checkedSubsNames[a];
-    var displayName = mySubstrates[a][3];
+    var displayName = checkedSubsAbbr[a];
     console.log(displayName);
     drawObject(currentX, currentY, name, displayName);
     if(checkedSubsNames.length > a + 1){
@@ -263,7 +262,7 @@ function drawProducts(currentX, currentY){
   var a;
   for(a = 0; a < checkedProdsNames.length; a++){
     name = checkedProdsNames[a];
-    var displayName = myProducts[a][3];
+    var displayName = checkedProdsAbbr[a];
     drawObject(currentX, currentY, name, displayName);
     if(checkedProdsNames.length > a + 1){
       drawPlus(currentX, currentY);
@@ -292,11 +291,16 @@ function displayReaction(){
 }
 
 function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
+  console.log("setReaction");
+  console.log(enzymeSubs);
+  console.log(enzymeProds);
+
   var canBeChecked = false;
   var enzymeName = checkedEnzsNames[0];
   for(var i = 0; i < enzymeSubs.length; i++){
       if(enzymeSubs[i][1].toUpperCase() === enzymeName.toUpperCase()){
         checkedSubsNames.push(enzymeSubs[i][0]);
+        checkedSubsAbbr.push(enzymeSubs[i][3]);
         countSubstrates++;
         canBeChecked = true;
     }
@@ -304,6 +308,7 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
   for(var i = 0; i < enzymeProds.length; i++){
       if(enzymeProds[i][1].toUpperCase() === enzymeName.toUpperCase()){
         checkedProdsNames.push(enzymeProds[i][0]);
+        checkedProdsAbbr.push(enzymeProds[i][3]);
         countProducts++;
       }
   }
@@ -402,17 +407,21 @@ function setArraysRepresentingReaction(){
   countSubstrates = 0;
   checkedSubsNames = [];
   checkedProdsNames = [];
-  checkedEnzsNames = []
+  checkedEnzsNames = [];
+  checkedSubsAbbr = [];
+  checkedProdsAbbr = [];
 
   if(myEnzymes.length == 0){
     return false;
   }else{
     for(var i = 0; i < mySubstrates.length; i++){
       checkedSubsNames.push(mySubstrates[i][0]);
+      checkedSubsAbbr.push(mySubstrates[i][3]);
       countSubstrates++;
     }
     for(var i = 0; i < myProducts.length; i++){
       checkedProdsNames.push(myProducts[i][0]);
+      checkedProdsAbbr.push(myProducts[i][3]);
       countProducts++;
     }
     checkedEnzsNames.push(myEnzymes[0][0]);
@@ -514,6 +523,7 @@ function createErrorCheckArrays() {
 
   enzymeSubs = allSubs;
   enzymeProds = allProds;
+  console.log(enzymeSubs);
   for(var k = 0; k < allModules.length; k++){
     var isReversible = false;
     if(allModules[k][1] == "reversible"){
@@ -557,9 +567,12 @@ window.onload = function init(){
   }
 
   canvas1 = document.getElementById("imageCanvas");
-  substrates  = document.getElementsByName('Substrate');
-  enzymes = document.getElementsByName('Enzyme');
-  products = document.getElementsByName('Product');
+  substrates  = document.getElementsByClassName('Substrate');
+  console.log(substrates);
+  enzymes = document.getElementsByClassName('Enzyme');
+  console.log(enzymes);
+  products = document.getElementsByClassName('Product');
+  console.log(products);
   reversibleChoice = document.getElementsByName('reversibleChoice');
   ctx  = canvas1.getContext("2d");
   image  = document.getElementById("step1");

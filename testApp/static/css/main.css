@@ -32,7 +32,7 @@ Landing Page CSS
   display: inline-block;
   text-align: center;
   width: 100%;  
-  min-height: 90vh;
+  min-height: 88vh;
   background: rgb(51, 51, 60); /* Fallback for older browsers without RGBA-support */
   background: rgba(51, 51, 60, 0.4);
   border-radius: 20px;
@@ -411,7 +411,6 @@ label {
   color: #EEEEEE;
   font-size: 33px;
   display: inline-block;
-  text-align: center;
   font-family: 'Courier', Courier, monospace;
   font-weight: 500;
   margin-left: -25px;
@@ -431,7 +430,6 @@ label {
   display: -moz-box;
   display: -ms-flexbox;
   display: inline-block;
-  text-align: center;
   width: 90px;
   height: 50px;
   margin-left: 82px;

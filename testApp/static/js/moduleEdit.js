@@ -11,6 +11,7 @@ var ctx; //context of the canvas element, is 2d
 var image; //image to be displayed corresponding to substrates and products chosen
 var createBtn; //button hit after module settings are set (displays rxn in canvas)
 var saveBtn; //button hit after user is finished, send user back to model edit screen
+var backBtn;
 var clearBtn;
 var isReversible = false; //boolean that indicates if user wants rxn to be reversible or not
 var reversibleChoice; //variable to hold reversible radio buttons
@@ -38,16 +39,16 @@ var enzymeProds = [];
 var enzymeSubs = [];
 var enzymeReverse = [];
 
-var step1 = "Glucose+ATP>Hexokinase<Glucose-6-Phosphate+ADP;false";
-var step2 = "Glucose-6-Phosphate>Phosphoglucose isomerase<Fructose-6-Phosphate;true";
-var step3 = "Fructose-6-Phosphate+ATP>Phosphofructokinase<Fructose-1,6-bisphosphate+ADP;false";
-var step4 = "Fructose-1,6-bisphosphate>aldolase<Dihydroxyacetone Phosphate+Glyceraldehyde-3-Phosphate;true"
-var step5 = "Dihydroxyacetone Phosphate>Triosephosphate isomerase<Glyceraldehyde-3-Phosphate;true";
-var step6 = "Glyceraldehyde-3-Phosphate>Glyceraldehyde phosphate dehydrogenase<1,3-bisphoglycerate;true";
-var step7 = "1,3-bisphoglycerate>Phosphoglycerate kinase<3 phosphoglycerate;true";
-var step8 = "3 phosphoglycerate>Phosphoglycerate mutase<2 phosphoglycerate;true";
-var step9 = "2 phosphoglycerate>Enolase<Phosphoenolpyruvate;true";
-var step10 = "Phosphoenolpyruvate>Pyruvate kinase<Pyruvate;false";
+// var step1 = "Glucose+ATP>Hexokinase<Glucose-6-Phosphate+ADP;false";
+// var step2 = "Glucose-6-Phosphate>Phosphoglucose isomerase<Fructose-6-Phosphate;true";
+// var step3 = "Fructose-6-Phosphate+ATP>Phosphofructokinase<Fructose-1,6-bisphosphate+ADP;false";
+// var step4 = "Fructose-1,6-bisphosphate>aldolase<Dihydroxyacetone Phosphate+Glyceraldehyde-3-Phosphate;true"
+// var step5 = "Dihydroxyacetone Phosphate>Triosephosphate isomerase<Glyceraldehyde-3-Phosphate;true";
+// var step6 = "Glyceraldehyde-3-Phosphate>Glyceraldehyde phosphate dehydrogenase<1,3-bisphoglycerate;true";
+// var step7 = "1,3-bisphoglycerate>Phosphoglycerate kinase<3 phosphoglycerate;true";
+// var step8 = "3 phosphoglycerate>Phosphoglycerate mutase<2 phosphoglycerate;true";
+// var step9 = "2 phosphoglycerate>Enolase<Phosphoenolpyruvate;true";
+// var step10 = "Phosphoenolpyruvate>Pyruvate kinase<Pyruvate;false";
 
 //My guess is we'll need a similar construct like this in the DB
 //there will be 3 columns Enzyme name, product/substrate name/ and boolean indicating type (prod/sub)
@@ -74,7 +75,6 @@ var step10 = "Phosphoenolpyruvate>Pyruvate kinase<Pyruvate;false";
 
 //function to change reversible boolean depending on which reversible radio btn is set
 function onRadioReverseChange(){
-  //console.log("THIS IS TRIGGERED");
   if(reversibleChoice[0].checked){
     isReversible = true;
   }else{
@@ -92,8 +92,6 @@ function onRadioChange(){
   checkedProdsNames = [];
   checkedEnzsNames = []
 
-  console.log("substrates in onRadioChange");
-  console.log(substrates);
   for(var i = 0; i < substrates.length; i++){
     if(substrates[i].checked){
       countSubstrates++;
@@ -102,8 +100,6 @@ function onRadioChange(){
   }
   for(var j = 0; j < enzymes.length; j++){
     if(enzymes[j].checked){
-      console.log("ENZYMES[j]");
-      console.log(enzymes[j].value);
       checkedEnzsNames.push(enzymes[j].value);
     }
   }
@@ -168,19 +164,15 @@ function onRadioChanged(substrates, enzymes, products){
 //display image corresponding to substrates and products chosen
 function displayImage(xcoor, ycoor, name){
   if(name === "ADP" || name === "ATP"){
-    //console.log("ADP OR ATP");
+
   }else{
     var img = document.getElementById(name);
-    console.log(img);
-    console.log(name);
     ctx.drawImage(img, xcoor, ycoor, objectWidth, objectHeight);
   }
-  //console.log("image info  " + name + xcoor + ycoor);
 }
 
 //draw boxes for substrates and products and set text
 function drawObject(xcoor, ycoor, name){
-  //console.log(name);
   if(name === "ATP" || name === "ADP"){
     //xcoor = xcoor + (objectWidth / 2);
     ycoor = ycoor - (objectHeight / 2);
@@ -212,10 +204,7 @@ function drawDownArrow(xcoor, ycoor, name){
   ycoor = ycoor + objectHeight / 25;
   // ctx.fillText(name, xcoor , ycoor + objectBuffer); //This is for version without downwards arrow
   ctx.fillText(name, xcoor + 5 , ycoor + (objectHeight / 2));//This is for version with downwards arrow
-    //console.log("isREVERISBLE = " + isReversible);
   if(isReversible){
-    //console.log("MISTAKE");
-    //console.log("isREVERISBLE = " + isReversible);
     //xcoor = canvas1.width / 2;
     ctx.moveTo(xcoor, ycoor);
     ctx.lineTo(xcoor + (objectWidth / 4), ycoor + (objectHeight / 4));
@@ -290,14 +279,10 @@ function setInitialXCoor(count){
 }
 
 function drawSubstrates(currentX, currentY){
-  console.log("drawSubstrates");
   var name;
   var a;
-  console.log(checkedSubsNames);
   for(a = 0; a < checkedSubsNames.length; a++){
     name = checkedSubsNames[a];
-    console.log("drawSubstrates")
-    console.log(name);
     drawObject(currentX, currentY, name);
     if(checkedSubsNames.length > a + 1){
       drawPlus(currentX, currentY);
@@ -307,7 +292,6 @@ function drawSubstrates(currentX, currentY){
 }
 
 function drawProducts(currentX, currentY){
-  console.log("drawProducts");
   var name;
   var a;
   for(a = 0; a < checkedProdsNames.length; a++){
@@ -326,7 +310,6 @@ function displayReaction(){
   var currentX = horizontalBuffer;
   var currentY = verticalBuffer;
   currentX = currentX + setInitialXCoor(countSubstrates);
-  //console.log("COUNT SUBSTRATES = " + countSubstrates);
   drawSubstrates(currentX, currentY);
 
   currentY = currentY + objectHeight + verticalBuffer * 2; //for version with downwards arrow
@@ -337,50 +320,29 @@ function displayReaction(){
   currentX = horizontalBuffer;
   currentY = verticalBuffer * 5 + objectHeight * 2;
   currentX = currentX + setInitialXCoor(countProducts);
-  //console.log("COUNT SUBSTRATES = " + countProducts);
   drawProducts(currentX, currentY);
 }
 
 function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
-  //SOMETHING IS WRONG HERE
-  console.log("setReaction is called");
   var canBeChecked = false;
   var enzymeName = checkedEnzsNames[0];
-  console.log(enzymeName);
-  console.log("*****");
-  console.log(enzymeSubs);
-  console.log("*****");
   for(var i = 0; i < enzymeSubs.length; i++){
-    //for(var j = 1; j < enzymeSubs[i].length; j++){
-      console.log(enzymeSubs[i][1]);
-      console.log(enzymeName);
       if(enzymeSubs[i][1].toUpperCase() === enzymeName.toUpperCase()){
-        //console.log(enzymeSubs[i][j]);
-        console.log("SET checkedSubsNames");
-        //console.log("**********"+enzymeSubs[i],[j]);
         checkedSubsNames.push(enzymeSubs[i][0]);
         countSubstrates++;
         canBeChecked = true;
-      //}
     }
   }
   for(var i = 0; i < enzymeProds.length; i++){
-    //for(var j = 1; j < enzymeProds[i].length; j++){
       if(enzymeProds[i][1].toUpperCase() === enzymeName.toUpperCase()){
         checkedProdsNames.push(enzymeProds[i][0]);
         countProducts++;
       }
-    //}
   }
-  console.log(enzymeReverse);
-  console.log("&&&&&&&&&&&&&&&");
   for(var i = 0; i < enzymeReverse.length; i++){
-    console.log(enzymeReverse[i]);
     //for(var j = 1; j < enzymeReverse[i].length; j++){
       if(enzymeReverse[i][0].toUpperCase() === enzymeName.toUpperCase()){
-        console.log(enzymeReverse[i][1]);
         if(enzymeReverse[i][1]){
-          console.log("HERE");
           isReversible = true;
           reversibleChoice[0].checked = true;
         }else{
@@ -436,7 +398,6 @@ function clearAll(){
 }
 
 function checkSubsEnzProds(){
-  // console.log("IS REVERISBLE IES HEKRJ"+isReversible);
   for(var i = 0; i < substrates.length; i++){
     for(var j = 0; j < checkedSubsNames.length; j++){
       if(substrates[i].value === checkedSubsNames[j]){
@@ -456,15 +417,18 @@ function checkSubsEnzProds(){
       enzymes[i].checked = true;
     }
   }
-  //console.log("IS REVERSIBLE = " + isReversible)
   if(isReversible === "true"){
-    //console.log("CHECKING TRUE");
     reversibleChoice[0].checked = true;
   }else{
-    //console.log("CHECKING FALSE");
     reversibleChoice[1].checked = true;
   }
 }
+
+String.prototype.replaceAll = function(search, replacement) {
+  var target = this;
+  return target.split(search).join(replacement);
+};
+
 function setArraysRepresentingReaction(){
   countProducts = 0;
   countSubstrates = 0;
@@ -472,54 +436,39 @@ function setArraysRepresentingReaction(){
   checkedProdsNames = [];
   checkedEnzsNames = []
 
-  if(currentRxn === ""){
-    //console.log("CURRENT RXN + " + currentRxn);
+  console.log(myEnzymes);
+  console.log(myProducts);
+  console.log(mySubstrates);
+
+  console.log(currentRxn);
+
+  if(myEnzymes.length == 0){
     return false;
   }else{
-    var tmpArr = currentRxn.split(">");
-    var newArr = tmpArr[1].split("<");
-    var evenNewer = newArr[1].split(";");
-    // fullArr now contains
-    // [0]: substrates (inputs)
-    // [1]: enzyme
-    // [2]: products (outputs)
-    // [3]: reversible? (boolean)
-    var fullArr = [tmpArr[0], newArr[0], evenNewer[0], evenNewer[1]];
-    var subsArr = fullArr[0].split("+");
-    var prodArr = fullArr[2].split("+");
-    // console.log("Substrates: ");
-    // console.log(subsArr);
-    // console.log("Enzyme:");
-    // console.log(fullArr[1]);
-    // console.log("Products: ");
-    // console.log(prodArr);
-    // console.log("Reversible?: ");
-    // console.log(fullArr[3]);
-
-    for(var i = 0; i < subsArr.length; i++){
-      checkedSubsNames.push(subsArr[i]);
+    for(var i = 0; i < mySubstrates.length; i++){
+      checkedSubsNames.push(mySubstrates[i][0]);
       countSubstrates++;
     }
-    for(var i = 0; i < prodArr.length; i++){
-      checkedProdsNames.push(prodArr[i]);
+    for(var i = 0; i < myProducts.length; i++){
+      checkedProdsNames.push(myProducts[i][0]);
       countProducts++;
     }
-    checkedEnzsNames.push(fullArr[1]);
-    if(fullArr[3] === 'true'){
-      //console.log("SET IS REVERSIBLE TO TRUE");
-      isReversible = true;
-    }else if(fullArr[3] === 'false'){
-      //console.log("SET IS REVERSIBLE TO FALSE");
+    checkedEnzsNames.push(myEnzymes[0][0]);
+    if(myEnzymes[0][1] === 'irreversible'){
       isReversible = false;
+    }else if(myEnzymes[0][1] === 'reversible'){
+      isReversible = true;
     }
-    //console.log("IS REVERSIBLE IS SET TO " + isReversible);
     //Reset currentRxn string, since everything is pushed to the global variables
     currentRxn = "";
+    console.log(checkedEnzsNames);
+    console.log(checkedSubsNames);
+    console.log(checkedProdsNames);
+
     var continueDisplay = validateReaction();
 
     if(continueDisplay){
       checkSubsEnzProds();
-      //console.log("IS REVERSIBLE:" + isReversible);
       displayReaction();
     }else{
       modal.style.display = "block";
@@ -529,40 +478,56 @@ function setArraysRepresentingReaction(){
 }
 
 function validateReaction(){
-  console.log("validateReaction is called");
   //iterate through user selections and create string representation
   //this is done so that if it is a complete reaction (something from
   //every category is chosen) it can easily be compared to the known
   //reactions
-  console.log(checkedSubsNames);
-  console.log(checkedEnzsNames);
-  console.log(checkedProdsNames);
-  console.log("ABOVE validate RXN");
+  console.log(allModules);
+  console.log(allProds);
+  console.log(allSubs);
+  var validSubCount = 0;
+  var validProdCount = 0;
+  var validEnzCount = 0;
   for(var i = 0; i < checkedSubsNames.length; i++){
-    if(i === checkedSubsNames.length - 1){
-      currentRxn = currentRxn + checkedSubsNames[i] + ">";
-    }else {
-      currentRxn = currentRxn + checkedSubsNames[i] + "+";
+    for(var a = 0; a < allSubs.length; a++){
+      if(checkedSubsNames[i] === allSubs[a][0] && checkedEnzsNames[0] === allSubs[a][1]){
+        console.log("TRUE");
+        validSubCount++;
+      }else{
+        console.log("FALSE");
+      }
     }
   }
 
-  for(var j = 0; j < checkedEnzsNames.length; j++){
-    currentRxn = currentRxn + checkedEnzsNames[j] + "<";
+  for(var j = 0; j < allModules.length; j++){
+    if(allModules[j][0] === checkedEnzsNames[0]){
+      console.log("tRUE");
+      validEnzCount++;
+    }else{
+      console.log("fALSE");
+    }
   }
 
   for(var k = 0; k < checkedProdsNames.length; k++){
-    currentRxn = currentRxn + checkedProdsNames[k];
-    if(checkedProdsNames.length > k + 1){
-      currentRxn = currentRxn + "+";
+    for(var c = 0; c < allProds.length; c++){
+      if(checkedProdsNames[k] === allProds[c][0] && checkedEnzsNames[0] === allProds[c][1]){
+        console.log("TRUe");
+        validProdCount++;
+      }else{
+        console.log("FALSe");
+      }
     }
   }
-  currentRxn = currentRxn + ";" + isReversible;
-  //console.log("THE CURRENT REACTION ***" + currentRxn + "*******");
+  console.log(validProdCount);
+  console.log(countProducts);
+  console.log(validSubCount);
+  console.log(countSubstrates);
+  console.log(validEnzCount);
+  console.log(checkedEnzsNames.length);
 
   if(countProducts > 5 || countSubstrates > 5 || checkedEnzsNames.length === 0 ){
     //settings are invalid, user is limited to 5 products and 5 substrates and an
     //enzyme must be selected
-    //console.log("INVALID");
     ctx.fillStyle = "tomato";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
 
@@ -576,16 +541,14 @@ function validateReaction(){
   }else if(countSubstrates === 0 || countProducts === 0){
     //settings are invalid, cannot have selected some products and
     //no substrates or some substrates and no products
-    //console.log("INVALID");
     ctx.fillStyle = "tomato";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
 
     return false;
 
-  }else if(step1 === currentRxn || step2 === currentRxn || step3 === currentRxn || step4 === currentRxn
-        || step5 === currentRxn || step6 === currentRxn || step7 === currentRxn || step8 === currentRxn
-        || step9 === currentRxn || step10 === currentRxn){
-    //Reaction is valid
+  }else if(countProducts === validProdCount && countSubstrates === validSubCount && validEnzCount === checkedEnzsNames.length){
+  //   //Reaction is valid
+    console.log("GOOGLE");
     ctx.fillStyle = "limegreen";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
 
@@ -600,33 +563,46 @@ function validateReaction(){
 }
 
 function createErrorCheckArrays() {
-  console.log("createErrorCheckArrays");
-  console.log(allSubs);
-  console.log(allProds);
+
   enzymeSubs = allSubs;
   enzymeProds = allProds;
-  console.log(allModules);
   for(var k = 0; k < allModules.length; k++){
     var isReversible = false;
     if(allModules[k][1] == "reversible"){
       isReversible = true;
     }
     var str = allModules[k][0];
-    var newStr = str.replace(/_/,' ');
-    enzymeReverse.push([newStr, isReversible, allModules[k][2], allModules[k][3]]);
+    enzymeReverse.push([str, isReversible, allModules[k][2], allModules[k][3]]);
   }
   console.log(enzymeSubs);
   console.log(enzymeProds);
-  console.log("@@@@@@@");
   console.log(enzymeReverse);
-  console.log("@@@@@@@");
+}
 
+function enableAndDisableBtns() {
+  //check if model is public
+
+}
+
+function replaceUnderscores(){
+  for(var i = 0; i < myEnzymes.length; i++){
+    myEnzymes[i][0] = myEnzymes[i][0].replaceAll(/_/,' ');
+  }
+  for(var j = 0; j < mySubstrates.length; j++){
+    mySubstrates[j][0] = mySubstrates[j][0].replaceAll(/_/,' ');
+  }
+  for(var k = 0; k < myProducts.length; k++){
+    myProducts[k][0] = myProducts[k][0].replaceAll(/_/,' ');
+  }
 }
 
 window.onload = function init(){
 
+  console.log(allModules);
+
   if(allModules.length != 0){
     createErrorCheckArrays();
+    replaceUnderscores();
   }else{
     //error checking is disabled
   }
@@ -640,6 +616,7 @@ window.onload = function init(){
   image  = document.getElementById("step1");
   createBtn = document.getElementById("createReaction");
   saveBtn = document.getElementById("saveReaction");
+  backBtn = document.getElementById("backBtn");
   clearBtn = document.getElementById("clearReaction");
   weightSliderValue = document.getElementById('weightSliderValue');
   submitWeightBtn = document.getElementById('submitWeight');
@@ -650,14 +627,13 @@ window.onload = function init(){
   var saveBtnClicked = false;
   //SET CURRENT REACTION TO STRING FROM MODEL EDIT SCREEN HERE
   var fromModel = localStorage.getItem("reactionClicked");
-  //console.log("LOCAL STORAGE FROM MODEL EDIT ");
-  //console.log(fromModel);
-  currentRxn = step3;//set currentRxn to dummy value
+
+  enableAndDisableBtns();
+  //currentRxn = step3;//set currentRxn to dummy value
   setArraysRepresentingReaction();//function to set the arrays to currentRxn and call values to display/validate
 
 
   createBtn.addEventListener("click", function(event){
-    console.log("create button is clicked");
     //reset global variables
     currentRxn = "";
     //clear everything out of canvas on button click so we can draw new rxn
@@ -671,7 +647,6 @@ window.onload = function init(){
 
     //the settings are valid so display as usual
     if(continueDisplay){
-      //console.log("IS REVERSIBLE:" + isReversible);
       displayReaction();
     }else{
       modal.style.display = "block";
@@ -681,15 +656,11 @@ window.onload = function init(){
   });
 
   saveBtn.addEventListener("click", function(event){
-    //if(saveBtnClicked){
-      //saveBtn.style.background = '#4CAF50'
-      //saveBtnClicked = false;
       localStorage.setItem("currentRxn",currentRxn);
-      document.location.href = 'modelEdit';
-    //}else{
-    //  saveBtn.style.background = '#000000';
-    //  saveBtnClicked = true;
-    //}
+  });
+
+  backBtn.addEventListener("click", function(event){
+    document.location.href = '/testApp/modelEdit/'+myEnzymes[0][2];
   });
 
   clearBtn.addEventListener("click", function(event){
@@ -723,25 +694,6 @@ window.onload = function init(){
     }
   }
 
-//not currently important
-  // canvas1.addEventListener("click", function (event) {
-  //     let mousePosition = getMousePosition(canvas1, event);
-  //     let rectNum = (Math.floor(mousePosition.x / 100) + Math.floor(mousePosition.y / objectWidth) * 8) - 15;
-  //     let rectClicked = document.getElementById("rectClicked");
-  // });
-
-//button to submit value entered in weight value text box
-//and set slider accordingly
- //  submitWeightBtn.addEventListener("click", function(event) {
- //    var val = weightSliderValue.value;
- //    //verify that value entered is valid and within range
- //    if(val >= -1.0 && val <= 1.0){
- //      weightSlider.value=val;
- //    }else{
- //      weightSliderValue.value=0.0;
- //      weightSlider.value = 0.0;
- //    }
- // });
 }
 function main () {
 

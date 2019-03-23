@@ -11,11 +11,60 @@ button {
     background: transparent;
 }
 
+<<<<<<< HEAD
+.viewAndCreateReaction {
+=======
+#irreversibleID {
+
+}
+
 .viewAndCreateReaction {
     position: absolute;
     height: 100%;
     width: 100%;
     padding: 2%;
+
+
+}
+
+.formdiv {
+
+}
+
+.container-login100 {
+    width: 100%;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-items: left;
+    padding: 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    z-index: 1;
+    background-color: rgba(255,255,255,0.5);
+}
+
+.container-login100::before {
+    content: "";
+    display: block;
+>>>>>>> 8b1b3539260b66ce39016238f4cae1f290022a1b
+    position: absolute;
+    height: 100%;
+<<<<<<< HEAD
+    width: 100%;
+    padding: 2%;
+=======
+    top: 0;
+    left: 0;
+    background-color: rgba(255,255,255,0.5);
+>>>>>>> 8b1b3539260b66ce39016238f4cae1f290022a1b
 }
 
 .wrap-login100 {
@@ -31,7 +80,11 @@ button {
     align-content:center;
 }
 #subsContainer, #prodsContainer, #enzsContainer{
+<<<<<<< HEAD
   width: 100%; /* makes them stack */
+=======
+  width: 80%; /* makes them stack */
+>>>>>>> 8b1b3539260b66ce39016238f4cae1f290022a1b
   border-radius: 5%;
   height: 170px;
   border: 5px;
@@ -94,8 +147,12 @@ ul#substrates{
     background-color: #4CAF50;
     border: 1px solid white;
     color: white;
+<<<<<<< HEAD
     width: 39.4%;
 
+=======
+    width: 38%;
+>>>>>>> 8b1b3539260b66ce39016238f4cae1f290022a1b
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -108,8 +165,11 @@ ul#substrates{
 .createReaction {
     border: 1px solid white;
     background-color: #4CAF50; /* Green */
+<<<<<<< HEAD
     height: 57.8px;
     margin-top: 3%;
+=======
+>>>>>>> 8b1b3539260b66ce39016238f4cae1f290022a1b
     color: white;
     width: 16.15%;
     padding: 2% 2% 2% 2%;
@@ -119,16 +179,27 @@ ul#substrates{
     display: inline-block;
     margin-left: 1%;
     font-size: 16px;
+<<<<<<< HEAD
     margin-right: 1.5%;
     
     
+=======
+    margin-right: 2%;
+
+
+>>>>>>> 8b1b3539260b66ce39016238f4cae1f290022a1b
 }
 .saveModuleForm {
     float: left;
     padding-left: 15px;
     height: 550px;
+<<<<<<< HEAD
     width: 34.85%;
     
+=======
+    width: 34%;
+
+>>>>>>> 8b1b3539260b66ce39016238f4cae1f290022a1b
 }
 
 .saveReaction {
@@ -144,9 +215,15 @@ ul#substrates{
     margin-top: 2%;
 }
 
+<<<<<<< HEAD
 .clearReaction {
     border: 1px solid white;
     background-color: #4CAF50; /* Green */
+=======
+.backBtn {
+  border: 1px solid white;
+  background-color: #4CAF50; /* Green */
+>>>>>>> 8b1b3539260b66ce39016238f4cae1f290022a1b
     color: white;
     padding: 2% 2% 2% 2%;
     width: 16.15%;
@@ -160,6 +237,22 @@ ul#substrates{
     
 }
 
+<<<<<<< HEAD
+=======
+.clearReaction {
+    border: 1px solid white;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    padding: 2% 2% 2% 2%;
+
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+
+}
+
+>>>>>>> 8b1b3539260b66ce39016238f4cae1f290022a1b
 .createReaction, .saveReaction, .clearReaction{
   float: left;
   display: inline-block;
@@ -189,7 +282,11 @@ ul#substrates{
     background-color: white;
     border-radius: 5%;
     float: left;
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 8b1b3539260b66ce39016238f4cae1f290022a1b
 }
 
 /* The Modal (background) */

@@ -53,11 +53,17 @@ def moduleEdit(request, model, module):
 	myMod = Module.objects.all().filter(pk = module)
 	mySubs = Substrates.objects.all().filter(moduleID_id__exact = module)
 	myProds = Products.objects.all().filter(moduleID_id__exact = module)
-	myModel = Model.objects.filter(pk = model).values('public')
+	myModel = Model.objects.filter(pk = model)
+	print("HERKJEKFJKDF")
 	for value in myModel:
-		result = value
+		print(value)
+		currentModelName = value.modelName
+		result = value.public
 
-	if(result.get("public")):
+	print(result)
+	print(currentModelName)
+
+	if(result):
 		allmodules = Module.objects.all().filter(modelID_id__exact = model).values('enzyme', 'enzymeAbbr', 'reversible', 'id')
 		allsubs = Substrates.objects.select_related('moduleID').all()
 		allprods = Products.objects.select_related('moduleID').all()
@@ -72,20 +78,51 @@ def moduleEdit(request, model, module):
 		for value in allprods:
 			currentProdDict = {"product": value.product, "enzyme": value.moduleID.enzyme, "abbr": value.abbr}
 			listOfProds.append(currentProdDict)
+	else:
+		print("KDJFKDFKDJFKDJF")
+		publicModel = Model.objects.all().filter(modelName = currentModelName, public = True)
+		for mod in publicModel:
+			publicMod = mod
+		print(publicMod)
+		print(publicMod.id)
+		print("$$$$$$$$$$")
+		allmodules = Module.objects.all().filter(modelID_id__exact = publicMod.id).values('enzyme', 'enzymeAbbr', 'reversible', 'id')
+		allsubs = Substrates.objects.select_related('moduleID').filter(modelID = publicMod.id)
+		allprods = Products.objects.select_related('moduleID').filter(modelID = publicMod.id)
+
+		print(allsubs)
+		print("******************")
+		print(allprods)
+		print("******************")
+		print(allmodules)
+		print("******************")
+		listOfSubs = []
+		listOfProds = []
+
+		for value in allsubs:
+			currentSubDict = {"substrate": value.substrate, "enzyme": value.moduleID.enzyme, "abbr": value.abbr}
+			listOfSubs.append(currentSubDict)
+
+		for value in allprods:
+			currentProdDict = {"product": value.product, "enzyme": value.moduleID.enzyme, "abbr": value.abbr}
+			listOfProds.append(currentProdDict)
+
+		print(listOfSubs)
+		print(listOfProds)
 
 	if request.method == 'POST':
 		new_enzyme = request.POST.get("Enzyme")
 		new_reversible = request.POST.get("reversibleChoice")
-		post = Module(modelID_id=2, enzyme=new_enzyme, reversible=new_reversible)
+		post = Module(modelID_id=99, enzyme=new_enzyme, reversible=new_reversible)
 		post.save()
 		for key, values in request.POST.lists():
 			if (key == "Product"):
 				for i in range(len(values)):
-					prods = Products(moduleID_id=2, product=values[i])
+					prods = Products(moduleID_id=99, product=values[i])
 					prods.save()
 			if (key == "Substrate"):
 				for i in range(len(values)):
-					subs = Substrates(moduleID_id=2, substrate=values[i])
+					subs = Substrates(moduleID_id=99, substrate=values[i])
 					subs.save()
 
 		return HttpResponseRedirect("/testApp/modelEdit/" + str(model))

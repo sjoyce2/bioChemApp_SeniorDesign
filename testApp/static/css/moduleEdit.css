@@ -12,7 +12,7 @@ button {
 }
 
 #irreversibleID {
-    
+
 }
 
 .viewAndCreateReaction {
@@ -20,12 +20,12 @@ button {
     height: 100%;
     width: 100%;
     padding: 2%;
-    
+
 
 }
 
 .formdiv {
-    
+
 }
 
 .container-login100 {
@@ -45,6 +45,7 @@ button {
     background-size: cover;
     position: relative;
     z-index: 1;
+    background-color: rgba(255,255,255,0.5);
 }
 
 .container-login100::before {
@@ -56,7 +57,7 @@ button {
     height: 100%;
     top: 0;
     left: 0;
-    background-color: rgba(255,255,255,0.9);
+    background-color: rgba(255,255,255,0.5);
 }
 
 .wrap-login100 {
@@ -145,18 +146,31 @@ ul#substrates{
     margin-left: 1%;
     font-size: 16px;
     margin-right: 2%;
-    
-    
+
+
 }
 .saveModuleForm {
     float: left;
     padding-left: 15px;
     height: 550px;
     width: 34%;
-    
+
 }
 
 .saveReaction {
+  border: 1px solid white;
+  background-color: #4CAF50; /* Green */
+    color: white;
+    padding: 2% 2% 2% 2%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-right: 2%;
+    margin-top: 2%;
+}
+
+.backBtn {
   border: 1px solid white;
   background-color: #4CAF50; /* Green */
     color: white;
@@ -179,7 +193,7 @@ ul#substrates{
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    
+
 }
 
 .createReaction, .saveReaction, .clearReaction{
@@ -211,7 +225,7 @@ ul#substrates{
     background-color: white;
     border-radius: 5%;
     float: left;
-    
+
 }
 
 /* The Modal (background) */

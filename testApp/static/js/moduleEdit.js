@@ -423,6 +423,12 @@ function checkSubsEnzProds(){
     reversibleChoice[1].checked = true;
   }
 }
+
+String.prototype.replaceAll = function(search, replacement) {
+  var target = this;
+  return target.split(search).join(replacement);
+};
+
 function setArraysRepresentingReaction(){
   countProducts = 0;
   countSubstrates = 0;
@@ -566,8 +572,7 @@ function createErrorCheckArrays() {
       isReversible = true;
     }
     var str = allModules[k][0];
-    var newStr = str.replace(/_/,' ');
-    enzymeReverse.push([newStr, isReversible, allModules[k][2], allModules[k][3]]);
+    enzymeReverse.push([str, isReversible, allModules[k][2], allModules[k][3]]);
   }
   console.log(enzymeSubs);
   console.log(enzymeProds);
@@ -579,12 +584,25 @@ function enableAndDisableBtns() {
 
 }
 
+function replaceUnderscores(){
+  for(var i = 0; i < myEnzymes.length; i++){
+    myEnzymes[i][0] = myEnzymes[i][0].replaceAll(/_/,' ');
+  }
+  for(var j = 0; j < mySubstrates.length; j++){
+    mySubstrates[j][0] = mySubstrates[j][0].replaceAll(/_/,' ');
+  }
+  for(var k = 0; k < myProducts.length; k++){
+    myProducts[k][0] = myProducts[k][0].replaceAll(/_/,' ');
+  }
+}
+
 window.onload = function init(){
 
   console.log(allModules);
 
   if(allModules.length != 0){
     createErrorCheckArrays();
+    replaceUnderscores();
   }else{
     //error checking is disabled
   }

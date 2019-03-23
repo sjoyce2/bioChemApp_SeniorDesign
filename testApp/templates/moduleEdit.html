@@ -33,6 +33,10 @@
 				allModules.push(['{{ mod.enzyme }}', '{{mod.reversible}}', '{{mod.enzymeAbbr}}', '{{mod.id}}']);
 		{% endfor %}
 
+		var isPublic = false;
+		isPublic = '{{isPublic}}';
+
+		console.log(isPublic);
 		console.log(allProds);
 		console.log(allSubs);
 		console.log(allModules);

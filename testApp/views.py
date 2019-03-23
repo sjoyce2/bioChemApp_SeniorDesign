@@ -63,6 +63,8 @@ def moduleEdit(request, model, module):
 	print(result)
 	print(currentModelName)
 
+	isPublic = result;
+
 	if(result):
 		allmodules = Module.objects.all().filter(modelID_id__exact = model).values('enzyme', 'enzymeAbbr', 'reversible', 'id')
 		allsubs = Substrates.objects.select_related('moduleID').all()
@@ -133,7 +135,8 @@ def moduleEdit(request, model, module):
 				   'products' : myProds,
 				   'allmodules' : allmodules,
 				   'allprods' : listOfProds,
-				   'allsubs' : listOfSubs
+				   'allsubs' : listOfSubs,
+				   'isPublic' : isPublic
 				  }
 		return render(request, 'moduleEdit.html', context=context)
 

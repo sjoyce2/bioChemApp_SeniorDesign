@@ -34,6 +34,7 @@ var myProducts;
 var allProds;
 var allSubs;
 var allModules;
+var isPublic;
 //above from database
 var enzymeProds = [];
 var enzymeSubs = [];
@@ -580,8 +581,16 @@ function createErrorCheckArrays() {
 }
 
 function enableAndDisableBtns() {
+  console.log("HEKRJK");
   //check if model is public
-
+  if(isPublic === 'True'){
+    console.log("the model is public");
+    //disable saveBtn
+    saveBtn.disabled = "disabled";
+    saveBtn.style.visibility="hidden";
+  }else{
+    console.log("the model is private");
+  }
 }
 
 function replaceUnderscores(){

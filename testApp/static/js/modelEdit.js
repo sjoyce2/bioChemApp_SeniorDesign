@@ -1,10 +1,7 @@
-var x;
-var y;
+'use strict'
+
 var firstRectMidX;
 var firstRectMidY;
-var endY;  //depricated
-var direction = 1; //depricated
-var speed; //how fast the "molecule" is flowing through the pathway
 
 var canv = document.getElementById("modelEditCanvas");
 var modelDiv = document.getElementById("modelEditDiv");
@@ -16,6 +13,7 @@ var lastY;
 var marginLeft = -(divWidth/2 - canv.width/2);
 console.log(divWidth, canv.width, marginLeft)
 var marginTop = 0;
+var positionChange = 5
 
 // Instead of these, we need a list of enzymes and a corresponding 2d list
 // for products and another for substrates
@@ -25,9 +23,8 @@ var productList = [];
 var revList = [];
 var xCoords = [];
 var yCoords = [];
-var en1weight = 2;
-var en2weight = 9;
-var en3weight = 1;
+var dotPositions = []; //For each module, the (x, y) position of the "dot" representing the flow
+var directions = [];
 var db_modules = JSON.parse(document.getElementById('db-modules').textContent);
 var db_substrates = JSON.parse(document.getElementById('db-substrates').textContent);
 var db_products = JSON.parse(document.getElementById('db-products').textContent);
@@ -215,48 +212,80 @@ function revStep(firstText, secondText, enzyme, firstRectMidX, firstRectMidY,
 //changes by a consistent value each time but the horizontal
 //position can change if it is following a non-reversible reaction
 //TODO: Fix this equation
-function getDotPos(newY, firstRectMidY, firstRectMidX) {
-    var arrayPos = Math.floor((newY - firstRectMidY) / 100);
-    if (!revList[arrayPos]) {
-        x = firstRectMidX + Math.sqrt(-1 * Math.pow((newY - firstRectMidY) - 50 - (100 * arrayPos), 2) + 2500);
+function getDotPos(moduleNumber) {
+    //find whether module is reversible
+    //find module start and end positions
+    //if irreversible:
+        //semicircular path
+    //else:
+        //if startX == endX:
+            //vertical path
+        //else:
+            //if startY == endY:
+                //horizontal path
+            //else:
+                //weird path
+    var startX = xCoords[moduleNumber];
+    var startY = yCoords[moduleNumber];
+    var endX;
+    var endY;
+    var x;
+    var y;
+    if (moduleNumber == xCoords.length - 1) {
+        endX = xCoords[moduleNumber];
+        endY = yCoords[moduleNumber] + 1;
     } else {
-        x = firstRectMidX - 50;
+        endX = xCoords[moduleNumber + 1];
+        endY = yCoords[moduleNumber + 1];
     }
-    return x;
+    var revMod = revList[moduleNumber];
+    if (revMod == "irreversible") {
+        if (dotPositions[moduleNumber][0] < (startX+50)) {
+            if (dotPositions[moduleNumber][1] == startY) {
+                dotPositions[moduleNumber][0] += directions[moduleNumber] * positionChange;
+            } else {
+                dotPositions[moduleNumber][0] -= directions[moduleNumber] * positionChange;
+            }
+        } else {
+            dotPositions[moduleNumber][0] += directions[moduleNumber] * 
+                50 * Math.sin(positionChange / 50);
+            dotPositions[moduleNumber][1] += directions[moduleNumber] * 
+                50 * (1 - Math.cos(positionChange / 50));
+        }
+    } else {
+        if (startX == endX) { //vertical
+            dotPositions[moduleNumber][1] += directions[moduleNumber] * positionChange;
+        } else {
+            if (startY == endY) { //horizontal
+                dotPositions[moduleNumber][0] += directions[moduleNumber] * positionChange;
+            } else { //weird
+                var midPoint = (yCoords[moduleNumber] * 100) + 25;
+                if (dotPositions[moduleNumber][1] >= midPoint) {
+                    //TODO: Split into two dots
+                } else {
+                    dotPositions[moduleNumber][1] += directions[moduleNumber] * positionChange;
+                }
+            }
+        }
+    }
+    if (dotPositions[moduleNumber][1] >= endY && dotPositions[moduleNumber][0] >= endX) {
+        directions[moduleNumber] = -1;
+    } else if (dotPositions[moduleNumber][1] <= startY && dotPositions[moduleNumber][0] <= startX) {
+        directions[moduleNumber] = 1;
+    }
 }
 
 //Sets the speed of the molecule given the weight and enzyme speed for the
 //reaction it is currently in
-
-//TODO: Fix this
-function setSpeed(enzymeName, weight) {
-    if (enzymeName === "") {
-        speed = 1;
-        return 0;
-    } else {
-        var enzymeSpeed = parseInt(document.getElementById(enzymeName).value);
-        speed = weight * (enzymeSpeed / 50);
-        return 1;
-    }
-}
 
 //startX, startY, endX, endY all floats
 //stepOrder: array of strings, direction is 1 or -1
 
 //TODO: Fix this
 function animate() {
-    if (y < firstRectMidY + 0.0 || y >= endY) {
-        y = firstRectMidY;
+    for (var i = 0; i < enzymeList.length; i++) {
+        getDotPos(i);
     }
-    if (y >= firstRectMidY && y < firstRectMidY + 200.0) {
-        setSpeed(enzyme1, en1weight);
-    } else if (y >= firstRectMidY + 200.0 && y < firstRectMidY + 400.0) {
-        setSpeed(enzyme2, en2weight);
-    } else {
-        setSpeed("", 1);
-    }
-    y += 0.25 * direction * speed;
-    x = getDotPos(y, firstRectMidY, firstRectMidX);
     render();
     window.requestAnimationFrame(animate);
 }
@@ -271,7 +300,7 @@ function render() {
     for (var i = 0; i < enzymeList.length; i++) {
         //set speed
         if (i == 0) {
-            firstRectMidX = xCoords[i] * 75 + (canvas.clientWidth / 2 + 50)
+            firstRectMidX = xCoords[i] * 75 + (canvas.clientWidth / 2 + 50);
             firstRectMidY = yCoords[i] * 100;
         }
         if (revList[i] == "reversible") {
@@ -281,8 +310,8 @@ function render() {
                 nextX = xCoords[i+1] * 75 + (canvas.clientWidth / 2 + 50);
                 nextY = yCoords[i+1] * 100;
             } else {
-                nextX = null
-                nextY = null
+                nextX = xCoords[i] * 75 + (canvas.clientWidth / 2 + 50);
+                nextY = yCoords[i] * 100;
             }
             revStep(substrateList[i][0], productList[i][0], enzymeList[i], 
                 xCoords[i] * 75 + (canvas.clientWidth / 2 + 50), yCoords[i] * 100, 
@@ -293,39 +322,47 @@ function render() {
                 ctx);
         }
     }
-    endY = firstRectMidY + 390.0;
     ctx.stroke();
     ctx.closePath();
     ctx.beginPath();
     ctx.fillStyle = "blue";
-    ctx.moveTo(x + 5, y);
-    ctx.arc(x, y, 5, 0, 2 * Math.PI);
+    for (var i = 0; i < dotPositions.length; i++) {
+        ctx.moveTo(dotPositions[i][0] + 5, dotPositions[i][1]);
+        ctx.arc(dotPositions[i][0], dotPositions[i][1], 5, 0, 2 * Math.PI);
+    }
     ctx.fill();
+    ctx.stroke();
 }
 
 function convertIdToText(id) {
-    stringArr = id.split("_");
-    textStr = stringArr.join(" ");
+    var stringArr = id.split("_");
+    var textStr = stringArr.join(" ");
     return textStr;
 }
 
 function convertTextToId(text) {
-    txtArr = text.split(" ");
-    idStr = txtArr.join("_");
+    var txtArr = text.split(" ");
+    var idStr = txtArr.join("_");
     return idStr;
 }
 
 //resets values of sliders on page (re)load
 function reset() {
-    for (i=0; i<db_modules.length; i++) {
-        if (db_modules[i].modelID_id == 1) {
-            var enSlider = document.getElementById(db_modules[i].enzyme);
-            enSlider.value = "50";
-            numId = db_modules[i].enzyme + "Value";
-            enSlider.oninput = function() {
-                sliderId = convertTextToId(this.id) + "Value";
-                document.getElementById(sliderId).innerHTML = this.value;
+    var canvas = document.getElementById("modelEditCanvas");
+    for (var i=0; i<db_modules.length; i++) {
+        if (db_modules[i].modelID_id == modelNum) {
+            if (db_modules[i].reversible == 'irreversible') {
+                var enSlider = document.getElementById(db_modules[i].enzyme);
+                enSlider.value = "50";
+                var numId = db_modules[i].enzyme + "Value";
+                enSlider.oninput = function() {
+                    sliderId = convertTextToId(this.id) + "Value";
+                    document.getElementById(sliderId).innerHTML = this.value;
+                }
             }
+            dotPositions.push([db_modules[i].xCoor * 75 + (canvas.clientWidth / 2),
+                db_modules[i].yCoor * 100])
+            directions.push(1);
         }
     }
 }
@@ -355,22 +392,22 @@ function parseThrough(stringToParse) {
 }
 
 function addValues() {
-    for (i=0; i<db_modules.length; i++) {
-        if (db_modules[i].modelID_id == 1) {
+    for (var i=0; i<db_modules.length; i++) {
+        if (db_modules[i].modelID_id == modelNum) {
             var moduleNum = db_modules[i].id
             enzymeList.push(db_modules[i].enzymeAbbr)
             revList.push(db_modules[i].reversible)
             xCoords.push(db_modules[i].xCoor)
             yCoords.push(db_modules[i].yCoor)
             var subList = []
-            for (j=0; j<db_substrates.length; j++) {
+            for (var j=0; j<db_substrates.length; j++) {
                 if (db_substrates[j].moduleID_id == moduleNum) {
                     subList.push(db_substrates[j].abbr)
                 }
             }
             substrateList.push(subList)
             var prodList = []
-            for (j=0; j<db_products.length; j++) {
+            for (var j=0; j<db_products.length; j++) {
                 if (db_products[j].moduleID_id == moduleNum) {
                     prodList.push(db_products[j].abbr)
                 }
@@ -381,19 +418,19 @@ function addValues() {
 }
 
 function createSliders() {
-    for (i=0; i<db_modules.length; i++) {
-        if (db_modules[i].modelID_id == modelNum) {
-            sliderHolder = document.getElementById("slider-holder");
-            varHolder = document.createElement('div');
+    for (var i=0; i<db_modules.length; i++) {
+        if (db_modules[i].modelID_id == modelNum && db_modules[i].reversible == 'irreversible') {
+            var sliderHolder = document.getElementById("slider-holder");
+            var varHolder = document.createElement('div');
             varHolder.setAttribute("class", "variable-holder");
-            enzLabel = document.createElement('label');
+            var enzLabel = document.createElement('label');
             enzLabel.setAttribute("for", db_modules[i].enzyme);
             enzLabel.innerHTML = convertIdToText(db_modules[i].enzyme);
             varHolder.appendChild(enzLabel);
-            inner = document.createElement('div');
+            var inner = document.createElement('div');
             inner.setAttribute("class", "inner-flex-horiz");
             //Set slider attributes
-            inputItem = document.createElement('input');
+            var inputItem = document.createElement('input');
             inputItem.setAttribute("type", "range");
             inputItem.setAttribute("min", "0");
             inputItem.setAttribute("max", "100");
@@ -402,11 +439,11 @@ function createSliders() {
             inputItem.setAttribute("class", "variables");
             inputItem.setAttribute("id", db_modules[i].enzyme);
             inner.appendChild(inputItem);
-            header = document.createElement('h4');
+            var header = document.createElement('h4');
             header.setAttribute("id", db_modules[i].enzyme + "Value");
             header.innerHTML = "50";
             inner.appendChild(header);
-            editButton = document.createElement('a');
+            var editButton = document.createElement('a');
             editButton.innerHTML = "Edit";
             var url = "/testApp/moduleEdit/" + modelNum + "/" + (i + 1);
             editButton.setAttribute("href", url);
@@ -420,16 +457,9 @@ function createSliders() {
 function main () {
     createSliders();
     reset();
-    //get data from database
-    //get data from localStorage.getItem("currentRxn")
-    localStorage.setItem("reactionClicked", "-1")
-    var stringToParse = localStorage.getItem('currentRxn');
-    var reaction = parseThrough(stringToParse);
     addValues();
-    x = 0;
-    y = 0;
     render();
-    //window.requestAnimationFrame(animate); //TODO: Fix animate() so we can use this
+    window.requestAnimationFrame(animate);
 }
 
 

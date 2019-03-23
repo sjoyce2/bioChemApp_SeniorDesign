@@ -74,20 +74,22 @@ button {
   height: 170px;
   border: 5px;
   border-style: solid;
-  border-color:  #fefefe;
+  border-color: rgba(255,255,255,0.9);
   display: inline-block;
   overflow: hidden;
 }
 #prodsLabel, #enzsLabel, #subsLabel{
   display: inline-block;
   font-size: 25px;
-  color: white;
-  padding-left: 1%;
+  color: rgb(25,25,25);
+  margin-left: 1%;
+  border-bottom: 2px solid;
+  border-bottom-color: black;
+  
 }
 .subs, .enzs, .prods {
     width: 100%;
     padding-left: 1%;
-    color: rgb(240,234)
 }
 
 ul#products{
@@ -124,8 +126,10 @@ ul#substrates{
 .container {
   float: left;
   clear: none;
+  color: rgb(25,25,25);
   display: block;
   padding: 2% 1% 0 0;
+  
 }
 
 .reversibleChoice {

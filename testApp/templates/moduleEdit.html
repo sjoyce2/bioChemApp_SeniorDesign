@@ -63,19 +63,22 @@
 														for(var i = 0; i < allSubs.length; i++){
 															console.log("BELOW");
 															console.log(document.getElementById(allSubs[i][0]+"SubId"));
+															String.prototype.replaceAll = function(search, replacement) {
+																var target = this;
+																return target.split(search).join(replacement);
+															};
+															var str = allSubs[i][0];
+															var newStr = str.replaceAll(/_/,' ');
+															var enzymeStr = allSubs[i][1];
+															var newEnz = enzymeStr.replaceAll(/_/,' ');
+															allSubs[i][1] = newEnz;
+															allSubs[i][0] = newStr;
+															console.log("****************");
+															console.log(newStr);
+															console.log(newEnz);
 															if(document.getElementById(allSubs[i][0]+"SubId") === null){
 																console.log("Does not exist");
 																console.log(allSubs[i][0]);
-																String.prototype.replaceAll = function(search, replacement) {
-																	var target = this;
-    															return target.split(search).join(replacement);
-																};
-																var str = allSubs[i][0];
-														    var newStr = str.replaceAll(/_/,' ');
-																var enzymeStr = allSubs[i][1];
-																var newEnz = enzymeStr.replaceAll(/_/,' ');
-																allSubs[i][1] = newEnz;
-																allSubs[i][0] = newStr;
 																var newlabel = document.createElement("Label");
 																newlabel.innerHTML = newStr;
 																newlabel.className = "container";
@@ -87,6 +90,8 @@
 																newcheckbox.setAttribute("name", "Substrate");
 																newlabel.appendChild(newcheckbox);
 																document.getElementById("substrates").appendChild(newlabel);
+																console.log("SUBS");
+																console.log(allSubs);
 															}
 														}
 													</script>
@@ -101,18 +106,18 @@
 														for(var i = 0; i < allModules.length; i++){
 															console.log("BELOW");
 															console.log(document.getElementById(allModules[i][0]+"EnzId"));
+															String.prototype.replaceAll = function(search, replacement) {
+																var target = this;
+																return target.split(search).join(replacement);
+															};
+															var str = allModules[i][0];
+															var newStr = str.replaceAll(/_/,' ');
+															allModules[i][0] = newStr;
+															console.log("****************");
+															console.log(newStr);
 															if(document.getElementById(allModules[i][0]+"EnzId") === null){
 																console.log("Does not exist");
 																console.log(allModules[i][0]);
-																//function to replace all underscores in the string
-																String.prototype.replaceAll = function(search, replacement) {
-																	var target = this;
-    															return target.split(search).join(replacement);
-																};
-																var str = allModules[i][0];
-														    var newStr = str.replaceAll(/_/,' ');
-																allModules[i][0] = newStr;
-																console.log(newStr);
 																var newlabel = document.createElement("Label");
 																newlabel.innerHTML = newStr;
 																newlabel.className = "container";
@@ -124,6 +129,8 @@
 																newcheckbox.setAttribute("name", "Enzyme");
 																newlabel.appendChild(newcheckbox);
 																document.getElementById("enzymes").appendChild(newlabel);
+																console.log("MODULES");
+																console.log(allModules);
 															}
 														}
 													</script>
@@ -138,21 +145,22 @@
 														for(var i = 0; i < allProds.length; i++){
 															console.log("BELOW");
 															console.log(document.getElementById(allProds[i][0]+"ProdId"));
+															String.prototype.replaceAll = function(search, replacement) {
+																var target = this;
+																return target.split(search).join(replacement);
+															};
+															var str = allProds[i][0];
+															var newStr = str.replaceAll(/_/,' ');
+															allProds[i][0] = newStr;
+															var enzymeStr = allProds[i][1];
+															var newEnz = enzymeStr.replaceAll(/_/,' ');
+															allProds[i][1] = newEnz;
+															console.log("****************");
+															console.log(newStr);
+															console.log(newEnz);
 															if(document.getElementById(allProds[i][0]+"ProdId") === null){
 																console.log("Does not exist");
 																console.log(allProds[i][0]);
-																String.prototype.replaceAll = function(search, replacement) {
-																	var target = this;
-    															return target.split(search).join(replacement);
-																};
-																var str = allProds[i][0];
-														    var newStr = str.replaceAll(/_/,' ');
-																allProds[i][0] = newStr;
-																var enzymeStr = allProds[i][1];
-																var newEnz = enzymeStr.replaceAll(/_/,' ');
-																allProds[i][1] = newEnz;
-																console.log("REPLACE");
-																console.log(newStr);
 																var newlabel = document.createElement("Label");
 																newlabel.innerHTML = newStr;
 																newlabel.className = "container";
@@ -164,6 +172,8 @@
 																newcheckbox.setAttribute("name", "Product");
 																newlabel.appendChild(newcheckbox);
 																document.getElementById("products").appendChild(newlabel);
+																console.log("PRODS");
+																console.log(allProds);
 															}
 														}
 													</script>

@@ -20,42 +20,6 @@ button {
 
 }
 
-.formdiv {
-
-}
-
-.container-login100 {
-    width: 100%;
-    min-height: 100vh;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: left;
-    align-items: left;
-    padding: 15px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    position: relative;
-    z-index: 1;
-    background-color: rgba(255,255,255,0.5);
-}
-
-.container-login100::before {
-    content: "";
-    display: block;
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    padding: 2%;
-    top: 0;
-    left: 0;
-    background-color: rgba(255,255,255,0.5);
-}
-
 .wrap-login100 {
     width: 1000px;
     border-radius: 10px;

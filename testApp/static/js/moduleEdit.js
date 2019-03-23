@@ -11,8 +11,8 @@ var ctx; //context of the canvas element, is 2d
 var image; //image to be displayed corresponding to substrates and products chosen
 var createBtn; //button hit after module settings are set (displays rxn in canvas)
 var saveBtn; //button hit after user is finished, send user back to model edit screen
-var backBtn;
-var clearBtn;
+var backBtn; //buton hit if user wants to go back to modelEdit screen without saving to Database
+var clearBtn; //button hit if user wants to clear all checkboxes and the canvas
 var isReversible = false; //boolean that indicates if user wants rxn to be reversible or not
 var reversibleChoice; //variable to hold reversible radio buttons
 var weightSliderValue; //var corresponding to textbox for weight slider, displays weight value and allows user to set weight
@@ -21,12 +21,11 @@ var weightSlider; //var corresponding to weight slider
 var objectWidth = 125; //width of boxes for substrates and products and arrows
 var objectHeight = 125; //height of boxes for substrates and products
 var horizontalBuffer = 20; //buffer size between each substrate, product and enzyme in canvas
-var verticalBuffer = 10;
+var verticalBuffer = 10; //buffer size between each row on canvas
 var countProducts;
 var countSubstrates;
-var currentRxn = "";
 var modal;
-var modal2;
+//var modal2;
 //from database
 var mySubstrates;
 var myEnzymes;
@@ -39,40 +38,6 @@ var isPublic;
 var enzymeProds = [];
 var enzymeSubs = [];
 var enzymeReverse = [];
-
-// var step1 = "Glucose+ATP>Hexokinase<Glucose-6-Phosphate+ADP;false";
-// var step2 = "Glucose-6-Phosphate>Phosphoglucose isomerase<Fructose-6-Phosphate;true";
-// var step3 = "Fructose-6-Phosphate+ATP>Phosphofructokinase<Fructose-1,6-bisphosphate+ADP;false";
-// var step4 = "Fructose-1,6-bisphosphate>aldolase<Dihydroxyacetone Phosphate+Glyceraldehyde-3-Phosphate;true"
-// var step5 = "Dihydroxyacetone Phosphate>Triosephosphate isomerase<Glyceraldehyde-3-Phosphate;true";
-// var step6 = "Glyceraldehyde-3-Phosphate>Glyceraldehyde phosphate dehydrogenase<1,3-bisphoglycerate;true";
-// var step7 = "1,3-bisphoglycerate>Phosphoglycerate kinase<3 phosphoglycerate;true";
-// var step8 = "3 phosphoglycerate>Phosphoglycerate mutase<2 phosphoglycerate;true";
-// var step9 = "2 phosphoglycerate>Enolase<Phosphoenolpyruvate;true";
-// var step10 = "Phosphoenolpyruvate>Pyruvate kinase<Pyruvate;false";
-
-//My guess is we'll need a similar construct like this in the DB
-//there will be 3 columns Enzyme name, product/substrate name/ and boolean indicating type (prod/sub)
-//then the enzymeProds array will fetch all rows with type product and enzymeSubs will fetch the rest
-//And we'll end up with 2 arrays filled with arrays of length 2
-// var enzymeProds = [["Hexokinase","Glucose-6-Phosphate"],["Hexokinase","ADP"],["Phosphoglucose isomerase","Fructose-6-Phosphate"],
-//   ["Phosphofructokinase","Fructose-1,6-bisphosphate"],["Phosphofructokinase","ADP"],["aldolase","Dihydroxyacetone Phosphate"],["aldolase","Glyceraldehyde-3-Phosphate"],
-//   ["Triosephosphate isomerase","Glyceraldehyde-3-Phosphate"],["Glyceraldehyde phosphate dehydrogenase","1,3-bisphoglycerate"],
-//   ["Phosphoglycerate kinase","3 phosphoglycerate"],["Phosphoglycerate kinase","ADP"],["Phosphoglycerate mutase","2 phosphoglycerate"],["Enolase","Phosphoenolpyruvate"],
-//   ["Pyruvate kinase","Pyruvate"],["Pyruvate kinase","ADP"]];
-//
-// var enzymeSubs = [["Hexokinase","Glucose"],["Hexokinase","ATP"],["Phosphoglucose isomerase","Glucose-6-Phosphate"],
-//   ["Phosphofructokinase","Fructose-6-Phosphate"],["Phosphofructokinase","ATP"],["aldolase","Fructose-1,6-bisphosphate"], ["Triosephosphate isomerase","Dihydroxyacetone Phosphate"],
-//   ["Glyceraldehyde phosphate dehydrogenase","Glyceraldehyde-3-Phosphate"],["Phosphoglycerate kinase","1,3-bisphoglycerate"],["Phosphoglycerate kinase","ATP"],
-//   ["Phosphoglycerate mutase","3 phosphoglycerate"],["Enolase","2 phosphoglycerate"],["Pyruvate kinase","Phosphoenolpyruvate"],["Pyruvate kinase","ATP"]];
-//
-// var enzymeReverse = [["Hexokinase","irreversible"], ["Phosphoglucose isomerase","reversible"], ["Phosphofructokinase","irreversible"], ["aldolase","reversible"],
-//   ["Triosephosphate isomerase","reversible"],["Glyceraldehyde phosphate dehydrogenase","reversible"],["Phosphoglycerate kinase","reversible"],
-//   ["Phosphoglycerate mutase","reversible"],["Enolase","reversible"],["Pyruvate kinase","irreversible"]];
-//function to change the text box to the value set by slider
-// function updateTextInput(val) {
-//   document.getElementById('weightSliderValue').value=val;
-// }
 
 //function to change reversible boolean depending on which reversible radio btn is set
 function onRadioReverseChange(){
@@ -353,13 +318,13 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
       }
     //}
   }
-  currentRxn = "";
   if(canBeChecked){
     validateReaction();
-  }else{
-    modal2.style.display = "block";
-    ctx.clearRect(0, 0, canvas1.width, canvas1.height);
   }
+  // else{
+  //   modal2.style.display = "block";
+  //   ctx.clearRect(0, 0, canvas1.width, canvas1.height);
+  // }
 
 }
 //unit test
@@ -437,12 +402,6 @@ function setArraysRepresentingReaction(){
   checkedProdsNames = [];
   checkedEnzsNames = []
 
-  console.log(myEnzymes);
-  console.log(myProducts);
-  console.log(mySubstrates);
-
-  console.log(currentRxn);
-
   if(myEnzymes.length == 0){
     return false;
   }else{
@@ -460,11 +419,6 @@ function setArraysRepresentingReaction(){
     }else if(myEnzymes[0][1] === 'reversible'){
       isReversible = true;
     }
-    //Reset currentRxn string, since everything is pushed to the global variables
-    currentRxn = "";
-    console.log(checkedEnzsNames);
-    console.log(checkedSubsNames);
-    console.log(checkedProdsNames);
 
     var continueDisplay = validateReaction();
 
@@ -483,48 +437,31 @@ function validateReaction(){
   //this is done so that if it is a complete reaction (something from
   //every category is chosen) it can easily be compared to the known
   //reactions
-  console.log(allModules);
-  console.log(allProds);
-  console.log(allSubs);
   var validSubCount = 0;
   var validProdCount = 0;
   var validEnzCount = 0;
   for(var i = 0; i < checkedSubsNames.length; i++){
     for(var a = 0; a < allSubs.length; a++){
       if(checkedSubsNames[i] === allSubs[a][0] && checkedEnzsNames[0] === allSubs[a][1]){
-        console.log("TRUE");
         validSubCount++;
-      }else{
-        console.log("FALSE");
       }
     }
   }
 
   for(var j = 0; j < allModules.length; j++){
     if(allModules[j][0] === checkedEnzsNames[0]){
-      console.log("tRUE");
       validEnzCount++;
-    }else{
-      console.log("fALSE");
     }
   }
 
   for(var k = 0; k < checkedProdsNames.length; k++){
     for(var c = 0; c < allProds.length; c++){
       if(checkedProdsNames[k] === allProds[c][0] && checkedEnzsNames[0] === allProds[c][1]){
-        console.log("TRUe");
         validProdCount++;
       }else{
-        console.log("FALSe");
       }
     }
   }
-  console.log(validProdCount);
-  console.log(countProducts);
-  console.log(validSubCount);
-  console.log(countSubstrates);
-  console.log(validEnzCount);
-  console.log(checkedEnzsNames.length);
 
   if(countProducts > 5 || countSubstrates > 5 || checkedEnzsNames.length === 0 ){
     //settings are invalid, user is limited to 5 products and 5 substrates and an
@@ -549,7 +486,6 @@ function validateReaction(){
 
   }else if(countProducts === validProdCount && countSubstrates === validSubCount && validEnzCount === checkedEnzsNames.length){
   //   //Reaction is valid
-    console.log("GOOGLE");
     ctx.fillStyle = "limegreen";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
 
@@ -575,24 +511,19 @@ function createErrorCheckArrays() {
     var str = allModules[k][0];
     enzymeReverse.push([str, isReversible, allModules[k][2], allModules[k][3]]);
   }
-  console.log(enzymeSubs);
-  console.log(enzymeProds);
-  console.log(enzymeReverse);
 }
 
 function enableAndDisableBtns() {
-  console.log("HEKRJK");
   //check if model is public
   if(isPublic === 'True'){
-    console.log("the model is public");
     //disable saveBtn
     saveBtn.disabled = "disabled";
     saveBtn.style.visibility="hidden";
-  }else{
-    console.log("the model is private");
   }
 }
 
+//any substrate, product, or enzyme with a space in it's name, has to be saved
+//with an underscore instead of a space, so we need to change the underscores to spaces 
 function replaceUnderscores(){
   for(var i = 0; i < myEnzymes.length; i++){
     myEnzymes[i][0] = myEnzymes[i][0].replaceAll(/_/,' ');
@@ -605,15 +536,13 @@ function replaceUnderscores(){
   }
 }
 
+//Run when window loads
 window.onload = function init(){
 
-  console.log(allModules);
-
+  //if error checking is allowed for the model
   if(allModules.length != 0){
     createErrorCheckArrays();
     replaceUnderscores();
-  }else{
-    //error checking is disabled
   }
 
   canvas1 = document.getElementById("imageCanvas");
@@ -631,20 +560,17 @@ window.onload = function init(){
   submitWeightBtn = document.getElementById('submitWeight');
   weightSlider = document.getElementById('weightSlider');
   modal = document.getElementById('invalidModal');
-  modal2 = document.getElementById('invalidCheckModal');
+  //modal2 = document.getElementById('invalidCheckModal');
   var span = document.getElementsByClassName("close")[0];
   var saveBtnClicked = false;
   //SET CURRENT REACTION TO STRING FROM MODEL EDIT SCREEN HERE
   var fromModel = localStorage.getItem("reactionClicked");
 
   enableAndDisableBtns();
-  //currentRxn = step3;//set currentRxn to dummy value
-  setArraysRepresentingReaction();//function to set the arrays to currentRxn and call values to display/validate
+  setArraysRepresentingReaction();//function to set the arrays to current reaction and call values to display/validate
 
 
   createBtn.addEventListener("click", function(event){
-    //reset global variables
-    currentRxn = "";
     //clear everything out of canvas on button click so we can draw new rxn
     ctx.clearRect(0, 0, canvas1.width, canvas1.height);
     //calling beginPath here preps canvas for drawing
@@ -665,7 +591,7 @@ window.onload = function init(){
   });
 
   saveBtn.addEventListener("click", function(event){
-      localStorage.setItem("currentRxn",currentRxn);
+    //Submit post request to Django and update database
   });
 
   backBtn.addEventListener("click", function(event){
@@ -674,7 +600,6 @@ window.onload = function init(){
 
   clearBtn.addEventListener("click", function(event){
     //reset global variables
-    currentRxn = "";
 
     //clear everything out of canvas on button click so we can draw new rxn
     ctx.clearRect(0, 0, canvas1.width, canvas1.height);
@@ -698,15 +623,13 @@ window.onload = function init(){
   window.onclick = function(event) {
     if (event.target == modal) {
       modal.style.display = "none";
-    }else if (event.target == modal2){
-      modal2.style.display = "none"
     }
+    // else if (event.target == modal2){
+    //   modal2.style.display = "none"
+    // }
   }
-
 }
-function main () {
-
-}
+function main () {}
 main()
 
 // module.exports = {};

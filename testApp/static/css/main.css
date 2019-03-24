@@ -274,8 +274,8 @@ iframe {
 .wrap-login100 {
   display: inline-block;
   flex-direction: column;
-  width: 400px;
-  height: 500px;
+  width: 28.4%;
+  height: 73.5%;
   border-radius: 10px;
   overflow: hidden;
   padding: 40px 55px 37px 55px;
@@ -808,5 +808,6 @@ label {
 }
 
 .body {
-  overflow: hidden;
+  overflow: auto;
+  
 }

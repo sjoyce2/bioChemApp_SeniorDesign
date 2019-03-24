@@ -5,7 +5,7 @@ var firstRectMidY;
 
 var canvas = document.getElementById("modelEditCanvas");
 var modelDiv = document.getElementById("modelEditDiv");
-var divWidth = window.getComputedStyle(modelDiv, null).width
+var divWidth = window.getComputedStyle(modelDiv, null).width;
 var context = canvas.getContext('2d');
 var dragging = false;
 var lastX;
@@ -52,8 +52,10 @@ window.addEventListener('mousemove', function(e) {
         marginTop += deltaY;
         marginLeft = marginLeft;
         marginTop = Math.min(marginTop, 0);
+        var marginBot = Math.max(marginBot, window.getComputedStyle(modelDiv, null).height);
         canvas.style.marginLeft = marginLeft + "px";
         canvas.style.marginTop = marginTop + "px";
+        canvas.style.marginBottom = marginBot + "px";
     }
     e.preventDefault();
 }, false);
@@ -224,8 +226,10 @@ function calculateX(y, centerX, centerY) {
 }
 
 function checkRatio(moduleNumber) {
-    var q = prodSubValues[0] / prodSubValues[1];
+    //var q = prodSubValues[0] / prodSubValues[1];
+    // test value for q: TODO: Fix so i don't need test value
     var k = kValues[moduleNumber];
+    var q = k - 0.1;
     if (q/k > 1.0) {
         rxnDir[moduleNumber] = -1;
     } else if (q/k < 1.0) {
@@ -454,7 +458,7 @@ function animate() {
         getDotPos(i);
     }
     render();
-    //window.requestAnimationFrame(animate);
+    window.requestAnimationFrame(animate);
 }
 
 // specifies which steps of the pathway to draw and draws them
@@ -519,7 +523,6 @@ function calculateK(moduleNumber) {
     var deltaG = db_modules[moduleNumber].deltaG
     var deltaGNaughtPrime = db_modules[moduleNumber].deltaGNaughtPrime
     var k = Math.exp(deltaGNaughtPrime / (0.008314 * 298));
-    console.log(k);
     return k;
 }
 

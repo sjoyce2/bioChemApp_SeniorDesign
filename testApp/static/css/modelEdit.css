@@ -152,7 +152,7 @@ iframe {
     border: 1px solid white;
     background-color: #4CAF50; /* Green */
     height: 57.8px;
-    margin-top: 3%;
+    margin-top: 4%;
     color: white;
     width: 100%;
     padding: 1.2% 1.2% 1.2% 1.2%;
@@ -165,12 +165,13 @@ iframe {
 }
 
 #backButtonModelEdit {
-    margin-top: 260%;
+    /*/margin-top: 0px;*/
 }
 
 .modelButtons {
     display: flex;
     flex-flow: column;
+    height: 720px;
 }
 
 .flex-horiz {
@@ -183,6 +184,7 @@ iframe {
     display: flex;
     flex-direction: column;
     float: left;
+    height: 720px;
 }
 
 .variable-holder {

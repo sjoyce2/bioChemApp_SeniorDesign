@@ -215,7 +215,7 @@ function revStep(firstText, secondText, enzyme, firstRectMidX, firstRectMidY,
 function calculateX(y, centerX, centerY, halfCircle) {
     var x;
     if (halfCircle == "top") {
-        x = centerX + Math.sqrt(-1 * Math.pow((y - centerY) - 
+        x = centerX - 50 + Math.sqrt(-1 * Math.pow((y - centerY) - 
             50 - (centerY), 2) + 2500);
     } else {
         x = Math.sqrt(2500 - Math.pow(x - centerX, 2)) - centerY;
@@ -280,15 +280,8 @@ function getDotPos(moduleNumber) {
                 dotPositions[moduleNumber][0] -= directions[moduleNumber] * positionChange;
             }
         } else {
-            var midPoint = startY * 100 + 50
             var yChange = positionChange;
-            if (dotPositions[moduleNumber][1] <= midPoint) {
-                dotPositions[moduleNumber][1] += directions[moduleNumber] * 
-                    yChange;
-            } else {
-                dotPositions[moduleNumber][0] -= directions[moduleNumber] * 
-                    xChange;
-            }
+            dotPositions[moduleNumber][1] += directions[moduleNumber] * yChange;
             dotPositions[moduleNumber][1] = calculateX(dotPositions[moduleNumber][1],
                 (startX * 75 + canvas.clientWidth / 2), (startY * 100 + 50));
         }

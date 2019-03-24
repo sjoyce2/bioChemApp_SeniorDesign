@@ -36,6 +36,7 @@ var allProds;
 var allSubs;
 var allModules;
 var isPublic;
+var modelID;
 //above from database
 var enzymeProds = [];
 var enzymeSubs = [];
@@ -66,8 +67,11 @@ function onRadioChange(){
     if(substrates[i].checked){
       countSubstrates++;
       checkedSubsNames.push(substrates[i].value);
-      checkedSubsAbbr.push(substrates[i].name);
+      checkedSubsAbbr.push(substrates[i].className);
       console.log(substrates[i].name);
+      console.log("AAAAAAAAAAAAAAAAAAAAAA");
+      console.log(substrates[i].className);
+      console.log(substrates[i]);
     }
   }
   for(var j = 0; j < enzymes.length; j++){
@@ -79,7 +83,7 @@ function onRadioChange(){
     if(products[k].checked){
       countProducts++;
       checkedProdsNames.push(products[k].value);
-      checkedProdsAbbr.push(products[k].name);
+      checkedProdsAbbr.push(products[k].className);
       console.log(products[k].name);
     }
   }
@@ -452,6 +456,24 @@ function validateReaction(){
   //this is done so that if it is a complete reaction (something from
   //every category is chosen) it can easily be compared to the known
   //reactions
+  var requiredSubsCount = 0;
+  var requiredProdsCount = 0;
+
+  for(var x = 0; x < allSubs.length; x++){
+    if(allSubs[x][1] === checkedEnzsNames[0]){
+      requiredSubsCount++;
+    }
+  }
+  for(var y = 0; y < allProds.length; y++){
+    if(allProds[y][1] === checkedEnzsNames[0]){
+      requiredProdsCount++;
+    }
+  }
+  console.log("%%%%%%%%%%%%%%%%%%")
+  console.log(requiredSubsCount);
+  console.log(requiredProdsCount);
+  console.log("%%%%%%%%%%%%%%%%%%")
+
   var validSubCount = 0;
   var validProdCount = 0;
   var validEnzCount = 0;
@@ -508,7 +530,9 @@ function validateReaction(){
     saveBtn.disabled = true;
     return false;
 
-  }else if(countProducts === validProdCount && countSubstrates === validSubCount && validEnzCount === checkedEnzsNames.length){
+  }else if(countProducts === validProdCount && countSubstrates === validSubCount
+     && validEnzCount === checkedEnzsNames.length && requiredSubsCount ===
+     validSubCount && requiredProdsCount === validProdCount){
   //   //Reaction is valid
     ctx.fillStyle = "limegreen";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
@@ -574,11 +598,11 @@ window.onload = function init(){
   }
 
   canvas1 = document.getElementById("imageCanvas");
-  substrates  = document.getElementsByClassName('Substrate');
+  substrates  = document.getElementsByName('Substrate');
   console.log(substrates);
   enzymes = document.getElementsByClassName('Enzyme');
   console.log(enzymes);
-  products = document.getElementsByClassName('Product');
+  products = document.getElementsByName('Product');
   console.log(products);
   reversibleChoice = document.getElementsByName('reversibleChoice');
   ctx  = canvas1.getContext("2d");
@@ -626,7 +650,7 @@ window.onload = function init(){
   });
 
   backBtn.addEventListener("click", function(event){
-    document.location.href = '/testApp/modelEdit/'+myEnzymes[0][2];
+    document.location.href = '/testApp/modelEdit/'+modelID;
   });
 
   clearBtn.addEventListener("click", function(event){

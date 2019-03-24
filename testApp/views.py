@@ -59,7 +59,7 @@ def moduleEdit(request, model, module):
 	for value in myModel:
 		currentModelName = value.modelName
 		result = value.public
-
+		modelID = value.id
 
 	isPublic = result;
 
@@ -99,23 +99,50 @@ def moduleEdit(request, model, module):
 			listOfProds.append(currentProdDict)
 
 	if request.method == 'POST':
-
 		new_enzyme = request.POST.get("Enzyme")
 		new_reversible = request.POST.get("reversibleChoice")
 
-		print(new_enzyme)
-		print(new_reversible)
+		myModel = Model.objects.filter(pk = model)
 
-		post = Module(modelID_id=model, enzyme=new_enzyme, reversible=new_reversible, deltaG=-1, deltaGNaughtPrime=1)
+		for value in myModel:
+			currentModelName = value.modelName
+			result = value.public
+
+		modelData = Model.objects.filter(modelName = currentModelName, public = True)
+
+		for mod in modelData:
+			publicMod = mod
+		moduleData = Module.objects.filter(modelID_id__exact = publicMod.id, enzyme=new_enzyme, reversible = new_reversible)
+
+		for mods in moduleData:
+			correctModule = mods
+
+		substratesData = Substrates.objects.filter(modelID = publicMod.id, moduleID_id = correctModule.id).values()
+		productsData = Products.objects.filter(modelID = publicMod.id, moduleID_id = correctModule.id).values()
+
+		ProdAbbrsList = {}
+		SubAbbrsList = {}
+
+		for sub in substratesData:
+			subAbbr = sub
+			# SubAbbrsList.append({"abbr"+subAbbr.get('substrate') : subAbbr.get('abbr')})
+			SubAbbrsList['abbr'+subAbbr.get('substrate')] = subAbbr.get('abbr')
+		for prod in productsData:
+			prodAbbr = prod
+			# ProdAbbrsList.append({"abbr"+prodAbbr.get('product') : prodAbbr.get('abbr')})
+			ProdAbbrsList['abbr'+prodAbbr.get('product')] = prodAbbr.get('abbr')
+
+		post = Module(modelID_id=model, enzyme=new_enzyme, reversible=new_reversible, enzymeAbbr=correctModule.enzymeAbbr, xCoor=correctModule.xCoor, yCoor=correctModule.yCoor, enzWeight=correctModule.enzWeight, deltaG=correctModule.deltaG, deltaGNaughtPrime=correctModule.deltaGNaughtPrime)
 		post.save()
+
 		for key, values in request.POST.lists():
 			if (key == "Product"):
 				for i in range(len(values)):
-					prods = Products(moduleID_id=99, product=values[i])
+					prods = Products(moduleID_id=model, product=values[i], abbr=ProdAbbrsList.get('abbr'+values[i]), modelID = model)
 					prods.save()
 			if (key == "Substrate"):
 				for i in range(len(values)):
-					subs = Substrates(moduleID_id=99, substrate=values[i])
+					subs = Substrates(moduleID_id=model, substrate=values[i], abbr=SubAbbrsList.get('abbr'+values[i]), modelID = model)
 					subs.save()
 
 		return HttpResponseRedirect("/testApp/modelEdit/" + str(model))
@@ -127,7 +154,8 @@ def moduleEdit(request, model, module):
 				   'allmodules' : allmodules,
 				   'allprods' : listOfProds,
 				   'allsubs' : listOfSubs,
-				   'isPublic' : isPublic
+				   'isPublic' : isPublic,
+				   'modelID' : modelID
 				  }
 		return render(request, 'moduleEdit.html', context=context)
 

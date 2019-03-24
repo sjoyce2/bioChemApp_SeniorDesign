@@ -5,7 +5,7 @@ var firstRectMidY;
 
 var canvas = document.getElementById("modelEditCanvas");
 var modelDiv = document.getElementById("modelEditDiv");
-var divWidth = window.getComputedStyle(modelDiv, null).width
+var divWidth = window.getComputedStyle(modelDiv, null).width;
 var context = canvas.getContext('2d');
 var dragging = false;
 var lastX;
@@ -52,8 +52,10 @@ window.addEventListener('mousemove', function(e) {
         marginTop += deltaY;
         marginLeft = marginLeft;
         marginTop = Math.min(marginTop, 0);
+        var marginBot = Math.max(marginBot, window.getComputedStyle(modelDiv, null).height);
         canvas.style.marginLeft = marginLeft + "px";
         canvas.style.marginTop = marginTop + "px";
+        canvas.style.marginBottom = marginBot + "px";
     }
     e.preventDefault();
 }, false);
@@ -224,8 +226,10 @@ function calculateX(y, centerX, centerY) {
 }
 
 function checkRatio(moduleNumber) {
-    var q = prodSubValues[0] / prodSubValues[1];
+    //var q = prodSubValues[0] / prodSubValues[1];
+    // test value for q: TODO: Fix so i don't need test value
     var k = kValues[moduleNumber];
+    var q = k - 0.1;
     if (q/k > 1.0) {
         rxnDir[moduleNumber] = -1;
     } else if (q/k < 1.0) {
@@ -370,23 +374,30 @@ function getDotPos(moduleNumber) {
                 }
             } else { //weird
                 var midPoint = (yCoords[moduleNumber] * 100) + 50;
+                var botMidPoint = midPoint + 25;
+                if (dotPositions[moduleNumber][2] === 'undefined') { //If the reaction has not reached the midpoint before
+                    dotPositions[moduleNumber].append(0);
+                    dotPositions[moduleNumber].append(0);
+                }
                 if (dotPositions[moduleNumber][1] >= midPoint) {
                     //TODO: Split into two dots
                     dotPositions[moduleNumber][1] += directions[moduleNumber] * positionChange;
-                    dotPositions[moduleNumber][0] = directions[moduleNumber] * 3 * 
-                        dotPositions[moduleNumber][1];
-                    if (dotPositions[moduleNumber][2] === 'undefined') { //If the reaction has not reached the midpoint before
-                        dotPositions[moduleNumber].append(startX*75+canvas.clientWidth/2);
-                        dotPositions[moduleNumber].append(dotPositions[moduleNumber][1]);
-                        dotPositions[moduleNumber][2] = startX + directions[moduleNumber] * 3 * 
-                            dotPositions[moduleNumber][1];
-                    } else {
-                        dotPositions[moduleNumber][3] = dotPositions[moduleNumber][1]
-                        dotPositions[moduleNumber][2] += directions[moduleNumber] * 3 * 
-                            dotPositions[moduleNumber][1];
+                    if (dotPositions[moduleNumber][1] < botMidPoint) {
+                        dotPositions[moduleNumber][0] = (startX*75+canvas.clientWidth/2) + 
+                            directions[moduleNumber] * 3 * (dotPositions[moduleNumber][1] - 
+                            midPoint);
+                    }
+                    dotPositions[moduleNumber][3] = dotPositions[moduleNumber][1];
+                    if (dotPositions[moduleNumber][3] < botMidPoint) {
+                        dotPositions[moduleNumber][2] = (startX*75+canvas.clientWidth/2) - 
+                            directions[moduleNumber] * 3 * (dotPositions[moduleNumber][1] - 
+                            midPoint);
                     }
                 } else {
+                    dotPositions[moduleNumber][0] = startX*75+canvas.clientWidth/2;
                     dotPositions[moduleNumber][1] += directions[moduleNumber] * positionChange;
+                    dotPositions[moduleNumber][2] = startX*75+canvas.clientWidth/2;
+                    dotPositions[moduleNumber][3] = dotPositions[moduleNumber][1];
                 }
                 if (dotPositions[moduleNumber][1] >= endY * 100 && dotPositions[moduleNumber][0] >= 
                     (endX * 75) + canvas.clientWidth / 2) {
@@ -395,6 +406,8 @@ function getDotPos(moduleNumber) {
                     } else {
                         dotPositions[moduleNumber][0] = startX * 75 + canvas.clientWidth / 2;
                         dotPositions[moduleNumber][1] = startY * 100;
+                        dotPositions[moduleNumber][2] = startX * 75 + canvas.clientWidth / 2;
+                        dotPositions[moduleNumber][3] = startY * 100;
                         directions[moduleNumber] = 1;
                     }
                     prodSubValues[moduleNumber][0] ++;
@@ -413,6 +426,8 @@ function getDotPos(moduleNumber) {
                     } else {
                         dotPositions[moduleNumber][0] = endX * 75 + canvas.clientWidth / 2;
                         dotPositions[moduleNumber][1] = endY * 100;
+                        dotPositions[moduleNumber][2] = startX * 75 + canvas.clientWidth / 2;
+                        dotPositions[moduleNumber][3] = startY * 100;
                         directions[moduleNumber] = -1;
                     }
                     prodSubValues[moduleNumber][0] --;
@@ -508,7 +523,6 @@ function calculateK(moduleNumber) {
     var deltaG = db_modules[moduleNumber].deltaG
     var deltaGNaughtPrime = db_modules[moduleNumber].deltaGNaughtPrime
     var k = Math.exp(deltaGNaughtPrime / (0.008314 * 298));
-    console.log(k);
     return k;
 }
 
@@ -521,7 +535,7 @@ function reset() {
                 enSlider.value = "50";
                 var numId = db_modules[i].enzyme + "Value";
                 enSlider.oninput = function() {
-                    sliderId = convertTextToId(this.id) + "Value";
+                    var sliderId = convertTextToId(this.id) + "Value";
                     document.getElementById(sliderId).innerHTML = this.value;
                 }
             }
@@ -599,16 +613,16 @@ function createSliders() {
     button.setAttribute("onclick", "redirect();");
     button.onclick = function() {redirect();};
     for (var i=0; i<db_modules.length; i++) {
+        var sliderHolder = document.getElementById("slider-holder");
+        var varHolder = document.createElement('div');
+        varHolder.setAttribute("class", "variable-holder");
+        var enzLabel = document.createElement('label');
+        enzLabel.setAttribute("for", db_modules[i].enzyme);
+        enzLabel.innerHTML = convertIdToText(db_modules[i].enzyme);
+        varHolder.appendChild(enzLabel);
+        var inner = document.createElement('div');
+        inner.setAttribute("class", "inner-flex-horiz");
         if (db_modules[i].modelID_id == modelNum && db_modules[i].reversible == 'irreversible') {
-            var sliderHolder = document.getElementById("slider-holder");
-            var varHolder = document.createElement('div');
-            varHolder.setAttribute("class", "variable-holder");
-            var enzLabel = document.createElement('label');
-            enzLabel.setAttribute("for", db_modules[i].enzyme);
-            enzLabel.innerHTML = convertIdToText(db_modules[i].enzyme);
-            varHolder.appendChild(enzLabel);
-            var inner = document.createElement('div');
-            inner.setAttribute("class", "inner-flex-horiz");
             //Set slider attributes
             var inputItem = document.createElement('input');
             inputItem.setAttribute("type", "range");
@@ -623,14 +637,14 @@ function createSliders() {
             header.setAttribute("id", db_modules[i].enzyme + "Value");
             header.innerHTML = "50";
             inner.appendChild(header);
-            var editButton = document.createElement('a');
-            editButton.innerHTML = "Edit";
-            var url = "/testApp/moduleEdit/" + modelNum + "/" + (i + 1);
-            editButton.setAttribute("href", url);
-            inner.appendChild(editButton);
-            varHolder.appendChild(inner);
-            sliderHolder.append(varHolder);
-        } 
+        }
+        var editButton = document.createElement('a');
+        editButton.innerHTML = "Edit";
+        var url = "/testApp/moduleEdit/" + modelNum + "/" + (i + 1);
+        editButton.setAttribute("href", url);
+        inner.appendChild(editButton);
+        varHolder.appendChild(inner);
+        sliderHolder.append(varHolder); 
     }
 }
 

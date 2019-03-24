@@ -12,8 +12,8 @@
         {{ products|json_script:"db-products" }}
         {{ model_num|json_script:"modelNum"}}
         <div class="flex-horiz">
-            <div id="modelEditDiv"style="width: 800px; height: 720px; overflow: hidden">
-                <canvas id="modelEditCanvas" height="710" width="800" ></canvas>
+            <div id="modelEditDiv"style="width: 800px; height: 800px; overflow: hidden">
+                <canvas id="modelEditCanvas" height="10000" width="800" ></canvas>
             </div>
             <div class="flex-sliders" id="slider-holder">
                 <h3 style="padding:10px 20px">Variables</h3>
@@ -32,4 +32,5 @@
     <script src="{% static 'js/modelEdit.js' %}"></script>
     
 </body>
+</html>
 {% endblock %}

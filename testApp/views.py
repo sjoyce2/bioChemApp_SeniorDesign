@@ -61,11 +61,6 @@ def moduleEdit(request, model, module):
 		result = value.public
 		modelID = value.id
 
-	print(mySubs)
-	print(myProds)
-	print(modelID)
-
-
 	isPublic = result;
 
 	if(result):

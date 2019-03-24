@@ -212,17 +212,18 @@ function revStep(firstText, secondText, enzyme, firstRectMidX, firstRectMidY,
 
 // Calculates the y-value of a point on a circle (of radius 50) given the x value
 // TODO: Fix this
-function calculateY(x, centerX, centerY, halfCircle) {
-    var y;
+function calculateX(y, centerX, centerY, halfCircle) {
+    var x;
     if (halfCircle == "top") {
-        y = Math.sqrt(2500 - Math.pow(x - centerX, 2)) + centerY;
+        x = centerX + Math.sqrt(-1 * Math.pow((y - centerY) - 
+            50 - (centerY), 2) + 2500);
     } else {
-        y = Math.sqrt(2500 - Math.pow(x - centerX, 2)) - centerY;
+        x = Math.sqrt(2500 - Math.pow(x - centerX, 2)) - centerY;
     }
-    if (Number.isNaN(y)) {
-        return centerY +50;
+    if (Number.isNaN(x)) {
+        return centerX + 50;
     } else {
-        return y;
+        return x;
     }
 }
 
@@ -280,18 +281,16 @@ function getDotPos(moduleNumber) {
             }
         } else {
             var midPoint = startY * 100 + 50
-            var xChange = 2;
+            var yChange = positionChange;
             if (dotPositions[moduleNumber][1] <= midPoint) {
-                dotPositions[moduleNumber][0] += directions[moduleNumber] * 
-                    xChange;
-                dotPositions[moduleNumber][1] = calculateY(dotPositions[moduleNumber][0],
-                    (startX * 75 + canvas.clientWidth / 2), (startY * 100 + 50), "top");
+                dotPositions[moduleNumber][1] += directions[moduleNumber] * 
+                    yChange;
             } else {
                 dotPositions[moduleNumber][0] -= directions[moduleNumber] * 
                     xChange;
-                dotPositions[moduleNumber][1] = calculateY(dotPositions[moduleNumber][0],
-                    (startX * 75 + canvas.clientWidth / 2), (startY * 100 + 50), "bottom");
             }
+            dotPositions[moduleNumber][1] = calculateX(dotPositions[moduleNumber][1],
+                (startX * 75 + canvas.clientWidth / 2), (startY * 100 + 50));
         }
         if (dotPositions[moduleNumber][1] >= endY * 100 && dotPositions[moduleNumber][0] < 
             (endX * 75) + canvas.clientWidth / 2) { //if reaches end of reaction
@@ -465,11 +464,10 @@ function convertTextToId(text) {
 }
 
 function calculateK(moduleNumber) {
-    //var deltaG = db_modules[moduleNumber].deltaG
-    //var deltaGNaughtPrime = db_modules[moduleNumber].deltaGNaughtPrime
-    var deltaG = -2.9; //TODO: Test Values
-    var deltaGNaughtPrime = 1.67; //TODO: Test Values
+    var deltaG = db_modules[moduleNumber].deltaG
+    var deltaGNaughtPrime = db_modules[moduleNumber].deltaGNaughtPrime
     var k = Math.exp(deltaGNaughtPrime / (0.008314 * 298));
+    console.log(k);
     return k;
 }
 

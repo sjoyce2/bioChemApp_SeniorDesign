@@ -50,10 +50,10 @@ def modelChoice(request):
 
 def moduleEdit(request, model, module):
 
-	myMod = Module.objects.all().filter(pk = module)
+	myMod = Module.objects.all().filter(pk = module, modelID_id = model)
 
-	mySubs = Substrates.objects.all().filter(moduleID_id__exact = module)
-	myProds = Products.objects.all().filter(moduleID_id__exact = module)
+	mySubs = Substrates.objects.all().filter(moduleID_id__exact = module, modelID = model)
+	myProds = Products.objects.all().filter(moduleID_id__exact = module, modelID = model)
 	myModel = Model.objects.filter(pk = model)
 
 	for value in myModel:

@@ -71,7 +71,7 @@ Landing Page CSS
 }
 
 body, html {
-	height: 100%;
+	height: 100vh;
   font-family: Poppins-Regular, sans-serif;
   color: white;
 }

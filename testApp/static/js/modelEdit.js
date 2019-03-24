@@ -212,14 +212,10 @@ function revStep(firstText, secondText, enzyme, firstRectMidX, firstRectMidY,
 
 // Calculates the y-value of a point on a circle (of radius 50) given the x value
 // TODO: Fix this
-function calculateX(y, centerX, centerY, halfCircle) {
+//x = firstRectMidX + Math.sqrt(-1 * Math.pow((newY - firstRectMidY) - 50 - (100 * arrayPos), 2) + 2500);
+function calculateX(y, centerX, centerY) {
     var x;
-    if (halfCircle == "top") {
-        x = centerX - 50 + Math.sqrt(-1 * Math.pow((y - centerY) - 
-            50 - (centerY), 2) + 2500);
-    } else {
-        x = Math.sqrt(2500 - Math.pow(x - centerX, 2)) - centerY;
-    }
+    x = centerX + Math.sqrt(-1 * Math.pow((y - centerY), 2) + 2500);
     if (Number.isNaN(x)) {
         return centerX + 50;
     } else {
@@ -273,23 +269,30 @@ function getDotPos(moduleNumber) {
     var revMod = revList[moduleNumber];
     checkRatio(moduleNumber);
     if (revMod == "irreversible") { //TODO: decrease sub and increase prod when reach end
-        if (dotPositions[moduleNumber][0] < (startX * 75 + canvas.clientWidth / 2 + 50)) {
+        if (dotPositions[moduleNumber][0] <= (startX * 75 + canvas.clientWidth / 2 + 50)) {
             if (dotPositions[moduleNumber][1] == startY * 100) {
                 dotPositions[moduleNumber][0] += directions[moduleNumber] * positionChange;
             } else {
                 dotPositions[moduleNumber][0] -= directions[moduleNumber] * positionChange;
             }
         } else {
-            var yChange = positionChange;
-            dotPositions[moduleNumber][1] += directions[moduleNumber] * yChange;
-            dotPositions[moduleNumber][1] = calculateX(dotPositions[moduleNumber][1],
-                (startX * 75 + canvas.clientWidth / 2), (startY * 100 + 50));
+            dotPositions[moduleNumber][1] += directions[moduleNumber] * positionChange;
+            dotPositions[moduleNumber][0] = calculateX(dotPositions[moduleNumber][1],
+                (startX * 75 + canvas.clientWidth / 2 + 50), startY * 100 + 50);
         }
         if (dotPositions[moduleNumber][1] >= endY * 100 && dotPositions[moduleNumber][0] < 
             (endX * 75) + canvas.clientWidth / 2) { //if reaches end of reaction
-            dotPositions[moduleNumber] = [startX, startY];
+            dotPositions[moduleNumber] = [startX*75+canvas.clientWidth/2, startY*100];
             if (rxnDir[moduleNumber] != 1) {
                 directions[moduleNumber] = 0;
+            }
+            prodSubValues[moduleNumber][0] ++;
+            prodSubValues[moduleNumber][1] --;
+            if (prodSubValues < 1) {
+                prodSubValues = 1;
+            }
+            if (moduleNumber != prodSubValues.length - 1) {
+                prodSubValues[moduleNumber + 1][1] ++;
             }
         }
     } else {
@@ -308,6 +311,9 @@ function getDotPos(moduleNumber) {
                 if (prodSubValues[moduleNumber][1] < 1) {
                     prodSubValues[moduleNumber][1] = 1;
                 }
+                if (moduleNumber != prodSubValues.length - 1) {
+                    prodSubValues[moduleNumber + 1][1] ++;
+                }
             } else if (dotPositions[moduleNumber][1] <= startY * 100) {
                 if (rxnDir[moduleNumber] == 0 || rxnDir[moduleNumber] == 1) {
                     directions[moduleNumber] = 1;
@@ -321,6 +327,9 @@ function getDotPos(moduleNumber) {
                 if (prodSubValues[moduleNumber][0] < 1) {
                     prodSubValues[moduleNumber][0] = 1;
                 }
+                if (moduleNumber != 0) {
+                    prodSubValues[moduleNumber + 1][0] ++;
+                }
             }
         } else {
             if (startY == endY) { //horizontal
@@ -333,11 +342,13 @@ function getDotPos(moduleNumber) {
                         dotPositions[moduleNumber][1] = startY * 100;
                         directions[moduleNumber] = 1;
                     }
-                    directions[moduleNumber] = -1;
                     prodSubValues[moduleNumber][0] ++;
                     prodSubValues[moduleNumber][1] --;
                     if (prodSubValues[moduleNumber][1] < 1) {
                         prodSubValues[moduleNumber][1] = 1;
+                    }
+                    if (moduleNumber != prodSubValues.length - 1) {
+                        prodSubValues[moduleNumber + 1][1] ++;
                     }
                 } else if (dotPositions[moduleNumber][0] <= (startX * 75) + 
                     canvas.clientWidth / 2) {
@@ -353,11 +364,27 @@ function getDotPos(moduleNumber) {
                     if (prodSubValues[moduleNumber][0] < 1) {
                         prodSubValues[moduleNumber][0] = 1;
                     }
+                    if (moduleNumber != 0) {
+                        prodSubValues[moduleNumber + 1][0] ++;
+                    }
                 }
-            } else { //weird TODO: decrease sub and increase prod when reach end
+            } else { //weird
                 var midPoint = (yCoords[moduleNumber] * 100) + 50;
                 if (dotPositions[moduleNumber][1] >= midPoint) {
                     //TODO: Split into two dots
+                    dotPositions[moduleNumber][1] += directions[moduleNumber] * positionChange;
+                    dotPositions[moduleNumber][0] = directions[moduleNumber] * 3 * 
+                        dotPositions[moduleNumber][1];
+                    if (dotPositions[moduleNumber][2] === 'undefined') { //If the reaction has not reached the midpoint before
+                        dotPositions[moduleNumber].append(startX*75+canvas.clientWidth/2);
+                        dotPositions[moduleNumber].append(dotPositions[moduleNumber][1]);
+                        dotPositions[moduleNumber][2] = startX + directions[moduleNumber] * 3 * 
+                            dotPositions[moduleNumber][1];
+                    } else {
+                        dotPositions[moduleNumber][3] = dotPositions[moduleNumber][1]
+                        dotPositions[moduleNumber][2] += directions[moduleNumber] * 3 * 
+                            dotPositions[moduleNumber][1];
+                    }
                 } else {
                     dotPositions[moduleNumber][1] += directions[moduleNumber] * positionChange;
                 }
@@ -370,6 +397,14 @@ function getDotPos(moduleNumber) {
                         dotPositions[moduleNumber][1] = startY * 100;
                         directions[moduleNumber] = 1;
                     }
+                    prodSubValues[moduleNumber][0] ++;
+                    prodSubValues[moduleNumber][1] --;
+                    if (prodSubValues[moduleNumber][1] < 1) {
+                        prodSubValues[moduleNumber][1] = 1;
+                    }
+                    if (moduleNumber != prodSubValues.length - 1) {
+                        prodSubValues[moduleNumber + 1][1] ++;
+                    }
                 } else if (dotPositions[moduleNumber][1] <= startY * 100 && 
                     dotPositions[moduleNumber][0] <= (startX * 75) + 
                     canvas.clientWidth / 2) {
@@ -379,6 +414,14 @@ function getDotPos(moduleNumber) {
                         dotPositions[moduleNumber][0] = endX * 75 + canvas.clientWidth / 2;
                         dotPositions[moduleNumber][1] = endY * 100;
                         directions[moduleNumber] = -1;
+                    }
+                    prodSubValues[moduleNumber][0] --;
+                    prodSubValues[moduleNumber][1] ++;
+                    if (prodSubValues[moduleNumber][0] < 1) {
+                        prodSubValues[moduleNumber][0] = 1;
+                    }
+                    if (moduleNumber != 0) {
+                        prodSubValues[moduleNumber + 1][0] ++;
                     }
                 }
             }
@@ -394,6 +437,8 @@ function getDotPos(moduleNumber) {
 
 //TODO: Fix this
 function animate() {
+    canvas = document.getElementById("modelEditCanvas");
+    //getDotPos(0)
     for (var i = 0; i < enzymeList.length; i++) {
         getDotPos(i);
     }
@@ -439,6 +484,10 @@ function render() {
     for (var i = 0; i < dotPositions.length; i++) {
         ctx.moveTo(dotPositions[i][0] + 5, dotPositions[i][1]);
         ctx.arc(dotPositions[i][0], dotPositions[i][1], 5, 0, 2 * Math.PI);
+        if (dotPositions[i].length == 4) {
+            ctx.moveTo(dotPositions[i][2] + 5, dotPositions[i][3]);
+            ctx.arc(dotPositions[i][2], dotPositions[i][3], 5, 0, 2 * Math.PI);
+        }
     }
     ctx.fill();
 }
@@ -546,14 +595,9 @@ function redirect() {
 }
 
 function createSliders() {
-    var flexHorizList = document.getElementsByClassName("flex-horiz");
-    var button = document.createElement("button");
+    var button = document.getElementById("new-reaction");
     button.setAttribute("onclick", "redirect();");
-    button.setAttribute("type", "button");
-    button.setAttribute("id", "new-reaction");
     button.onclick = function() {redirect();};
-    button.innerHTML = "Create New Reaction";
-    flexHorizList[0].insertBefore(button, flexHorizList[0].childNodes[2]);
     for (var i=0; i<db_modules.length; i++) {
         if (db_modules[i].modelID_id == modelNum && db_modules[i].reversible == 'irreversible') {
             var sliderHolder = document.getElementById("slider-holder");

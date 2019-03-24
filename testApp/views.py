@@ -59,6 +59,11 @@ def moduleEdit(request, model, module):
 	for value in myModel:
 		currentModelName = value.modelName
 		result = value.public
+		modelID = value.id
+
+	print(mySubs)
+	print(myProds)
+	print(modelID)
 
 
 	isPublic = result;
@@ -154,7 +159,8 @@ def moduleEdit(request, model, module):
 				   'allmodules' : allmodules,
 				   'allprods' : listOfProds,
 				   'allsubs' : listOfSubs,
-				   'isPublic' : isPublic
+				   'isPublic' : isPublic,
+				   'modelID' : modelID
 				  }
 		return render(request, 'moduleEdit.html', context=context)
 

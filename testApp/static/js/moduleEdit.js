@@ -36,6 +36,7 @@ var allProds;
 var allSubs;
 var allModules;
 var isPublic;
+var modelID;
 //above from database
 var enzymeProds = [];
 var enzymeSubs = [];
@@ -649,7 +650,7 @@ window.onload = function init(){
   });
 
   backBtn.addEventListener("click", function(event){
-    document.location.href = '/testApp/modelEdit/'+myEnzymes[0][2];
+    document.location.href = '/testApp/modelEdit/'+modelID;
   });
 
   clearBtn.addEventListener("click", function(event){

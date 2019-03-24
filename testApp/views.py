@@ -111,9 +111,14 @@ def moduleEdit(request, model, module):
 			listOfProds.append(currentProdDict)
 
 	if request.method == 'POST':
+
 		new_enzyme = request.POST.get("Enzyme")
 		new_reversible = request.POST.get("reversibleChoice")
-		post = Module(modelID_id=99, enzyme=new_enzyme, reversible=new_reversible)
+
+		print(new_enzyme)
+		print(new_reversible)
+
+		post = Module(modelID_id=model, enzyme=new_enzyme, reversible=new_reversible, deltaG=-1, deltaGNaughtPrime=1)
 		post.save()
 		for key, values in request.POST.lists():
 			if (key == "Product"):

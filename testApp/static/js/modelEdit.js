@@ -401,10 +401,9 @@ function getDotPos(moduleNumber) {
 
 //TODO: Fix this
 function animate() {
-    getDotPos(1)
-    /* for (var i = 0; i < enzymeList.length; i++) {
+    for (var i = 0; i < enzymeList.length; i++) {
         getDotPos(i);
-    } */
+    }
     render();
     window.requestAnimationFrame(animate);
 }

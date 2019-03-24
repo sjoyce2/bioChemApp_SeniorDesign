@@ -238,6 +238,7 @@ ul#substrates{
     width: 70px;
     padding: 1% 1% 1% 1%;
     text-align: center;
+    float: left;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;

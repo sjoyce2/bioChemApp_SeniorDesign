@@ -99,9 +99,14 @@ def moduleEdit(request, model, module):
 			listOfProds.append(currentProdDict)
 
 	if request.method == 'POST':
+
 		new_enzyme = request.POST.get("Enzyme")
 		new_reversible = request.POST.get("reversibleChoice")
-		post = Module(modelID_id=99, enzyme=new_enzyme, reversible=new_reversible)
+
+		print(new_enzyme)
+		print(new_reversible)
+
+		post = Module(modelID_id=model, enzyme=new_enzyme, reversible=new_reversible, deltaG=-1, deltaGNaughtPrime=1)
 		post.save()
 		for key, values in request.POST.lists():
 			if (key == "Product"):
@@ -132,7 +137,8 @@ def modelEdit(request, model):
 	for obj in mod:
 		mod_dict = {"id": obj.id, "modelID_id": obj.modelID_id, "enzyme": obj.enzyme, \
 			"reversible": obj.reversible, "enzymeAbbr": obj.enzymeAbbr, "xCoor": obj.xCoor, \
-			"yCoor": obj.yCoor, "enzWeight": obj.enzWeight}
+			"yCoor": obj.yCoor, "enzWeight": obj.enzWeight, "deltaG": obj.deltaG, \
+			"deltaGNaughtPrime": obj.deltaGNaughtPrime}
 		list_of_mods.append(mod_dict)
 	subs = Substrates.objects.all()
 	list_of_subs = []

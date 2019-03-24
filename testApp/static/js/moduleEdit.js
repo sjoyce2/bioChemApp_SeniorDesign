@@ -488,31 +488,38 @@ function validateReaction(){
     //enzyme must be selected
     ctx.fillStyle = "tomato";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
-
+    //cannot save invalid reaction
+    console.log("disable save button");
+    saveBtn.disabled = true;
     return false;
 
   }else if(countSubstrates === 0 && countProducts === 0){
     setReaction(enzymeSubs, enzymeProds, enzymeReverse); //the user has only selected the enzyme so fill in reaction
     ctx.fillStyle = "limegreen";//reaction will be correct so set to green
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
+    saveBtn.disabled = false;
 
   }else if(countSubstrates === 0 || countProducts === 0){
     //settings are invalid, cannot have selected some products and
     //no substrates or some substrates and no products
     ctx.fillStyle = "tomato";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
-
+    console.log("disable save button");
+    saveBtn.disabled = true;
     return false;
 
   }else if(countProducts === validProdCount && countSubstrates === validSubCount && validEnzCount === checkedEnzsNames.length){
   //   //Reaction is valid
     ctx.fillStyle = "limegreen";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
+    saveBtn.disabled = false;
 
   }else{
     //reaction is invalid, but still want to display reaction
     ctx.fillStyle = "tomato";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
+    console.log("disable save button");
+    saveBtn.disabled = true;
   }
   //set fillStyle back to black
   ctx.fillStyle = "black";

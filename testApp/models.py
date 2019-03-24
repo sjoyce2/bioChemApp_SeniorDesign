@@ -20,6 +20,8 @@ class Module(models.Model):
 	xCoor = models.IntegerField(default=0)
 	yCoor = models.IntegerField(default=0)
 	enzWeight = models.IntegerField(default=1)
+	deltaG = models.FloatField(default=-1.0)
+	deltaGNaughtPrime = models.FloatField(default=1.0)
 
 	def __str__(self):
 		return_val = str(id) + str(self.modelID) + str(self.enzyme) + str(self.enzymeAbbr) + str(self.reversible) + str(self.xCoor) + str(self.yCoor) + str(self.enzWeight)

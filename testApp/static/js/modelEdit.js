@@ -26,6 +26,7 @@ var dotPositions = []; //For each module, the (x, y) position of the "dot" repre
 var directions = [];
 var prodSubValues = [];
 var rxnDir = [];
+var kValues = [];
 var db_modules = JSON.parse(document.getElementById('db-modules').textContent);
 var db_substrates = JSON.parse(document.getElementById('db-substrates').textContent);
 var db_products = JSON.parse(document.getElementById('db-products').textContent);
@@ -226,20 +227,14 @@ function calculateY(x, centerX, centerY, halfCircle) {
 }
 
 function checkRatio(moduleNumber) {
-    //Calculate the ratio of substrates to products in the module
-    //Calculate the critical ratio at which the directions switch
-    //If the ratio is higher than the crit ratio, the direction changes to 1
-    //If it is lower than the crit ratio, the direction changes to -1
-    var deltaG = db_modules[moduleNumber].deltaG
-    var deltaGNaughtPrime = db_modules[moduleNumber].deltaGNaughtPrime
-    var k = Math.exp(deltaGNaughtPrime / (0.008314 * 298))
-    var q = prodSubValues[0] / prodSubValues[1]
-    if (q/k > 1) {
-        rxnDir[moduleNumber] = -1
-    } else if (q/k < 1) {
-        rxnDir[moduleNumber] = 1
+    var q = prodSubValues[0] / prodSubValues[1];
+    var k = kValues[moduleNumber];
+    if (q/k > 1.0) {
+        rxnDir[moduleNumber] = -1;
+    } else if (q/k < 1.0) {
+        rxnDir[moduleNumber] = 1;
     } else {
-        rxnDir[moduleNumber] = 0
+        rxnDir[moduleNumber] = 0;
     }
 }
 
@@ -276,7 +271,7 @@ function getDotPos(moduleNumber) {
     }
     var revMod = revList[moduleNumber];
     checkRatio(moduleNumber);
-    if (revMod == "irreversible") {
+    if (revMod == "irreversible") { //TODO: decrease sub and increase prod when reach end
         if (dotPositions[moduleNumber][0] < (startX * 75 + canvas.clientWidth / 2 + 50)) {
             if (dotPositions[moduleNumber][1] == startY * 100) {
                 dotPositions[moduleNumber][0] += directions[moduleNumber] * positionChange;
@@ -309,27 +304,37 @@ function getDotPos(moduleNumber) {
         if (startX == endX) { //vertical
             dotPositions[moduleNumber][1] += directions[moduleNumber] * positionChange;
             if (dotPositions[moduleNumber][1] >= endY * 100) {
-                if (rxnDir == 0 || rxnDir == -1) {
+                if (rxnDir[moduleNumber] == 0 || rxnDir[moduleNumber] == -1) {
                     directions[moduleNumber] = -1;
                 } else {
                     dotPositions[moduleNumber][0] = startX * 75 + canvas.clientWidth / 2;
                     dotPositions[moduleNumber][1] = startY * 100;
                     directions[moduleNumber] = 1;
                 }
+                prodSubValues[moduleNumber][0] ++;
+                prodSubValues[moduleNumber][1] --;
+                if (prodSubValues[moduleNumber][1] < 1) {
+                    prodSubValues[moduleNumber][1] = 1;
+                }
             } else if (dotPositions[moduleNumber][1] <= startY * 100) {
-                if (rxnDir == 0 || rxnDir == 1) {
+                if (rxnDir[moduleNumber] == 0 || rxnDir[moduleNumber] == 1) {
                     directions[moduleNumber] = 1;
                 } else {
                     dotPositions[moduleNumber][0] = endX * 75 + canvas.clientWidth / 2;
                     dotPositions[moduleNumber][1] = endY * 100;
                     directions[moduleNumber] = -1;
                 }
+                prodSubValues[moduleNumber][0] --;
+                prodSubValues[moduleNumber][1] ++;
+                if (prodSubValues[moduleNumber][0] < 1) {
+                    prodSubValues[moduleNumber][0] = 1;
+                }
             }
         } else {
             if (startY == endY) { //horizontal
                 dotPositions[moduleNumber][0] += directions[moduleNumber] * positionChange;
                 if (dotPositions[moduleNumber][0] >= (endX * 75) + canvas.clientWidth / 2) {
-                    if (rxnDir == 0 || rxnDir == -1) {
+                    if (rxnDir[moduleNumber] == 0 || rxnDir[moduleNumber] == -1) {
                         directions[moduleNumber] = -1;
                     } else {
                         dotPositions[moduleNumber][0] = startX * 75 + canvas.clientWidth / 2;
@@ -337,17 +342,27 @@ function getDotPos(moduleNumber) {
                         directions[moduleNumber] = 1;
                     }
                     directions[moduleNumber] = -1;
+                    prodSubValues[moduleNumber][0] ++;
+                    prodSubValues[moduleNumber][1] --;
+                    if (prodSubValues[moduleNumber][1] < 1) {
+                        prodSubValues[moduleNumber][1] = 1;
+                    }
                 } else if (dotPositions[moduleNumber][0] <= (startX * 75) + 
                     canvas.clientWidth / 2) {
-                    if (rxnDir == 0 || rxnDir == 1) {
+                    if (rxnDir[moduleNumber] == 0 || rxnDir[moduleNumber] == 1) {
                         directions[moduleNumber] = 1;
                     } else {
                         dotPositions[moduleNumber][0] = endX * 75 + canvas.clientWidth / 2;
                         dotPositions[moduleNumber][1] = endY * 100;
                         directions[moduleNumber] = -1;
                     }
+                    prodSubValues[moduleNumber][0] --;
+                    prodSubValues[moduleNumber][1] ++;
+                    if (prodSubValues[moduleNumber][0] < 1) {
+                        prodSubValues[moduleNumber][0] = 1;
+                    }
                 }
-            } else { //weird
+            } else { //weird TODO: decrease sub and increase prod when reach end
                 var midPoint = (yCoords[moduleNumber] * 100) + 50;
                 if (dotPositions[moduleNumber][1] >= midPoint) {
                     //TODO: Split into two dots
@@ -356,7 +371,7 @@ function getDotPos(moduleNumber) {
                 }
                 if (dotPositions[moduleNumber][1] >= endY * 100 && dotPositions[moduleNumber][0] >= 
                     (endX * 75) + canvas.clientWidth / 2) {
-                    if (rxnDir == 0 || rxnDir == -1) {
+                    if (rxnDir[moduleNumber] == 0 || rxnDir[moduleNumber] == -1) {
                         directions[moduleNumber] = -1;
                     } else {
                         dotPositions[moduleNumber][0] = startX * 75 + canvas.clientWidth / 2;
@@ -366,7 +381,7 @@ function getDotPos(moduleNumber) {
                 } else if (dotPositions[moduleNumber][1] <= startY * 100 && 
                     dotPositions[moduleNumber][0] <= (startX * 75) + 
                     canvas.clientWidth / 2) {
-                    if (rxnDir == 0 || rxnDir == 1) {
+                    if (rxnDir[moduleNumber] == 0 || rxnDir[moduleNumber] == 1) {
                         directions[moduleNumber] = 1;
                     } else {
                         dotPositions[moduleNumber][0] = endX * 75 + canvas.clientWidth / 2;
@@ -387,9 +402,10 @@ function getDotPos(moduleNumber) {
 
 //TODO: Fix this
 function animate() {
-    for (var i = 0; i < enzymeList.length; i++) {
+    getDotPos(1)
+    /* for (var i = 0; i < enzymeList.length; i++) {
         getDotPos(i);
-    }
+    } */
     render();
     window.requestAnimationFrame(animate);
 }
@@ -448,6 +464,15 @@ function convertTextToId(text) {
     return idStr;
 }
 
+function calculateK(moduleNumber) {
+    //var deltaG = db_modules[moduleNumber].deltaG
+    //var deltaGNaughtPrime = db_modules[moduleNumber].deltaGNaughtPrime
+    var deltaG = -2.9; //TODO: Test Values
+    var deltaGNaughtPrime = 1.67; //TODO: Test Values
+    var k = Math.exp(deltaGNaughtPrime / (0.008314 * 298));
+    return k;
+}
+
 //resets values of sliders on page (re)load
 function reset() {
     for (var i=0; i<db_modules.length; i++) {
@@ -466,10 +491,11 @@ function reset() {
             directions.push(1);
             rxnDir.push(1);
             if (i == 0) {
-                rxnDir.push([1, 10]);
+                prodSubValues.push([1, 10]);
             } else {
-                rxnDir.push([1, 1]);
+                prodSubValues.push([1, 1]);
             }
+            kValues.push(calculateK(i));
         }
     }
 }
@@ -524,7 +550,20 @@ function addValues() {
     }
 }
 
+function redirect() {
+    var url = "/testApp/moduleEdit/" + modelNum + "/0";
+    location.href = url;
+}
+
 function createSliders() {
+    var flexHorizList = document.getElementsByClassName("flex-horiz");
+    var button = document.createElement("button");
+    button.setAttribute("onclick", "redirect();");
+    button.setAttribute("type", "button");
+    button.setAttribute("id", "new-reaction");
+    button.onclick = function() {redirect();};
+    button.innerHTML = "Create New Reaction";
+    flexHorizList[0].insertBefore(button, flexHorizList[0].childNodes[2]);
     for (var i=0; i<db_modules.length; i++) {
         if (db_modules[i].modelID_id == modelNum && db_modules[i].reversible == 'irreversible') {
             var sliderHolder = document.getElementById("slider-holder");

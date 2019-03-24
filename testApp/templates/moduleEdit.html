@@ -91,9 +91,9 @@
 																newcheckbox.setAttribute("type", "checkbox");
 																newcheckbox.setAttribute("value", newStr);
 																newcheckbox.setAttribute("onchange", "onRadioChange()");
-																newcheckbox.setAttribute("name", allSubs[i][2]);
+																newcheckbox.setAttribute("name", "Substrate");
 																console.log(allSubs[i][2]);
-																newcheckbox.className = "Substrate";
+																newcheckbox.className = allSubs[i][2];
 																newlabel.appendChild(newcheckbox);
 																document.getElementById("substrates").appendChild(newlabel);
 															}
@@ -159,9 +159,9 @@
 																newcheckbox.setAttribute("type", "checkbox");
 																newcheckbox.setAttribute("value", newStr);
 																newcheckbox.setAttribute("onchange", "onRadioChange()");
-																newcheckbox.setAttribute("name", allProds[i][2]);
+																newcheckbox.setAttribute("name", "Product");
 																console.log(allProds[i][2]);
-																newcheckbox.className = "Product";
+																newcheckbox.className = allProds[i][2];
 																newlabel.appendChild(newcheckbox);
 																document.getElementById("products").appendChild(newlabel);
 															}

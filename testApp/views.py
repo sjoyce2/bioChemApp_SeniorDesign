@@ -50,23 +50,11 @@ def modelChoice(request):
 
 def moduleEdit(request, model, module):
 
-	# need to validate that current user actually owns the model, or it's public
+	myMod = Module.objects.all().filter(pk = module)
 
-	print(model)
-	print(module)
-
-	myMod = Module.objects.all().filter(pk = module, modelID_id = model)
-
-	mySubs = Substrates.objects.all().filter(moduleID_id__exact = module, modelID = model)
-	myProds = Products.objects.all().filter(moduleID_id__exact = module, modelID = model)
-
+	mySubs = Substrates.objects.all().filter(moduleID_id__exact = module)
+	myProds = Products.objects.all().filter(moduleID_id__exact = module)
 	myModel = Model.objects.filter(pk = model)
-
-	print(myMod)
-	print(mySubs)
-	print(myProds)
-
-	print(myModel)
 
 	for value in myModel:
 		currentModelName = value.modelName
@@ -144,7 +132,8 @@ def modelEdit(request, model):
 	for obj in mod:
 		mod_dict = {"id": obj.id, "modelID_id": obj.modelID_id, "enzyme": obj.enzyme, \
 			"reversible": obj.reversible, "enzymeAbbr": obj.enzymeAbbr, "xCoor": obj.xCoor, \
-			"yCoor": obj.yCoor, "enzWeight": obj.enzWeight}
+			"yCoor": obj.yCoor, "enzWeight": obj.enzWeight, "deltaG": obj.deltaG, \
+			"deltaGNaughtPrime": obj.deltaGNaughtPrime}
 		list_of_mods.append(mod_dict)
 	subs = Substrates.objects.all()
 	list_of_subs = []

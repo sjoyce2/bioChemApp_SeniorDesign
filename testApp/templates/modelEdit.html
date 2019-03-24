@@ -5,6 +5,7 @@
 
 </head>
 <body>
+    
 	<form class="login100-form validate-form">
         {{ modules|json_script:"db-modules" }}
         {{ substrates|json_script:"db-substrates" }}
@@ -14,14 +15,20 @@
             <div id="modelEditDiv"style="width: 800px; height: 800px; overflow: hidden">
                 <canvas id="modelEditCanvas" height="10000" width="800" ></canvas>
             </div>
-            <!-- Create New Reaction button created here with id="new-reaction" -->
             <div class="flex-sliders" id="slider-holder">
                 <h3 style="padding:10px 20px">Variables</h3>
             </div>
+            <!-- Create New Reaction button created here with id="new-reaction" -->
+            <div class="modelButtons">
+                <button type="button" class="play-pause" id="">Play/Pause</button>
+                <button type="button" class="play-pause" id="new-reaction">Create New Reaction</button>
+                <button type="button" class="play-pause" id="backButtonModelEdit">Back</button>
+            </div>
         </div>
     </form>
-	<div id="dropDownSelect1"></div>
-	<script src="{% static 'js/modelEdit.js' %}"></script>
+    
+    <script src="{% static 'js/modelEdit.js' %}"></script>
+    
 </body>
 </html>
 {% endblock %}

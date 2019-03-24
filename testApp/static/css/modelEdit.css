@@ -21,9 +21,6 @@
     src: url('../fonts/poppins/Poppins-SemiBold.ttf');
 }
 
-
-
-
 /*//////////////////////////////////////////////////////////////////
 [ RESTYLE TAG ]*/
 
@@ -148,20 +145,32 @@ iframe {
 }
 
 #new-reaction {
+    
+}
+
+.play-pause {
     border: 1px solid white;
     background-color: #4CAF50; /* Green */
     height: 57.8px;
     margin-top: 3%;
     color: white;
-    width: 14%;
+    width: 100%;
     padding: 1.2% 1.2% 1.2% 1.2%;
     text-align: center;
-    line-height: 50%;
+    line-height: 99%;
     text-decoration: none;
-    float: right;
     margin-left: 1%;
-    font-size: 14px;
+    font-size: 16px;
     margin-right: 1%;
+}
+
+#backButtonModelEdit {
+    margin-top: 260%;
+}
+
+.modelButtons {
+    display: flex;
+    flex-flow: column;
 }
 
 .flex-horiz {

@@ -50,11 +50,23 @@ def modelChoice(request):
 
 def moduleEdit(request, model, module):
 
-	myMod = Module.objects.all().filter(pk = module)
+	# need to validate that current user actually owns the model, or it's public
 
-	mySubs = Substrates.objects.all().filter(moduleID_id__exact = module)
-	myProds = Products.objects.all().filter(moduleID_id__exact = module)
+	print(model)
+	print(module)
+
+	myMod = Module.objects.all().filter(pk = module, modelID_id = model)
+
+	mySubs = Substrates.objects.all().filter(moduleID_id__exact = module, modelID = model)
+	myProds = Products.objects.all().filter(moduleID_id__exact = module, modelID = model)
+
 	myModel = Model.objects.filter(pk = model)
+
+	print(myMod)
+	print(mySubs)
+	print(myProds)
+
+	print(myModel)
 
 	for value in myModel:
 		currentModelName = value.modelName

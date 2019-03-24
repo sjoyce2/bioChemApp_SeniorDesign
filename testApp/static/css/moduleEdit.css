@@ -62,7 +62,7 @@ ul#products{
     font-size: 16px;
     display: flex;
     flex-direction: column;
-    max-height: 100px;
+    max-height: 120px;
 }
 ul#enzymes{
     overflow-y: scroll;
@@ -70,7 +70,7 @@ ul#enzymes{
     font-size: 16px;
     display: flex;
     flex-direction: column;
-    max-height: 100px;
+    max-height: 120px;
 }
 
 ul#substrates{
@@ -79,20 +79,15 @@ ul#substrates{
     font-size: 16px;
     display: flex;
     flex-direction: column;
-    max-height: 100px;
+    max-height: 120px;
 }
-
-/* #substrates, #products, #enzymes{
-  float: left;
-  display: inline-block;
-} */
 
 .container {
   float: left;
   clear: none;
   color: rgb(25,25,25);
   display: block;
-  padding: 2% 1% 0 0;
+  padding: .5% 1% 0 0;
   
 }
 

@@ -808,5 +808,6 @@ label {
 }
 
 .body {
-  overflow: hidden;
+  overflow: auto;
+  
 }

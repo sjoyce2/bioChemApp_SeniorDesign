@@ -1,0 +1,11 @@
+﻿id,modelID_id,enzyme,reversible,enzymeAbbr,xCoor,yCoor,enzWeight,deltaG,deltaGNaughtPrime
+1,1,Hexokinase,irreversible,HK,0,1,1,-1,1
+2,1,Phosphoglucose_isomerase,reversible,PGI,0,2,1,-1,1
+3,1,Phosphofructokinase,irreversible,PFK,0,3,1,-1,1
+4,1,Aldolase,reversible,ALDO,0,4,1,-1,1
+5,1,Triosephosphate_isomerase,reversible,TPI,-1,5,1,-1,1
+6,1,Glyceraldehyde_phosphate_dehydrogenase,reversible,GAPDH,1,5,1,-1,1
+7,1,Phosphoglycerate_kinase,reversible,PGK,1,6,1,-1,1
+8,1,Phosphoglycerate_mutase,reversible,PGM,1,7,1,-1,1
+9,1,Enolase,reversible,ENO,1,8,1,-1,1
+10,1,Pyruvate_kinase,irreversible,PK,1,9,1,-1,1

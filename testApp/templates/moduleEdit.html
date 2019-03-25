@@ -5,6 +5,9 @@
 <body>
 	<script>
 		//need to add in abbreviations
+		var modelID = {{modelID}};
+		console.log(modelID);
+
 		var myEnzymes = [];
 		{% for mod in modules %}
 				myEnzymes.push(['{{ mod.enzyme }}', '{{mod.reversible}}', '{{mod.id}}', '{{mod.modelID_id}}', '{{mod.enzymeAbbr}}']);

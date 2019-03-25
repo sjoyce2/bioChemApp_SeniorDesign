@@ -453,7 +453,7 @@ function animate() {
 function render() {
     var ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
-
+    var varList = document.getElementsByClassName("inner-flex-horiz");
     //Draw each step of the pathway, including reversible and non-reversible steps
     for (var i = 0; i < enzymeList.length; i++) {
         getDotPos(i);
@@ -480,7 +480,7 @@ function render() {
                 xCoords[i] * 75 + (canvas.clientWidth / 2 + 50), yCoords[i] * 100, 
                 ctx);
         }
-        if (highlightRects[i][4] === true) {
+        if (varList[i].getAttribute("drawRect") === "true") {
             ctx.beginPath();
             ctx.rect(highlightRects[i][0], highlightRects[i][1], highlightRects[i][2], 
                 highlightRects[i][3]);
@@ -537,16 +537,14 @@ function reset() {
             }
             highlightRects.push([db_modules[i].xCoor*75+canvas.clientWidth/2-130,
                 db_modules[i].yCoor*100-30, 260, 160, false]);
-            var indexAttrib = document.createAttribute("indexVal");
-            indexAttrib.value = i.toString();
+            var indexAttrib = document.createAttribute("drawRect");
+            indexAttrib.value = "false";
             varList[i].setAttributeNode(indexAttrib);
             varList[i].addEventListener("mouseenter", function(event) {
-                highlightRects[parseInt(this.getAttribute("indexVal"))][4] = true;
-                console.log(parseInt(this.getAttribute("indexVal")));
-                console.log(highlightRects[parseInt(this.getAttribute("indexVal"))][4]);
+                this.setAttribute("drawRect", "true");
             }, false);
             varList[i].addEventListener("mouseenter", function(event) {
-                highlightRects[parseInt(this.getAttribute("indexVal"))][4] = false;
+                this.setAttribute("drawRect", "false");
             }, false)
             dotPositions.push([db_modules[i].xCoor * 75 + (canvas.clientWidth / 2),
                 db_modules[i].yCoor * 100])

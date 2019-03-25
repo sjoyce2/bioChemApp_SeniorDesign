@@ -12,7 +12,7 @@ var lastX;
 var lastY;
 var marginLeft = -(divWidth/2 - canvas.width/2);
 var marginTop = 0;
-var positionChange = 2
+var positionChange = 2;
 
 // Instead of these, we need a list of enzymes and a corresponding 2d list
 // for products and another for substrates
@@ -272,7 +272,7 @@ function getDotPos(moduleNumber) {
     }
     var revMod = revList[moduleNumber];
     checkRatio(moduleNumber);
-    if (revMod == "irreversible") { //TODO: decrease sub and increase prod when reach end
+    if (revMod == "irreversible") {
         if (dotPositions[moduleNumber][0] <= (startX * 75 + canvas.clientWidth / 2 + 50)) {
             if (dotPositions[moduleNumber][1] == startY * 100) {
                 dotPositions[moduleNumber][0] += directions[moduleNumber] * positionChange;
@@ -337,7 +337,8 @@ function getDotPos(moduleNumber) {
             }
         } else {
             if (startY == endY) { //horizontal
-                dotPositions[moduleNumber][0] += directions[moduleNumber] * positionChange;
+                var currPosChange = (3/2) * positionChange
+                dotPositions[moduleNumber][0] += directions[moduleNumber] * currPosChange;
                 if (dotPositions[moduleNumber][0] >= (endX * 75) + canvas.clientWidth / 2) {
                     if (rxnDir[moduleNumber] == 0 || rxnDir[moduleNumber] == -1) {
                         directions[moduleNumber] = -1;

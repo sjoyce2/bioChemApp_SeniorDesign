@@ -620,38 +620,41 @@ function createSliders() {
     button.setAttribute("onclick", "redirect();");
     button.onclick = function() {redirect();};
     for (var i=0; i<db_modules.length; i++) {
-        var sliderHolder = document.getElementById("slider-holder");
-        var varHolder = document.createElement('div');
-        varHolder.setAttribute("class", "variable-holder");
-        var enzLabel = document.createElement('label');
-        enzLabel.setAttribute("for", db_modules[i].enzyme);
-        enzLabel.innerHTML = convertIdToText(db_modules[i].enzyme);
-        varHolder.appendChild(enzLabel);
-        var inner = document.createElement('div');
-        inner.setAttribute("class", "inner-flex-horiz");
-        if (db_modules[i].modelID_id === modelNum && db_modules[i].reversible === 'irreversible') {
-            //Set slider attributes
-            var inputItem = document.createElement('input');
-            inputItem.setAttribute("type", "range");
-            inputItem.setAttribute("min", "0");
-            inputItem.setAttribute("max", "100");
-            inputItem.setAttribute("value", "50");
-            inputItem.setAttribute("step", "10");
-            inputItem.setAttribute("class", "variables");
-            inputItem.setAttribute("id", db_modules[i].enzyme);
-            inner.appendChild(inputItem);
-            var header = document.createElement('h4');
-            header.setAttribute("id", db_modules[i].enzyme + "Value");
-            header.innerHTML = "50";
-            inner.appendChild(header);
+        if (db_modules[i].modelID_id === modelNum) {
+            var sliderHolder = document.getElementById("slider-holder");
+            var varHolder = document.createElement('div');
+            varHolder.setAttribute("class", "variable-holder");
+            var enzLabel = document.createElement('label');
+            enzLabel.setAttribute("for", db_modules[i].enzyme);
+            enzLabel.innerHTML = convertIdToText(db_modules[i].enzyme);
+            varHolder.appendChild(enzLabel);
+            var inner = document.createElement('div');
+            inner.setAttribute("class", "inner-flex-horiz");
+            if (db_modules[i].reversible === 'irreversible') {
+                //Set slider attributes
+                var inputItem = document.createElement('input');
+                inputItem.setAttribute("type", "range");
+                inputItem.setAttribute("min", "0");
+                inputItem.setAttribute("max", "100");
+                inputItem.setAttribute("value", "50");
+                inputItem.setAttribute("step", "10");
+                inputItem.setAttribute("class", "variables");
+                inputItem.setAttribute("id", db_modules[i].enzyme);
+                inner.appendChild(inputItem);
+                var header = document.createElement('h4');
+                header.setAttribute("id", db_modules[i].enzyme + "Value");
+                header.innerHTML = "50";
+                inner.appendChild(header);
+            }
+            var editButton = document.createElement('a');
+            editButton.innerHTML = "Edit";
+            var url = "/testApp/moduleEdit/" + modelNum + "/" + (i + 1);
+            editButton.setAttribute("href", url);
+            inner.appendChild(editButton);
+            varHolder.appendChild(inner);
+            sliderHolder.append(varHolder); 
         }
-        var editButton = document.createElement('a');
-        editButton.innerHTML = "Edit";
-        var url = "/testApp/moduleEdit/" + modelNum + "/" + (i + 1);
-        editButton.setAttribute("href", url);
-        inner.appendChild(editButton);
-        varHolder.appendChild(inner);
-        sliderHolder.append(varHolder); 
+        
     }
 }
 

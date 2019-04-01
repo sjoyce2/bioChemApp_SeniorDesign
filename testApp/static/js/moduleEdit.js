@@ -68,10 +68,6 @@ function onRadioChange(){
       countSubstrates++;
       checkedSubsNames.push(substrates[i].value);
       checkedSubsAbbr.push(substrates[i].className);
-      console.log(substrates[i].name);
-      console.log("AAAAAAAAAAAAAAAAAAAAAA");
-      console.log(substrates[i].className);
-      console.log(substrates[i]);
     }
   }
   for(var j = 0; j < enzymes.length; j++){
@@ -84,7 +80,6 @@ function onRadioChange(){
       countProducts++;
       checkedProdsNames.push(products[k].value);
       checkedProdsAbbr.push(products[k].className);
-      console.log(products[k].name);
     }
   }
   if(countProducts > 5 || countSubstrates > 5){
@@ -246,13 +241,11 @@ function setInitialXCoor(count){
 }
 
 function drawSubstrates(currentX, currentY){
-  console.log(checkedSubsAbbr);
   var name;
   var a;
   for(a = 0; a < checkedSubsNames.length; a++){
     name = checkedSubsNames[a];
     var displayName = checkedSubsAbbr[a];
-    console.log(displayName);
     drawObject(currentX, currentY, name, displayName);
     if(checkedSubsNames.length > a + 1){
       drawPlus(currentX, currentY);
@@ -295,9 +288,6 @@ function displayReaction(){
 }
 
 function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
-  console.log("setReaction");
-  console.log(enzymeSubs);
-  console.log(enzymeProds);
 
   var canBeChecked = false;
   var enzymeName = checkedEnzsNames[0];
@@ -394,7 +384,7 @@ function checkSubsEnzProds(){
       enzymes[i].checked = true;
     }
   }
-  if(isReversible === "true"){
+  if(isReversible){
     reversibleChoice[0].checked = true;
   }else{
     reversibleChoice[1].checked = true;
@@ -435,9 +425,6 @@ function setArraysRepresentingReaction(){
       isReversible = true;
     }
 
-    console.log(checkedProdsNames);
-    console.log(checkedSubsNames);
-    console.log(checkedEnzsNames);
 
     var continueDisplay = validateReaction();
 
@@ -458,6 +445,7 @@ function validateReaction(){
   //reactions
   var requiredSubsCount = 0;
   var requiredProdsCount = 0;
+  var correctReversibleChoice = false;
 
   for(var x = 0; x < allSubs.length; x++){
     if(allSubs[x][1] === checkedEnzsNames[0]){
@@ -469,10 +457,6 @@ function validateReaction(){
       requiredProdsCount++;
     }
   }
-  console.log("%%%%%%%%%%%%%%%%%%")
-  console.log(requiredSubsCount);
-  console.log(requiredProdsCount);
-  console.log("%%%%%%%%%%%%%%%%%%")
 
   var validSubCount = 0;
   var validProdCount = 0;
@@ -488,6 +472,11 @@ function validateReaction(){
   for(var j = 0; j < allModules.length; j++){
     if(allModules[j][0] === checkedEnzsNames[0]){
       validEnzCount++;
+      if(allModules[j][1] === "reversible"){
+        correctReversibleChoice = true;
+      }else{
+        correctReversibleChoice = false;
+      }
     }
   }
 
@@ -495,15 +484,9 @@ function validateReaction(){
     for(var c = 0; c < allProds.length; c++){
       if(checkedProdsNames[k] === allProds[c][0] && checkedEnzsNames[0] === allProds[c][1]){
         validProdCount++;
-      }else{
       }
     }
   }
-  console.log(validProdCount);
-  console.log(validSubCount);
-  console.log(validEnzCount);
-  console.log(countProducts);
-  console.log(countSubstrates);
 
   if(countProducts > 5 || countSubstrates > 5 || checkedEnzsNames.length === 0 ){
     //settings are invalid, user is limited to 5 products and 5 substrates and an
@@ -511,7 +494,6 @@ function validateReaction(){
     ctx.fillStyle = "tomato";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
     //cannot save invalid reaction
-    console.log("disable save button");
     saveBtn.disabled = true;
     return false;
 
@@ -526,13 +508,12 @@ function validateReaction(){
     //no substrates or some substrates and no products
     ctx.fillStyle = "tomato";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
-    console.log("disable save button");
     saveBtn.disabled = true;
     return false;
 
   }else if(countProducts === validProdCount && countSubstrates === validSubCount
      && validEnzCount === checkedEnzsNames.length && requiredSubsCount ===
-     validSubCount && requiredProdsCount === validProdCount){
+     validSubCount && requiredProdsCount === validProdCount && correctReversibleChoice === isReversible){
   //   //Reaction is valid
     ctx.fillStyle = "limegreen";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
@@ -542,7 +523,6 @@ function validateReaction(){
     //reaction is invalid, but still want to display reaction
     ctx.fillStyle = "tomato";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
-    console.log("disable save button");
     saveBtn.disabled = true;
   }
   //set fillStyle back to black
@@ -554,7 +534,6 @@ function createErrorCheckArrays() {
 
   enzymeSubs = allSubs;
   enzymeProds = allProds;
-  console.log(enzymeSubs);
   for(var k = 0; k < allModules.length; k++){
     var isReversible = false;
     if(allModules[k][1] == "reversible"){
@@ -599,11 +578,8 @@ window.onload = function init(){
 
   canvas1 = document.getElementById("imageCanvas");
   substrates  = document.getElementsByName('Substrate');
-  console.log(substrates);
   enzymes = document.getElementsByClassName('Enzyme');
-  console.log(enzymes);
   products = document.getElementsByName('Product');
-  console.log(products);
   reversibleChoice = document.getElementsByName('reversibleChoice');
   ctx  = canvas1.getContext("2d");
   image  = document.getElementById("step1");

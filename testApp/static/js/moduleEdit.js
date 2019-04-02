@@ -37,6 +37,8 @@ var allSubs;
 var allModules;
 var isPublic;
 var modelID;
+var myXCoor;
+var myYCoor;
 //above from database
 var enzymeProds = [];
 var enzymeSubs = [];
@@ -68,8 +70,6 @@ function onRadioChange(){
       countSubstrates++;
       checkedSubsNames.push(substrates[i].value);
       checkedSubsAbbr.push(substrates[i].className);
-      console.log(substrates[i].value);
-      console.log(substrates[i].className);
     }
   }
   for(var j = 0; j < enzymes.length; j++){
@@ -290,8 +290,6 @@ function displayReaction(){
 }
 
 function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
-  console.log(enzymeSubs);
-  console.log(enzymeProds);
 
   var canBeChecked = false;
   var enzymeName = checkedEnzsNames[0];
@@ -466,6 +464,9 @@ function validateReaction(){
   var validSubCount = 0;
   var validProdCount = 0;
   var validEnzCount = 0;
+  var validXcoor = 0;
+  var validYcoor = 0;
+
   for(var i = 0; i < checkedSubsNames.length; i++){
     for(var a = 0; a < allSubs.length; a++){
       if(checkedSubsNames[i] === allSubs[a][0] && checkedEnzsNames[0] === allSubs[a][1]){
@@ -482,6 +483,8 @@ function validateReaction(){
       }else{
         correctReversibleChoice = false;
       }
+      validXcoor = allModules[j][4];
+      validYcoor = allModules[j][5];
     }
   }
 
@@ -504,11 +507,18 @@ function validateReaction(){
 
   }else if(countSubstrates === 0 && countProducts === 0){
     setReaction(enzymeSubs, enzymeProds, enzymeReverse); //the user has only selected the enzyme so fill in reaction
-    ctx.fillStyle = "limegreen";//reaction will be correct so set to green
-    ctx.fillRect(0, 0, canvas1.width, canvas1.height);
-    saveBtn.disabled = false;
+
+    if(validXcoor === myXCoor && validYcoor === myYCoor){
+      ctx.fillStyle = "limegreen";//reaction will be correct so set to green
+      ctx.fillRect(0, 0, canvas1.width, canvas1.height);
+      saveBtn.disabled = false;
+    }else{
+      console.log("This is a valid reaction, but not the next reaction in the pathway.");
+      ctx.fillStyle = "lightblue";
+      ctx.fillRect(0, 0, canvas1.width, canvas1.height);
+    }
     //This is a valid reaction, but not the next reaction in the pathway.
-    //Display an alert, if the x and y coordinates do not match the valid x and y coors. 
+    //Display an alert, if the x and y coordinates do not match the valid x and y coors.
 
   }else if(countSubstrates === 0 || countProducts === 0){
     //settings are invalid, cannot have selected some products and
@@ -520,7 +530,8 @@ function validateReaction(){
 
   }else if(countProducts === validProdCount && countSubstrates === validSubCount
      && validEnzCount === checkedEnzsNames.length && requiredSubsCount ===
-     validSubCount && requiredProdsCount === validProdCount && correctReversibleChoice === isReversible){
+     validSubCount && requiredProdsCount === validProdCount && correctReversibleChoice === isReversible &&
+     validXcoor === myXCoor && validYcoor === myYCoor){
   //   //Reaction is valid
     ctx.fillStyle = "limegreen";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);

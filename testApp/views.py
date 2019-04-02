@@ -113,9 +113,6 @@ def moduleEdit(request, model, module, xCoor, yCoor):
 	# 			xCoor = values.xCoor
 	# 		print(xCoor)
 
-	print(xCoor)
-	print(yCoor)
-
 	isPublic = result;
 
 	if(result):
@@ -139,9 +136,6 @@ def moduleEdit(request, model, module, xCoor, yCoor):
 			publicMod = mod
 
 		allmodules = Module.objects.all().filter(modelID_id__exact = publicMod.id).values('enzyme', 'enzymeAbbr', 'reversible', 'id')
-		for mod in allmodules:
-			print(mod)
-			print("(((())))")
 		allsubs = Substrates.objects.select_related('moduleID').filter(modelID = publicMod.id)
 		allprods = Products.objects.select_related('moduleID').filter(modelID = publicMod.id)
 
@@ -205,8 +199,6 @@ def moduleEdit(request, model, module, xCoor, yCoor):
 
 		return HttpResponseRedirect("/testApp/modelEdit/" + str(model))
 	else:
-		for mod in allmodules:
-			print(mod)
 		context = {'form': SaveModuleForm,
 				   'modules' : myMod,
 				   'substrates' : mySubs,

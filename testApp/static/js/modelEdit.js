@@ -291,8 +291,8 @@ function getDotPos(moduleNumber) {
             }
             prodSubValues[moduleNumber][0] += 0.001;
             prodSubValues[moduleNumber][1] -= 0.001;
-            if (prodSubValues < 1) {
-                prodSubValues = 1;
+            if (prodSubValues === 0) {
+                prodSubValues = 0.001;
             }
             if (moduleNumber != prodSubValues.length - 1) {
                 prodSubValues[moduleNumber + 1][1] += 0.001;
@@ -311,8 +311,8 @@ function getDotPos(moduleNumber) {
                 }
                 prodSubValues[moduleNumber][0] += 0.001;
                 prodSubValues[moduleNumber][1] -= 0.001;
-                if (prodSubValues[moduleNumber][1] < 1) {
-                    prodSubValues[moduleNumber][1] = 1;
+                if (prodSubValues[moduleNumber][1] === 0) {
+                    prodSubValues[moduleNumber][1] = 0.001;
                 }
                 if (moduleNumber != prodSubValues.length - 1) {
                     prodSubValues[moduleNumber + 1][1] += 0.001;
@@ -327,8 +327,8 @@ function getDotPos(moduleNumber) {
                 }
                 prodSubValues[moduleNumber][0] -= 0.001;
                 prodSubValues[moduleNumber][1] += 0.001;
-                if (prodSubValues[moduleNumber][0] < 1) {
-                    prodSubValues[moduleNumber][0] = 1;
+                if (prodSubValues[moduleNumber][0] === 0) {
+                    prodSubValues[moduleNumber][0] = 0.001;
                 }
                 if (moduleNumber != 0) {
                     prodSubValues[moduleNumber + 1][0] += 0.001;
@@ -348,8 +348,8 @@ function getDotPos(moduleNumber) {
                     }
                     prodSubValues[moduleNumber][0] += 0.001;
                     prodSubValues[moduleNumber][1] -= 0.001;
-                    if (prodSubValues[moduleNumber][1] < 1) {
-                        prodSubValues[moduleNumber][1] = 1;
+                    if (prodSubValues[moduleNumber][1] === 0) {
+                        prodSubValues[moduleNumber][1] = 0.001;
                     }
                     if (moduleNumber != prodSubValues.length - 1) {
                         prodSubValues[moduleNumber + 1][1] += 0.001;
@@ -365,8 +365,8 @@ function getDotPos(moduleNumber) {
                     }
                     prodSubValues[moduleNumber][0] -= 0.001;
                     prodSubValues[moduleNumber][1] += 0.001;
-                    if (prodSubValues[moduleNumber][0] < 1) {
-                        prodSubValues[moduleNumber][0] = 1;
+                    if (prodSubValues[moduleNumber][0] === 0) {
+                        prodSubValues[moduleNumber][0] = 0.001;
                     }
                     if (moduleNumber != 0) {
                         prodSubValues[moduleNumber + 1][0] += 0.001;
@@ -431,8 +431,8 @@ function getDotPos(moduleNumber) {
                     }
                     prodSubValues[moduleNumber][0] -= 0.001;
                     prodSubValues[moduleNumber][1] += 0.001;
-                    if (prodSubValues[moduleNumber][0] < 1) {
-                        prodSubValues[moduleNumber][0] = 1;
+                    if (prodSubValues[moduleNumber][0] === 0) {
+                        prodSubValues[moduleNumber][0] = 0.001;
                     }
                     if (moduleNumber != 0) {
                         prodSubValues[moduleNumber + 1][0] += 0.001;

@@ -49,7 +49,7 @@ def modelChoice(request):
 	}
 	return render(request, 'modelChoice.html', context=context)
 
-def moduleEdit(request, model, module):
+def moduleEdit(request, model, module, xCoor, yCoor):
 
 	myMod = Module.objects.all().filter(pk = module, modelID_id = model)
 

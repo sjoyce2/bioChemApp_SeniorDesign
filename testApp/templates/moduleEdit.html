@@ -6,28 +6,21 @@
 	<script>
 		//need to add in abbreviations
 		var modelID = {{modelID}};
-		console.log(modelID);
 
 		var myEnzymes = [];
 		{% for mod in modules %}
-				myEnzymes.push(['{{ mod.enzyme }}', '{{mod.reversible}}', '{{mod.id}}', '{{mod.modelID_id}}', '{{mod.enzymeAbbr}}']);
+				myEnzymes.push(['{{ mod.enzyme }}', '{{mod.reversible}}', '{{mod.id}}', '{{mod.modelID_id}}', '{{mod.enzymeAbbr}}', '{{mod.xCoor}}', '{{mod.yCoor}}']);
 		{% endfor %}
-
-		console.log(myEnzymes);
 
 		var mySubstrates = [];
 		{% for subs in substrates %}
 				mySubstrates.push(['{{subs.substrate}}', '{{subs.id}}', '{{subs.moduleID_id}}', '{{subs.abbr}}']);
 		{% endfor %}
 
-	  console.log(mySubstrates);
-
 		var myProducts = [];
 		{% for prods in products %}
 				myProducts.push(['{{prods.product}}', '{{prods.id}}', '{{prods.moduleID_id}}', '{{prods.abbr}}']);
 		{% endfor %}
-
-		console.log(myProducts);
 
 		var allProds = []
 		{% for prods in allprods %}
@@ -40,19 +33,22 @@
 
 		var allModules = []
 		{% for mod in allmodules %}
-				allModules.push(['{{ mod.enzyme }}', '{{mod.reversible}}', '{{mod.enzymeAbbr}}', '{{mod.id}}']);
+				allModules.push(['{{ mod.enzyme }}', '{{mod.reversible}}', '{{mod.enzymeAbbr}}', '{{mod.id}}', '{{mod.xCoor}}', '{{mod.yCoor}}']);
 		{% endfor %}
 
-		var xCoor = '{{xCoor}}';
-		var yCoor = '{{yCoor}}';
+		var myXCoor = '{{xCoor}}';
+		var myYCoor = '{{yCoor}}';
+		console.log("*******");
+		console.log(myXCoor, myYCoor);
+		console.log(allModules);
+		console.log(allSubs);
+		console.log(allProds);
+		console.log(myProducts);
+		console.log(mySubstrates);
+		console.log(myEnzymes);
 
 		var isPublic = false;
 		isPublic = '{{isPublic}}';
-
-		console.log(isPublic);
-		console.log(allProds);
-		console.log(allSubs);
-		console.log(allModules);
 	</script>
 			<img class="step1Image" id="step1" src="{% static 'images/GlycolysisStep1.jpg' %}" style="display: none;">
 			<img class="step1Image" id="Glucose" src="{% static 'images/Glucose.jpg' %}" style="display: none;">
@@ -98,7 +94,6 @@
 																newcheckbox.setAttribute("value", newStr);
 																newcheckbox.setAttribute("onchange", "onRadioChange()");
 																newcheckbox.setAttribute("name", "Substrate");
-																console.log(allSubs[i][2]);
 																newcheckbox.className = allSubs[i][2];
 																newlabel.appendChild(newcheckbox);
 																document.getElementById("substrates").appendChild(newlabel);
@@ -166,7 +161,6 @@
 																newcheckbox.setAttribute("value", newStr);
 																newcheckbox.setAttribute("onchange", "onRadioChange()");
 																newcheckbox.setAttribute("name", "Product");
-																console.log(allProds[i][2]);
 																newcheckbox.className = allProds[i][2];
 																newlabel.appendChild(newcheckbox);
 																document.getElementById("products").appendChild(newlabel);

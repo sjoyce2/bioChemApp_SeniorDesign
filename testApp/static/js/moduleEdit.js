@@ -68,6 +68,8 @@ function onRadioChange(){
       countSubstrates++;
       checkedSubsNames.push(substrates[i].value);
       checkedSubsAbbr.push(substrates[i].className);
+      console.log(substrates[i].value);
+      console.log(substrates[i].className);
     }
   }
   for(var j = 0; j < enzymes.length; j++){
@@ -288,13 +290,16 @@ function displayReaction(){
 }
 
 function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
+  console.log(enzymeSubs);
+  console.log(enzymeProds);
 
   var canBeChecked = false;
   var enzymeName = checkedEnzsNames[0];
   for(var i = 0; i < enzymeSubs.length; i++){
       if(enzymeSubs[i][1].toUpperCase() === enzymeName.toUpperCase()){
         checkedSubsNames.push(enzymeSubs[i][0]);
-        checkedSubsAbbr.push(enzymeSubs[i][3]);
+
+        checkedSubsAbbr.push(enzymeSubs[i][2]);
         countSubstrates++;
         canBeChecked = true;
     }
@@ -302,7 +307,7 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
   for(var i = 0; i < enzymeProds.length; i++){
       if(enzymeProds[i][1].toUpperCase() === enzymeName.toUpperCase()){
         checkedProdsNames.push(enzymeProds[i][0]);
-        checkedProdsAbbr.push(enzymeProds[i][3]);
+        checkedProdsAbbr.push(enzymeProds[i][2]);
         countProducts++;
       }
   }
@@ -502,6 +507,8 @@ function validateReaction(){
     ctx.fillStyle = "limegreen";//reaction will be correct so set to green
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
     saveBtn.disabled = false;
+    //This is a valid reaction, but not the next reaction in the pathway.
+    //Display an alert, if the x and y coordinates do not match the valid x and y coors. 
 
   }else if(countSubstrates === 0 || countProducts === 0){
     //settings are invalid, cannot have selected some products and

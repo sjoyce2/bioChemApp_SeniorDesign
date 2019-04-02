@@ -65,53 +65,53 @@ def moduleEdit(request, model, module, xCoor, yCoor):
 	publicModel = Model.objects.filter(modelName = currentModelName, public = True)
 	for models in publicModel:
 		publicModelID = models.id
-	if not myMod:
-		xCoor = 0
-		yCoor = 0
-	else:
-		maxY = Module.objects.all().aggregate(Max('yCoor'))
-		# current Y is the Max y in their model
-		maxY = maxY.get('yCoor__max')
-		# check if their are already 2 x values for the y, if so need to query for x associated with y+1
-		xForMaxY = Module.objects.all().filter(modelID_id = model, yCoor = maxY)
-		# get x values associated with y value in the public version
-		# curX = Module.objects.all().filter(modelName = modName, yCoor = maxY, public=True)
-
-		count = 0
-		for values in xForMaxY:
-			count = count + 1
-			currentX = values
-		if(count == 1):
-			# not on a split
-			# query for y + 1 in Public version
-			# check if next reaction is a split, if it is take smaller of 2 x values
-			# otherwise just take the single x value
-			yCoor = maxY + 1
-			xForYPlusOne = Module.objects.all().filter(modelID_id = publicModelID, yCoor = yCoor)
-			count = 0
-			listOfXcoors = [];
-			for values in xForYPlusOne:
-				listOfXcoors.append(values.xCoor)
-				count = count + 1
-				currentX = values
-			if(count == 1):
-				xCoor = currentX.xCoor;
-			elif(count == 2):
-				if(listOfXcoors[0] < listOfXcoors[1]):
-					xCoor = listOfXcoors[1]
-				else:
-					xCoor = listOfXcoors[0]
-			else:
-				# model is complete
-				xCoor = -1
-
-		else:
-			# has split already and need to query for x value for y + 1
-			yCoor = maxY + 1
-			xForYPlusOne = Module.objects.all().filter(modelID_id = publicModelID, yCoor = yCoor)
-			for values in xForYPlusOne:
-				xCoor = values.xCoor
-			print(xCoor)
+	# if not myMod:
+	# 	xCoor = 0
+	# 	yCoor = 0
+	# else:
+	# 	maxY = Module.objects.all().aggregate(Max('yCoor'))
+	# 	# current Y is the Max y in their model
+	# 	maxY = maxY.get('yCoor__max')
+	# 	# check if their are already 2 x values for the y, if so need to query for x associated with y+1
+	# 	xForMaxY = Module.objects.all().filter(modelID_id = model, yCoor = maxY)
+	# 	# get x values associated with y value in the public version
+	# 	# curX = Module.objects.all().filter(modelName = modName, yCoor = maxY, public=True)
+	#
+	# 	count = 0
+	# 	for values in xForMaxY:
+	# 		count = count + 1
+	# 		currentX = values
+	# 	if(count == 1):
+	# 		# not on a split
+	# 		# query for y + 1 in Public version
+	# 		# check if next reaction is a split, if it is take smaller of 2 x values
+	# 		# otherwise just take the single x value
+	# 		yCoor = maxY + 1
+	# 		xForYPlusOne = Module.objects.all().filter(modelID_id = publicModelID, yCoor = yCoor)
+	# 		count = 0
+	# 		listOfXcoors = [];
+	# 		for values in xForYPlusOne:
+	# 			listOfXcoors.append(values.xCoor)
+	# 			count = count + 1
+	# 			currentX = values
+	# 		if(count == 1):
+	# 			xCoor = currentX.xCoor;
+	# 		elif(count == 2):
+	# 			if(listOfXcoors[0] < listOfXcoors[1]):
+	# 				xCoor = listOfXcoors[1]
+	# 			else:
+	# 				xCoor = listOfXcoors[0]
+	# 		else:
+	# 			# model is complete
+	# 			xCoor = -1
+	#
+	# 	else:
+	# 		# has split already and need to query for x value for y + 1
+	# 		yCoor = maxY + 1
+	# 		xForYPlusOne = Module.objects.all().filter(modelID_id = publicModelID, yCoor = yCoor)
+	# 		for values in xForYPlusOne:
+	# 			xCoor = values.xCoor
+	# 		print(xCoor)
 
 	print(xCoor)
 	print(yCoor)
@@ -119,9 +119,9 @@ def moduleEdit(request, model, module, xCoor, yCoor):
 	isPublic = result;
 
 	if(result):
-		allmodules = Module.objects.all().filter(modelID_id__exact = model).values('enzyme', 'enzymeAbbr', 'reversible', 'id')
-		allsubs = Substrates.objects.select_related('moduleID').all()
-		allprods = Products.objects.select_related('moduleID').all()
+		allmodules = Module.objects.all().filter(modelID_id__exact = model).values('enzyme', 'enzymeAbbr', 'reversible', 'id', 'xCoor', 'yCoor')
+		allsubs = Substrates.objects.prefetch_related('moduleID').filter(modelID = model)
+		allprods = Products.objects.prefetch_related('moduleID').filter(modelID = model)
 
 		listOfSubs = []
 		listOfProds = []
@@ -139,6 +139,9 @@ def moduleEdit(request, model, module, xCoor, yCoor):
 			publicMod = mod
 
 		allmodules = Module.objects.all().filter(modelID_id__exact = publicMod.id).values('enzyme', 'enzymeAbbr', 'reversible', 'id')
+		for mod in allmodules:
+			print(mod)
+			print("(((())))")
 		allsubs = Substrates.objects.select_related('moduleID').filter(modelID = publicMod.id)
 		allprods = Products.objects.select_related('moduleID').filter(modelID = publicMod.id)
 
@@ -202,6 +205,8 @@ def moduleEdit(request, model, module, xCoor, yCoor):
 
 		return HttpResponseRedirect("/testApp/modelEdit/" + str(model))
 	else:
+		for mod in allmodules:
+			print(mod)
 		context = {'form': SaveModuleForm,
 				   'modules' : myMod,
 				   'substrates' : mySubs,

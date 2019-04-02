@@ -145,7 +145,7 @@ iframe {
 }
 
 #new-reaction {
-    
+
 }
 
 .play-pause {
@@ -172,6 +172,7 @@ iframe {
     display: flex;
     flex-flow: column;
     height: 720px;
+    margin: 0px 20px 0px 20px;
 }
 
 .flex-horiz {
@@ -185,8 +186,17 @@ iframe {
     flex-direction: column;
     float: left;
     height: 720px;
+    margin: 20px 0px 20px 30px;
+    background-color: rgba(255,255,255,0.5);
+    border: 5px;
+    border-style: solid;
+    border-color: rgba(255,255,255, 0.9);
+    border-radius: 5%;
 }
 
+.varLabel{
+  padding: 0px 0px 0px 10px;
+}
 .variable-holder {
     padding: 10px 20px;
     min-width: 240px;

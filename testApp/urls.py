@@ -10,7 +10,7 @@ from django.contrib.auth.views import LoginView
 urlpatterns = [
 	path('', views.login, name= 'login'),
 	path('accounts/', include('django.contrib.auth.urls')),
-	path('moduleEdit/<int:model>/<int:module>/<int:xCoor>/int:yCoor', views.moduleEdit, name='moduleEdit'),
+	path('moduleEdit/<int:model>/<int:module>/<int:xCoor>/<int:yCoor>', views.moduleEdit, name='moduleEdit'),
 	path('modelEdit/<int:model>', views.modelEdit, name='modelEdit'),
 	path('modelChoice', views.modelChoice, name='modelChoice'),
 	path('register', views.register, name='register'),

@@ -25,3 +25,6 @@ Link to latest PowerPoint
 
 https://docs.google.com/presentation/d/1J01QVqnocP9uX6Ll24yIE6PfKwb8tuaYlFI_fuL2h9I/edit?usp=sharing
 
+Link to Database intructions for Dr. Watson
+
+https://docs.google.com/document/d/1bGHMbrutLVrTfU1fp6tIn22BUKbyFHfCyAWLoIXn9pM/edit

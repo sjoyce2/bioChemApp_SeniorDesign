@@ -14,8 +14,6 @@ var marginLeft = -(divWidth/2 - canvas.width/2);
 var marginTop = 0;
 var positionChange = 2;
 
-// Instead of these, we need a list of enzymes and a corresponding 2d list
-// for products and another for substrates
 var enzymeList = [];
 var substrateList = [];
 var productList = [];
@@ -32,6 +30,7 @@ var db_modules = JSON.parse(document.getElementById('db-modules').textContent);
 var db_substrates = JSON.parse(document.getElementById('db-substrates').textContent);
 var db_products = JSON.parse(document.getElementById('db-products').textContent);
 var modelNum = parseInt(document.getElementById('modelNum').textContent);
+var sliders = []
 
 canvas.addEventListener('mousedown', function(e) {
     var evt = e || event;
@@ -218,7 +217,7 @@ function calculateX(y, centerX, centerY) {
     var x;
     x = centerX + Math.sqrt(-1 * Math.pow((y - centerY), 2) + 2500);
     if (Number.isNaN(x)) {
-        return centerX + 50;
+        return centerX;
     } else {
         return x;
     }
@@ -228,7 +227,7 @@ function checkRatio(moduleNumber) {
     //var q = prodSubValues[0] / prodSubValues[1];
     // test value for q: TODO: Fix so i don't need test value
     var k = kValues[moduleNumber];
-    var q = k - 0.1;
+    var q = prodSubValues[moduleNumber][0]/prodSubValues[moduleNumber][1];
     if (q/k > 1.0) {
         rxnDir[moduleNumber] = -1;
     } else if (q/k < 1.0) {
@@ -270,15 +269,17 @@ function getDotPos(moduleNumber) {
     }
     var revMod = revList[moduleNumber];
     checkRatio(moduleNumber);
-    if (revMod === "irreversible") {
+    if (revMod.toLowerCase() === "irreversible") {
+        var currSlider = document.getElementById(enzymeList[moduleNumber])
+        var irrPositionChange = positionChange * parseInt(currSlider.value) / 50
         if (dotPositions[moduleNumber][0] <= (startX * 75 + canvas.clientWidth / 2 + 50)) {
             if (dotPositions[moduleNumber][1] === startY * 100) {
-                dotPositions[moduleNumber][0] += directions[moduleNumber] * positionChange;
+                dotPositions[moduleNumber][0] += directions[moduleNumber] * irrPositionChange;
             } else {
-                dotPositions[moduleNumber][0] -= directions[moduleNumber] * positionChange;
+                dotPositions[moduleNumber][0] -= directions[moduleNumber] * irrPositionChange;
             }
         } else {
-            dotPositions[moduleNumber][1] += directions[moduleNumber] * positionChange;
+            dotPositions[moduleNumber][1] += directions[moduleNumber] * irrPositionChange;
             dotPositions[moduleNumber][0] = calculateX(dotPositions[moduleNumber][1],
                 (startX * 75 + canvas.clientWidth / 2 + 50), startY * 100 + 50);
         }
@@ -288,13 +289,13 @@ function getDotPos(moduleNumber) {
             if (rxnDir[moduleNumber] != 1) {
                 directions[moduleNumber] = 0;
             }
-            prodSubValues[moduleNumber][0] ++;
-            prodSubValues[moduleNumber][1] --;
+            prodSubValues[moduleNumber][0] += 0.001;
+            prodSubValues[moduleNumber][1] -= 0.001;
             if (prodSubValues < 1) {
                 prodSubValues = 1;
             }
             if (moduleNumber != prodSubValues.length - 1) {
-                prodSubValues[moduleNumber + 1][1] ++;
+                prodSubValues[moduleNumber + 1][1] += 0.001;
             }
         }
     } else {
@@ -308,13 +309,13 @@ function getDotPos(moduleNumber) {
                     dotPositions[moduleNumber][1] = startY * 100;
                     directions[moduleNumber] = 1;
                 }
-                prodSubValues[moduleNumber][0] ++;
-                prodSubValues[moduleNumber][1] --;
+                prodSubValues[moduleNumber][0] += 0.001;
+                prodSubValues[moduleNumber][1] -= 0.001;
                 if (prodSubValues[moduleNumber][1] < 1) {
                     prodSubValues[moduleNumber][1] = 1;
                 }
                 if (moduleNumber != prodSubValues.length - 1) {
-                    prodSubValues[moduleNumber + 1][1] ++;
+                    prodSubValues[moduleNumber + 1][1] += 0.001;
                 }
             } else if (dotPositions[moduleNumber][1] <= startY * 100) {
                 if (rxnDir[moduleNumber] === 0 || rxnDir[moduleNumber] === 1) {
@@ -324,13 +325,13 @@ function getDotPos(moduleNumber) {
                     dotPositions[moduleNumber][1] = endY * 100;
                     directions[moduleNumber] = -1;
                 }
-                prodSubValues[moduleNumber][0] --;
-                prodSubValues[moduleNumber][1] ++;
+                prodSubValues[moduleNumber][0] -= 0.001;
+                prodSubValues[moduleNumber][1] += 0.001;
                 if (prodSubValues[moduleNumber][0] < 1) {
                     prodSubValues[moduleNumber][0] = 1;
                 }
                 if (moduleNumber != 0) {
-                    prodSubValues[moduleNumber + 1][0] ++;
+                    prodSubValues[moduleNumber + 1][0] += 0.001;
                 }
             }
         } else {
@@ -345,13 +346,13 @@ function getDotPos(moduleNumber) {
                         dotPositions[moduleNumber][1] = startY * 100;
                         directions[moduleNumber] = 1;
                     }
-                    prodSubValues[moduleNumber][0] ++;
-                    prodSubValues[moduleNumber][1] --;
+                    prodSubValues[moduleNumber][0] += 0.001;
+                    prodSubValues[moduleNumber][1] -= 0.001;
                     if (prodSubValues[moduleNumber][1] < 1) {
                         prodSubValues[moduleNumber][1] = 1;
                     }
                     if (moduleNumber != prodSubValues.length - 1) {
-                        prodSubValues[moduleNumber + 1][1] ++;
+                        prodSubValues[moduleNumber + 1][1] += 0.001;
                     }
                 } else if (dotPositions[moduleNumber][0] <= (startX * 75) + 
                     canvas.clientWidth / 2) {
@@ -362,13 +363,13 @@ function getDotPos(moduleNumber) {
                         dotPositions[moduleNumber][1] = endY * 100;
                         directions[moduleNumber] = -1;
                     }
-                    prodSubValues[moduleNumber][0] --;
-                    prodSubValues[moduleNumber][1] ++;
+                    prodSubValues[moduleNumber][0] -= 0.001;
+                    prodSubValues[moduleNumber][1] += 0.001;
                     if (prodSubValues[moduleNumber][0] < 1) {
                         prodSubValues[moduleNumber][0] = 1;
                     }
                     if (moduleNumber != 0) {
-                        prodSubValues[moduleNumber + 1][0] ++;
+                        prodSubValues[moduleNumber + 1][0] += 0.001;
                     }
                 }
             } else { //weird
@@ -408,13 +409,13 @@ function getDotPos(moduleNumber) {
                         dotPositions[moduleNumber][3] = startY * 100;
                         directions[moduleNumber] = 1;
                     }
-                    prodSubValues[moduleNumber][0] ++;
-                    prodSubValues[moduleNumber][1] --;
+                    prodSubValues[moduleNumber][0] += 0.001;
+                    prodSubValues[moduleNumber][1] -= 0.001;
                     if (prodSubValues[moduleNumber][1] < 1) {
                         prodSubValues[moduleNumber][1] = 1;
                     }
                     if (moduleNumber != prodSubValues.length - 1) {
-                        prodSubValues[moduleNumber + 1][1] ++;
+                        prodSubValues[moduleNumber + 1][1] += 0.001;
                     }
                 } else if (dotPositions[moduleNumber][1] <= startY * 100 && 
                     dotPositions[moduleNumber][0] <= (startX * 75) + 
@@ -428,13 +429,13 @@ function getDotPos(moduleNumber) {
                         dotPositions[moduleNumber][3] = startY * 100;
                         directions[moduleNumber] = -1;
                     }
-                    prodSubValues[moduleNumber][0] --;
-                    prodSubValues[moduleNumber][1] ++;
+                    prodSubValues[moduleNumber][0] -= 0.001;
+                    prodSubValues[moduleNumber][1] += 0.001;
                     if (prodSubValues[moduleNumber][0] < 1) {
                         prodSubValues[moduleNumber][0] = 1;
                     }
                     if (moduleNumber != 0) {
-                        prodSubValues[moduleNumber + 1][0] ++;
+                        prodSubValues[moduleNumber + 1][0] += 0.001;
                     }
                 }
             }
@@ -526,24 +527,25 @@ function reset() {
     var varList = document.getElementsByClassName("inner-flex-horiz");
     for (var i=0; i<db_modules.length; i++) {
         if (db_modules[i].modelID_id === modelNum) {
-            if (db_modules[i].reversible === 'irreversible') {
-                var enSlider = document.getElementById(db_modules[i].enzyme);
+            if (db_modules[i].reversible.toLowerCase() === 'irreversible') {
+                var enSlider = document.getElementById(db_modules[i].enzymeAbbr);
                 enSlider.value = "50";
-                var numId = db_modules[i].enzyme + "Value";
+                var numId = db_modules[i].enzymeAbbr + "Value";
                 enSlider.oninput = function() {
                     var sliderId = convertTextToId(this.id) + "Value";
                     document.getElementById(sliderId).innerHTML = this.value;
                 }
             }
+            var currModuleIndex = enzymeList.indexOf(db_modules[i].enzymeAbbr)
             highlightRects.push([db_modules[i].xCoor*75+canvas.clientWidth/2-130,
                 db_modules[i].yCoor*100-30, 260, 160, false]);
             var indexAttrib = document.createAttribute("drawRect");
             indexAttrib.value = "false";
-            varList[i].setAttributeNode(indexAttrib);
-            varList[i].addEventListener("mouseenter", function(event) {
+            varList[currModuleIndex].setAttributeNode(indexAttrib);
+            varList[currModuleIndex].addEventListener("mouseenter", function(event) {
                 this.setAttribute("drawRect", "true");
             }, false);
-            varList[i].addEventListener("mouseenter", function(event) {
+            varList[currModuleIndex].addEventListener("mouseenter", function(event) {
                 this.setAttribute("drawRect", "false");
             }, false)
             dotPositions.push([db_modules[i].xCoor * 75 + (canvas.clientWidth / 2),
@@ -551,9 +553,9 @@ function reset() {
             directions.push(1);
             rxnDir.push(1);
             if (i === 0) {
-                prodSubValues.push([1, 10]);
+                prodSubValues.push([0.001, 5.0]);
             } else {
-                prodSubValues.push([1, 1]);
+                prodSubValues.push([0.001, 0.001 / calculateK(i) + 0.001]);
             }
             kValues.push(calculateK(i));
         }
@@ -611,7 +613,7 @@ function addValues() {
 }
 
 function redirect() {
-    var url = "/testApp/moduleEdit/" + modelNum + "/0";
+    var url = "/testApp/moduleEdit/" + modelNum + "/0/0/0";
     location.href = url;
 }
 
@@ -625,12 +627,12 @@ function createSliders() {
             var varHolder = document.createElement('div');
             varHolder.setAttribute("class", "variable-holder");
             var enzLabel = document.createElement('label');
-            enzLabel.setAttribute("for", db_modules[i].enzyme);
+            enzLabel.setAttribute("for", db_modules[i].enzymeAbbr);
             enzLabel.innerHTML = convertIdToText(db_modules[i].enzyme);
             varHolder.appendChild(enzLabel);
             var inner = document.createElement('div');
             inner.setAttribute("class", "inner-flex-horiz");
-            if (db_modules[i].reversible === 'irreversible') {
+            if (db_modules[i].reversible.toLowerCase() === 'irreversible') {
                 //Set slider attributes
                 var inputItem = document.createElement('input');
                 inputItem.setAttribute("type", "range");
@@ -639,16 +641,17 @@ function createSliders() {
                 inputItem.setAttribute("value", "50");
                 inputItem.setAttribute("step", "10");
                 inputItem.setAttribute("class", "variables");
-                inputItem.setAttribute("id", db_modules[i].enzyme);
+                inputItem.setAttribute("id", db_modules[i].enzymeAbbr);
                 inner.appendChild(inputItem);
                 var header = document.createElement('h4');
-                header.setAttribute("id", db_modules[i].enzyme + "Value");
+                header.setAttribute("id", db_modules[i].enzymeAbbr + "Value");
                 header.innerHTML = "50";
                 inner.appendChild(header);
             }
             var editButton = document.createElement('a');
             editButton.innerHTML = "Edit";
-            var url = "/testApp/moduleEdit/" + modelNum + "/" + (i + 1);
+            var url = "/testApp/moduleEdit/" + modelNum + "/" + (i + 1) + "/" + 
+                db_modules[i].xCoor + "/" + db_modules[i].yCoor;
             editButton.setAttribute("href", url);
             inner.appendChild(editButton);
             varHolder.appendChild(inner);
@@ -660,8 +663,8 @@ function createSliders() {
 
 function main () {
     createSliders();
-    reset();
     addValues();
+    reset();
     render();
     window.requestAnimationFrame(animate);
 }

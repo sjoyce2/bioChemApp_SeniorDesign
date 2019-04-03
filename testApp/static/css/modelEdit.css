@@ -168,6 +168,10 @@ iframe {
     /*/margin-top: 0px;*/
 }
 
+.sliderLabel {
+  color: black;
+}
+
 .modelButtons {
     display: flex;
     flex-flow: column;

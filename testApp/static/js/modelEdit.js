@@ -125,7 +125,7 @@ function notRevStep(substrate, product, enzyme,
 }
 
 //create a reversible reaction
-function revStep(firstText, secondText, enzyme, firstRectMidX, firstRectMidY, 
+function revStep(firstText, secondText, enzyme, firstRectMidX, firstRectMidY,
         nextX, nextY, ctx) {
     //create first protein
     ctx.font = "20px Arial";
@@ -283,7 +283,7 @@ function getDotPos(moduleNumber) {
             dotPositions[moduleNumber][0] = calculateX(dotPositions[moduleNumber][1],
                 (startX * 75 + canvas.clientWidth / 2 + 50), startY * 100 + 50);
         }
-        if (dotPositions[moduleNumber][1] >= endY * 100 && dotPositions[moduleNumber][0] < 
+        if (dotPositions[moduleNumber][1] >= endY * 100 && dotPositions[moduleNumber][0] <
             (endX * 75) + canvas.clientWidth / 2) { //if reaches end of reaction
             dotPositions[moduleNumber] = [startX*75+canvas.clientWidth/2, startY*100];
             if (rxnDir[moduleNumber] != 1) {
@@ -397,14 +397,14 @@ function getDotPos(moduleNumber) {
                 if (dotPositions[moduleNumber][1] >= midPoint) {
                     dotPositions[moduleNumber][1] += directions[moduleNumber] * positionChange;
                     if (dotPositions[moduleNumber][1] < botMidPoint) {
-                        dotPositions[moduleNumber][0] = (startX*75+canvas.clientWidth/2) + 
-                            directions[moduleNumber] * 3 * (dotPositions[moduleNumber][1] - 
+                        dotPositions[moduleNumber][0] = (startX*75+canvas.clientWidth/2) +
+                            directions[moduleNumber] * 3 * (dotPositions[moduleNumber][1] -
                             midPoint);
                     }
                     dotPositions[moduleNumber][3] = dotPositions[moduleNumber][1];
                     if (dotPositions[moduleNumber][3] < botMidPoint) {
-                        dotPositions[moduleNumber][2] = (startX*75+canvas.clientWidth/2) - 
-                            directions[moduleNumber] * 3 * (dotPositions[moduleNumber][1] - 
+                        dotPositions[moduleNumber][2] = (startX*75+canvas.clientWidth/2) -
+                            directions[moduleNumber] * 3 * (dotPositions[moduleNumber][1] -
                             midPoint);
                     }
                 } else {
@@ -413,7 +413,7 @@ function getDotPos(moduleNumber) {
                     dotPositions[moduleNumber][2] = startX*75+canvas.clientWidth/2;
                     dotPositions[moduleNumber][3] = dotPositions[moduleNumber][1];
                 }
-                if (dotPositions[moduleNumber][1] >= endY * 100 && dotPositions[moduleNumber][0] >= 
+                if (dotPositions[moduleNumber][1] >= endY * 100 && dotPositions[moduleNumber][0] >=
                     (endX * 75) + canvas.clientWidth / 2) {
                     if (rxnDir[moduleNumber] === 0 || rxnDir[moduleNumber] === -1) {
                         directions[moduleNumber] = -1;
@@ -494,17 +494,17 @@ function render() {
                 nextX = xCoords[i] * 75 + (canvas.clientWidth / 2 + 50);
                 nextY = yCoords[i] * 100;
             }
-            revStep(substrateList[i][0], productList[i][0], enzymeList[i], 
-                xCoords[i] * 75 + (canvas.clientWidth / 2 + 50), yCoords[i] * 100, 
+            revStep(substrateList[i][0], productList[i][0], enzymeList[i],
+                xCoords[i] * 75 + (canvas.clientWidth / 2 + 50), yCoords[i] * 100,
                 nextX, nextY, ctx);
         } else {
-            notRevStep(substrateList[i][0], productList[i][0], enzymeList[i], 
-                xCoords[i] * 75 + (canvas.clientWidth / 2 + 50), yCoords[i] * 100, 
+            notRevStep(substrateList[i][0], productList[i][0], enzymeList[i],
+                xCoords[i] * 75 + (canvas.clientWidth / 2 + 50), yCoords[i] * 100,
                 ctx);
         }
         if (varList[i].getAttribute("drawRect") === "true") {
             ctx.beginPath();
-            ctx.rect(highlightRects[i][0], highlightRects[i][1], highlightRects[i][2], 
+            ctx.rect(highlightRects[i][0], highlightRects[i][1], highlightRects[i][2],
                 highlightRects[i][3]);
             ctx.stroke();
         }
@@ -649,6 +649,7 @@ function createSliders() {
             varHolder.setAttribute("class", "variable-holder");
             var enzLabel = document.createElement('label');
             enzLabel.setAttribute("for", db_modules[i].enzymeAbbr);
+            enzLabel.className = "sliderLabel";
             enzLabel.innerHTML = convertIdToText(db_modules[i].enzyme);
             varHolder.appendChild(enzLabel);
             var inner = document.createElement('div');
@@ -671,14 +672,14 @@ function createSliders() {
             }
             var editButton = document.createElement('a');
             editButton.innerHTML = "Edit";
-            var url = "/testApp/moduleEdit/" + modelNum + "/" + (i + 1) + "/" + 
+            var url = "/testApp/moduleEdit/" + modelNum + "/" + (i + 1) + "/" +
                 db_modules[i].xCoor + "/" + db_modules[i].yCoor;
             editButton.setAttribute("href", url);
             inner.appendChild(editButton);
             varHolder.appendChild(inner);
-            sliderHolder.append(varHolder); 
+            sliderHolder.append(varHolder);
         }
-        
+
     }
 }
 

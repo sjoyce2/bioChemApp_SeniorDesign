@@ -297,6 +297,9 @@ function getDotPos(moduleNumber) {
             if (moduleNumber != prodSubValues.length - 1) {
                 prodSubValues[moduleNumber + 1][1] += 0.001;
             }
+            if (moduleNumber != 0) {
+                prodSubValues[moduleNumber - 1][0] -= 0.001;
+            }
         }
     } else {
         if (startX === endX) { //vertical
@@ -317,6 +320,9 @@ function getDotPos(moduleNumber) {
                 if (moduleNumber != prodSubValues.length - 1) {
                     prodSubValues[moduleNumber + 1][1] += 0.001;
                 }
+                if (moduleNumber != 0) {
+                    prodSubValues[moduleNumber - 1][0] -= 0.001;
+                }
             } else if (dotPositions[moduleNumber][1] <= startY * 100) {
                 if (rxnDir[moduleNumber] === 0 || rxnDir[moduleNumber] === 1) {
                     directions[moduleNumber] = 1;
@@ -330,8 +336,11 @@ function getDotPos(moduleNumber) {
                 if (prodSubValues[moduleNumber][0] === 0) {
                     prodSubValues[moduleNumber][0] = 0.001;
                 }
+                if (moduleNumber != prodSubValues.length - 1) {
+                    prodSubValues[moduleNumber + 1][1] -= 0.001;
+                }
                 if (moduleNumber != 0) {
-                    prodSubValues[moduleNumber + 1][0] += 0.001;
+                    prodSubValues[moduleNumber - 1][0] += 0.001;
                 }
             }
         } else {
@@ -354,6 +363,9 @@ function getDotPos(moduleNumber) {
                     if (moduleNumber != prodSubValues.length - 1) {
                         prodSubValues[moduleNumber + 1][1] += 0.001;
                     }
+                    if (moduleNumber != 0) {
+                        prodSubValues[moduleNumber - 1][1] -= 0.001;
+                    }
                 } else if (dotPositions[moduleNumber][0] <= (startX * 75) + 
                     canvas.clientWidth / 2) {
                     if (rxnDir[moduleNumber] === 0 || rxnDir[moduleNumber] === 1) {
@@ -368,8 +380,11 @@ function getDotPos(moduleNumber) {
                     if (prodSubValues[moduleNumber][0] === 0) {
                         prodSubValues[moduleNumber][0] = 0.001;
                     }
+                    if (moduleNumber != prodSubValues.length - 1) {
+                        prodSubValues[moduleNumber + 1][1] -= 0.001;
+                    }
                     if (moduleNumber != 0) {
-                        prodSubValues[moduleNumber + 1][0] += 0.001;
+                        prodSubValues[moduleNumber - 1][0] += 0.001;
                     }
                 }
             } else { //weird
@@ -417,6 +432,9 @@ function getDotPos(moduleNumber) {
                     if (moduleNumber != prodSubValues.length - 1) {
                         prodSubValues[moduleNumber + 1][1] += 0.001;
                     }
+                    if (moduleNumber != 0) {
+                        prodSubValues[moduleNumber - 1][0] -= 0.001;
+                    }
                 } else if (dotPositions[moduleNumber][1] <= startY * 100 && 
                     dotPositions[moduleNumber][0] <= (startX * 75) + 
                     canvas.clientWidth / 2) {
@@ -433,6 +451,9 @@ function getDotPos(moduleNumber) {
                     prodSubValues[moduleNumber][1] += 0.001;
                     if (prodSubValues[moduleNumber][0] === 0) {
                         prodSubValues[moduleNumber][0] = 0.001;
+                    }
+                    if (moduleNumber != prodSubValues.length - 1) {
+                        prodSubValues[moduleNumber + 1][1] -= 0.001;
                     }
                     if (moduleNumber != 0) {
                         prodSubValues[moduleNumber + 1][0] += 0.001;

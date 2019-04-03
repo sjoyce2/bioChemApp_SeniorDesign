@@ -533,10 +533,19 @@ function validateReaction(){
      && validEnzCount === checkedEnzsNames.length && requiredSubsCount ===
      validSubCount && requiredProdsCount === validProdCount && correctReversibleChoice === isReversible &&
      validXcoor === myXCoor && validYcoor === myYCoor){
+
+     ctx.fillStyle = "limegreen";
+     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
+     saveBtn.disabled = false;
+
+  }else if(countProducts === validProdCount && countSubstrates === validSubCount
+     && validEnzCount === checkedEnzsNames.length && requiredSubsCount ===
+     validSubCount && requiredProdsCount === validProdCount && correctReversibleChoice === isReversible){
   //   //Reaction is valid
-    ctx.fillStyle = "limegreen";
+    displaySnackbar1();
+    console.log("This is a valid reaction, but not the next reaction in the pathway.");
+    ctx.fillStyle = "lightblue";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
-    saveBtn.disabled = false;
 
   }else{
     //reaction is invalid, but still want to display reaction

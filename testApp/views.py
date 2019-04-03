@@ -135,7 +135,7 @@ def moduleEdit(request, model, module, xCoor, yCoor):
 		for mod in publicModel:
 			publicMod = mod
 
-		allmodules = Module.objects.all().filter(modelID_id__exact = publicMod.id).values('enzyme', 'enzymeAbbr', 'reversible', 'id')
+		allmodules = Module.objects.all().filter(modelID_id__exact = publicMod.id).values('enzyme', 'enzymeAbbr', 'reversible', 'id', 'xCoor', 'yCoor')
 		allsubs = Substrates.objects.select_related('moduleID').filter(modelID = publicMod.id)
 		allprods = Products.objects.select_related('moduleID').filter(modelID = publicMod.id)
 
@@ -152,6 +152,8 @@ def moduleEdit(request, model, module, xCoor, yCoor):
 
 	if request.method == 'POST':
 		new_enzyme = request.POST.get("Enzyme")
+		# The database cannot have strings with spaces, replace spaces with underscores
+		new_enzyme = new_enzyme.replace(" ", "_")
 		new_reversible = request.POST.get("reversibleChoice")
 
 		myModel = Model.objects.filter(pk = model)
@@ -164,6 +166,7 @@ def moduleEdit(request, model, module, xCoor, yCoor):
 
 		for mod in modelData:
 			publicMod = mod
+
 		moduleData = Module.objects.filter(modelID_id__exact = publicMod.id, enzyme=new_enzyme, reversible = new_reversible)
 
 		for mods in moduleData:

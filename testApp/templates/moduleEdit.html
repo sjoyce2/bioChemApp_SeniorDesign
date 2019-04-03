@@ -41,6 +41,13 @@
 
 		var isPublic = false;
 		isPublic = '{{isPublic}}';
+
+		console.log(myEnzymes);
+		console.log(myProducts);
+		console.log(mySubstrates);
+		console.log(allProds);
+		console.log(allSubs);
+		console.log(allModules);
 	</script>
 			<img class="step1Image" id="step1" src="{% static 'images/GlycolysisStep1.jpg' %}" style="display: none;">
 			<img class="step1Image" id="Glucose" src="{% static 'images/Glucose.jpg' %}" style="display: none;">
@@ -192,6 +199,10 @@
 										    <span class="close">&times;</span>
 										    <p>Sorry! We cannot fill in the reaction for your chosen enzyme at the moment.</p>
 										  </div>
+										</div>
+										<div id="snackbar">This is a valid reaction, but not the next reaction in the pathway.</div>
+										<div id="snackbarHelp">If you get stumped, select only the enzyme, hit "create reaction" and we'll fill in the rest</<div>
+
 										</div>
 
 	<script src="{% static 'js/moduleEdit.js' %}"></script>

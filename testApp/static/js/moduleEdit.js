@@ -513,6 +513,7 @@ function validateReaction(){
       ctx.fillRect(0, 0, canvas1.width, canvas1.height);
       saveBtn.disabled = false;
     }else{
+      displaySnackbar1();
       console.log("This is a valid reaction, but not the next reaction in the pathway.");
       ctx.fillStyle = "lightblue";
       ctx.fillRect(0, 0, canvas1.width, canvas1.height);
@@ -585,6 +586,30 @@ function replaceUnderscores(){
   }
 }
 
+//display snackbar to let user know their reaction is valid, but not the one we're looking for
+function displaySnackbar1() {
+  // Get the snackbar DIV
+  var x = document.getElementById("snackbar");
+
+  // Add the "show" class to DIV
+  x.className = "show";
+
+  // After 3 seconds, remove the show class from DIV
+  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
+}
+
+//display snackbar to let user know they can clear and click just the enzyme to get the reaction
+function displaySnackbarHelp() {
+  // Get the snackbar DIV
+  var y = document.getElementById("snackbarHelp");
+
+  // Add the "show" class to DIV
+  y.className = "show";
+
+  // After 3 seconds, remove the show class from DIV
+  setTimeout(function(){ y.className = y.className.replace("show", ""); }, 7000);
+}
+
 //Run when window loads
 window.onload = function init(){
 
@@ -593,6 +618,8 @@ window.onload = function init(){
     createErrorCheckArrays();
     replaceUnderscores();
   }
+
+  displaySnackbarHelp();
 
   canvas1 = document.getElementById("imageCanvas");
   substrates  = document.getElementsByName('Substrate');

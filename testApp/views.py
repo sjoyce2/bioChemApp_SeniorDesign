@@ -187,14 +187,17 @@ def moduleEdit(request, model, module, xCoor, yCoor):
 		post = Module(modelID_id=model, enzyme=new_enzyme, reversible=new_reversible, enzymeAbbr=correctModule.enzymeAbbr, xCoor=correctModule.xCoor, yCoor=correctModule.yCoor, enzWeight=correctModule.enzWeight, deltaG=correctModule.deltaG, deltaGNaughtPrime=correctModule.deltaGNaughtPrime)
 		post.save()
 
+		print(post.id)
+		nextModule = post.id
+
 		for key, values in request.POST.lists():
 			if (key == "Product"):
 				for i in range(len(values)):
-					prods = Products(moduleID_id=model, product=values[i], abbr=ProdAbbrsList.get('abbr'+values[i]), modelID = model)
+					prods = Products(moduleID_id=nextModule, product=values[i], abbr=ProdAbbrsList.get('abbr'+values[i]), modelID = model)
 					prods.save()
 			if (key == "Substrate"):
 				for i in range(len(values)):
-					subs = Substrates(moduleID_id=model, substrate=values[i], abbr=SubAbbrsList.get('abbr'+values[i]), modelID = model)
+					subs = Substrates(moduleID_id=nextModule, substrate=values[i], abbr=SubAbbrsList.get('abbr'+values[i]), modelID = model)
 					subs.save()
 
 		return HttpResponseRedirect("/testApp/modelEdit/" + str(model))

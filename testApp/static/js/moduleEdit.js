@@ -502,7 +502,7 @@ function validateReaction(){
     ctx.fillStyle = "tomato";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
     //cannot save invalid reaction
-    saveBtn.disabled = true;
+    saveBtn.setAttribute("type","button");
     return false;
 
   }else if(countSubstrates === 0 && countProducts === 0){
@@ -511,7 +511,7 @@ function validateReaction(){
     if(validXcoor === myXCoor && validYcoor === myYCoor){
       ctx.fillStyle = "limegreen";//reaction will be correct so set to green
       ctx.fillRect(0, 0, canvas1.width, canvas1.height);
-      saveBtn.disabled = false;
+      saveBtn.setAttribute("type","submit");
     }else{
       displaySnackbar1();
       console.log("This is a valid reaction, but not the next reaction in the pathway.");
@@ -526,7 +526,7 @@ function validateReaction(){
     //no substrates or some substrates and no products
     ctx.fillStyle = "tomato";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
-    saveBtn.disabled = true;
+    saveBtn.setAttribute("type","button");
     return false;
 
   }else if(countProducts === validProdCount && countSubstrates === validSubCount
@@ -536,7 +536,7 @@ function validateReaction(){
 
      ctx.fillStyle = "limegreen";
      ctx.fillRect(0, 0, canvas1.width, canvas1.height);
-     saveBtn.disabled = false;
+     saveBtn.setAttribute("type","submit");
 
   }else if(countProducts === validProdCount && countSubstrates === validSubCount
      && validEnzCount === checkedEnzsNames.length && requiredSubsCount ===
@@ -551,7 +551,7 @@ function validateReaction(){
     //reaction is invalid, but still want to display reaction
     ctx.fillStyle = "tomato";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
-    saveBtn.disabled = true;
+    saveBtn.setAttribute("type","button");
   }
   //set fillStyle back to black
   ctx.fillStyle = "black";
@@ -576,8 +576,11 @@ function enableAndDisableBtns() {
   //check if model is public
   if(isPublic === 'True'){
     //disable saveBtn
-    saveBtn.disabled = "disabled";
+    saveBtn.disabled = true;
     saveBtn.style.visibility="hidden";
+  }else{
+    //disable save button so it cannot be clicked with out selecting create reaction first
+    saveBtn.setAttribute("type", "button");
   }
 }
 
@@ -617,6 +620,17 @@ function displaySnackbarHelp() {
 
   // After 3 seconds, remove the show class from DIV
   setTimeout(function(){ y.className = y.className.replace("show", ""); }, 7000);
+}
+//You must create a reaction befor saving
+function displaySnackbarSaveBtn() {
+  // Get the snackbar DIV
+  var z = document.getElementById("snackbarSaveBtn");
+
+  // Add the "show" class to DIV
+  z.className = "show";
+
+  // After 3 seconds, remove the show class from DIV
+  setTimeout(function(){ z.className = z.className.replace("show", ""); }, 5000);
 }
 
 //Run when window loads
@@ -661,7 +675,6 @@ window.onload = function init(){
     //calling beginPath here preps canvas for drawing
     ctx.beginPath();
     ctx.lineWidth = 3;
-    //clearAll();
     //validate that settings are good, reaction created is good or bad
     var continueDisplay = validateReaction();
 
@@ -677,6 +690,12 @@ window.onload = function init(){
 
   saveBtn.addEventListener("click", function(event){
     //Submit post request to Django and update database
+    if(saveBtn.type == "button"){
+      //display snackbar letting user know that they must create a reaction before saving
+      displaySnackbarSaveBtn();
+    }else if(saveBtn.type == "submit"){
+
+    }
   });
 
   backBtn.addEventListener("click", function(event){
@@ -693,6 +712,7 @@ window.onload = function init(){
     ctx.beginPath();
 
     clearAll();
+    saveBtn.setAttribute("type","button");
   });
 
   //exit out of invalidModal when x is clicked

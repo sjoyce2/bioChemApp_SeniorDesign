@@ -252,7 +252,7 @@ ul#substrates{
     width: 38.5%;
 }
 
-#snackbar, #snackbarHelp{
+#snackbar, #snackbarHelp, #snackbarSaveBtn{
   visibility: hidden; /* Hidden by default. Visible on click */
   min-width: 50%; /* Set a default minimum width */
   margin: auto;
@@ -267,7 +267,7 @@ ul#substrates{
 }
 
 /* Show the snackbar when clicking on a button (class added with JavaScript) */
-#snackbar.show {
+#snackbar.show, #snackbarSaveBtn.show {
   visibility: visible; /* Show the snackbar */
   /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
   However, delay the fade out process for 4.5 seconds */
@@ -275,7 +275,7 @@ ul#substrates{
   animation: fadein 0.5s, fadeout 0.5s 4.5s;
 }
 
-#snackbarHelp.show {
+#snackbarHelp.show{
   visibility: visible; /* Show the snackbar */
   /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
   However, delay the fade out process for 6.5 seconds */

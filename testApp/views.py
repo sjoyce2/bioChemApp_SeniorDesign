@@ -116,7 +116,7 @@ def moduleEdit(request, model, module, xCoor, yCoor, isPositive):
 	# 			xCoor = values.xCoor
 	# 		print(xCoor)
 
-	isPublic = result;
+	isPublic = result
 
 	if(result):
 		allmodules = Module.objects.all().filter(modelID_id__exact = model).values('enzyme', 'enzymeAbbr', 'reversible', 'id', 'xCoor', 'yCoor')
@@ -305,7 +305,7 @@ def modelEdit(request, model):
 	print(xCoor)
 	print(yCoor)
 
-	mod = Module.objects.all()
+	mod = myModules
 	list_of_mods = []
 	for obj in mod:
 		mod_dict = {"id": obj.id, "modelID_id": obj.modelID_id, "enzyme": obj.enzyme, \
@@ -313,13 +313,13 @@ def modelEdit(request, model):
 			"yCoor": obj.yCoor, "enzWeight": obj.enzWeight, "deltaG": obj.deltaG, \
 			"deltaGNaughtPrime": obj.deltaGNaughtPrime}
 		list_of_mods.append(mod_dict)
-	subs = Substrates.objects.all()
+	subs = Substrates.objects.all().filter(modelID = model)
 	list_of_subs = []
 	for obj in subs:
 		sub_dict = {"id": obj.id, "substrate": obj.substrate, "moduleID_id": obj.moduleID_id, \
 			"abbr": obj.abbr}
 		list_of_subs.append(sub_dict)
-	prods = Products.objects.all()
+	prods = Products.objects.all().filter(modelID = model)
 	list_of_prods = []
 	for obj in prods:
 		prod_dict = {"id": obj.id, "product": obj.product, "moduleID_id": obj.moduleID_id, \

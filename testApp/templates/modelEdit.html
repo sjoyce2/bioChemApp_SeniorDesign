@@ -5,14 +5,16 @@
 
 </head>
 <body>
-	<form class="login100-form validate-form">
+	<form class="login100-form-modelEdit validate-form">
         {{ modules|json_script:"db-modules" }}
         {{ substrates|json_script:"db-substrates" }}
         {{ products|json_script:"db-products" }}
         {{ model_num|json_script:"modelNum"}}
+        {{ xCoorNext|json_script:"x-coor-next" }}
+        {{ yCoorNext|json_script:"y-coor-next" }}
         <div class="flex-horiz">
-            <div id="modelEditDiv"style="width: 800px; height: 800px; overflow-y: scroll">
-                <canvas id="modelEditCanvas" height="10000" width="800" ></canvas>
+            <div id="modelEditDiv"style="width: 800px; height: 650px; overflow-y: scroll">
+                <canvas id="modelEditCanvas" height="2000" width="800" ></canvas>
             </div>
             <div class="flex-sliders" id="slider-holder">
                 <h3 class="varLabel">Variables</h3>

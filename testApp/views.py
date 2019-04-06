@@ -49,8 +49,11 @@ def modelChoice(request):
 	}
 	return render(request, 'modelChoice.html', context=context)
 
-def moduleEdit(request, model, module, xCoor, yCoor):
-
+def moduleEdit(request, model, module, xCoor, yCoor, isPositive):
+	if(isPositive == 0):
+		xCoor = 0 - xCoor
+	print(xCoor)
+	print("****")
 	myMod = Module.objects.all().filter(pk = module, modelID_id = model)
 
 	mySubs = Substrates.objects.all().filter(moduleID_id__exact = module, modelID = model)
@@ -189,17 +192,17 @@ def moduleEdit(request, model, module, xCoor, yCoor):
 
 		post = Module(modelID_id=model, enzyme=new_enzyme, reversible=new_reversible, enzymeAbbr=correctModule.enzymeAbbr, xCoor=correctModule.xCoor, yCoor=correctModule.yCoor, enzWeight=correctModule.enzWeight, deltaG=correctModule.deltaG, deltaGNaughtPrime=correctModule.deltaGNaughtPrime)
 		post.save()
-
-		print(post.id)
 		nextModule = post.id
 
 		for key, values in request.POST.lists():
 			if (key == "Product"):
 				for i in range(len(values)):
+					values[i] = values[i].replace(" ", "_")
 					prods = Products(moduleID_id=nextModule, product=values[i], abbr=ProdAbbrsList.get('abbr'+values[i]), modelID = model)
 					prods.save()
 			if (key == "Substrate"):
 				for i in range(len(values)):
+					values[i] = values[i].replace(" ", "_")
 					subs = Substrates(moduleID_id=nextModule, substrate=values[i], abbr=SubAbbrsList.get('abbr'+values[i]), modelID = model)
 					subs.save()
 
@@ -220,6 +223,88 @@ def moduleEdit(request, model, module, xCoor, yCoor):
 		return render(request, 'moduleEdit.html', context=context)
 
 def modelEdit(request, model):
+	myModel = Model.objects.all().filter(pk = model)
+	for models in myModel:
+		modelName = models.modelName
+	print(modelName)
+	publicModel = Model.objects.all().filter(modelName = modelName, public = True)
+	for models in publicModel:
+		publicModelId = models.id
+
+	myModules = Module.objects.all().filter(modelID_id = model)
+	publicModules = Module.objects.all().filter(modelID_id = publicModelId)
+
+	if (not myModules):
+		xCoor = 0
+		yCoor = 0
+	else :
+		currentMaxY = 0
+		# check to see if the max y has 1 or 2 occurrences
+		countY = 0
+		for module in myModules:
+			if (module.yCoor > currentMaxY):
+				currentMaxY = module.yCoor
+				countY = 1
+			elif (module.yCoor == currentMaxY):
+				countY = countY + 1
+
+			print(currentMaxY)
+			print(countY)
+			print("&&&&**")
+		if (countY < 2):
+			countY = 0
+			xValues = []
+			# the next module could be the second module in a split
+			# check if currentMaxY is in the public modules more than once
+			for modules in publicModules:
+				if modules.yCoor == currentMaxY:
+					countY = countY + 1
+					xValues.append(modules.xCoor)
+			if(countY > 1):
+				yCoor = currentMaxY
+				currentMaxX = 0
+				for xVal in xValues:
+					if(xVal > currentMaxX):
+						currentMaxX = xVal
+				xCoor = currentMaxX
+				print(yCoor)
+				print(xCoor)
+				print("&&&&**")
+			else:
+				# the next module has a y value of currentMaxY + 1
+				# the module could still be part of a split, grab x values associated with currentMaxY + 1, take min x
+				xValues = []
+				# set currentMinX to greatest possible x value + 1
+				currentMinX = 2
+				for modules in publicModules:
+					if(modules.yCoor == currentMaxY + 1):
+						xValues.append(modules.xCoor)
+				for xVal in xValues:
+					if(xVal < currentMinX):
+						currentMinX = xVal
+				xCoor = currentMinX
+				yCoor = currentMaxY + 1
+				print(yCoor)
+				print(xCoor)
+				print("&&&&**")
+		else:
+			# the next module is not part of a split, because a split just occurred
+			# grab the x associated with y+1
+			xValues = []
+			# set currentMinX to greatest possible x value + 1
+			currentMinX = 2
+			for modules in publicModules:
+				if(modules.yCoor == currentMaxY + 1):
+					xValues.append(modules.xCoor)
+			for xVal in xValues:
+				if(xVal < currentMinX):
+					currentMinX = xVal
+			xCoor = currentMinX
+			yCoor = currentMaxY + 1
+
+	print(xCoor)
+	print(yCoor)
+
 	mod = Module.objects.all()
 	list_of_mods = []
 	for obj in mod:
@@ -241,7 +326,7 @@ def modelEdit(request, model):
 			"abbr": obj.abbr}
 		list_of_prods.append(prod_dict)
 	context = { 'modules': list_of_mods, 'substrates': list_of_subs, 'products': list_of_prods,
-		'model_num':model }
+		'model_num':model, 'xCoorNext':xCoor, 'yCoorNext':yCoor }
 	return render(request, 'modelEdit.html', context=context)
 
 def home(request):

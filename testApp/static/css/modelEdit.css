@@ -183,7 +183,7 @@ iframe {
     display: flex;
     flex-direction: row;
     min-width: 1000px;
-    min-height: 660px;
+    height: 650px;
 }
 
 .flex-sliders {
@@ -191,7 +191,7 @@ iframe {
     flex-direction: column;
     float: left;
     height: 630px;
-    margin: 20px 0px 20px 30px;
+    margin-left: 1%;
     background-color: rgba(255,255,255,0.5);
     border: 5px;
     border-style: solid;

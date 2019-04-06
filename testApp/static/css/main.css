@@ -187,6 +187,25 @@ iframe {
   height: 36px;
 }
 
+#topnav-logout-button {
+  float: right;
+  height: 36px;
+  margin-top: -1%;
+}
+
+.forgot-password {
+  color: #333333;
+  margin-top: 2%;
+  margin-left: 6.5%;
+  font-size: 14px;
+}
+
+.forgot-password:hover {
+  color: white;
+  
+}
+
+
 /* Style the links inside the navigation bar */
 .topnav a {
   float: left;
@@ -356,11 +375,12 @@ label {
 }
 
 .login-flex {
-  margin-top: 140px;
+  margin-top: 9%;
+  margin-left: 3.9%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-width: 100%;
+  position: fixed;
   align-items: center;
 }
 

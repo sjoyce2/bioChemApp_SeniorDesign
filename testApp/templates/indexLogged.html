@@ -34,17 +34,16 @@
 	
 	<div class="limiter">
 		<div class="topnav">
-			<a class="active" href="/testApp/home">
+			<a class="active" href="/testApp/modelChoice">
 				<img src="{% static 'images/home-icon-white.png' %}" class="wrap-home-top-bar">
 			</a>
-			<a href="#news">Settings</a>
 			<a href="#contact">Help</a>
 			<img src="{% static 'images/BioPath3.png' %}" class="wrap-biopath-logo-top-bar">
 			<p class="web-title">BioPath</p>
 			
-			<a class="username" id="username">User: {{ user.get_username }}</a>
+			<p class="username" id="username">User: {{ user.get_username }}</a>
 			
-			<a href="{% url 'logout_view' %}" id="topnav-buttons" class="login100-form-btn"><button type="button">
+			<a href="{% url 'logout_view' %}" id="topnav-logout-button" class="login100-form-btn"><button type="button">
 				Log Out
 			</button></a>
 

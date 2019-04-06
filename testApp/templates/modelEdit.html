@@ -11,7 +11,7 @@
         {{ products|json_script:"db-products" }}
         {{ model_num|json_script:"modelNum"}}
         <div class="flex-horiz">
-            <div id="modelEditDiv"style="width: 800px; height: 800px; overflow: hidden">
+            <div id="modelEditDiv"style="width: 800px; height: 800px; overflow-y: scroll">
                 <canvas id="modelEditCanvas" height="10000" width="800" ></canvas>
             </div>
             <div class="flex-sliders" id="slider-holder">
@@ -19,7 +19,7 @@
             </div>
             <!-- Create New Reaction button created here with id="new-reaction" -->
             <div class="modelButtons">
-                <button type="button" class="play-pause" id="">Play/Pause</button>
+                <button type="button" class="play-pause" id="play-pause">Pause</button>
                 <button type="button" class="play-pause" id="new-reaction">Create New Reaction</button>
                 <a href="/testApp/modelChoice">
                     <button type="button" class="play-pause" id="backButtonModelEdit">Back</button>
@@ -27,9 +27,7 @@
             </div>
         </div>
     </form>
-
     <script src="{% static 'js/modelEdit.js' %}"></script>
-
 </body>
 </html>
 {% endblock %}

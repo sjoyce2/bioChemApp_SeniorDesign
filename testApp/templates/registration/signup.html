@@ -1,8 +1,8 @@
 {% extends 'index.html' %}
  
 {% block signup %}
-<div class="wrap-login100">
-  <form method="post">
+<div class="wrap-signup100">
+  <form method="post" class="signup-form">
     {% csrf_token %}
     {% for field in form %}
       <p class="sign-up-spacing">

@@ -2,48 +2,34 @@
 
 {% block modelChoice %}
 <div class=".modelChoice-spacing">
-	<div class="wrap-modelChoice100">
-		<div class="container-modelChoice">
-			<div class="modelChoice-flex">
-				<h2 class="title-model">Create or Continue</h2>
-					<div class="modelChoice-scroll-elements">
-						<a href="{% url 'modelEdit' model=1 %}">
-							<button class="login100-form-btn">
-								+
-							</button>
-						</a>
-
-					</div>
-			</div>
-		</div>
-	</div>
 
 	<div class="wrap-modelChoice100">
 		<div class="container-modelChoice">
 			<div class="modelChoice-flex">
 				<h2 class="title-model">Your Models</h2>
-					<div class="modelChoice-scroll-elements" id="custom-models">
-						<!-- Create buttons dynamically for private models section -->
-						<script>
-							var myModels = [];
-							{% for model in models %}
-									myModels.push(['{{ model.modelName }}', '{{model.id}}']);
-							{% endfor %}
-							console.log(myModels);
+					<h5 class="title-model">Build a pathway from scratch</h5>
+						<div class="modelChoice-scroll-elements" id="custom-models">
+							<!-- Create buttons dynamically for private models section -->
+							<script>
+								var myModels = [];
+								{% for model in models %}
+										myModels.push(['{{ model.modelName }}', '{{model.id}}']);
+								{% endfor %}
+								console.log(myModels);
 
-							for(var i = 0; i < myModels.length; i++){
-								var link = document.createElement("A");
-								var btn = document.createElement("BUTTON");
-								//grab model name and set it as the inner html
-								btn.innerHTML = myModels[i][0];
-								btn.className = "login100-form-btn";
-								//grab the model id to complete the link to model edit screen 
-								link.href = "modelEdit/" + myModels[i][1];
-								link.appendChild(btn);
-								document.getElementById("custom-models").appendChild(link);
-							}
-						</script>
-					</div>
+								for(var i = 0; i < myModels.length; i++){
+									var link = document.createElement("A");
+									var btn = document.createElement("BUTTON");
+									//grab model name and set it as the inner html
+									btn.innerHTML = myModels[i][0];
+									btn.className = "login100-form-btn";
+									//grab the model id to complete the link to model edit screen 
+									link.href = "modelEdit/" + myModels[i][1];
+									link.appendChild(btn);
+									document.getElementById("custom-models").appendChild(link);
+								}
+							</script>
+						</div>
 			</div>
 		</div>
 	</div>
@@ -52,28 +38,29 @@
 		<div class="container-modelChoice">
 			<div class="modelChoice-flex">
 				<h2 class="title-model">Our Models</h2>
-					<div class="modelChoice-scroll-elements" id="public-models">
-						<!-- Create buttons dynamically for public models section -->
-						<script>
-							var myPublicModels = [];
-							{% for model in publicModels %}
-									myPublicModels.push(['{{ model.modelName }}', '{{model.id}}']);
-							{% endfor %}
-							console.log(myPublicModels);
+					<h5 class="title-model">View a finished pathway</h5>
+						<div class="modelChoice-scroll-elements" id="public-models">
+							<!-- Create buttons dynamically for public models section -->
+							<script>
+								var myPublicModels = [];
+								{% for model in publicModels %}
+										myPublicModels.push(['{{ model.modelName }}', '{{model.id}}']);
+								{% endfor %}
+								console.log(myPublicModels);
 
-							for(var i = 0; i < myPublicModels.length; i++){
-								var link = document.createElement("A");
-								var btn = document.createElement("BUTTON");
-								// Grab the model name and set it as the inner html
-								btn.innerHTML = myPublicModels[i][0];
-								btn.className = "login100-form-btn";
-								//grab the model ID to create link to model Edit screen
-								link.href = "modelEdit/" + myPublicModels[i][1];
-								link.appendChild(btn);
-								document.getElementById("public-models").appendChild(link);
-							}
-						</script>
-					</div>
+								for(var i = 0; i < myPublicModels.length; i++){
+									var link = document.createElement("A");
+									var btn = document.createElement("BUTTON");
+									// Grab the model name and set it as the inner html
+									btn.innerHTML = myPublicModels[i][0];
+									btn.className = "login100-form-btn";
+									//grab the model ID to create link to model Edit screen
+									link.href = "modelEdit/" + myPublicModels[i][1];
+									link.appendChild(btn);
+									document.getElementById("public-models").appendChild(link);
+								}
+							</script>
+						</div>
 			</div>
 		</div>
 	</div>

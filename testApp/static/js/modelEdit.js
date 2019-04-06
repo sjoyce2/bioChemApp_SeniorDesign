@@ -29,7 +29,6 @@ var modelNum = parseInt(document.getElementById('modelNum').textContent);
 var sliders = [];
 var paused = false;
 
-
 var playPauseButton = document.getElementById("play-pause");
 playPauseButton.addEventListener("click", function() {
     if (paused) {
@@ -657,8 +656,16 @@ function createSliders() {
                 + ", " + db_modules[i].yCoor + ");"
             editButton.setAttribute("onclick", functionString);
             editButton.setAttribute("type", "button");
-            var url = "/testApp/moduleEdit/" + modelNum + "/" + (i + 1) + "/" +
-                db_modules[i].xCoor + "/" + db_modules[i].yCoor;
+            var positiveX = 1;
+            var absX = 0;
+            if (db_modules[i].xCoor < 0) {
+                positiveX = 0;
+                absX = -db_modules[i].xCoor;
+            } else {
+                absX = db_modules[i].xCoor;
+            }
+            var url = "/testApp/moduleEdit/" + modelNum + "/" + (i + 1) + "/" 
+                + absX + "/" + db_modules[i].yCoor + "/" + positiveX;
             editButton.setAttribute("href", url);
             inner.appendChild(editButton);
             varHolder.appendChild(inner);

@@ -168,7 +168,7 @@ iframe {
     /*/margin-top: 0px;*/
 }
 
-.sliderLabel {
+.slider-label {
   color: black;
 }
 
@@ -196,6 +196,7 @@ iframe {
     border-style: solid;
     border-color: rgba(255,255,255, 0.9);
     border-radius: 5%;
+    overflow-y: scroll;
 }
 
 .varLabel{
@@ -212,10 +213,13 @@ iframe {
     flex-direction: row;
 }
 
-#enzyme1value, #enzyme2value, #enzyme3value {
-    padding: 0px 10px;
+.edit-button {
+    height: 100%;
+    color: white;
+    border: 1px solid white;
+    background-color: #4CAF50; /* Green */
+    padding: 5px;
 }
-
 
 /*------------------------------------------------------------------
 [ Form ]*/

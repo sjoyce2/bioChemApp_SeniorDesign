@@ -185,6 +185,7 @@ iframe {
 #topnav-buttons {
   float: right;
   height: 36px;
+  margin-top: -1%;
 }
 
 /* Style the links inside the navigation bar */

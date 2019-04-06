@@ -26,6 +26,8 @@ var db_modules = JSON.parse(document.getElementById('db-modules').textContent);
 var db_substrates = JSON.parse(document.getElementById('db-substrates').textContent);
 var db_products = JSON.parse(document.getElementById('db-products').textContent);
 var modelNum = parseInt(document.getElementById('modelNum').textContent);
+var xCoorNext = parseInt(document.getElementById('x-coor-next').textContent);
+var yCoorNext = parseInt(document.getElementById('y-coor-next').textContent);
 var sliders = [];
 var paused = false;
 
@@ -612,8 +614,16 @@ function addValues() {
 }
 
 function redirect(modNum, x, y) {
-    var url = "/testApp/moduleEdit/" + modelNum + "/" + modNum + "/" + x 
-        + "/" + y;
+    var posX = 1;
+    var absX = 0;
+    if (x < 0) {
+        posX = 0;
+        absX = -x;
+    } else {
+        absX = x;
+    }
+    var url = "/testApp/moduleEdit/" + modelNum + "/" + modNum + "/" + absX 
+        + "/" + y + "/" + posX;
     location.href = url;
 }
 
@@ -656,17 +666,6 @@ function createSliders() {
                 + ", " + db_modules[i].yCoor + ");"
             editButton.setAttribute("onclick", functionString);
             editButton.setAttribute("type", "button");
-            var positiveX = 1;
-            var absX = 0;
-            if (db_modules[i].xCoor < 0) {
-                positiveX = 0;
-                absX = -db_modules[i].xCoor;
-            } else {
-                absX = db_modules[i].xCoor;
-            }
-            var url = "/testApp/moduleEdit/" + modelNum + "/" + (i + 1) + "/" 
-                + absX + "/" + db_modules[i].yCoor + "/" + positiveX;
-            editButton.setAttribute("href", url);
             inner.appendChild(editButton);
             varHolder.appendChild(inner);
             sliderHolder.append(varHolder);

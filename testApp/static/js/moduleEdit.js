@@ -296,17 +296,17 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
   for(var i = 0; i < enzymeSubs.length; i++){
       if(enzymeSubs[i][1].toUpperCase() === enzymeName.toUpperCase()){
         checkedSubsNames.push(enzymeSubs[i][0]);
-
         checkedSubsAbbr.push(enzymeSubs[i][2]);
         countSubstrates++;
         canBeChecked = true;
     }
   }
-  for(var i = 0; i < enzymeProds.length; i++){
-      if(enzymeProds[i][1].toUpperCase() === enzymeName.toUpperCase()){
-        checkedProdsNames.push(enzymeProds[i][0]);
-        checkedProdsAbbr.push(enzymeProds[i][2]);
+  for(var j = 0; j < enzymeProds.length; j++){
+      if(enzymeProds[j][1].toUpperCase() === enzymeName.toUpperCase()){
+        checkedProdsNames.push(enzymeProds[j][0]);
+        checkedProdsAbbr.push(enzymeProds[j][2]);
         countProducts++;
+
       }
   }
   for(var i = 0; i < enzymeReverse.length; i++){
@@ -322,6 +322,8 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
       }
     //}
   }
+  checkSubsEnzProds();
+  
   if(canBeChecked){
     validateReaction();
   }

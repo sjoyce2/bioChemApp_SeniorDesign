@@ -139,28 +139,29 @@
 
 													<script type="text/javascript">
 													//look for element by id, don't add if not null.
-														for(var i = 0; i < allProds.length; i++){
+														for(var j = 0; j < allProds.length; j++){
+															console.log(allProds[j][0]);
 															String.prototype.replaceAll = function(search, replacement) {
 																var target = this;
 																return target.split(search).join(replacement);
 															};
-															var str = allProds[i][0];
+															var str = allProds[j][0];
 															var newStr = str.replaceAll(/_/,' ');
-															allProds[i][0] = newStr;
-															var enzymeStr = allProds[i][1];
+															allProds[j][0] = newStr;
+															var enzymeStr = allProds[j][1];
 															var newEnz = enzymeStr.replaceAll(/_/,' ');
-															allProds[i][1] = newEnz;
-															if(document.getElementById(allProds[i][0]+"ProdId") === null){
+															allProds[j][1] = newEnz;
+															if(document.getElementById(allProds[j][0]+"ProdId") === null){
 																var newlabel = document.createElement("Label");
 																newlabel.innerHTML = newStr;
 																newlabel.className = "container";
-																newlabel.setAttribute("id",allProds[i][0]+"ProdId");
+																newlabel.setAttribute("id",allProds[j][0]+"ProdId");
 																var newcheckbox = document.createElement("input");
 																newcheckbox.setAttribute("type", "checkbox");
 																newcheckbox.setAttribute("value", newStr);
 																newcheckbox.setAttribute("onchange", "onRadioChange()");
 																newcheckbox.setAttribute("name", "Product");
-																newcheckbox.className = allProds[i][2];
+																newcheckbox.className = allProds[j][2];
 																newlabel.appendChild(newcheckbox);
 																document.getElementById("products").appendChild(newlabel);
 															}

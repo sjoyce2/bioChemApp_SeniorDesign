@@ -23,7 +23,7 @@
 									//grab model name and set it as the inner html
 									btn.innerHTML = myModels[i][0];
 									btn.className = "login100-form-btn";
-									//grab the model id to complete the link to model edit screen 
+									//grab the model id to complete the link to model edit screen
 									link.href = "modelEdit/" + myModels[i][1];
 									link.appendChild(btn);
 									document.getElementById("custom-models").appendChild(link);
@@ -64,5 +64,20 @@
 			</div>
 		</div>
 	</div>
+</div>
+<div class="form-popup" id="myForm">
+	<form action="/action_page.php" class="form-container">
+		<h2>Help</h2>
+		<hr>
+		<h4>On this screen, you can choose to view Our Models or Your Models.</h4>
+		<hr>
+		<h4>Our models have the pathway completely filled out.</h4>
+		<hr>
+		<h4>Your models start as blank versions of our models</h4>
+		<hr>
+		<h4>It is your job to add each step to the pathway until it's complete.</h4>
+		<hr>
+		<button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+	</form>
 </div>
 {% endblock %}

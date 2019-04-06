@@ -203,9 +203,29 @@
 										</div>
 										<div id="snackbar">This is a valid reaction, but not the next reaction in the pathway.</div>
 										<div id="snackbarHelp">If you get stumped, select only the enzyme, hit "create reaction" and we'll fill in the rest</div>
-										<div id="snackbarSaveBtn">You must create a reaction before saving.</div>
-
-										</div>
+										<div id="snackbarSaveBtn">You must create the valid reaction before saving.</div>
+										<div class="form-popup" id="myForm">
+											<form action="/action_page.php" class="form-container">
+												<h2>Help</h2>
+												<hr>
+												<h4>On this screen, you can create the reactions in this pathway.</h4>
+												<hr>
+												<h4>Create a reaction by selecting your products, substrates, enzymes, and reversible choice, and clicking "CREATE REACTION".</hr>
+												<hr>
+												<h4>For the reaction to be correct you must correctly select the products, substrates, enzyme and don't forget to set the reaction to reversible or irreversible.</h4>
+												<hr>
+												<h4>If you do not see a save button that is because you are viewing one of our models, you'll need to view your models in order to add new reactions.</h4>
+												<hr>
+												<h4>If the reaction is blue, that means the reaction is correct, but not the one we're looking for.</h4>
+												<hr>
+												<h4>If the reaction is green, you have found the reaction we're looking for.</h4>
+												<hr>
+												<h4>If the reaction is red, try again.</h4>
+												<hr>
+												<h4>HINT: If you get stumped, hit the "CLEAR REACTION" button, select your enzyme, and hit "CREATE REACTION".</h4>
+												<hr>
+												<button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+											</form>
 										</div>
 
 	<script src="{% static 'js/moduleEdit.js' %}"></script>

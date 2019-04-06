@@ -30,6 +30,23 @@
             </div>
         </div>
     </form>
+		<div class="form-popup" id="myForm">
+			<form action="/action_page.php" class="form-container">
+				<h2>Help</h2>
+				<hr>
+				<h4>On this screen you can view the molecules flowing through the pathway!</h4>
+				<hr>
+				<h4>Click the pause button to stop the flow.</h4>
+				<hr>
+				<h4>Move the sliders to change the flow.</h4>
+				<hr>
+				<h4>Only irreversible reactions have sliders.</h4>
+				<hr>
+				<h4>If you would like to view a specific reaction, click the button in the variables section below the enzyme's name.</h4>
+				<hr>
+				<button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+			</form>
+		</div>
     <script src="{% static 'js/modelEdit.js' %}"></script>
 </body>
 </html>

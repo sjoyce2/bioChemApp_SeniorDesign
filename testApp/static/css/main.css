@@ -204,7 +204,7 @@ iframe {
 
 .forgot-password:hover {
   color: white;
-  
+
 }
 
 
@@ -413,7 +413,7 @@ iframe {
   width: 100%;
   margin-top: 0px;
   margin-left: 10px;
-  
+
 }
 
 .wrap-biopath-logo {
@@ -839,4 +839,27 @@ iframe {
 .body {
   overflow: auto;
 
+}
+
+/*help popup
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+.form-container {
+  max-width: 600px;
+  padding: 10px;
+  background-color: rgb(255,255,255);
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: green;
+  color: white;
 }

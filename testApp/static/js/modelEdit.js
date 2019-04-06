@@ -7,12 +7,8 @@ var canvas = document.getElementById("modelEditCanvas");
 var modelDiv = document.getElementById("modelEditDiv");
 var divWidth = window.getComputedStyle(modelDiv, null).width;
 var context = canvas.getContext('2d');
-var dragging = false;
-var lastX;
-var lastY;
-var marginLeft = -(divWidth/2 - canvas.width/2);
-var marginTop = 0;
 var positionChange = 2;
+var prevPosChange = positionChange;
 
 var enzymeList = [];
 var substrateList = [];
@@ -30,38 +26,21 @@ var db_modules = JSON.parse(document.getElementById('db-modules').textContent);
 var db_substrates = JSON.parse(document.getElementById('db-substrates').textContent);
 var db_products = JSON.parse(document.getElementById('db-products').textContent);
 var modelNum = parseInt(document.getElementById('modelNum').textContent);
-var sliders = []
+var sliders = [];
+var paused = false;
 
-canvas.addEventListener('mousedown', function(e) {
-    var evt = e || event;
-    dragging = true;
-    lastX = evt.clientX;
-    lastY = evt.clientY;
-    e.preventDefault();
-}, false);
 
-window.addEventListener('mousemove', function(e) {
-    var evt = e || event;
-    if (dragging) {
-        var delta = evt.clientX - lastX;
-        var deltaY = evt.clientY - lastY;
-        lastX = evt.clientX;
-        lastY = evt.clientY;
-        marginLeft += delta;
-        marginTop += deltaY;
-        marginLeft = marginLeft;
-        marginTop = Math.min(marginTop, 0);
-        var marginBot = Math.max(marginBot, window.getComputedStyle(modelDiv, null).height);
-        canvas.style.marginLeft = marginLeft + "px";
-        canvas.style.marginTop = marginTop + "px";
-        canvas.style.marginBottom = marginBot + "px";
+var playPauseButton = document.getElementById("play-pause");
+playPauseButton.addEventListener("click", function() {
+    if (paused) {
+        positionChange = prevPosChange;
+        this.innerHTML = "Pause";
+    } else {
+        positionChange = 0;
+        this.innerHTML = "Play";
     }
-    e.preventDefault();
-}, false);
-
-window.addEventListener('mouseup', function() {
-    dragging = false;
-}, false);
+    paused = !paused;
+});
 
 //Create a non-reversible reaction
 function notRevStep(substrate, product, enzyme,
@@ -633,15 +612,16 @@ function addValues() {
     }
 }
 
-function redirect() {
-    var url = "/testApp/moduleEdit/" + modelNum + "/0/0/0";
+function redirect(modNum, x, y) {
+    var url = "/testApp/moduleEdit/" + modelNum + "/" + modNum + "/" + x 
+        + "/" + y;
     location.href = url;
 }
 
 function createSliders() {
     var button = document.getElementById("new-reaction");
-    button.setAttribute("onclick", "redirect();");
-    button.onclick = function() {redirect();};
+    button.setAttribute("onclick", "redirect(0, 0, 0);");
+    button.onclick = function() {redirect(0, 0, 0);};
     for (var i=0; i<db_modules.length; i++) {
         if (db_modules[i].modelID_id === modelNum) {
             var sliderHolder = document.getElementById("slider-holder");
@@ -673,6 +653,10 @@ function createSliders() {
             var editButton = document.createElement('button');
             editButton.innerHTML = "Edit";
             editButton.setAttribute("class", "edit-button");
+            var functionString = "redirect(" + (i+1) + ", " + db_modules[i].xCoor
+                + ", " + db_modules[i].yCoor + ");"
+            editButton.setAttribute("onclick", functionString);
+            editButton.setAttribute("type", "button");
             var url = "/testApp/moduleEdit/" + modelNum + "/" + (i + 1) + "/" +
                 db_modules[i].xCoor + "/" + db_modules[i].yCoor;
             editButton.setAttribute("href", url);
@@ -680,7 +664,6 @@ function createSliders() {
             varHolder.appendChild(inner);
             sliderHolder.append(varHolder);
         }
-
     }
 }
 

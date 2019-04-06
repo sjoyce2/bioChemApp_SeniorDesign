@@ -35,9 +35,12 @@
     });
 
     //Change login elements to fit our purposes
-    
-    $('#id_username')[0].placeholder = "Username";
-    $('#id_password')[0].placeholder = "Password";
+    //Only applies to login screen so we add try/catch to avoid unnecessary
+    // error messages
+    try {
+        $('#id_username')[0].placeholder = "Username";
+        $('#id_password')[0].placeholder = "Password";
+    } catch(e) {}
 
 
     $('.validate-form .input100').each(function(){

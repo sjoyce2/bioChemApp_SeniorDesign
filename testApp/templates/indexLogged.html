@@ -42,7 +42,7 @@
 			<img src="{% static 'images/BioPath3.png' %}" class="wrap-biopath-logo-top-bar">
 			<p class="web-title">BioPath</p>
 			
-			<a class="username" id="username">User: {{ user.get_username }}</a>
+			<p class="username" id="username">User: {{ user.get_username }}</a>
 			
 			<a href="{% url 'logout_view' %}" id="topnav-buttons" class="login100-form-btn"><button type="button">
 				Log Out

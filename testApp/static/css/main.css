@@ -111,7 +111,7 @@ p {
 	font-family: Poppins-Regular;
 	font-size: 14px;
 	line-height: 1.7;
-	color: #666666;
+	color: white;
 	margin: 0px;
 }
 
@@ -370,10 +370,6 @@ iframe {
   background: -o-linear-gradient(top, #19384A, #347787);
   background: -moz-linear-gradient(top, #19384A, #347787);
   background: linear-gradient(top, #19384A, #347787);
-}
-
-label {
-  color: white;
 }
 
 .login-flex {

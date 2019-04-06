@@ -629,8 +629,8 @@ function redirect(modNum, x, y) {
 
 function createSliders() {
     var button = document.getElementById("new-reaction");
-    button.setAttribute("onclick", "redirect(0, 0, 0);");
-    button.onclick = function() {redirect(0, 0, 0);};
+    button.setAttribute("onclick", "redirect(0, xCoorNext, yCoorNext);");
+    button.onclick = function() {redirect(0, xCoorNext, yCoorNext);};
     for (var i=0; i<db_modules.length; i++) {
         if (db_modules[i].modelID_id === modelNum) {
             var sliderHolder = document.getElementById("slider-holder");

@@ -28,6 +28,7 @@ var db_products = JSON.parse(document.getElementById('db-products').textContent)
 var modelNum = parseInt(document.getElementById('modelNum').textContent);
 var xCoorNext = parseInt(document.getElementById('x-coor-next').textContent);
 var yCoorNext = parseInt(document.getElementById('y-coor-next').textContent);
+var pubModel = (document.getElementById('pubModel').textContent === "true");
 var sliders = [];
 var paused = false;
 
@@ -592,7 +593,7 @@ function addValues() {
         if (db_modules[i].modelID_id === modelNum) {
             var moduleNum = db_modules[i].id
             enzymeList.push(db_modules[i].enzymeAbbr)
-            revList.push(db_modules[i].reversible)
+            revList.push(db_modules[i].reversible.toLowerCase())
             xCoords.push(db_modules[i].xCoor)
             yCoords.push(db_modules[i].yCoor)
             var subList = []
@@ -629,8 +630,12 @@ function redirect(modNum, x, y) {
 
 function createSliders() {
     var button = document.getElementById("new-reaction");
-    button.setAttribute("onclick", "redirect(0, xCoorNext, yCoorNext);");
-    button.onclick = function() {redirect(0, xCoorNext, yCoorNext);};
+    if (pubModel === true) {
+        button.style.visibility = "hidden";
+    } else {
+        button.setAttribute("onclick", "redirect(0, xCoorNext, yCoorNext);");
+        button.onclick = function() {redirect(0, xCoorNext, yCoorNext);};
+    }
     for (var i=0; i<db_modules.length; i++) {
         if (db_modules[i].modelID_id === modelNum) {
             var sliderHolder = document.getElementById("slider-holder");
@@ -660,7 +665,11 @@ function createSliders() {
                 inner.appendChild(header);
             }
             var editButton = document.createElement('button');
-            editButton.innerHTML = "Edit";
+            if (pubModel === true) {
+                editButton.innerHTML = "View";
+            } else {
+                editButton.innerHTML = "Edit";
+            }
             editButton.setAttribute("class", "edit-button");
             var functionString = "redirect(" + (i+1) + ", " + db_modules[i].xCoor
                 + ", " + db_modules[i].yCoor + ");"

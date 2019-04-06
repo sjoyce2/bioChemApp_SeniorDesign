@@ -12,8 +12,9 @@
         {{ model_num|json_script:"modelNum"}}
         {{ xCoorNext|json_script:"x-coor-next" }}
         {{ yCoorNext|json_script:"y-coor-next" }}
+        {{ pubModel|json_script:"pubModel" }}
         <div class="flex-horiz">
-            <div id="modelEditDiv"style="width: 800px; height: 650px; overflow-y: scroll">
+            <div id="modelEditDiv"style="width: 800px; height: 650px; overflow: scroll">
                 <canvas id="modelEditCanvas" height="2000" width="800" ></canvas>
             </div>
             <div class="flex-sliders" id="slider-holder">

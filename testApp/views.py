@@ -243,6 +243,13 @@ def modelEdit(request, model):
 			xCoor = currentMinX
 			yCoor = currentMaxY + 1
 
+	print(xCoor)
+	print(yCoor)
+
+	pubModel = -1
+	for obj in myModel:
+		pubModel = obj.public
+	print(pubModel)
 	mod = myModules
 	list_of_mods = []
 	for obj in mod:
@@ -264,7 +271,7 @@ def modelEdit(request, model):
 			"abbr": obj.abbr}
 		list_of_prods.append(prod_dict)
 	context = { 'modules': list_of_mods, 'substrates': list_of_subs, 'products': list_of_prods,
-		'model_num':model, 'xCoorNext':xCoor, 'yCoorNext':yCoor }
+		'model_num':model, 'xCoorNext':xCoor, 'yCoorNext':yCoor, 'pubModel':pubModel }
 	return render(request, 'modelEdit.html', context=context)
 
 def home(request):

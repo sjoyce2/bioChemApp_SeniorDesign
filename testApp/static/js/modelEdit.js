@@ -670,8 +670,9 @@ function createSliders() {
                 header.innerHTML = "50";
                 inner.appendChild(header);
             }
-            var editButton = document.createElement('a');
+            var editButton = document.createElement('button');
             editButton.innerHTML = "Edit";
+            editButton.setAttribute("class", "edit-button");
             var url = "/testApp/moduleEdit/" + modelNum + "/" + (i + 1) + "/" +
                 db_modules[i].xCoor + "/" + db_modules[i].yCoor;
             editButton.setAttribute("href", url);

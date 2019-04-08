@@ -249,12 +249,20 @@ def modelEdit(request, model):
 	print(yCoor)
 
 	if request.method == 'POST':
+		isPublic = Model.objects.all().filter(pk = model)
+
+		for pub in isPublic:
+			isPub = pub.public
+
 		print("POST")
 		print(request)
 		print(model)
-		deletedProducts = Products.objects.all().filter(modelID = model).delete()
-		deletedSubstrates = Substrates.objects.all().filter(modelID = model).delete()
-		deletedModules = Module.objects.all().filter(modelID_id__exact = model).delete()
+		print(isPub)
+		if(not isPub):
+			print("VALID")
+			deletedProducts = Products.objects.all().filter(modelID = model).delete()
+			deletedSubstrates = Substrates.objects.all().filter(modelID = model).delete()
+			deletedModules = Module.objects.all().filter(modelID_id__exact = model).delete()
 
 
 	pubModel = -1

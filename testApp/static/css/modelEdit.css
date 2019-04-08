@@ -177,19 +177,14 @@ iframe {
     flex-flow: column;
     height: 650px;
     margin-left: 1%;
-    
+    margin-right: 1%;
 }
 
 .flex-horiz {
     display: flex;
     flex-direction: row;
     float: center;
-    position: fixed;
-    top: 54%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    min-width: 1400px;
+    min-width: 1000px;
     height: 650px;
 }
 
@@ -198,7 +193,7 @@ iframe {
     flex-direction: column;
     float: left;
     height: 650px;
-    margin-left: 1.5%;
+    margin-left: 1%;
     background-color: rgba(255,255,255,0.5);
     border: 5px;
     border-style: solid;

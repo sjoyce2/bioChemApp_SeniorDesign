@@ -152,6 +152,17 @@ function revStep(firstText, secondText, enzyme, firstRectMidX, firstRectMidY,
                 ctx.stroke();
             }
         }
+    } else {
+        ctx.moveTo(firstRectMidX - 65, firstRectMidY + 35);
+        ctx.lineTo(firstRectMidX - 55, firstRectMidY + 25);
+        ctx.lineTo(firstRectMidX - 55, firstRectMidY + 75);
+        ctx.moveTo(firstRectMidX - 45, firstRectMidY + 25);
+        ctx.lineTo(firstRectMidX - 45, firstRectMidY + 75);
+        ctx.lineTo(firstRectMidX - 35, firstRectMidY + 65);
+        ctx.fillStyle = "black";
+        //create second protein
+        ctx.rect(firstRectMidX - 100, firstRectMidY + 75, 100, 50);
+        ctx.stroke();
     }
     //Enzyme
     ctx.beginPath();

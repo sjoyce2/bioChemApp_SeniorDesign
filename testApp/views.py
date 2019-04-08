@@ -248,6 +248,15 @@ def modelEdit(request, model):
 	print(xCoor)
 	print(yCoor)
 
+	if request.method == 'POST':
+		print("POST")
+		print(request)
+		print(model)
+		deletedProducts = Products.objects.all().filter(modelID = model).delete()
+		deletedSubstrates = Substrates.objects.all().filter(modelID = model).delete()
+		deletedModules = Module.objects.all().filter(modelID_id__exact = model).delete()
+
+
 	pubModel = -1
 	for obj in myModel:
 		pubModel = obj.public

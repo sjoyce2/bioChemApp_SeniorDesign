@@ -8,6 +8,10 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
+
+SendGrid Username: Gonzaga_BioPath
+SendGrid Password: WwzqZ2wPNsds257
+SendGrid Email: gpalm@zagmail.gonzaga.edu
 """
 
 import os
@@ -132,3 +136,5 @@ STATICFILES_DIRS = [
 ]
 
 LOGIN_REDIRECT_URL = '/testApp/modelChoice'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

@@ -184,9 +184,10 @@ def modelEdit(request, model):
 	myModules = Module.objects.all().filter(modelID_id = model)
 	publicModules = Module.objects.all().filter(modelID_id = publicModelId)
 
+# Start if else statements to get next x and y coordinate
 	if (not myModules):
 		xCoor = 0
-		yCoor = 0
+		yCoor = 1
 	else :
 		currentMaxY = 0
 		# check to see if the max y has 1 or 2 occurrences
@@ -242,6 +243,7 @@ def modelEdit(request, model):
 					currentMinX = xVal
 			xCoor = currentMinX
 			yCoor = currentMaxY + 1
+	# End if else statements to get next x and y coordinate
 
 	print(xCoor)
 	print(yCoor)

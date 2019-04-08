@@ -598,14 +598,18 @@ function addValues() {
             yCoords.push(db_modules[i].yCoor)
             var subList = []
             for (var j=0; j<db_substrates.length; j++) {
-                if (db_substrates[j].moduleID_id === moduleNum) {
+                if (db_substrates[j].moduleID_id === moduleNum && 
+                    db_substrates[j].abbr !== "ATP" &&
+                    db_substrates[j].abbr !== "ADP") {
                     subList.push(db_substrates[j].abbr)
                 }
             }
             substrateList.push(subList)
             var prodList = []
             for (var j=0; j<db_products.length; j++) {
-                if (db_products[j].moduleID_id === moduleNum) {
+                if (db_products[j].moduleID_id === moduleNum && 
+                    db_products[j].abbr !== "ATP" &&
+                    db_products[j].abbr !== "ADP") {
                     prodList.push(db_products[j].abbr)
                 }
             }

@@ -250,10 +250,8 @@ def modelEdit(request, model):
 
 	if request.method == 'POST':
 		isPublic = Model.objects.all().filter(pk = model)
-
 		for pub in isPublic:
 			isPub = pub.public
-
 		print("POST")
 		print(request)
 		print(model)

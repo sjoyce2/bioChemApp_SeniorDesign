@@ -318,7 +318,7 @@ iframe {
   display: inline-block;
   flex-direction: column;
   width: 400px;
-  height: 600px;
+  min-height: 550px;
   border-radius: 10px;
   overflow: hidden;
   padding: 40px 55px 37px 55px;

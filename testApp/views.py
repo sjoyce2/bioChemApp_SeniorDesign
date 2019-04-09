@@ -174,6 +174,19 @@ def moduleEdit(request, model, module, xCoor, yCoor, isPositive):
 		return render(request, 'moduleEdit.html', context=context)
 
 def modelEdit(request, model):
+	if request.method == 'POST':
+		isPublic = Model.objects.all().filter(pk = model)
+		for pub in isPublic:
+			isPub = pub.public
+		print("POST")
+		print(request)
+		print(model)
+		print(isPub)
+		if(not isPub):
+			print("VALID")
+			deletedProducts = Products.objects.all().filter(modelID = model).delete()
+			deletedSubstrates = Substrates.objects.all().filter(modelID = model).delete()
+			deletedModules = Module.objects.all().filter(modelID_id__exact = model).delete()
 	myModel = Model.objects.all().filter(pk = model)
 	for models in myModel:
 		modelName = models.modelName
@@ -247,20 +260,6 @@ def modelEdit(request, model):
 
 	print(xCoor)
 	print(yCoor)
-
-	if request.method == 'POST':
-		isPublic = Model.objects.all().filter(pk = model)
-		for pub in isPublic:
-			isPub = pub.public
-		print("POST")
-		print(request)
-		print(model)
-		print(isPub)
-		if(not isPub):
-			print("VALID")
-			deletedProducts = Products.objects.all().filter(modelID = model).delete()
-			deletedSubstrates = Substrates.objects.all().filter(modelID = model).delete()
-			deletedModules = Module.objects.all().filter(modelID_id__exact = model).delete()
 
 
 	pubModel = -1

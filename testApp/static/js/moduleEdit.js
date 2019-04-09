@@ -323,7 +323,7 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
     //}
   }
   checkSubsEnzProds();
-  
+
   if(canBeChecked){
     validateReaction();
   }
@@ -424,9 +424,9 @@ function setArraysRepresentingReaction(){
       countProducts++;
     }
     checkedEnzsNames.push(myEnzymes[0][0]);
-    if(myEnzymes[0][1] === 'irreversible'){
+    if(myEnzymes[0][1] === 'irreversible' || myEnzymes[0][1] === 'Irreversible'){
       isReversible = false;
-    }else if(myEnzymes[0][1] === 'reversible'){
+    }else if(myEnzymes[0][1] === 'reversible' || myEnzymes[0][1] === 'Reversible'){
       isReversible = true;
     }
 

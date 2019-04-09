@@ -53,7 +53,6 @@ def moduleEdit(request, model, module, xCoor, yCoor, isPositive):
 	if(isPositive == 0):
 		xCoor = 0 - xCoor
 	myMod = Module.objects.all().filter(pk = module, modelID_id = model)
-
 	mySubs = Substrates.objects.all().filter(moduleID_id__exact = module, modelID = model)
 	myProds = Products.objects.all().filter(moduleID_id__exact = module, modelID = model)
 	myModel = Model.objects.filter(pk = model)

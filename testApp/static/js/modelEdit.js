@@ -535,9 +535,18 @@ function calculateK(moduleNumber) {
     return k;
 }
 
+function deleteValues() {
+    enzymeList = [];
+    productList = [];
+    substrateList = [];
+    prodSubValues = [];
+}
+
 //resets values of sliders on page (re)load
 function reset() {
     var varList = document.getElementsByClassName("inner-flex-horiz");
+    document.getElementById("clearButton").addEventListener("submit", 
+        function() {window.reload(true)});
     for (var i=0; i<db_modules.length; i++) {
         if (db_modules[i].modelID_id === modelNum) {
             if (db_modules[i].reversible.toLowerCase() === 'irreversible') {
@@ -645,8 +654,10 @@ function redirect(modNum, x, y) {
 
 function createSliders() {
     var button = document.getElementById("new-reaction");
+    var clearButton = document.getElementById("clearButton");
     if (pubModel === true) {
         button.style.visibility = "hidden";
+        clearButton.style.visibility = "hidden";
     } else {
         button.setAttribute("onclick", "redirect(0, xCoorNext, yCoorNext);");
         button.onclick = function() {redirect(0, xCoorNext, yCoorNext);};

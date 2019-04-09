@@ -14,7 +14,7 @@ button {
 .viewAndCreateReaction {
     position: absolute;
     height: 100%;
-    width: 1440px;
+    width: 100%;
     padding: 2%;
 
 
@@ -35,7 +35,7 @@ button {
 #subsContainer, #prodsContainer, #enzsContainer{
   width: 100%; /* makes them stack */
   border-radius: 5%;
-  height: 170px;
+  height: 30.855%;
   border: 5px;
   border-style: solid;
   border-color: rgba(255,255,255, 0.9);
@@ -192,6 +192,8 @@ ul#substrates{
     background-color: white;
     border-radius: 5%;
     float: left;
+    width: 65%;
+    height: 99.5%;
 }
 
 /* The Modal (background) */
@@ -236,7 +238,7 @@ ul#substrates{
     border: 1px solid white;
     background-color: #4CAF50; /* Green */
     color: white;
-    width: 70px;
+    width: 5.055%;
     padding: 1% 1% 1% 1%;
     text-align: center;
     float: left;

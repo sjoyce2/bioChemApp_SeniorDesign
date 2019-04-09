@@ -645,8 +645,11 @@ function redirect(modNum, x, y) {
 
 function createSliders() {
     var button = document.getElementById("new-reaction");
+    var clearModelButton = document.getElementById("clearModelButton");
+
     if (pubModel === true) {
         button.style.visibility = "hidden";
+        clearModelButton.style.visibility = "hidden";
     } else {
         button.setAttribute("onclick", "redirect(0, xCoorNext, yCoorNext);");
         button.onclick = function() {redirect(0, xCoorNext, yCoorNext);};

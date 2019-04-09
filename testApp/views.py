@@ -252,7 +252,6 @@ def modelEdit(request, model):
 			yCoor = currentMaxY + 1
 	# End if else statements to get next x and y coordinate
 
-
 	pubModel = -1
 	for obj in myModel:
 		pubModel = obj.public

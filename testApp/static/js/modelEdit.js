@@ -686,7 +686,6 @@ function createSliders() {
                 editButton.innerHTML = "Edit";
             }
             editButton.setAttribute("class", "edit-button");
-            console.log(db_modules);
             // var functionString = "redirect(" + (i+1) + ", " + db_modules[i].xCoor
             //     + ", " + db_modules[i].yCoor + ");"
             //Dynamically grab module id

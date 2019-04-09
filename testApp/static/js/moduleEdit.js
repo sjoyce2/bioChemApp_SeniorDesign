@@ -516,7 +516,6 @@ function validateReaction(){
       saveBtn.setAttribute("type","submit");
     }else{
       displaySnackbar1();
-      console.log("This is a valid reaction, but not the next reaction in the pathway.");
       ctx.fillStyle = "lightblue";
       ctx.fillRect(0, 0, canvas1.width, canvas1.height);
     }
@@ -545,7 +544,6 @@ function validateReaction(){
      validSubCount && requiredProdsCount === validProdCount && correctReversibleChoice === isReversible){
   //   //Reaction is valid
     displaySnackbar1();
-    console.log("This is a valid reaction, but not the next reaction in the pathway.");
     ctx.fillStyle = "lightblue";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
 

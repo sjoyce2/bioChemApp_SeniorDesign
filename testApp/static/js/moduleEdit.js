@@ -323,7 +323,7 @@ function setReaction(enzymeSubs, enzymeProds, enzymeReverse){
     //}
   }
   checkSubsEnzProds();
-  
+
   if(canBeChecked){
     validateReaction();
   }
@@ -424,9 +424,9 @@ function setArraysRepresentingReaction(){
       countProducts++;
     }
     checkedEnzsNames.push(myEnzymes[0][0]);
-    if(myEnzymes[0][1] === 'irreversible'){
+    if(myEnzymes[0][1] === 'irreversible' || myEnzymes[0][1] === 'Irreversible'){
       isReversible = false;
-    }else if(myEnzymes[0][1] === 'reversible'){
+    }else if(myEnzymes[0][1] === 'reversible' || myEnzymes[0][1] === 'Reversible'){
       isReversible = true;
     }
 
@@ -516,7 +516,6 @@ function validateReaction(){
       saveBtn.setAttribute("type","submit");
     }else{
       displaySnackbar1();
-      console.log("This is a valid reaction, but not the next reaction in the pathway.");
       ctx.fillStyle = "lightblue";
       ctx.fillRect(0, 0, canvas1.width, canvas1.height);
     }
@@ -545,7 +544,6 @@ function validateReaction(){
      validSubCount && requiredProdsCount === validProdCount && correctReversibleChoice === isReversible){
   //   //Reaction is valid
     displaySnackbar1();
-    console.log("This is a valid reaction, but not the next reaction in the pathway.");
     ctx.fillStyle = "lightblue";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
 

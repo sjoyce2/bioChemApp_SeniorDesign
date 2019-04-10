@@ -53,7 +53,6 @@ def moduleEdit(request, model, module, xCoor, yCoor, isPositive):
 	if(isPositive == 0):
 		xCoor = 0 - xCoor
 	myMod = Module.objects.all().filter(pk = module, modelID_id = model)
-
 	mySubs = Substrates.objects.all().filter(moduleID_id__exact = module, modelID = model)
 	myProds = Products.objects.all().filter(moduleID_id__exact = module, modelID = model)
 	myModel = Model.objects.filter(pk = model)
@@ -178,12 +177,7 @@ def modelEdit(request, model):
 		isPublic = Model.objects.all().filter(pk = model)
 		for pub in isPublic:
 			isPub = pub.public
-		print("POST")
-		print(request)
-		print(model)
-		print(isPub)
 		if(not isPub):
-			print("VALID")
 			deletedProducts = Products.objects.all().filter(modelID = model).delete()
 			deletedSubstrates = Substrates.objects.all().filter(modelID = model).delete()
 			deletedModules = Module.objects.all().filter(modelID_id__exact = model).delete()
@@ -258,14 +252,9 @@ def modelEdit(request, model):
 			yCoor = currentMaxY + 1
 	# End if else statements to get next x and y coordinate
 
-	print(xCoor)
-	print(yCoor)
-
-
 	pubModel = -1
 	for obj in myModel:
 		pubModel = obj.public
-	print(pubModel)
 	mod = myModules
 	list_of_mods = []
 	for obj in mod:

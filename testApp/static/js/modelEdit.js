@@ -358,7 +358,7 @@ function getDotPos(moduleNumber) {
                     if (moduleNumber != 0) {
                         prodSubValues[moduleNumber - 1][1] -= 0.001;
                     }
-                } else if (dotPositions[moduleNumber][0] <= (startX * 75) + 
+                } else if (dotPositions[moduleNumber][0] <= (startX * 75) +
                     canvas.clientWidth / 2) {
                     if (rxnDir[moduleNumber] === 0 || rxnDir[moduleNumber] === 1) {
                         directions[moduleNumber] = 1;
@@ -427,8 +427,8 @@ function getDotPos(moduleNumber) {
                     if (moduleNumber != 0) {
                         prodSubValues[moduleNumber - 1][0] -= 0.001;
                     }
-                } else if (dotPositions[moduleNumber][1] <= startY * 100 && 
-                    dotPositions[moduleNumber][0] <= (startX * 75) + 
+                } else if (dotPositions[moduleNumber][1] <= startY * 100 &&
+                    dotPositions[moduleNumber][0] <= (startX * 75) +
                     canvas.clientWidth / 2) {
                     if (rxnDir[moduleNumber] === 0 || rxnDir[moduleNumber] === 1) {
                         directions[moduleNumber] = 1;
@@ -618,7 +618,7 @@ function addValues() {
             yCoords.push(db_modules[i].yCoor)
             var subList = []
             for (var j=0; j<db_substrates.length; j++) {
-                if (db_substrates[j].moduleID_id === moduleNum && 
+                if (db_substrates[j].moduleID_id === moduleNum &&
                     db_substrates[j].abbr !== "ATP" &&
                     db_substrates[j].abbr !== "ADP") {
                     subList.push(db_substrates[j].abbr)
@@ -627,7 +627,7 @@ function addValues() {
             substrateList.push(subList)
             var prodList = []
             for (var j=0; j<db_products.length; j++) {
-                if (db_products[j].moduleID_id === moduleNum && 
+                if (db_products[j].moduleID_id === moduleNum &&
                     db_products[j].abbr !== "ATP" &&
                     db_products[j].abbr !== "ADP") {
                     prodList.push(db_products[j].abbr)
@@ -647,17 +647,18 @@ function redirect(modNum, x, y) {
     } else {
         absX = x;
     }
-    var url = "/testApp/moduleEdit/" + modelNum + "/" + modNum + "/" + absX 
+    var url = "/testApp/moduleEdit/" + modelNum + "/" + modNum + "/" + absX
         + "/" + y + "/" + posX;
     location.href = url;
 }
 
 function createSliders() {
     var button = document.getElementById("new-reaction");
-    var clearButton = document.getElementById("clearButton");
+    var clearModelButton = document.getElementById("clearModelButton");
+
     if (pubModel === true) {
         button.style.visibility = "hidden";
-        clearButton.style.visibility = "hidden";
+        clearModelButton.style.visibility = "hidden";
     } else {
         button.setAttribute("onclick", "redirect(0, xCoorNext, yCoorNext);");
         button.onclick = function() {redirect(0, xCoorNext, yCoorNext);};
@@ -697,7 +698,10 @@ function createSliders() {
                 editButton.innerHTML = "Edit";
             }
             editButton.setAttribute("class", "edit-button");
-            var functionString = "redirect(" + (i+1) + ", " + db_modules[i].xCoor
+            // var functionString = "redirect(" + (i+1) + ", " + db_modules[i].xCoor
+            //     + ", " + db_modules[i].yCoor + ");"
+            //Dynamically grab module id
+            var functionString = "redirect(" + db_modules[i].id + ", " + db_modules[i].xCoor
                 + ", " + db_modules[i].yCoor + ");"
             editButton.setAttribute("onclick", functionString);
             editButton.setAttribute("type", "button");

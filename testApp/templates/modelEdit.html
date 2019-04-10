@@ -33,7 +33,7 @@
 
 		<form method="post" action="#">
 			{% csrf_token %}
-			<button type="submit" name="deleteModel" class="play-pause" id="clearButton">CLEAR MODEL</button>
+			<button type="submit" name="deleteModel" class="play-pause" id="clearModelButton">CLEAR MODEL</button>
 		</form>
 
 		<div class="form-popup" id="myForm">
@@ -49,6 +49,10 @@
 				<h4>Only irreversible reactions have sliders.</h4>
 				<hr>
 				<h4>If you would like to view a specific reaction, click the button in the variables section below the enzyme's name.</h4>
+				<hr>
+				<h4>If you would like to clear all of the reactions from your model and start over, click the "CLEAR MODEL" button.</h4>
+				<hr>
+				<h4>*NOTE* The "CLEAR MODEL" button will not appear if you're viewing "Our Models".</h4>
 				<hr>
 				<button type="button" class="btn cancel" onclick="closeForm()">Close</button>
 			</form>

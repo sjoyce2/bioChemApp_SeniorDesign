@@ -545,7 +545,7 @@ function deleteValues() {
 //resets values of sliders on page (re)load
 function reset() {
     var varList = document.getElementsByClassName("inner-flex-horiz");
-    document.getElementById("clearButton").addEventListener("submit", 
+    document.getElementById("clearModelButton").addEventListener("submit", 
         function() {window.reload(true)});
     for (var i=0; i<db_modules.length; i++) {
         if (db_modules[i].modelID_id === modelNum) {

@@ -27,7 +27,6 @@ var verticalBuffer = 10; //buffer size between each row on canvas
 var countProducts;
 var countSubstrates;
 var modal;
-//var modal2;
 //from database
 var mySubstrates;
 var myEnzymes;
@@ -37,6 +36,7 @@ var allSubs;
 var allModules;
 var isPublic;
 var modelID;
+var moduleID;
 var myXCoor;
 var myYCoor;
 //above from database
@@ -573,12 +573,13 @@ function createErrorCheckArrays() {
 }
 
 function enableAndDisableBtns() {
+  console.log(moduleID)
   //check if model is public
-  if(isPublic === 'True'){
+  if(isPublic === 'True' || moduleID != 0){
     //disable saveBtn
     saveBtn.disabled = true;
     saveBtn.style.visibility="hidden";
-  }else{
+  }else {
     //disable save button so it cannot be clicked with out selecting create reaction first
     saveBtn.setAttribute("type", "button");
   }
@@ -638,19 +639,27 @@ window.onload = function init(){
 
   //if error checking is allowed for the model
   if(allModules.length != 0){
+    //Create arrays representing the correct version of the complete model
     createErrorCheckArrays();
+    //The database needs strings to be saved with underscores, so any underscores need to be replaced with spaces
+    //so the user doesn't see underscores on the screen.
     replaceUnderscores();
   }
-
+  //Display a note to the user telling them what they should do
   displaySnackbarHelp();
 
+  //canvas1 is where the reaction is deisplayed.
   canvas1 = document.getElementById("imageCanvas");
+  //substrates holds the checkboxes the user can choose from to add substrates to the reaction
   substrates  = document.getElementsByName('Substrate');
+  //enzymes holds the radio buttons the user can pick their enzyme from
   enzymes = document.getElementsByClassName('Enzyme');
+  //products holds the checkboxes the user cna choose from to add products to the reaction
   products = document.getElementsByName('Product');
+  //reversible choice holds the radio buttons to set the reaction to reversible or irreversible
   reversibleChoice = document.getElementsByName('reversibleChoice');
+  //ctx is used to draw on the canvas
   ctx  = canvas1.getContext("2d");
-  image  = document.getElementById("step1");
   createBtn = document.getElementById("createReaction");
   saveBtn = document.getElementById("saveReaction");
   backBtn = document.getElementById("backBtn");
@@ -720,22 +729,15 @@ window.onload = function init(){
     modal.style.display = "none";
   });
 
-  document.getElementById("logout").addEventListener("click", function(event) {
-    document.location.href = '..';
-  });
-
   //exit out of invalidModal when area outside of modal is clicked
   window.onclick = function(event) {
     if (event.target == modal) {
       modal.style.display = "none";
     }
-    // else if (event.target == modal2){
-    //   modal2.style.display = "none"
-    // }
   }
 }
 function main () {}
-main()
+main();
 
 // module.exports = {};
 // module.exports.testClickSaveBtn = testClickSaveBtn;

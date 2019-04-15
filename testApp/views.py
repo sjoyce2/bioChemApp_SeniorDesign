@@ -167,6 +167,7 @@ def moduleEdit(request, model, module, xCoor, yCoor, isPositive):
 				   'allsubs' : listOfSubs,
 				   'isPublic' : isPublic,
 				   'modelID' : modelID,
+				   'moduleID' : module,
 				   'xCoor' : xCoor,
 				   'yCoor' : yCoor
 				  }

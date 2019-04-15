@@ -573,7 +573,6 @@ function createErrorCheckArrays() {
 }
 
 function enableAndDisableBtns() {
-  console.log(moduleID)
   //check if model is public
   if(isPublic === 'True' || moduleID != 0){
     //disable saveBtn

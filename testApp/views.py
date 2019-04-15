@@ -34,13 +34,17 @@ def modelChoice(request):
 	privateModels = Model.objects.all().filter(userID_id__exact = user.id)
 	publicModels = Model.objects.all().filter(public__exact = True)
 
-	for model in privateModels:
-		modelDict = {"modelName":model.modelName, "id": model.id}
-		privateModelsList.append(modelDict)
-
 	for model in publicModels:
 		pubModelDict = {"modelName":model.modelName, "id": model.id}
 		publicModelsList.append(pubModelDict)
+		privateVersion = Model.objects.all().filter(userID_id__exact = user.id, modelName = model.modelName)
+		if not privateVersion:
+			newPrivateModel = Model(modelName=model.modelName, userID_id=user.id, public=False)
+			newPrivateModel.save()
+
+	for model in privateModels:
+		modelDict = {"modelName":model.modelName, "id": model.id}
+		privateModelsList.append(modelDict)
 
 	context = {
 		'userID': user.id,
@@ -308,6 +312,7 @@ def register(request):
 
 def login(request):
 	context = {}
+	print("Login*******")
 
 	return render(request, 'load.html', context=context)
 
@@ -318,7 +323,7 @@ def signup(request):
 
 def indexLogged(request):
 	context = {}
-
+	print("Login*****")
 	return render(request, 'indexLogged.html', context=context)
 
 def logout_view(request):

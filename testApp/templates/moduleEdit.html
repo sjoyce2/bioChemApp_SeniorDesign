@@ -41,17 +41,9 @@
 
 		var moduleID = '{{moduleID}}'
 
-		console.log(moduleID);
-
 		var isPublic = false;
 		isPublic = '{{isPublic}}';
 
-		console.log(myEnzymes);
-		console.log(myProducts);
-		console.log(mySubstrates);
-		console.log(allProds);
-		console.log(allSubs);
-		console.log(allModules);
 	</script>
 			<img class="step1Image" id="Glucose" src="{% static 'images/Glucose.jpg' %}" style="display: none;">
 			<img class="step1Image" id="Glucose-6-Phosphate" src="{% static 'images/Glucose-6-Phosphate.jpg' %}" style="display: none;">
@@ -75,6 +67,7 @@
 													<!-- dynamically create substrates checkboxes and labels -->
 													<script type="text/javascript">
 													//look for element by id, don't add if not null.
+
 														for(var i = 0; i < allSubs.length; i++){
 															String.prototype.replaceAll = function(search, replacement) {
 																var target = this;
@@ -143,7 +136,6 @@
 													<script type="text/javascript">
 													//look for element by id, don't add if not null.
 														for(var j = 0; j < allProds.length; j++){
-															console.log(allProds[j][0]);
 															String.prototype.replaceAll = function(search, replacement) {
 																var target = this;
 																return target.split(search).join(replacement);

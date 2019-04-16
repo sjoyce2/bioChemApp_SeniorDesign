@@ -134,6 +134,7 @@ function displayImage(xcoor, ycoor, name){
 
   }else{
     var img = document.getElementById(name);
+    console.log(img, xcoor, ycoor, objectWidth, objectHeight, name)
     ctx.drawImage(img, xcoor, ycoor, objectWidth, objectHeight);
   }
 }
@@ -370,6 +371,7 @@ function clearAll(){
 }
 
 function checkSubsEnzProds(){
+  console.log("HERE")
   for(var i = 0; i < substrates.length; i++){
     for(var j = 0; j < checkedSubsNames.length; j++){
       if(substrates[i].value === checkedSubsNames[j]){
@@ -469,6 +471,8 @@ function validateReaction(){
   var validXcoor = 0;
   var validYcoor = 0;
 
+  console.log(checkedSubsNames);
+
   for(var i = 0; i < checkedSubsNames.length; i++){
     for(var a = 0; a < allSubs.length; a++){
       if(checkedSubsNames[i] === allSubs[a][0] && checkedEnzsNames[0] === allSubs[a][1]){
@@ -479,12 +483,15 @@ function validateReaction(){
 
   for(var j = 0; j < allModules.length; j++){
     if(allModules[j][0] === checkedEnzsNames[0]){
+      console.log(allModules[j][0]);
+      console.log(checkedEnzsNames[0]);
       validEnzCount++;
       if(allModules[j][1] === "reversible"){
         correctReversibleChoice = true;
       }else{
         correctReversibleChoice = false;
       }
+      console.log(allModules[j]);
       validXcoor = allModules[j][4];
       validYcoor = allModules[j][5];
     }
@@ -509,12 +516,13 @@ function validateReaction(){
 
   }else if(countSubstrates === 0 && countProducts === 0){
     setReaction(enzymeSubs, enzymeProds, enzymeReverse); //the user has only selected the enzyme so fill in reaction
-
+    console.log(validXcoor, validYcoor);
     if(validXcoor === myXCoor && validYcoor === myYCoor){
       ctx.fillStyle = "limegreen";//reaction will be correct so set to green
       ctx.fillRect(0, 0, canvas1.width, canvas1.height);
       saveBtn.setAttribute("type","submit");
     }else{
+      console.log(myXCoor, myYCoor);
       displaySnackbar1();
       ctx.fillStyle = "lightblue";
       ctx.fillRect(0, 0, canvas1.width, canvas1.height);
@@ -544,6 +552,8 @@ function validateReaction(){
      validSubCount && requiredProdsCount === validProdCount && correctReversibleChoice === isReversible){
   //   //Reaction is valid
     displaySnackbar1();
+    console.log(validXcoor);
+    console.log(validYcoor);
     ctx.fillStyle = "lightblue";
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
 

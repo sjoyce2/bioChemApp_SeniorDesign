@@ -22,27 +22,55 @@
 				myProducts.push(['{{prods.product}}', '{{prods.id}}', '{{prods.moduleID_id}}', '{{prods.abbr}}']);
 		{% endfor %}
 
-		var allProds = []
+		var allProds = [];
+
+		var randomProds = [];
+		var randomSubs = [];
+		var randomModules = [];
+
 		{% for prods in allprods %}
+				//randomProds.push(['{{prods.product}}', '{{prods.enzyme}}', '{{prods.abbr}}']);
 				allProds.push(['{{prods.product}}', '{{prods.enzyme}}', '{{prods.abbr}}']);
 		{% endfor %}
-		var allSubs = []
+
+		var allSubs = [];
 		{% for subs in allsubs %}
+				//randomSubs.push(['{{subs.substrate}}', '{{subs.enzyme}}', '{{subs.abbr}}']);
 				allSubs.push(['{{subs.substrate}}', '{{subs.enzyme}}', '{{subs.abbr}}']);
 		{% endfor %}
 
-		var allModules = []
+		var allModules = [];
 		{% for mod in allmodules %}
+				//randomModules.push(['{{ mod.enzyme }}', '{{mod.reversible}}', '{{mod.enzymeAbbr}}', '{{mod.id}}', '{{mod.xCoor}}', '{{mod.yCoor}}']);
 				allModules.push(['{{ mod.enzyme }}', '{{mod.reversible}}', '{{mod.enzymeAbbr}}', '{{mod.id}}', '{{mod.xCoor}}', '{{mod.yCoor}}']);
 		{% endfor %}
+
+		randomModules = allModules.slice();
+		randomSubs = allSubs.slice();
+		randomProds = allProds.slice();
 
 		var myXCoor = '{{xCoor}}';
 		var myYCoor = '{{yCoor}}';
 
-		var moduleID = '{{moduleID}}'
+		var moduleID = '{{moduleID}}';
 
 		var isPublic = false;
 		isPublic = '{{isPublic}}';
+
+		randomModules = shuffle(randomModules);
+		randomSubs = shuffle(randomSubs);
+		randomProds = shuffle(randomProds);
+
+		function shuffle(a) {
+	    var j, x, i;
+	    for (i = a.length - 1; i > 0; i--) {
+	        j = Math.floor(Math.random() * (i + 1));
+	        x = a[i];
+	        a[i] = a[j];
+	        a[j] = x;
+	    }
+	    return a;
+	}
 
 	</script>
 			<img class="step1Image" id="Glucose" src="{% static 'images/Glucose.jpg' %}" style="display: none;">
@@ -68,28 +96,34 @@
 													<script type="text/javascript">
 													//look for element by id, don't add if not null.
 
-														for(var i = 0; i < allSubs.length; i++){
+														for(var i = 0; i < randomSubs.length; i++){
 															String.prototype.replaceAll = function(search, replacement) {
 																var target = this;
 																return target.split(search).join(replacement);
 															};
-															var str = allSubs[i][0];
+															var str1 = allSubs[i][0];
+															var str = randomSubs[i][0];
+															var newStr1 = str1.replaceAll(/_/,' ');
 															var newStr = str.replaceAll(/_/,' ');
-															var enzymeStr = allSubs[i][1];
+															var enzymeStr1 = allSubs[i][1];
+															var enzymeStr = randomSubs[i][1];
+															var newEnz1 = enzymeStr1.replaceAll(/_/,' ');
 															var newEnz = enzymeStr.replaceAll(/_/,' ');
-															allSubs[i][1] = newEnz;
-															allSubs[i][0] = newStr;
-															if(document.getElementById(allSubs[i][0]+"SubId") === null){
+															randomSubs[i][1] = newEnz;
+														  randomSubs[i][0] = newStr;
+														  allSubs[i][1] = newEnz1
+															allSubs[i][0] = newStr1;
+															if(document.getElementById(randomSubs[i][0]+"SubId") === null){
 																var newlabel = document.createElement("Label");
 																newlabel.innerHTML = newStr;
 																newlabel.className = "container";
-																newlabel.setAttribute("id",allSubs[i][0]+"SubId");
+																newlabel.setAttribute("id",randomSubs[i][0]+"SubId");
 																var newcheckbox = document.createElement("input");
 																newcheckbox.setAttribute("type", "checkbox");
 																newcheckbox.setAttribute("value", newStr);
 																newcheckbox.setAttribute("onchange", "onRadioChange()");
 																newcheckbox.setAttribute("name", "Substrate");
-																newcheckbox.className = allSubs[i][2];
+																newcheckbox.className = randomSubs[i][2];
 																newlabel.appendChild(newcheckbox);
 																document.getElementById("substrates").appendChild(newlabel);
 															}
@@ -103,19 +137,22 @@
 
 													<script type="text/javascript">
 													//look for element by id, don't add if not null.
-														for(var i = 0; i < allModules.length; i++){
+														for(var i = 0; i < randomModules.length; i++){
 															String.prototype.replaceAll = function(search, replacement) {
 																var target = this;
 																return target.split(search).join(replacement);
 															};
-															var str = allModules[i][0];
+															var str1 = allModules[i][0];
+															var str = randomModules[i][0];
+															var newStr1 = str1.replaceAll(/_/,' ');
 															var newStr = str.replaceAll(/_/,' ');
-															allModules[i][0] = newStr;
-															if(document.getElementById(allModules[i][0]+"EnzId") === null){
+															allModules[i][0] = newStr1;
+															randomModules[i][0] = newStr;
+															if(document.getElementById(randomModules[i][0]+"EnzId") === null){
 																var newlabel = document.createElement("Label");
 																newlabel.innerHTML = newStr;
 																newlabel.className = "container";
-																newlabel.setAttribute("id",allModules[i][0]+"EnzId");
+																newlabel.setAttribute("id",randomModules[i][0]+"EnzId");
 																var newcheckbox = document.createElement("input");
 																newcheckbox.setAttribute("type", "radio");
 																newcheckbox.setAttribute("value", newStr);
@@ -135,28 +172,34 @@
 
 													<script type="text/javascript">
 													//look for element by id, don't add if not null.
-														for(var j = 0; j < allProds.length; j++){
+														for(var j = 0; j < randomProds.length; j++){
 															String.prototype.replaceAll = function(search, replacement) {
 																var target = this;
 																return target.split(search).join(replacement);
 															};
-															var str = allProds[j][0];
+															var str1 = allProds[j][0];
+															var str = randomProds[j][0];
+															var newStr1 = str1.replaceAll(/_/,' ');
 															var newStr = str.replaceAll(/_/,' ');
-															allProds[j][0] = newStr;
-															var enzymeStr = allProds[j][1];
+															allProds[j][0] = newStr1;
+															randomProds[j][0] = newStr;
+															var enzymeStr1 = allProds[j][1];
+															var enzymeStr = randomProds[j][1];
 															var newEnz = enzymeStr.replaceAll(/_/,' ');
-															allProds[j][1] = newEnz;
-															if(document.getElementById(allProds[j][0]+"ProdId") === null){
+															var newEnz1 = enzymeStr1.replaceAll(/_/,' ');
+															allProds[j][1] = newEnz1;
+															randomProds[j][1] = newEnz;
+															if(document.getElementById(randomProds[j][0]+"ProdId") === null){
 																var newlabel = document.createElement("Label");
 																newlabel.innerHTML = newStr;
 																newlabel.className = "container";
-																newlabel.setAttribute("id",allProds[j][0]+"ProdId");
+																newlabel.setAttribute("id",randomProds[j][0]+"ProdId");
 																var newcheckbox = document.createElement("input");
 																newcheckbox.setAttribute("type", "checkbox");
 																newcheckbox.setAttribute("value", newStr);
 																newcheckbox.setAttribute("onchange", "onRadioChange()");
 																newcheckbox.setAttribute("name", "Product");
-																newcheckbox.className = allProds[j][2];
+																newcheckbox.className = randomProds[j][2];
 																newlabel.appendChild(newcheckbox);
 																document.getElementById("products").appendChild(newlabel);
 															}

@@ -9,7 +9,7 @@ from django.contrib.auth.views import LoginView
 
 urlpatterns = [
 	path('accounts/login/', auth_views.LoginView.as_view(), name= 'login'),
-	path('accounts/reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+	path('accounts/reset/done/', views.passwordResetDone, name='password_reset_complete'),
 	path('accounts/password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
 	path('accounts/reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
 	path('accounts/password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset_form'),

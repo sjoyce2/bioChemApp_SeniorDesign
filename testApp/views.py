@@ -330,3 +330,6 @@ def logout_view(request):
 	context = {}
 	logout(request)
 	return render(request, 'home.html', context=context)
+
+def passwordResetDone(request):
+	return render(request, 'password_reset_complete.html')

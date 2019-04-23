@@ -257,23 +257,18 @@ function calculateX(y, centerX, centerY) {
 }
 
 function checkRatio(moduleNumber) {
-    //var q = prodSubValues[0] / prodSubValues[1];
-    // test value for q: TODO: Fix so i don't need test value
     var prodNum = prodSubValues[moduleNumber][0];
     var subNum = prodSubValues[moduleNumber][1];
-    if (prodNum > subNum) {
+    if (prodNum >= 20.0) {
         rxnDir[moduleNumber] = -1;
-    } else if (prodNum < subNum) {
-        rxnDir[moduleNumber] = 1;
     } else {
-        rxnDir[moduleNumber] = 0;
+        rxnDir[moduleNumber] = 1;
     }
 }
 
 //Calculate the x value of the molecule in the reaction. The height
 //changes by a consistent value each time but the horizontal
 //position can change if it is following a non-reversible reaction
-//TODO: allow sliders to control speed of irreversible reaction
 function getDotPos(moduleNumber) {
     //find whether module is reversible
     //find module start and end positions
@@ -301,10 +296,13 @@ function getDotPos(moduleNumber) {
         endY = yCoords[moduleNumber + 1];
     }
     var revMod = revList[moduleNumber];
-    checkRatio(moduleNumber);
     if (revMod.toLowerCase() === "irreversible") {
-        var currSlider = document.getElementById(enzymeList[moduleNumber])
-        var irrPositionChange = positionChange * parseInt(currSlider.value) / 50
+        var currSlider = document.getElementById(enzymeList[moduleNumber]);
+        var irrPositionChange = positionChange * (parseInt(currSlider.value) / 50) * (1 + Math.PI / 2);
+        checkRatio(moduleNumber);
+        if (rxnDir[moduleNumber] === 1) {
+            directions[moduleNumber] = 1;
+        }
         if (dotPositions[moduleNumber][0] <= (startX * 75 + canvas.clientWidth / 2 + 50)) {
             if (dotPositions[moduleNumber][1] === startY * 100) {
                 dotPositions[moduleNumber][0] += directions[moduleNumber] * irrPositionChange;
@@ -318,26 +316,34 @@ function getDotPos(moduleNumber) {
         }
         if (dotPositions[moduleNumber][1] >= endY * 100 && dotPositions[moduleNumber][0] <
             (endX * 75) + canvas.clientWidth / 2) { //if reaches end of reaction
-            dotPositions[moduleNumber] = [startX*75+canvas.clientWidth/2, startY*100];
-            if (rxnDir[moduleNumber] != 1) {
-                directions[moduleNumber] = 0;
-            }
             prodSubValues[moduleNumber][0] += 1;
             prodSubValues[moduleNumber][1] -= 1;
-            if (prodSubValues === 0) {
-                prodSubValues = 1;
-            }
             if (moduleNumber != prodSubValues.length - 1) {
                 prodSubValues[moduleNumber + 1][1] += 1;
             }
             if (moduleNumber != 0) {
                 prodSubValues[moduleNumber - 1][0] -= 1;
             }
+            
+            dotPositions[moduleNumber] = [startX*75+canvas.clientWidth/2, startY*100];
+            checkRatio(moduleNumber);
+            if (rxnDir[moduleNumber] != 1) {
+                directions[moduleNumber] = 0;
+            }
         }
     } else {
         if (startX === endX) { //vertical
             dotPositions[moduleNumber][1] += directions[moduleNumber] * positionChange;
             if (dotPositions[moduleNumber][1] >= endY * 100) {
+                prodSubValues[moduleNumber][0] += 1;
+                prodSubValues[moduleNumber][1] -= 1;
+                if (moduleNumber != prodSubValues.length - 1) {
+                    prodSubValues[moduleNumber + 1][1] += 1;
+                }
+                if (moduleNumber != 0) {
+                    prodSubValues[moduleNumber - 1][0] -= 1;
+                }
+                checkRatio(moduleNumber);
                 if (rxnDir[moduleNumber] === 0 || rxnDir[moduleNumber] === -1) {
                     directions[moduleNumber] = -1;
                 } else {
@@ -345,18 +351,16 @@ function getDotPos(moduleNumber) {
                     dotPositions[moduleNumber][1] = startY * 100;
                     directions[moduleNumber] = 1;
                 }
-                prodSubValues[moduleNumber][0] += 1;
-                prodSubValues[moduleNumber][1] -= 1;
-                if (prodSubValues[moduleNumber][1] === 0) {
-                    prodSubValues[moduleNumber][1] = 1;
-                }
+            } else if (dotPositions[moduleNumber][1] <= startY * 100) {
+                prodSubValues[moduleNumber][0] -= 1;
+                prodSubValues[moduleNumber][1] += 1;
                 if (moduleNumber != prodSubValues.length - 1) {
-                    prodSubValues[moduleNumber + 1][1] += 1;
+                    prodSubValues[moduleNumber + 1][1] -= 1;
                 }
                 if (moduleNumber != 0) {
-                    prodSubValues[moduleNumber - 1][0] -= 1;
+                    prodSubValues[moduleNumber - 1][0] += 1;
                 }
-            } else if (dotPositions[moduleNumber][1] <= startY * 100) {
+                checkRatio(moduleNumber);
                 if (rxnDir[moduleNumber] === 0 || rxnDir[moduleNumber] === 1) {
                     directions[moduleNumber] = 1;
                 } else {
@@ -364,23 +368,20 @@ function getDotPos(moduleNumber) {
                     dotPositions[moduleNumber][1] = endY * 100;
                     directions[moduleNumber] = -1;
                 }
-                prodSubValues[moduleNumber][0] -= 1;
-                prodSubValues[moduleNumber][1] += 1;
-                if (prodSubValues[moduleNumber][0] === 0) {
-                    prodSubValues[moduleNumber][0] = 1;
-                }
-                if (moduleNumber != prodSubValues.length - 1) {
-                    prodSubValues[moduleNumber + 1][1] -= 1;
-                }
-                if (moduleNumber != 0) {
-                    prodSubValues[moduleNumber - 1][0] += 1;
-                }
             }
         } else {
             if (startY === endY) { //horizontal
                 var currPosChange = (3/2) * positionChange
                 dotPositions[moduleNumber][0] += directions[moduleNumber] * currPosChange;
                 if (dotPositions[moduleNumber][0] >= (endX * 75) + canvas.clientWidth / 2) {
+                    prodSubValues[moduleNumber][0] += 1;
+                    prodSubValues[moduleNumber][1] -= 1;
+                    if (moduleNumber != prodSubValues.length - 1) {
+                        prodSubValues[moduleNumber + 1][1] += 1;
+                    }
+                    if (moduleNumber != 0) {
+                        prodSubValues[moduleNumber - 1][0] -= 1;
+                    }checkRatio(moduleNumber);
                     if (rxnDir[moduleNumber] === 0 || rxnDir[moduleNumber] === -1) {
                         directions[moduleNumber] = -1;
                     } else {
@@ -388,36 +389,23 @@ function getDotPos(moduleNumber) {
                         dotPositions[moduleNumber][1] = startY * 100;
                         directions[moduleNumber] = 1;
                     }
-                    prodSubValues[moduleNumber][0] += 1;
-                    prodSubValues[moduleNumber][1] -= 1;
-                    if (prodSubValues[moduleNumber][1] === 0) {
-                        prodSubValues[moduleNumber][1] = 1;
-                    }
-                    if (moduleNumber != prodSubValues.length - 1) {
-                        prodSubValues[moduleNumber + 1][1] += 1;
-                    }
-                    if (moduleNumber != 0) {
-                        prodSubValues[moduleNumber - 1][1] -= 1;
-                    }
                 } else if (dotPositions[moduleNumber][0] <= (startX * 75) +
                     canvas.clientWidth / 2) {
+                    prodSubValues[moduleNumber][0] -= 1;
+                    prodSubValues[moduleNumber][1] += 1;
+                    if (moduleNumber != prodSubValues.length - 1) {
+                        prodSubValues[moduleNumber + 1][1] -= 1;
+                    }
+                    if (moduleNumber != 0) {
+                        prodSubValues[moduleNumber - 1][0] += 1;
+                    }
+                    checkRatio(moduleNumber);
                     if (rxnDir[moduleNumber] === 0 || rxnDir[moduleNumber] === 1) {
                         directions[moduleNumber] = 1;
                     } else {
                         dotPositions[moduleNumber][0] = endX * 75 + canvas.clientWidth / 2;
                         dotPositions[moduleNumber][1] = endY * 100;
                         directions[moduleNumber] = -1;
-                    }
-                    prodSubValues[moduleNumber][0] -= 1;
-                    prodSubValues[moduleNumber][1] += 1;
-                    if (prodSubValues[moduleNumber][0] === 0) {
-                        prodSubValues[moduleNumber][0] = 1;
-                    }
-                    if (moduleNumber != prodSubValues.length - 1) {
-                        prodSubValues[moduleNumber + 1][1] -= 1;
-                    }
-                    if (moduleNumber != 0) {
-                        prodSubValues[moduleNumber - 1][0] += 1;
                     }
                 }
             } else { //weird
@@ -448,6 +436,15 @@ function getDotPos(moduleNumber) {
                 }
                 if (dotPositions[moduleNumber][1] >= endY * 100 && dotPositions[moduleNumber][0] >=
                     (endX * 75) + canvas.clientWidth / 2) {
+                    prodSubValues[moduleNumber][0] += 1;
+                    prodSubValues[moduleNumber][1] -= 1;
+                    if (moduleNumber != prodSubValues.length - 1) {
+                        prodSubValues[moduleNumber + 1][1] += 1;
+                    }
+                    if (moduleNumber != 0) {
+                        prodSubValues[moduleNumber - 1][0] -= 1;
+                    }
+                    checkRatio(moduleNumber);
                     if (rxnDir[moduleNumber] === 0 || rxnDir[moduleNumber] === -1) {
                         directions[moduleNumber] = -1;
                     } else {
@@ -457,20 +454,18 @@ function getDotPos(moduleNumber) {
                         dotPositions[moduleNumber][3] = startY * 100;
                         directions[moduleNumber] = 1;
                     }
-                    prodSubValues[moduleNumber][0] += 1;
-                    prodSubValues[moduleNumber][1] -= 1;
-                    if (prodSubValues[moduleNumber][1] < 1) {
-                        prodSubValues[moduleNumber][1] = 1;
-                    }
-                    if (moduleNumber != prodSubValues.length - 1) {
-                        prodSubValues[moduleNumber + 1][1] += 1;
-                    }
-                    if (moduleNumber != 0) {
-                        prodSubValues[moduleNumber - 1][0] -= 1;
-                    }
                 } else if (dotPositions[moduleNumber][1] <= startY * 100 &&
                     dotPositions[moduleNumber][0] <= (startX * 75) +
                     canvas.clientWidth / 2) {
+                    prodSubValues[moduleNumber][0] -= 1;
+                    prodSubValues[moduleNumber][1] += 1;
+                    if (moduleNumber != prodSubValues.length - 1) {
+                        prodSubValues[moduleNumber + 1][1] -= 1;
+                    }
+                    if (moduleNumber != 0) {
+                        prodSubValues[moduleNumber - 1][0] += 1;
+                    }
+                    checkRatio(moduleNumber);
                     if (rxnDir[moduleNumber] === 0 || rxnDir[moduleNumber] === 1) {
                         directions[moduleNumber] = 1;
                     } else {
@@ -480,19 +475,20 @@ function getDotPos(moduleNumber) {
                         dotPositions[moduleNumber][3] = startY * 100;
                         directions[moduleNumber] = -1;
                     }
-                    prodSubValues[moduleNumber][0] -= 1;
-                    prodSubValues[moduleNumber][1] += 1;
-                    if (prodSubValues[moduleNumber][0] === 0) {
-                        prodSubValues[moduleNumber][0] = 1;
-                    }
-                    if (moduleNumber != prodSubValues.length - 1) {
-                        prodSubValues[moduleNumber + 1][1] -= 1;
-                    }
-                    if (moduleNumber != 0) {
-                        prodSubValues[moduleNumber + 1][0] += 1;
-                    }
                 }
             }
+        }
+    }
+    if (moduleNumber === 0) {
+        prodSubValues[moduleNumber][1] += 1;
+        if (prodSubValues[moduleNumber][1] >= 5) {
+            prodSubValues[moduleNumber][1] = 5;
+        }
+    }
+    if (moduleNumber === prodSubValues.length - 1) {
+        prodSubValues[moduleNumber][0] -= 1;
+        if (prodSubValues[moduleNumber][0] <= 1) {
+            prodSubValues[moduleNumber][0] = 1;
         }
     }
 }
@@ -615,7 +611,11 @@ function reset() {
                 db_modules[i].yCoor * 100])
             directions.push(1);
             rxnDir.push(1);
-            prodSubValues.push([1.0, 10.0]);
+            if (enzymeList.indexOf(db_modules.enzymeAbbr) == 0) {
+                prodSubValues.push([10.0, 13.0]);
+            } else {
+                prodSubValues.push([10.0, 10.0]);
+            }
             kValues.push(calculateK(i));
         }
     }
@@ -751,10 +751,9 @@ function createSliders() {
 
 function calculateColor(moduleNumber, index) {
     var currNum = prodSubValues[moduleNumber][index];
-    var otherNum = prodSubValues[moduleNumber][1-index];
-    if (currNum >= otherNum) {
+    if (currNum >= 20.0) {
         return "red";
-    } else if (otherNum - currNum >= 3.0) {
+    } else if (currNum >= 14.0) {
         return "orange";
     } else {
         return "green";

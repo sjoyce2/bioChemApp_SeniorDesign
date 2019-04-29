@@ -153,6 +153,7 @@ iframe {
     background-color: #4CAF50; /* Green */
     height: 57.8px;
     margin-top: 4%;
+    float: left;
     color: white;
     width: 100%;
     padding: 1.2% 1.2% 1.2% 1.2%;
@@ -187,6 +188,7 @@ iframe {
     min-width: 1000px;
     height: 650px;
 }
+
 
 .flex-sliders {
     display: flex;

@@ -26,15 +26,14 @@
                 <button type="button" class="play-pause" id="new-reaction">Create New Reaction</button>
                 <a href="/testApp/modelChoice">
                     <button type="button" class="play-pause" id="backButtonModelEdit">Back</button>
-                </a>
+				</a>
+				<form method="post" action="#">
+					{% csrf_token %}
+					<button type="submit" name="deleteModel" class="play-pause" id="clearModelButton">CLEAR MODEL</button>
+				</form>
             </div>
         </div>
     </form>
-
-		<form method="post" action="#">
-			{% csrf_token %}
-			<button type="submit" name="deleteModel" class="play-pause" id="clearModelButton">CLEAR MODEL</button>
-		</form>
 
 		<div class="form-popup" id="myForm">
 			<form action="/action_page.php" class="form-container">

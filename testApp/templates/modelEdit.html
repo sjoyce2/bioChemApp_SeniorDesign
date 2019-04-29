@@ -19,7 +19,8 @@
             </div>
             <div class="flex-sliders" id="slider-holder">
                 <h3 class="varLabel">Variables</h3>
-            </div>
+			</div>
+		</form>
             <!-- Create New Reaction button created here with id="new-reaction" -->
             <div class="modelButtons">
                 <button type="button" class="play-pause" id="play-pause">Pause</button>
@@ -31,9 +32,13 @@
 					{% csrf_token %}
 					<button type="submit" name="deleteModel" class="play-pause" id="clearModelButton">CLEAR MODEL</button>
 				</form>
-            </div>
+				
+			</div>
+			
         </div>
-    </form>
+	
+	
+	
 
 		<div class="form-popup" id="myForm">
 			<form action="/action_page.php" class="form-container">

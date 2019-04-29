@@ -106,10 +106,14 @@ function notRevStep(substrate, product, enzyme,
 	ctx.fill();
 
     //Label the proteins(rectangles) and enzyme(oval)
-    ctx.fillStyle = "black";
     ctx.font = "20px Arial";
+    ctx.fillStyle = "white";
     ctx.fillText(substrate, firstRectMidX - 90, firstRectMidY + 5);
     ctx.fillText(product, firstRectMidX - 90, firstRectMidY + 105);
+    ctx.stroke();
+    ctx.closePath();
+    ctx.beginPath();
+    ctx.fillStyle = "black";
     ctx.font = "12px Arial";
     ctx.fillText(enzyme, firstRectMidX + 50 - fontMeasures.width / 2,
         firstRectMidY + 54);
@@ -231,14 +235,21 @@ function revStep(firstText, secondText, enzyme, firstRectMidX, firstRectMidY,
     ctx.fillStyle = "white";
     ctx.fill();
 
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "white";
     ctx.font = "20px Arial";
+    ctx.stroke();
+    ctx.closePath();
+    ctx.beginPath();
     //add label to first protein
     ctx.fillText(firstText, firstRectMidX - 90, firstRectMidY + 5);
     if (!nextY) {
         //add label to second protein
         ctx.fillText(secondText, firstRectMidX - 90, firstRectMidY + 105);
     }
+    ctx.stroke();
+    ctx.closePath();
+    ctx.beginPath();
+    ctx.fillStyle = "black";
     ctx.font = "12px Arial";
     ctx.fillText(enzyme, xCoord + 5, yCoord + 4);
     //draw everything to the screen
@@ -298,7 +309,7 @@ function getDotPos(moduleNumber) {
     var revMod = revList[moduleNumber];
     if (revMod.toLowerCase() === "irreversible") {
         var currSlider = document.getElementById(enzymeList[moduleNumber]);
-        var irrPositionChange = positionChange * (parseInt(currSlider.value) / 50) * (1 + Math.PI / 2);
+        var irrPositionChange = positionChange * (parseInt(currSlider.value) / 50) * (Math.PI / 2);
         checkRatio(moduleNumber);
         if (rxnDir[moduleNumber] === 1) {
             directions[moduleNumber] = 1;
@@ -756,7 +767,7 @@ function calculateColor(moduleNumber, index) {
     } else if (currNum >= 14.0) {
         return "orange";
     } else {
-        return "green";
+        return "#4CAF50";
     }
 }
 
